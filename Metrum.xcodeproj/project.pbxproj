@@ -17,6 +17,7 @@
 		DD5749D723EC405300C50423 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD5749D523EC405300C50423 /* LaunchScreen.storyboard */; };
 		DD5749E223EC405300C50423 /* MetrumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749E123EC405300C50423 /* MetrumTests.swift */; };
 		DD5749ED23EC405400C50423 /* MetrumUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749EC23EC405400C50423 /* MetrumUITests.swift */; };
+		DD5749FC23EC408800C50423 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DD5749FB23EC408800C50423 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		DD5749E823EC405400C50423 /* MetrumUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MetrumUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD5749EC23EC405400C50423 /* MetrumUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetrumUITests.swift; sourceTree = "<group>"; };
 		DD5749EE23EC405400C50423 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DD5749FB23EC408800C50423 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 		DD5749BA23EC405200C50423 = {
 			isa = PBXGroup;
 			children = (
+				DD5749FA23EC407500C50423 /* Git */,
 				DD5749C523EC405200C50423 /* Metrum */,
 				DD5749E023EC405300C50423 /* MetrumTests */,
 				DD5749EB23EC405400C50423 /* MetrumUITests */,
@@ -132,6 +135,14 @@
 				DD5749EE23EC405400C50423 /* Info.plist */,
 			);
 			path = MetrumUITests;
+			sourceTree = "<group>";
+		};
+		DD5749FA23EC407500C50423 /* Git */ = {
+			isa = PBXGroup;
+			children = (
+				DD5749FB23EC408800C50423 /* .gitignore */,
+			);
+			path = Git;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,6 +253,7 @@
 				DD5749C923EC405200C50423 /* GameScene.sks in Resources */,
 				DD5749D423EC405300C50423 /* Assets.xcassets in Resources */,
 				DD5749D723EC405300C50423 /* LaunchScreen.storyboard in Resources */,
+				DD5749FC23EC408800C50423 /* .gitignore in Resources */,
 				DD5749CB23EC405200C50423 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -447,6 +459,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 85738K795J;
 				INFOPLIST_FILE = Metrum/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -465,6 +478,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 85738K795J;
 				INFOPLIST_FILE = Metrum/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
