@@ -11,6 +11,9 @@ import SpriteKit
 
 class AccentuationInfoScene: SKScene {
     
+    // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
+    var gameViewController : GameViewController!
+    
     override func didMove(to view: SKView) {
         let accentuationInfoLabel = SKLabelNode(text: "Accentuation Info Scene")
         accentuationInfoLabel.position = CGPoint(x: frame.midX, y: frame.midY+400)
@@ -36,9 +39,11 @@ class AccentuationInfoScene: SKScene {
         let touchedNode = self.atPoint(touchLocation)
         
         if(touchedNode.name == "readyForLevelOne") {
-            let levelOneScene = LevelOneScene(fileNamed: "LevelOneScene")
-            levelOneScene?.scaleMode = scaleMode
-            view?.presentScene(levelOneScene)
+            // let levelOneScene = LevelOneScene(fileNamed: "LevelOneScene")
+            // levelOneScene?.scaleMode = scaleMode
+            // view?.presentScene(levelOneScene)
+            view?.presentScene(gameViewController.levelOneScene)
+
         }
     }
 
