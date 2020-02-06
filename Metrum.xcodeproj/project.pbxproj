@@ -22,6 +22,8 @@
 		DDC4906923EC4F0B000F0942 /* LevelOneScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4906823EC4F0B000F0942 /* LevelOneScene.swift */; };
 		DDC4906B23EC4F31000F0942 /* AccentuationInfoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4906A23EC4F31000F0942 /* AccentuationInfoScene.swift */; };
 		DDC4906D23EC507A000F0942 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC4906C23EC507A000F0942 /* MainMenuScene.sks */; };
+		DDC4906F23EC5716000F0942 /* AccentuationInfoScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC4906E23EC5716000F0942 /* AccentuationInfoScene.sks */; };
+		DDC4907123EC5736000F0942 /* LevelOneScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC4907023EC5736000F0942 /* LevelOneScene.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		DDC4906823EC4F0B000F0942 /* LevelOneScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelOneScene.swift; sourceTree = "<group>"; };
 		DDC4906A23EC4F31000F0942 /* AccentuationInfoScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentuationInfoScene.swift; sourceTree = "<group>"; };
 		DDC4906C23EC507A000F0942 /* MainMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenuScene.sks; sourceTree = "<group>"; };
+		DDC4906E23EC5716000F0942 /* AccentuationInfoScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = AccentuationInfoScene.sks; sourceTree = "<group>"; };
+		DDC4907023EC5736000F0942 /* LevelOneScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelOneScene.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,11 +121,13 @@
 				DD5749C623EC405200C50423 /* AppDelegate.swift */,
 				DD5749C823EC405200C50423 /* GameScene.sks */,
 				DDC4906C23EC507A000F0942 /* MainMenuScene.sks */,
+				DDC4906E23EC5716000F0942 /* AccentuationInfoScene.sks */,
+				DDC4907023EC5736000F0942 /* LevelOneScene.sks */,
 				DD5749CA23EC405200C50423 /* Actions.sks */,
 				DD5749CC23EC405200C50423 /* GameScene.swift */,
+				DDC4906623EC47EC000F0942 /* MainMenuScene.swift */,
 				DDC4906A23EC4F31000F0942 /* AccentuationInfoScene.swift */,
 				DDC4906823EC4F0B000F0942 /* LevelOneScene.swift */,
-				DDC4906623EC47EC000F0942 /* MainMenuScene.swift */,
 				DD5749CE23EC405200C50423 /* GameViewController.swift */,
 				DD5749D023EC405200C50423 /* Main.storyboard */,
 				DD5749D323EC405300C50423 /* Assets.xcassets */,
@@ -261,11 +267,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDC4906F23EC5716000F0942 /* AccentuationInfoScene.sks in Resources */,
 				DD5749D223EC405200C50423 /* Main.storyboard in Resources */,
 				DDC4906D23EC507A000F0942 /* MainMenuScene.sks in Resources */,
 				DD5749C923EC405200C50423 /* GameScene.sks in Resources */,
 				DD5749D423EC405300C50423 /* Assets.xcassets in Resources */,
 				DD5749D723EC405300C50423 /* LaunchScreen.storyboard in Resources */,
+				DDC4907123EC5736000F0942 /* LevelOneScene.sks in Resources */,
 				DD5749FC23EC408800C50423 /* .gitignore in Resources */,
 				DD5749CB23EC405200C50423 /* Actions.sks in Resources */,
 			);
