@@ -6,7 +6,6 @@
 //  Copyright © 2020 Jonas Jonas. All rights reserved.
 //
 
-import UIKit
 import SpriteKit
 
 class LevelOneScene: SKScene {
@@ -15,6 +14,7 @@ class LevelOneScene: SKScene {
     
     var accentuationInfo: AccentuationInfo!
     var backgroundBlocker: SKSpriteNode!
+    var firstEntryOfLevelOne = true
 
     
     override func didMove(to view: SKView) {
@@ -34,6 +34,11 @@ class LevelOneScene: SKScene {
         accentuationInfoLabel.position = CGPoint(x: frame.midX+225, y: frame.midY)
         accentuationInfoLabel.fontColor = SKColor.black
         addChild(accentuationInfoLabel)
+        
+        if firstEntryOfLevelOne {
+            displayAccentuationInfo()
+            firstEntryOfLevelOne = false
+        }
     }
     
     func displayAccentuationInfo() {
@@ -50,11 +55,7 @@ class LevelOneScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touched in LevelOneScene.swift")
-
-        
         // https://code.tutsplus.com/tutorials/spritekit-basics-nodes--cms-28785
-        
         guard let touch = touches.first else {
             return
         }
@@ -63,9 +64,6 @@ class LevelOneScene: SKScene {
         let touchedNode = self.atPoint(touchLocation)
         
         if(touchedNode.name == "accentuationInfoLbl") {
-//            let accentuationInfoScene = AccentuationInfoScene(fileNamed: "AccentuationInfoScene")
-//            accentuationInfoScene?.scaleMode = scaleMode
-//            view?.presentScene(accentuationInfoScene)
             displayAccentuationInfo()
         }
         

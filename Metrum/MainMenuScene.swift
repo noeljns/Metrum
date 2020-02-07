@@ -6,7 +6,6 @@
 //  Copyright © 2020 Jonas Jonas. All rights reserved.
 //
 
-import UIKit
 import SpriteKit
 
 class MainMenuScene: SKScene {

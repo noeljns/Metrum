@@ -6,7 +6,6 @@
 //  Copyright © 2020 Jonas Jonas. All rights reserved.
 //
 
-import UIKit
 import SpriteKit
 
 protocol AccentuationInfoDelegate: class {
@@ -51,7 +50,6 @@ class AccentuationInfo: SKSpriteNode {
         // close button
         closeButton = SKSpriteNode(texture: SKTexture(imageNamed: "bereit"))
         closeButton.name = "close"
-        // closeButton.position = CGPoint(x: self.size.width / 2 - closeButton.size.width / 2, y: self.size.height / 2 - closeButton.size.height / 2)
         closeButton.position = CGPoint(x: frame.midX+100, y: frame.midY-250)
 
         closeButton.zPosition = 4
@@ -74,8 +72,6 @@ class AccentuationInfo: SKSpriteNode {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touched in AccentuationInfo.swift")
-        
         guard let touch = touches.first else {
             return
         }
@@ -83,7 +79,6 @@ class AccentuationInfo: SKSpriteNode {
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
         if (touchedNode.name == "close") {
-            print("touched")
             close()
         }
     }
@@ -91,5 +86,4 @@ class AccentuationInfo: SKSpriteNode {
     func close() {
         self.delegate?.close()
     }
-    
 }
