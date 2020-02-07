@@ -50,11 +50,10 @@ class MainMenuScene: SKScene {
         let touchedNode = self.atPoint(touchLocation)
         
         if(touchedNode.name == "levelOne") {
-            let accentuationInfoScene = AccentuationInfoScene(fileNamed: "AccentuationInfoScene")
-            accentuationInfoScene?.scaleMode = scaleMode
-            view?.presentScene(accentuationInfoScene)
+            let leveOneScene = LevelOneScene(fileNamed: "LevelOneScene")
+            leveOneScene?.scaleMode = scaleMode
+            view?.presentScene(leveOneScene)
         }
-        
     }
     
 }

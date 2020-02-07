@@ -24,6 +24,7 @@
 		DDC4906D23EC507A000F0942 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC4906C23EC507A000F0942 /* MainMenuScene.sks */; };
 		DDC4906F23EC5716000F0942 /* AccentuationInfoScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC4906E23EC5716000F0942 /* AccentuationInfoScene.sks */; };
 		DDC4907123EC5736000F0942 /* LevelOneScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC4907023EC5736000F0942 /* LevelOneScene.sks */; };
+		DDC4907323ED7641000F0942 /* AccentuationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4907223ED7641000F0942 /* AccentuationInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		DDC4906C23EC507A000F0942 /* MainMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenuScene.sks; sourceTree = "<group>"; };
 		DDC4906E23EC5716000F0942 /* AccentuationInfoScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = AccentuationInfoScene.sks; sourceTree = "<group>"; };
 		DDC4907023EC5736000F0942 /* LevelOneScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelOneScene.sks; sourceTree = "<group>"; };
+		DDC4907223ED7641000F0942 /* AccentuationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentuationInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 				DDC4906623EC47EC000F0942 /* MainMenuScene.swift */,
 				DDC4906A23EC4F31000F0942 /* AccentuationInfoScene.swift */,
 				DDC4906823EC4F0B000F0942 /* LevelOneScene.swift */,
+				DDC4907223ED7641000F0942 /* AccentuationInfo.swift */,
 				DD5749CE23EC405200C50423 /* GameViewController.swift */,
 				DD5749D023EC405200C50423 /* Main.storyboard */,
 				DD5749D323EC405300C50423 /* Assets.xcassets */,
@@ -306,6 +309,7 @@
 				DD5749CF23EC405200C50423 /* GameViewController.swift in Sources */,
 				DDC4906723EC47EC000F0942 /* MainMenuScene.swift in Sources */,
 				DD5749C723EC405200C50423 /* AppDelegate.swift in Sources */,
+				DDC4907323ED7641000F0942 /* AccentuationInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
