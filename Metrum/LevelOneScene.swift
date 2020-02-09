@@ -9,36 +9,75 @@
 import SpriteKit
 
 class LevelOneScene: SKScene {
-
-    var storage = 7
     
+    private let taskLabel = SKLabelNode()
+    
+    private let accentOneBin = SKSpriteNode()
+    private let accentTwoBin = SKSpriteNode()
+    private var wordToBeRated = SKLabelNode()
+    
+    private let accentOne = SKLabelNode()
+    private let accentTwo = SKLabelNode()
+
     var accentuationInfo: AccentuationInfo!
     var backgroundBlocker: SKSpriteNode!
     var firstEntryOfLevelOne = true
-
     
-    override func didMove(to view: SKView) {
-        let levelOneLabel = SKLabelNode(text: "Level One")
-        levelOneLabel.position = CGPoint(x: frame.midX, y: frame.midY+400)
-        levelOneLabel.fontColor = SKColor.black
-        addChild(levelOneLabel)
+    // var audioOfWord : SKAudioLabel!
+    
+    func setUpScene() {
+        // loadingBar = SKSpriteNode(imaged Name: "...")
         
-        let storageLabel = SKLabelNode(text: "speicher: " + String(storage))
-        storageLabel.name = "storage"
-        storageLabel.position = CGPoint(x: frame.midX, y: frame.midY)
-        storageLabel.fontColor = SKColor.black
-        addChild(storageLabel)
+        taskLabel.fontColor = SKColor.black
+        taskLabel.text = "Markiere die betonten (x́) und unbetonten (x) Silben des Wortes.\n" +
+        "Ziehe dafür die Betonungszeichen in das jeweilige Kästchen über der Silbe."
+        taskLabel.position = CGPoint(x: frame.midX , y: frame.midY+150)
+        // break line: https://forums.developer.apple.com/thread/82994
+        taskLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+        taskLabel.numberOfLines = 0
+        taskLabel.preferredMaxLayoutWidth = 480
+        // taskLabel.zPosition = 2
+        addChild(taskLabel)
         
-        let accentuationInfoLabel = SKLabelNode(text: "INFO")
-        accentuationInfoLabel.name = "accentuationInfoLbl"
-        accentuationInfoLabel.position = CGPoint(x: frame.midX+225, y: frame.midY)
-        accentuationInfoLabel.fontColor = SKColor.black
-        addChild(accentuationInfoLabel)
+        accentOneBin.color = SKColor.lightGray
+        accentOneBin.size = CGSize(width: 40, height: 40)
+        accentOneBin.position = CGPoint(x: frame.midX-30, y: frame.midY+70)
+        addChild(accentOneBin)
         
-        if firstEntryOfLevelOne {
-            displayAccentuationInfo()
-            firstEntryOfLevelOne = false
-        }
+        accentTwoBin.color = SKColor.lightGray
+        accentTwoBin.size = CGSize(width: 40, height: 40)
+        accentTwoBin.position = CGPoint(x: frame.midX+30, y: frame.midY+70)
+        addChild(accentTwoBin)
+        
+        wordToBeRated.fontColor = SKColor.black
+        wordToBeRated.text = "Sonne"
+        wordToBeRated.fontSize = 50
+        wordToBeRated.position = CGPoint(x: frame.midX, y: frame.midY)
+        addChild(wordToBeRated)
+        
+        accentOne.fontColor = SKColor.black
+        accentOne.text = "x́"
+        accentOne.fontSize = 40
+        accentOne.position = CGPoint(x: frame.midX-40, y: frame.midY-150)
+        addChild(accentOne)
+        
+        accentTwo.fontColor = SKColor.black
+        accentTwo.text = "x"
+        accentTwo.fontSize = 40
+        accentTwo.position = CGPoint(x: frame.midX+40, y: frame.midY-150)
+        addChild(accentTwo)
+        
+        let accentuationInfoButton = SKSpriteNode(imageNamed: "info")
+        accentuationInfoButton.name = "accentuationInfoBtn"
+        accentuationInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY+20)
+        accentuationInfoButton.size = CGSize(width: 50, height: 50)
+        addChild(accentuationInfoButton)
+        
+        let soundBoxButton = SKSpriteNode(imageNamed: "sound")
+        soundBoxButton.name = "soundBoxBtn"
+        soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY+20)
+        soundBoxButton.size = CGSize(width: 50, height: 50)
+        addChild(soundBoxButton)
     }
     
     func displayAccentuationInfo() {
@@ -54,23 +93,31 @@ class LevelOneScene: SKScene {
         addChild(accentuationInfo)
     }
     
+    override func didMove(to view: SKView) {
+        setUpScene()
+        
+        if firstEntryOfLevelOne {
+            displayAccentuationInfo()
+            firstEntryOfLevelOne = false
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // https://code.tutsplus.com/tutorials/spritekit-basics-nodes--cms-28785
         guard let touch = touches.first else {
             return
         }
-        
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
         
-        if(touchedNode.name == "accentuationInfoLbl") {
+        if(touchedNode.name == "accentuationInfoBtn") {
             displayAccentuationInfo()
         }
         
-        if(touchedNode.name == "storage") {
-            storage += 1
-            print(storage)
+        if(touchedNode.name == "soundBoxBtn") {
+            print("soundbox touched")
         }
+        
     }
     
 }
