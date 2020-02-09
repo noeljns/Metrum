@@ -15,13 +15,13 @@ class LevelOneScene: SKScene {
     private let accentOneBin = SKSpriteNode()
     private let accentTwoBin = SKSpriteNode()
     
-    var wordToBeRated = SKLabelNode()
-    var wordToBeRatedBold = SKLabelNode()
+    private var wordToBeRated = SKLabelNode()
+    private var wordToBeRatedBold = SKLabelNode()
     
-    let stressedParent = SKSpriteNode()
-    let stressed = SKLabelNode()
-    let unstressedParent = SKSpriteNode()
-    let unstressed = SKLabelNode()
+    private let stressedParent = SKSpriteNode()
+    private let stressed = SKLabelNode()
+    private let unstressedParent = SKSpriteNode()
+    private let unstressed = SKLabelNode()
     
     private var accentuationInfo: AccentuationInfo!
     private var backgroundBlocker: SKSpriteNode!
@@ -124,6 +124,13 @@ class LevelOneScene: SKScene {
         addChild(soundBoxButton)
         
         addChild(audioNode)
+        
+        let checkButton = SKSpriteNode(imageNamed: "check")
+        checkButton.name = "check"
+        checkButton.position = CGPoint(x: frame.midX+200, y: frame.midY-300)
+        checkButton.size = CGSize(width: 175, height: 50)
+        checkButton.zPosition = 2
+        addChild(checkButton)
     }
     
     func displayAccentuationInfo() {
@@ -131,7 +138,8 @@ class LevelOneScene: SKScene {
         backgroundBlocker.zPosition = 4999
         addChild(backgroundBlocker)
 
-        accentuationInfo = AccentuationInfo(size: CGSize(width: 500, height: 800))
+        accentuationInfo = AccentuationInfo(size: CGSize(width: 650, height: 800))
+
         accentuationInfo.delegate = self
         accentuationInfo.zPosition = 5000
         addChild(accentuationInfo)
@@ -184,6 +192,11 @@ class LevelOneScene: SKScene {
                                           SKAction.run{self.addAndRemoveNode(node: self.wordToBeRatedBold)},
                                           SKAction.run{self.hideAndUnhideNode(node: self.wordToBeRated)}])
             self.run(action)
+        }
+        
+        if (touchedNode.name == "check") {
+            print("check!")
+            // check()
         }
     }
     

@@ -54,7 +54,7 @@ class AccentuationInfo: SKSpriteNode {
  
         closeButton = SKSpriteNode(texture: SKTexture(imageNamed: "bereit"))
         closeButton.name = "close"
-        closeButton.position = CGPoint(x: frame.midX+100, y: frame.midY-250)
+        closeButton.position = CGPoint(x: frame.midX+200, y: frame.midY-300)
         closeButton.size = CGSize(width: 175, height: 50)
         closeButton.zPosition = 5
         addChild(closeButton)
