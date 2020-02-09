@@ -19,14 +19,18 @@ class LevelOneScene: SKScene {
     private let accentOne = SKLabelNode()
     private let accentTwo = SKLabelNode()
 
-    var accentuationInfo: AccentuationInfo!
-    var backgroundBlocker: SKSpriteNode!
-    var firstEntryOfLevelOne = true
+    private var accentuationInfo: AccentuationInfo!
+    private var backgroundBlocker: SKSpriteNode!
+    private var firstEntryOfLevelOne = true
     
-    // var audioOfWord : SKAudioLabel!
+    private let audioNode = SKNode()
     
     func setUpScene() {
         // loadingBar = SKSpriteNode(imaged Name: "...")
+        let loadingBar = SKSpriteNode(imageNamed: "loadingBarOne")
+        loadingBar.position = CGPoint(x: frame.midX , y: frame.midY+450)
+        loadingBar.size = CGSize(width: 600, height: 35)
+        addChild(loadingBar)
         
         taskLabel.fontColor = SKColor.black
         taskLabel.text = "Markiere die betonten (x́) und unbetonten (x) Silben des Wortes.\n" +
@@ -78,6 +82,8 @@ class LevelOneScene: SKScene {
         soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY+20)
         soundBoxButton.size = CGSize(width: 50, height: 50)
         addChild(soundBoxButton)
+        
+        addChild(audioNode)
     }
     
     func displayAccentuationInfo() {
@@ -116,6 +122,8 @@ class LevelOneScene: SKScene {
         
         if(touchedNode.name == "soundBoxBtn") {
             print("soundbox touched")
+//            let soundOfWordToBeRated = SKAction.playSoundFileNamed("Sonne.wav", waitForCompletion: true)
+            audioNode.run(SKAction.playSoundFileNamed("Sonne.wav", waitForCompletion: true))
         }
         
     }
