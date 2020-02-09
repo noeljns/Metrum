@@ -21,19 +21,24 @@ class AccentuationInfo: SKSpriteNode {
         super.init(texture: nil, color: .clear, size: size)
         name = "accentuationInfo"
         
-        // background design
-        let background = SKSpriteNode(color: .lightGray, size: self.size)
+        let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
+        background.drawBorder(color: .yellow, width: 5)
         addChild(background)
         
-        // info sign
+        let headerLabel = SKLabelNode(text: "Merke")
+        headerLabel.fontColor = SKColor.black
+        headerLabel.fontSize = 50
+        headerLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY+250)
+        headerLabel.zPosition = 4
+        addChild(headerLabel)
+        
         let info = SKSpriteNode(imageNamed: "info")
         info.position = CGPoint(x: frame.midX-150 , y: frame.midY+275)
         info.size = CGSize(width: 50, height: 50)
         info.zPosition = 3
         addChild(info)
 
-        // text
         let explanationLabel = SKLabelNode(text: "test")
         explanationLabel.fontColor = SKColor.black
         explanationLabel.text = "Jedes Wort besteht aus einer oder mehreren Silben. Diese können betont (x́) oder unbetont (x) sein.\n\n" +
@@ -47,12 +52,11 @@ class AccentuationInfo: SKSpriteNode {
         explanationLabel.zPosition = 2
         addChild(explanationLabel)
  
-        // close button
         closeButton = SKSpriteNode(texture: SKTexture(imageNamed: "bereit"))
         closeButton.name = "close"
         closeButton.position = CGPoint(x: frame.midX+100, y: frame.midY-250)
-
-        closeButton.zPosition = 4
+        closeButton.size = CGSize(width: 175, height: 50)
+        closeButton.zPosition = 5
         addChild(closeButton)
     }
     
@@ -85,5 +89,16 @@ class AccentuationInfo: SKSpriteNode {
     
     func close() {
         self.delegate?.close()
+    }
+}
+
+extension SKSpriteNode {
+    // https://stackoverflow.com/questions/20889222/can-i-add-a-border-to-an-skspritenode-similar-to-uiview
+    func drawBorder(color: UIColor, width: CGFloat) {
+        let shapeNode = SKShapeNode(rect: frame)
+        shapeNode.fillColor = .clear
+        shapeNode.strokeColor = color
+        shapeNode.lineWidth = width
+        addChild(shapeNode)
     }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DD11698D23F0406600E553CE /* test.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DD11698C23F0406600E553CE /* test.WAV */; };
+		DD11698F23F054FF00E553CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD11698E23F054FF00E553CE /* Assets.xcassets */; };
 		DD3E90CE23F03C9B00E72372 /* Sonne.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DD3E90CD23F03C9B00E72372 /* Sonne.WAV */; };
 		DD5749C723EC405200C50423 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749C623EC405200C50423 /* AppDelegate.swift */; };
 		DD5749C923EC405200C50423 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DD5749C823EC405200C50423 /* GameScene.sks */; };
@@ -19,7 +20,6 @@
 		DD5749E223EC405300C50423 /* MetrumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749E123EC405300C50423 /* MetrumTests.swift */; };
 		DD5749ED23EC405400C50423 /* MetrumUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749EC23EC405400C50423 /* MetrumUITests.swift */; };
 		DD5749FC23EC408800C50423 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DD5749FB23EC408800C50423 /* .gitignore */; };
-		DD8400CF23F0356B002B45CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD8400CE23F0356B002B45CF /* Assets.xcassets */; };
 		DDC4906723EC47EC000F0942 /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4906623EC47EC000F0942 /* MainMenuScene.swift */; };
 		DDC4906923EC4F0B000F0942 /* LevelOneScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4906823EC4F0B000F0942 /* LevelOneScene.swift */; };
 		DDC4906D23EC507A000F0942 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC4906C23EC507A000F0942 /* MainMenuScene.sks */; };
@@ -46,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		DD11698C23F0406600E553CE /* test.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test.WAV; sourceTree = "<group>"; };
+		DD11698E23F054FF00E553CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD3E90CD23F03C9B00E72372 /* Sonne.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Sonne.WAV; sourceTree = "<group>"; };
 		DD5749C323EC405200C50423 /* Metrum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metrum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD5749C623EC405200C50423 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -63,7 +64,6 @@
 		DD5749EC23EC405400C50423 /* MetrumUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetrumUITests.swift; sourceTree = "<group>"; };
 		DD5749EE23EC405400C50423 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD5749FB23EC408800C50423 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		DD8400CE23F0356B002B45CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DDC4906623EC47EC000F0942 /* MainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
 		DDC4906823EC4F0B000F0942 /* LevelOneScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelOneScene.swift; sourceTree = "<group>"; };
 		DDC4906C23EC507A000F0942 /* MainMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenuScene.sks; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 				DD5749D023EC405200C50423 /* Main.storyboard */,
 				DD5749D523EC405300C50423 /* LaunchScreen.storyboard */,
 				DD5749D823EC405300C50423 /* Info.plist */,
-				DD8400CE23F0356B002B45CF /* Assets.xcassets */,
+				DD11698E23F054FF00E553CE /* Assets.xcassets */,
 				DD11698C23F0406600E553CE /* test.WAV */,
 				DD3E90CC23F03C9B00E72372 /* Sounds */,
 			);
@@ -282,11 +282,11 @@
 				DDC4906D23EC507A000F0942 /* MainMenuScene.sks in Resources */,
 				DD11698D23F0406600E553CE /* test.WAV in Resources */,
 				DD5749C923EC405200C50423 /* GameScene.sks in Resources */,
+				DD11698F23F054FF00E553CE /* Assets.xcassets in Resources */,
 				DD5749D723EC405300C50423 /* LaunchScreen.storyboard in Resources */,
 				DDC4907123EC5736000F0942 /* LevelOneScene.sks in Resources */,
 				DD5749FC23EC408800C50423 /* .gitignore in Resources */,
 				DD5749CB23EC405200C50423 /* Actions.sks in Resources */,
-				DD8400CF23F0356B002B45CF /* Assets.xcassets in Resources */,
 				DD3E90CE23F03C9B00E72372 /* Sonne.WAV in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

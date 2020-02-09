@@ -33,7 +33,7 @@ class LevelOneScene: SKScene {
         addChild(loadingBar)
         
         taskLabel.fontColor = SKColor.black
-        taskLabel.text = "Markiere die betonten (x́) und unbetonten (x) Silben des Wortes.\n" +
+        taskLabel.text = "Markiere die betonten (x́) und unbetonten (x) Silben des Wortes.\n"+
         "Ziehe dafür die Betonungszeichen in das jeweilige Kästchen über der Silbe."
         taskLabel.position = CGPoint(x: frame.midX , y: frame.midY+150)
         // break line: https://forums.developer.apple.com/thread/82994
@@ -121,13 +121,12 @@ class LevelOneScene: SKScene {
         }
         
         if(touchedNode.name == "soundBoxBtn") {
-            print("soundbox touched")
-//            let soundOfWordToBeRated = SKAction.playSoundFileNamed("Sonne.wav", waitForCompletion: true)
             // https://stackoverflow.com/questions/28823386/skaction-playsoundfilenamed-fails-to-load-sound
             // worked
             // audioNode.run(SKAction.playSoundFileNamed("Sonne.WAV", waitForCompletion: false))
             // audioNode.run(SKAction.playSoundFileNamed("test.WAV", waitForCompletion: false))
             run(SKAction.playSoundFileNamed("Sonne.WAV", waitForCompletion: false))
+            
         }
         
     }
