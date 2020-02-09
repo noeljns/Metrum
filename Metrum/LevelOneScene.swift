@@ -123,7 +123,11 @@ class LevelOneScene: SKScene {
         if(touchedNode.name == "soundBoxBtn") {
             print("soundbox touched")
 //            let soundOfWordToBeRated = SKAction.playSoundFileNamed("Sonne.wav", waitForCompletion: true)
-            audioNode.run(SKAction.playSoundFileNamed("Sonne.wav", waitForCompletion: true))
+            // https://stackoverflow.com/questions/28823386/skaction-playsoundfilenamed-fails-to-load-sound
+            // worked
+            // audioNode.run(SKAction.playSoundFileNamed("Sonne.WAV", waitForCompletion: false))
+            // audioNode.run(SKAction.playSoundFileNamed("test.WAV", waitForCompletion: false))
+            run(SKAction.playSoundFileNamed("Sonne.WAV", waitForCompletion: false))
         }
         
     }
