@@ -11,6 +11,9 @@ import SpriteKit
 class LevelOneScene: SKScene {
     
     // variables
+    private var exitLabel = SKLabelNode()
+    private var loadingBar = SKSpriteNode()
+    
     private let taskLabel = SKLabelNode()
     private let accentOneBin = SKSpriteNode()
     private let accentTwoBin = SKSpriteNode()
@@ -23,12 +26,16 @@ class LevelOneScene: SKScene {
     private let unstressedParent = SKSpriteNode()
     private let unstressed = SKLabelNode()
     
+    private var accentuationInfoButton = SKSpriteNode()
     private var accentuationInfo: AccentuationInfo!
     private var backgroundBlocker: SKSpriteNode!
     private var firstEntryOfLevelOne = true
     
+    private var soundBoxButton = SKSpriteNode()
     private let audioNode = SKNode()
     
+    private var checkButton = SKSpriteNode()
+
     // actions
     // https://stackoverflow.com/questions/28823386/skaction-playsoundfilenamed-fails-to-load-sound
     // worked
@@ -38,7 +45,15 @@ class LevelOneScene: SKScene {
     
     
     func setUpScene() {
-        let loadingBar = SKSpriteNode(imageNamed: "loadingBarOne")
+        exitLabel.name = "exit"
+        exitLabel.fontColor = SKColor.black
+        exitLabel.text = "x"
+        exitLabel.fontSize = 60
+        exitLabel.position = CGPoint(x: frame.midX-330, y: frame.midY+435)
+        exitLabel.zPosition = 2
+        addChild(exitLabel)
+        
+        loadingBar = SKSpriteNode(imageNamed: "loadingBarOne")
         loadingBar.position = CGPoint(x: frame.midX , y: frame.midY+450)
         loadingBar.size = CGSize(width: 600, height: 35)
         loadingBar.zPosition = 3
@@ -109,14 +124,14 @@ class LevelOneScene: SKScene {
         unstressedParent.addChild(unstressed)
         addChild(unstressedParent)
         
-        let accentuationInfoButton = SKSpriteNode(imageNamed: "info")
+        accentuationInfoButton = SKSpriteNode(imageNamed: "info")
         accentuationInfoButton.name = "accentuationInfoBtn"
         accentuationInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY+20)
         accentuationInfoButton.size = CGSize(width: 50, height: 50)
         accentuationInfoButton.zPosition = 2
         addChild(accentuationInfoButton)
         
-        let soundBoxButton = SKSpriteNode(imageNamed: "sound")
+        soundBoxButton = SKSpriteNode(imageNamed: "sound")
         soundBoxButton.name = "soundBoxBtn"
         soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY+20)
         soundBoxButton.size = CGSize(width: 50, height: 50)
@@ -125,7 +140,7 @@ class LevelOneScene: SKScene {
         
         addChild(audioNode)
         
-        let checkButton = SKSpriteNode(imageNamed: "check")
+        checkButton = SKSpriteNode(imageNamed: "check")
         checkButton.name = "check"
         checkButton.position = CGPoint(x: frame.midX+200, y: frame.midY-300)
         checkButton.size = CGSize(width: 175, height: 50)
@@ -167,6 +182,7 @@ class LevelOneScene: SKScene {
     override func didMove(to view: SKView) {
         setUpScene()
         
+        // has to be stored as NSuserData
         if firstEntryOfLevelOne {
             displayAccentuationInfo()
             firstEntryOfLevelOne = false
@@ -197,6 +213,12 @@ class LevelOneScene: SKScene {
         if (touchedNode.name == "check") {
             print("check!")
             // check()
+        }
+        
+        if (touchedNode.name == "exit") {
+            // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
+            let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
+            self.view?.presentScene(mainMenu)
         }
     }
     
