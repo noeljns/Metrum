@@ -9,6 +9,32 @@
 import SpriteKit
 
 class LevelOneScene: SKScene {
+    // examples of input data
+    let freu = Syllable(syllableString: "Freu", accentuation: Accentuation.stressed)
+    let de = Syllable(syllableString: "de", accentuation: Accentuation.unstressed)
+    let freude = Word(syllables: [freu, de])
+    let schoe = Syllable(syllableString: "schoe", accentuation: Accentuation.stressed)
+    let ner = Syllable(syllableString: "ner", accentuation: Accentuation.unstressed)
+    let schoener = Word(syllables: [schoe, ner])
+    let goe = Syllable(syllableString: "Goe", accentuation: Accentuation.stressed)
+    let tter = Syllable(syllableString: "tter", accentuation: Accentuation.unstressed)
+    let fun = Syllable(syllableString: "fun", accentuation: Accentuation.stressed)
+    let ken = Syllable(syllableString: "tter", accentuation: Accentuation.unstressed)
+    let goetterfunken = Word(syllables: [goe, tter, fun, ken])
+    let lineOne = Line(words: [freude, schoener, goetterfunken], measure: Measure.trochaeus)
+    var test = lineOne.words[0].syllables[0].accentuation
+    
+    let so = Syllable(syllableString: "So", accentuation: Accentuation.stressed)
+    let nne = Syllable(syllableString: "nne", accentuation: Accentuation.unstressed)
+    let sonne = Word(syllables: [so, nne])
+    let lineTwo = Line(words: [sonne], measure: Measure.trochaeus)
+    
+    var ge = Syllable(syllableString: "Ge", accentuation: Accentuation.unstressed)
+    var spenst = Syllable(syllableString: "spenst", accentuation: Accentuation.stressed)
+    var gespenst = Word(syllables: [ge, spenst])
+    let lineThree = Line(words: [gespenst], measure: Measure.jambus)
+    
+    
     
     // variables
     private var exitLabel = SKLabelNode()
@@ -35,7 +61,7 @@ class LevelOneScene: SKScene {
     private let audioNode = SKNode()
     
     private var checkButton = SKSpriteNode()
-    
+
     let selection = [(["x́", "x"], ["Sonne", "So", "nne", "Sonne.mp3"]),
                      (["x", "x́"], ["Gespenst", "Ge", "spenst", "Gespenst.mp3"])]
     var selected = (["x́", "x"], ["Sonne", "So", "nne", "Sonne.WAV"])

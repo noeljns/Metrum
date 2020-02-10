@@ -128,10 +128,10 @@
 			isa = PBXGroup;
 			children = (
 				DD4363FF23F18D87001F2A48 /* Line.swift */,
+				DD4363FD23F186F2001F2A48 /* Measure.swift */,
 				DD4363F723F18645001F2A48 /* Word.swift */,
 				DD4363F923F18676001F2A48 /* Syllable.swift */,
 				DD4363FB23F18692001F2A48 /* Accentuation.swift */,
-				DD4363FD23F186F2001F2A48 /* Measure.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

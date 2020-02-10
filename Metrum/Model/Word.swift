@@ -12,7 +12,8 @@ struct Word {
     let syllables: [Syllable]
 
     // in case of two or more syllables, the word itself has a measure
-    let measureOfWord: Measure
+    // verworfen, wegen Mitternacht einzeln Daktylus und z.B. in Vers in Jambus eingebettet
+    // let measureOfWord: Measure
     
     // computed property
     var word: String {
