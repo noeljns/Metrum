@@ -19,6 +19,7 @@ class MainMenuScene: SKScene {
         addChild(levelOneLabel)
         
         let levelTwoLabel = SKLabelNode(text: "Enter Level 2")
+        levelTwoLabel.name = "levelTwo"
         // position label to the center of scene
         levelTwoLabel.position = CGPoint(x: frame.midX, y: frame.midY+100)
         levelTwoLabel.fontColor = SKColor.black
@@ -52,6 +53,12 @@ class MainMenuScene: SKScene {
             let leveOneScene = LevelOneScene(fileNamed: "LevelOneScene")
             leveOneScene?.scaleMode = scaleMode
             view?.presentScene(leveOneScene)
+        }
+        
+        if(touchedNode.name == "levelTwo") {
+            let levelTwoScene = LevelTwoScene(fileNamed: "LevelTwoScene")
+            levelTwoScene?.scaleMode = scaleMode
+            view?.presentScene(levelTwoScene)
         }
     }
     

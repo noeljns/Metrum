@@ -242,6 +242,11 @@ class LevelOneScene: SKScene {
         
         if (touchedNode.name == "check") {
             print("check!")
+            
+            // if accent in correct order, then show green overlay
+            // if "weiter" clicked, then
+            // loadingBar with new image
+            // new selected word
             check()
         }
         
@@ -325,7 +330,6 @@ extension LevelOneScene: AccentuationInfoDelegate {
         accentuationInfo?.removeFromParent()
     }
 }
-
 
 
 

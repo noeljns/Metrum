@@ -11,6 +11,8 @@
 		DD11698F23F054FF00E553CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD11698E23F054FF00E553CE /* Assets.xcassets */; };
 		DD3276CA23F0DE93007DAB87 /* Gespenst.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD3276C923F0DE93007DAB87 /* Gespenst.mp3 */; };
 		DD3276CC23F0E17A007DAB87 /* Sonne.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD3276CB23F0E17A007DAB87 /* Sonne.mp3 */; };
+		DD3276CE23F0E257007DAB87 /* LevelTwoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3276CD23F0E257007DAB87 /* LevelTwoScene.swift */; };
+		DD3276D023F0E26F007DAB87 /* LevelTwoScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DD3276CF23F0E26F007DAB87 /* LevelTwoScene.sks */; };
 		DD3E90CE23F03C9B00E72372 /* Sonne.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DD3E90CD23F03C9B00E72372 /* Sonne.WAV */; };
 		DD5749C723EC405200C50423 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749C623EC405200C50423 /* AppDelegate.swift */; };
 		DD5749C923EC405200C50423 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DD5749C823EC405200C50423 /* GameScene.sks */; };
@@ -51,6 +53,8 @@
 		DD11698E23F054FF00E553CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD3276C923F0DE93007DAB87 /* Gespenst.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Gespenst.mp3; sourceTree = "<group>"; };
 		DD3276CB23F0E17A007DAB87 /* Sonne.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Sonne.mp3; sourceTree = "<group>"; };
+		DD3276CD23F0E257007DAB87 /* LevelTwoScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelTwoScene.swift; sourceTree = "<group>"; };
+		DD3276CF23F0E26F007DAB87 /* LevelTwoScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelTwoScene.sks; sourceTree = "<group>"; };
 		DD3E90CD23F03C9B00E72372 /* Sonne.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Sonne.WAV; sourceTree = "<group>"; };
 		DD5749C323EC405200C50423 /* Metrum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metrum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD5749C623EC405200C50423 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -138,11 +142,13 @@
 				DD5749C823EC405200C50423 /* GameScene.sks */,
 				DDC4906C23EC507A000F0942 /* MainMenuScene.sks */,
 				DDC4907023EC5736000F0942 /* LevelOneScene.sks */,
+				DD3276CF23F0E26F007DAB87 /* LevelTwoScene.sks */,
 				DD5749CA23EC405200C50423 /* Actions.sks */,
 				DD5749CC23EC405200C50423 /* GameScene.swift */,
 				DDC4906623EC47EC000F0942 /* MainMenuScene.swift */,
 				DDC4906823EC4F0B000F0942 /* LevelOneScene.swift */,
 				DDC4907223ED7641000F0942 /* AccentuationInfo.swift */,
+				DD3276CD23F0E257007DAB87 /* LevelTwoScene.swift */,
 				DD5749CE23EC405200C50423 /* GameViewController.swift */,
 				DD5749D023EC405200C50423 /* Main.storyboard */,
 				DD5749D523EC405300C50423 /* LaunchScreen.storyboard */,
@@ -288,6 +294,7 @@
 				DD3276CA23F0DE93007DAB87 /* Gespenst.mp3 in Resources */,
 				DD3276CC23F0E17A007DAB87 /* Sonne.mp3 in Resources */,
 				DDC4906D23EC507A000F0942 /* MainMenuScene.sks in Resources */,
+				DD3276D023F0E26F007DAB87 /* LevelTwoScene.sks in Resources */,
 				DD11698D23F0406600E553CE /* test.WAV in Resources */,
 				DD5749C923EC405200C50423 /* GameScene.sks in Resources */,
 				DD11698F23F054FF00E553CE /* Assets.xcassets in Resources */,
@@ -322,6 +329,7 @@
 			files = (
 				DD5749CD23EC405200C50423 /* GameScene.swift in Sources */,
 				DDC4906923EC4F0B000F0942 /* LevelOneScene.swift in Sources */,
+				DD3276CE23F0E257007DAB87 /* LevelTwoScene.swift in Sources */,
 				DD5749CF23EC405200C50423 /* GameViewController.swift in Sources */,
 				DDC4906723EC47EC000F0942 /* MainMenuScene.swift in Sources */,
 				DD5749C723EC405200C50423 /* AppDelegate.swift in Sources */,
