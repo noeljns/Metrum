@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		DD11698D23F0406600E553CE /* test.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DD11698C23F0406600E553CE /* test.WAV */; };
 		DD11698F23F054FF00E553CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD11698E23F054FF00E553CE /* Assets.xcassets */; };
+		DD3276CA23F0DE93007DAB87 /* Gespenst.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD3276C923F0DE93007DAB87 /* Gespenst.mp3 */; };
+		DD3276CC23F0E17A007DAB87 /* Sonne.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD3276CB23F0E17A007DAB87 /* Sonne.mp3 */; };
 		DD3E90CE23F03C9B00E72372 /* Sonne.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DD3E90CD23F03C9B00E72372 /* Sonne.WAV */; };
 		DD5749C723EC405200C50423 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749C623EC405200C50423 /* AppDelegate.swift */; };
 		DD5749C923EC405200C50423 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DD5749C823EC405200C50423 /* GameScene.sks */; };
@@ -47,6 +49,8 @@
 /* Begin PBXFileReference section */
 		DD11698C23F0406600E553CE /* test.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test.WAV; sourceTree = "<group>"; };
 		DD11698E23F054FF00E553CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DD3276C923F0DE93007DAB87 /* Gespenst.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Gespenst.mp3; sourceTree = "<group>"; };
+		DD3276CB23F0E17A007DAB87 /* Sonne.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Sonne.mp3; sourceTree = "<group>"; };
 		DD3E90CD23F03C9B00E72372 /* Sonne.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Sonne.WAV; sourceTree = "<group>"; };
 		DD5749C323EC405200C50423 /* Metrum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metrum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD5749C623EC405200C50423 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +103,8 @@
 		DD3E90CC23F03C9B00E72372 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				DD3276CB23F0E17A007DAB87 /* Sonne.mp3 */,
+				DD3276C923F0DE93007DAB87 /* Gespenst.mp3 */,
 				DD3E90CD23F03C9B00E72372 /* Sonne.WAV */,
 			);
 			path = Sounds;
@@ -279,6 +285,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD5749D223EC405200C50423 /* Main.storyboard in Resources */,
+				DD3276CA23F0DE93007DAB87 /* Gespenst.mp3 in Resources */,
+				DD3276CC23F0E17A007DAB87 /* Sonne.mp3 in Resources */,
 				DDC4906D23EC507A000F0942 /* MainMenuScene.sks in Resources */,
 				DD11698D23F0406600E553CE /* test.WAV in Resources */,
 				DD5749C923EC405200C50423 /* GameScene.sks in Resources */,
