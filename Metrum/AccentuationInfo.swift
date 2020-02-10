@@ -23,7 +23,7 @@ class AccentuationInfo: SKSpriteNode {
         
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
-        background.drawBorder(color: .yellow, width: 5)
+        background.drawBorder(color: .lightGray, width: 5)
         addChild(background)
         
         let headerLabel = SKLabelNode(text: "Merke")
@@ -57,6 +57,8 @@ class AccentuationInfo: SKSpriteNode {
         closeButton.position = CGPoint(x: frame.midX+200, y: frame.midY-300)
         closeButton.size = CGSize(width: 175, height: 50)
         closeButton.zPosition = 5
+        // not working
+        closeButton.drawBorder(color: .yellow, width: 5)
         addChild(closeButton)
     }
     

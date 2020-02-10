@@ -98,6 +98,8 @@ class LevelOneScene: SKScene {
         checkButton.position = CGPoint(x: frame.midX+200, y: frame.midY-300)
         checkButton.size = CGSize(width: 175, height: 50)
         checkButton.zPosition = 2
+        // not working
+        checkButton.drawBorder(color: .yellow, width: 5)
         addChild(checkButton)
     }
     
