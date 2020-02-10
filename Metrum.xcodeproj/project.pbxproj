@@ -14,6 +14,11 @@
 		DD3276CE23F0E257007DAB87 /* LevelTwoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3276CD23F0E257007DAB87 /* LevelTwoScene.swift */; };
 		DD3276D023F0E26F007DAB87 /* LevelTwoScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DD3276CF23F0E26F007DAB87 /* LevelTwoScene.sks */; };
 		DD3E90CE23F03C9B00E72372 /* Sonne.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DD3E90CD23F03C9B00E72372 /* Sonne.WAV */; };
+		DD4363F823F18645001F2A48 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363F723F18645001F2A48 /* Word.swift */; };
+		DD4363FA23F18676001F2A48 /* Syllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363F923F18676001F2A48 /* Syllable.swift */; };
+		DD4363FC23F18692001F2A48 /* Accentuation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363FB23F18692001F2A48 /* Accentuation.swift */; };
+		DD4363FE23F186F2001F2A48 /* Measure.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363FD23F186F2001F2A48 /* Measure.swift */; };
+		DD43640023F18D87001F2A48 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363FF23F18D87001F2A48 /* Line.swift */; };
 		DD5749C723EC405200C50423 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749C623EC405200C50423 /* AppDelegate.swift */; };
 		DD5749C923EC405200C50423 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DD5749C823EC405200C50423 /* GameScene.sks */; };
 		DD5749CB23EC405200C50423 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = DD5749CA23EC405200C50423 /* Actions.sks */; };
@@ -56,6 +61,11 @@
 		DD3276CD23F0E257007DAB87 /* LevelTwoScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelTwoScene.swift; sourceTree = "<group>"; };
 		DD3276CF23F0E26F007DAB87 /* LevelTwoScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelTwoScene.sks; sourceTree = "<group>"; };
 		DD3E90CD23F03C9B00E72372 /* Sonne.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Sonne.WAV; sourceTree = "<group>"; };
+		DD4363F723F18645001F2A48 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
+		DD4363F923F18676001F2A48 /* Syllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Syllable.swift; sourceTree = "<group>"; };
+		DD4363FB23F18692001F2A48 /* Accentuation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accentuation.swift; sourceTree = "<group>"; };
+		DD4363FD23F186F2001F2A48 /* Measure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measure.swift; sourceTree = "<group>"; };
+		DD4363FF23F18D87001F2A48 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		DD5749C323EC405200C50423 /* Metrum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metrum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD5749C623EC405200C50423 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD5749C823EC405200C50423 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -114,6 +124,18 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
+		DD4363F623F18629001F2A48 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DD4363FF23F18D87001F2A48 /* Line.swift */,
+				DD4363F723F18645001F2A48 /* Word.swift */,
+				DD4363F923F18676001F2A48 /* Syllable.swift */,
+				DD4363FB23F18692001F2A48 /* Accentuation.swift */,
+				DD4363FD23F186F2001F2A48 /* Measure.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		DD5749BA23EC405200C50423 = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +160,7 @@
 		DD5749C523EC405200C50423 /* Metrum */ = {
 			isa = PBXGroup;
 			children = (
+				DD4363F623F18629001F2A48 /* Model */,
 				DD5749C623EC405200C50423 /* AppDelegate.swift */,
 				DD5749C823EC405200C50423 /* GameScene.sks */,
 				DDC4906C23EC507A000F0942 /* MainMenuScene.sks */,
@@ -328,12 +351,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD5749CD23EC405200C50423 /* GameScene.swift in Sources */,
+				DD4363F823F18645001F2A48 /* Word.swift in Sources */,
 				DDC4906923EC4F0B000F0942 /* LevelOneScene.swift in Sources */,
 				DD3276CE23F0E257007DAB87 /* LevelTwoScene.swift in Sources */,
+				DD4363FE23F186F2001F2A48 /* Measure.swift in Sources */,
 				DD5749CF23EC405200C50423 /* GameViewController.swift in Sources */,
+				DD4363FA23F18676001F2A48 /* Syllable.swift in Sources */,
 				DDC4906723EC47EC000F0942 /* MainMenuScene.swift in Sources */,
 				DD5749C723EC405200C50423 /* AppDelegate.swift in Sources */,
+				DD43640023F18D87001F2A48 /* Line.swift in Sources */,
 				DDC4907323ED7641000F0942 /* AccentuationInfo.swift in Sources */,
+				DD4363FC23F18692001F2A48 /* Accentuation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
