@@ -9,9 +9,9 @@
 // measure (engl.) = Versmaß (dt.)
 import Foundation
 
-enum Measure : CaseIterable {
-    case jambus
-    case daktylus
-    case trochaeus
-    case anapaest
+enum Measure : String {
+    case jambus = "jambus"
+    case daktylus = "daktylus"
+    case trochaeus = "trochaeus"
+    case anapaest = "anapaest"
 }

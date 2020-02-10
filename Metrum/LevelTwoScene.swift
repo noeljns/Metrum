@@ -10,6 +10,65 @@ import UIKit
 import SpriteKit
 
 class LevelTwoScene: SKScene {
+    // examples of input data
+    // https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
+    lazy var freu = Syllable(syllableString: "Freu", accentuation: Accentuation.stressed)
+    lazy var de = Syllable(syllableString: "de", accentuation: Accentuation.unstressed)
+    lazy var freude = Word(syllables: [freu, de])
+    lazy var schoe = Syllable(syllableString: "schoe", accentuation: Accentuation.stressed)
+    lazy var ner = Syllable(syllableString: "ner", accentuation: Accentuation.unstressed)
+    lazy var schoener = Word(syllables: [schoe, ner])
+    lazy var goe = Syllable(syllableString: "Goe", accentuation: Accentuation.stressed)
+    lazy var tter = Syllable(syllableString: "tter", accentuation: Accentuation.unstressed)
+    lazy var fun = Syllable(syllableString: "fun", accentuation: Accentuation.stressed)
+    lazy var ken = Syllable(syllableString: "tter", accentuation: Accentuation.unstressed)
+    lazy var goetterfunken = Word(syllables: [goe, tter, fun, ken])
+    lazy var lineOne = Line(words: [freude, schoener, goetterfunken], measure: Measure.trochaeus, audioFile: "lineOne.mp3")
+    
+    lazy var er = Syllable(syllableString: "Er", accentuation: Accentuation.unstressed)
+    lazy var satz = Syllable(syllableString: "satz", accentuation: Accentuation.stressed)
+    lazy var ersatz = Word(syllables: [er, satz])
+    lazy var lineTwo = Line(words: [ersatz], measure: Measure.jambus, audioFile: "Ersatz.mp3")
+    
+    lazy var ver = Syllable(syllableString: "Ver", accentuation: Accentuation.unstressed)
+    lazy var stand = Syllable(syllableString: "stand", accentuation: Accentuation.stressed)
+    lazy var verstand = Word(syllables: [ver, stand])
+    lazy var lineThree = Line(words: [verstand], measure: Measure.jambus, audioFile: "Verstand.mp3")
+    
+    lazy var le = Syllable(syllableString: "Le", accentuation: Accentuation.stressed)
+    lazy var sung = Syllable(syllableString: "sung", accentuation: Accentuation.unstressed)
+    lazy var lesung = Word(syllables: [le, sung])
+    lazy var lineFour = Line(words: [lesung], measure: Measure.trochaeus, audioFile: "Lesung.mp3")
+    
+    lazy var fla = Syllable(syllableString: "Fla", accentuation: Accentuation.stressed)
+    lazy var sche = Syllable(syllableString: "sche", accentuation: Accentuation.unstressed)
+    lazy var flasche = Word(syllables: [fla, sche])
+    lazy var lineFive = Line(words: [flasche], measure: Measure.trochaeus, audioFile: "Flasche.mp3")
+    
+    lazy var zau = Syllable(syllableString: "Zau", accentuation: Accentuation.unstressed)
+    lazy var be = Syllable(syllableString: "be", accentuation: Accentuation.unstressed)
+    lazy var rei = Syllable(syllableString: "rei", accentuation: Accentuation.stressed)
+    lazy var zauberei = Word(syllables: [zau, be, rei])
+    lazy var lineSix = Line(words: [zauberei], measure: Measure.anapaest, audioFile: "Zauberei.mp3")
+    
+    lazy var har = Syllable(syllableString: "Har", accentuation: Accentuation.unstressed)
+    lazy var mo = Syllable(syllableString: "mo", accentuation: Accentuation.unstressed)
+    lazy var nie = Syllable(syllableString: "nie", accentuation: Accentuation.stressed)
+    lazy var harmonie = Word(syllables: [har, mo, nie])
+    lazy var lineSeven = Line(words: [harmonie], measure: Measure.anapaest, audioFile: "Harmonie.mp3")
+    
+    lazy var ei = Syllable(syllableString: "Ei", accentuation: Accentuation.stressed)
+    lazy var tel = Syllable(syllableString: "tel", accentuation: Accentuation.unstressed)
+    lazy var keit = Syllable(syllableString: "keit", accentuation: Accentuation.unstressed)
+    lazy var eitelkeit = Word(syllables: [ei, tel, keit])
+    lazy var lineEight = Line(words: [eitelkeit], measure: Measure.daktylus, audioFile: "Eitelkeit.mp3")
+    
+    lazy var ach = Syllable(syllableString: "Ach", accentuation: Accentuation.stressed)
+    lazy var ter = Syllable(syllableString: "ter", accentuation: Accentuation.unstressed)
+    lazy var bahn = Syllable(syllableString: "bahn", accentuation: Accentuation.unstressed)
+    lazy var achterbahn = Word(syllables: [ach, ter, bahn])
+    lazy var lineNine = Line(words: [achterbahn], measure: Measure.daktylus, audioFile: "Achterbahn.mp3")
+    
     private var exitLabel = SKLabelNode()
     private var loadingBar = SKSpriteNode()
     
@@ -29,15 +88,14 @@ class LevelTwoScene: SKScene {
     
     let score = SKLabelNode()
     
-    let toBePicked = ["jambus": ["Gespenst", "Verstand"],
-                      "trochaeus": ["Lesung", "Hil-fe", "kön-nen", "Freu-de", "Fun-ken"],
-                      "anapaest": ["Zaube-rei", "Har-mo-nie", "Sin-fo-nie", "Di-rek-tion"],
-                      "daktylus": ["Achterbahn", "Füll-hal-ter", "Ei-tel-keit", "Au-to-fahrt", "wunderbar", "Luft-han-sa"]]
+    // old data model
+//     let selection = [("jambus", "Ersatz"), ("jambus", "Verstand"),
+//                     ("trochaeus", "Lesung"), ("trochaeus", "Funken"),
+//                     ("anapaest", "Zauberei"), ("anapaest", "Harmonie"),
+//                     ("daktylus", "Eitelkeit"), ("daktylus", "Achterbahn")]
+    // new data model
+    lazy var selection = [lineTwo, lineThree, lineFour, lineFive, lineSix, lineSeven, lineEight, lineNine]
     
-    let selection = [("jambus", "Ersatz"), ("jambus", "Verstand"),
-                     ("trochaeus", "Lesung"), ("trochaeus", "Funken"),
-                     ("anapaest", "Zauberei"), ("anapaest", "Harmonie"),
-                     ("daktylus", "Eitelkeit"), ("daktylus", "Achterbahn")]
     
     let colorizeGreen = SKAction.colorize(with: UIColor.green, colorBlendFactor: 1, duration: 0.1)
     let colorizeRed = SKAction.colorize(with: UIColor.red, colorBlendFactor: 1, duration: 0.1)
@@ -51,8 +109,12 @@ class LevelTwoScene: SKScene {
         
         // get random element of selection
         let picked = selection.randomElement()
-        wordToBeRated.text = picked!.1
-        wordToBeRated.name = picked!.0
+        // old data model
+        // wordToBeRated.text = picked!.1
+        // wordToBeRated.name = picked!.0
+        // new data model
+        wordToBeRated.text = picked!.line
+        wordToBeRated.name = picked!.measure.rawValue
         
         // add the label to the scene
         wordToBeRated.zPosition = 3
@@ -168,7 +230,7 @@ class LevelTwoScene: SKScene {
         if jambusBin.frame.contains(wordToBeRated.position) {
             // https://www.hackingwithswift.com/example-code/games/how-to-color-an-skspritenode-using-colorblendfactor
             // https://stackoverflow.com/questions/36136665/how-to-animate-a-matrix-changing-the-sprites-one-by-one
-            if wordToBeRated.name == "jambus" {
+            if wordToBeRated.name == Measure.jambus.rawValue {
                 counter += 1
                 jambusBin.run(SKAction.sequence([colorizeGreen, colorizeLightGray]))
                 
@@ -184,7 +246,7 @@ class LevelTwoScene: SKScene {
         }
         
         if trochaeusBin.frame.contains(wordToBeRated.position) {
-            if wordToBeRated.name == "trochaeus" {
+            if wordToBeRated.name == Measure.trochaeus.rawValue {
                 counter += 1
                 trochaeusBin.run(SKAction.sequence([colorizeGreen, colorizeLightGray]))
                 
@@ -198,7 +260,7 @@ class LevelTwoScene: SKScene {
         }
         
         if daktylusBin.frame.contains(wordToBeRated.position) {
-            if wordToBeRated.name == "daktylus" {
+            if wordToBeRated.name == Measure.daktylus.rawValue {
                 counter += 1
                 daktylusBin.run(SKAction.sequence([colorizeGreen, colorizeLightGray]))
                 
@@ -212,7 +274,7 @@ class LevelTwoScene: SKScene {
         }
         
         if anapaestBin.frame.contains(wordToBeRated.position) {
-            if wordToBeRated.name == "anapaest" {
+            if wordToBeRated.name == Measure.anapaest.rawValue {
                 counter += 1
                 anapaestBin.run(SKAction.sequence([colorizeGreen, colorizeLightGray]))
                 
