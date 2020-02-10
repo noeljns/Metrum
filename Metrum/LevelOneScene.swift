@@ -35,12 +35,18 @@ class LevelOneScene: SKScene {
     private let audioNode = SKNode()
     
     private var checkButton = SKSpriteNode()
+    
+    let selection = [(["x́", "x"], ["Sonne", "So", "nne"]),
+                     (["x", "x́"], ["Gespenst", "Ge", "spenst"])]
 
     // actions
     // https://stackoverflow.com/questions/28823386/skaction-playsoundfilenamed-fails-to-load-sound
     // worked
     // audioNode.run(SKAction.playSoundFileNamed("Sonne.WAV", waitForCompletion: false))
     // audioNode.run(SKAction.playSoundFileNamed("test.WAV", waitForCompletion: false))
+    // TODO
+    // let nameOfAudioFile = selected.1[0] + ".WAV"
+    // let playSound = SKAction.playSoundFileNamed(nameOfAudioFile, waitForCompletion: true)
     let playSound = SKAction.playSoundFileNamed("Sonne.WAV", waitForCompletion: true)
     
     
@@ -82,24 +88,54 @@ class LevelOneScene: SKScene {
         accentTwoBin.zPosition = 2
         addChild(accentTwoBin)
         
+        accentuationInfoButton = SKSpriteNode(imageNamed: "info")
+        accentuationInfoButton.name = "accentuationInfoBtn"
+        accentuationInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY+20)
+        accentuationInfoButton.size = CGSize(width: 50, height: 50)
+        accentuationInfoButton.zPosition = 2
+        addChild(accentuationInfoButton)
+        
+        soundBoxButton = SKSpriteNode(imageNamed: "sound")
+        soundBoxButton.name = "soundBoxBtn"
+        soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY+20)
+        soundBoxButton.size = CGSize(width: 50, height: 50)
+        soundBoxButton.zPosition = 2
+        addChild(soundBoxButton)
+        
+        checkButton = SKSpriteNode(imageNamed: "check")
+        checkButton.name = "check"
+        checkButton.position = CGPoint(x: frame.midX+200, y: frame.midY-300)
+        checkButton.size = CGSize(width: 175, height: 50)
+        checkButton.zPosition = 2
+        addChild(checkButton)
+    }
+    
+    func setUpUnfixedParts() {
+        var selected = selection.randomElement()
+        // var selected = selection[0]
+        // selection now contains (["x́", "x"], ["Sonne", "So", "nne"])
+        // print(selected.0[1]) prints x
+        
         wordToBeRated.fontColor = SKColor.black
-        // wordToBeRated.text = "Sonne"
-        // wordToBeRated.fontSize = 50
-        wordToBeRated.attributedText = NSMutableAttributedString(string:"Sonne", attributes:[NSAttributedString.Key.font : UIFont.systemFont(ofSize: 50)])
+        wordToBeRated.attributedText = makeAttributedString(stringToBeMutated: (selected?.1[0])!, shallBecomeBold: false)
         wordToBeRated.position = CGPoint(x: frame.midX, y: frame.midY)
         wordToBeRated.zPosition = 2
+        print("test")
         addChild(wordToBeRated)
         
         wordToBeRatedBold.fontColor = SKColor.black
-        let bold = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 55)]
-        let notBold = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 50)]
-        let attributedString = NSMutableAttributedString(string:"So", attributes:bold)
-        let normalString = NSMutableAttributedString(string:"nne", attributes: notBold)
-        attributedString.append(normalString)
-        wordToBeRatedBold.attributedText = attributedString
+        // selected.1[1] contains "So, and selected.1[2] contains "nne"
+        let firstSyllableIsStressed = (selected?.0[0] == "x́")
+        let firstSyllable = makeAttributedString(stringToBeMutated: (selected?.1[1])!, shallBecomeBold: firstSyllableIsStressed)
+        let secondSyllableIsStressed = (selected?.0[1] == "x́")
+        let secondSyllable = makeAttributedString(stringToBeMutated: (selected?.1[2])!, shallBecomeBold: secondSyllableIsStressed)
+        firstSyllable.append(secondSyllable)
+        wordToBeRatedBold.attributedText = firstSyllable
         wordToBeRatedBold.position = CGPoint(x: frame.midX, y: frame.midY)
         wordToBeRatedBold.zPosition = 2
-        // addChild(wordToBeRated)
+        // addChild(wordToBeRatedBold)
+        
+        // addChild(audioNode)
         
         // https://stackoverflow.com/questions/42026839/make-touch-area-for-sklabelnode-bigger-for-small-characters#comment71238691_42026839
         stressedParent.color = .white
@@ -123,29 +159,30 @@ class LevelOneScene: SKScene {
         unstressed.zPosition = 2
         unstressedParent.addChild(unstressed)
         addChild(unstressedParent)
+    }
+    
+    func check() {
+        wordToBeRated.removeFromParent()
+        // audioNode.removeFromParent()
+        stressed.removeFromParent()
+        stressedParent.removeFromParent()
+        unstressed.removeFromParent()
+        unstressedParent.removeFromParent()
         
-        accentuationInfoButton = SKSpriteNode(imageNamed: "info")
-        accentuationInfoButton.name = "accentuationInfoBtn"
-        accentuationInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY+20)
-        accentuationInfoButton.size = CGSize(width: 50, height: 50)
-        accentuationInfoButton.zPosition = 2
-        addChild(accentuationInfoButton)
-        
-        soundBoxButton = SKSpriteNode(imageNamed: "sound")
-        soundBoxButton.name = "soundBoxBtn"
-        soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY+20)
-        soundBoxButton.size = CGSize(width: 50, height: 50)
-        soundBoxButton.zPosition = 2
-        addChild(soundBoxButton)
-        
-        addChild(audioNode)
-        
-        checkButton = SKSpriteNode(imageNamed: "check")
-        checkButton.name = "check"
-        checkButton.position = CGPoint(x: frame.midX+200, y: frame.midY-300)
-        checkButton.size = CGSize(width: 175, height: 50)
-        checkButton.zPosition = 2
-        addChild(checkButton)
+        setUpUnfixedParts()
+    }
+    
+    func makeAttributedString(stringToBeMutated: String, shallBecomeBold: Bool) -> NSMutableAttributedString {
+        if(shallBecomeBold) {
+            let bold = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 55)]
+            let attributedString = NSMutableAttributedString(string:stringToBeMutated, attributes:bold)
+            return attributedString
+        }
+        else {
+            let notBold = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 50)]
+            let normalString = NSMutableAttributedString(string:stringToBeMutated, attributes: notBold)
+            return normalString
+        }
     }
     
     func displayAccentuationInfo() {
@@ -178,9 +215,10 @@ class LevelOneScene: SKScene {
         )
     }
     
-    
+
     override func didMove(to view: SKView) {
         setUpScene()
+        setUpUnfixedParts()
         
         // has to be stored as NSuserData
         if firstEntryOfLevelOne {
@@ -212,7 +250,7 @@ class LevelOneScene: SKScene {
         
         if (touchedNode.name == "check") {
             print("check!")
-            // check()
+            check()
         }
         
         if (touchedNode.name == "exit") {
