@@ -10,29 +10,29 @@ import SpriteKit
 
 class LevelOneScene: SKScene {
     // examples of input data
-    let freu = Syllable(syllableString: "Freu", accentuation: Accentuation.stressed)
-    let de = Syllable(syllableString: "de", accentuation: Accentuation.unstressed)
-    let freude = Word(syllables: [freu, de])
-    let schoe = Syllable(syllableString: "schoe", accentuation: Accentuation.stressed)
-    let ner = Syllable(syllableString: "ner", accentuation: Accentuation.unstressed)
-    let schoener = Word(syllables: [schoe, ner])
-    let goe = Syllable(syllableString: "Goe", accentuation: Accentuation.stressed)
-    let tter = Syllable(syllableString: "tter", accentuation: Accentuation.unstressed)
-    let fun = Syllable(syllableString: "fun", accentuation: Accentuation.stressed)
-    let ken = Syllable(syllableString: "tter", accentuation: Accentuation.unstressed)
-    let goetterfunken = Word(syllables: [goe, tter, fun, ken])
-    let lineOne = Line(words: [freude, schoener, goetterfunken], measure: Measure.trochaeus)
-    var test = lineOne.words[0].syllables[0].accentuation
+    // https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
+    lazy var freu = Syllable(syllableString: "Freu", accentuation: Accentuation.stressed)
+    lazy var de = Syllable(syllableString: "de", accentuation: Accentuation.unstressed)
+    lazy var freude = Word(syllables: [freu, de])
+    lazy var schoe = Syllable(syllableString: "schoe", accentuation: Accentuation.stressed)
+    lazy var ner = Syllable(syllableString: "ner", accentuation: Accentuation.unstressed)
+    lazy var schoener = Word(syllables: [schoe, ner])
+    lazy var goe = Syllable(syllableString: "Goe", accentuation: Accentuation.stressed)
+    lazy var tter = Syllable(syllableString: "tter", accentuation: Accentuation.unstressed)
+    lazy var fun = Syllable(syllableString: "fun", accentuation: Accentuation.stressed)
+    lazy var ken = Syllable(syllableString: "tter", accentuation: Accentuation.unstressed)
+    lazy var goetterfunken = Word(syllables: [goe, tter, fun, ken])
+    lazy var lineOne = Line(words: [freude, schoener, goetterfunken], measure: Measure.trochaeus, audioFile: "lineOne.mp3")
     
-    let so = Syllable(syllableString: "So", accentuation: Accentuation.stressed)
-    let nne = Syllable(syllableString: "nne", accentuation: Accentuation.unstressed)
-    let sonne = Word(syllables: [so, nne])
-    let lineTwo = Line(words: [sonne], measure: Measure.trochaeus)
+    lazy var so = Syllable(syllableString: "So", accentuation: Accentuation.stressed)
+    lazy var nne = Syllable(syllableString: "nne", accentuation: Accentuation.unstressed)
+    lazy var sonne = Word(syllables: [so, nne])
+    lazy var lineTwo = Line(words: [sonne], measure: Measure.trochaeus, audioFile: "Sonne.mp3")
     
-    var ge = Syllable(syllableString: "Ge", accentuation: Accentuation.unstressed)
-    var spenst = Syllable(syllableString: "spenst", accentuation: Accentuation.stressed)
-    var gespenst = Word(syllables: [ge, spenst])
-    let lineThree = Line(words: [gespenst], measure: Measure.jambus)
+    lazy var ge = Syllable(syllableString: "Ge", accentuation: Accentuation.unstressed)
+    lazy var spenst = Syllable(syllableString: "spenst", accentuation: Accentuation.stressed)
+    lazy var gespenst = Word(syllables: [ge, spenst])
+    lazy var lineThree = Line(words: [gespenst], measure: Measure.jambus, audioFile: "Gespenst.mp3")
     
     
     
@@ -62,10 +62,14 @@ class LevelOneScene: SKScene {
     
     private var checkButton = SKSpriteNode()
 
-    let selection = [(["x́", "x"], ["Sonne", "So", "nne", "Sonne.mp3"]),
-                     (["x", "x́"], ["Gespenst", "Ge", "spenst", "Gespenst.mp3"])]
-    var selected = (["x́", "x"], ["Sonne", "So", "nne", "Sonne.WAV"])
+    // old data model
+//    let selection = [(["x́", "x"], ["Sonne", "So", "nne", "Sonne.mp3"]),
+//                     (["x", "x́"], ["Gespenst", "Ge", "spenst", "Gespenst.mp3"])]
+//    var selected = (["x́", "x"], ["Sonne", "So", "nne", "Sonne.WAV"])
 
+    // new data model
+    lazy var selection = [lineTwo, lineThree]
+    lazy var selected = lineTwo
     
     func setUpScene() {
         exitLabel.name = "exit"
@@ -133,17 +137,27 @@ class LevelOneScene: SKScene {
         selected = selection.randomElement()!
         
         wordToBeRated.fontColor = SKColor.black
-        wordToBeRated.attributedText = makeAttributedString(stringToBeMutated: (selected.1[0]), shallBecomeBold: false)
+        // old data model
+        // wordToBeRated.attributedText = makeAttributedString(stringToBeMutated: (selected.1[0]), shallBecomeBold: false)
+        wordToBeRated.attributedText = makeAttributedString(stringToBeMutated: (selected.words[0].word), shallBecomeBold: false)
+        
         wordToBeRated.position = CGPoint(x: frame.midX, y: frame.midY)
         wordToBeRated.zPosition = 2
         addChild(wordToBeRated)
         
         wordToBeRatedBold.fontColor = SKColor.black
+        // old data model
         // selected.1[1] contains "So, and selected.1[2] contains "nne"
-        let firstSyllableIsStressed = (selected.0[0] == "x́")
-        let firstSyllable = makeAttributedString(stringToBeMutated: (selected.1[1]), shallBecomeBold: firstSyllableIsStressed)
-        let secondSyllableIsStressed = (selected.0[1] == "x́")
-        let secondSyllable = makeAttributedString(stringToBeMutated: (selected.1[2]), shallBecomeBold: secondSyllableIsStressed)
+//        let firstSyllableIsStressed = (selected.0[0] == "x́")
+//        let firstSyllable = makeAttributedString(stringToBeMutated: (selected.1[1]), shallBecomeBold: firstSyllableIsStressed)
+//        let secondSyllableIsStressed = (selected.0[1] == "x́")
+//        let secondSyllable = makeAttributedString(stringToBeMutated: (selected.1[2]), shallBecomeBold: secondSyllableIsStressed)
+        // new data model
+        let firstSyllableIsStressed = (selected.words[0].syllables[0].accentuation == Accentuation.stressed)
+        let firstSyllable = makeAttributedString(stringToBeMutated: (selected.words[0].syllables[0].syllableString), shallBecomeBold: firstSyllableIsStressed)
+        let secondSyllableIsStressed = (selected.words[0].syllables[1].accentuation == Accentuation.stressed)
+        let secondSyllable = makeAttributedString(stringToBeMutated: (selected.words[0].syllables[1].syllableString), shallBecomeBold: secondSyllableIsStressed)
+        
         firstSyllable.append(secondSyllable)
         wordToBeRatedBold.attributedText = firstSyllable
         wordToBeRatedBold.position = CGPoint(x: frame.midX, y: frame.midY)
@@ -261,7 +275,10 @@ class LevelOneScene: SKScene {
             // worked
             // audioNode.run(SKAction.playSoundFileNamed("Sonne.WAV", waitForCompletion: false))
             // audioNode.run(SKAction.playSoundFileNamed("test.WAV", waitForCompletion: false))
-            let playSound = SKAction.playSoundFileNamed(selected.1[3], waitForCompletion: true)
+            // old data model
+//            let playSound = SKAction.playSoundFileNamed(selected.1[3], waitForCompletion: true)
+            // new data model
+            let playSound = SKAction.playSoundFileNamed(selected.audioFile, waitForCompletion: true)
             let action =  SKAction.group([playSound,
                                           SKAction.run{self.addAndRemoveNode(node: self.wordToBeRatedBold)},
                                           SKAction.run{self.hideAndUnhideNode(node: self.wordToBeRated)}])
