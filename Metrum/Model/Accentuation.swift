@@ -9,7 +9,7 @@
 import Foundation
 
 // accentuation (engl.) = Betonung (dt.)
-enum Accentuation : CaseIterable {
-    case stressed
-    case unstressed
+enum Accentuation: String {
+    case stressed = "stressed"
+    case unstressed = "unstressed"
 }

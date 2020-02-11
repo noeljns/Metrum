@@ -9,7 +9,7 @@
 // measure (engl.) = Versmaß (dt.)
 import Foundation
 
-enum Measure : String {
+enum Measure: String {
     case jambus = "jambus"
     case daktylus = "daktylus"
     case trochaeus = "trochaeus"
