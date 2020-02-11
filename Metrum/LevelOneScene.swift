@@ -57,6 +57,7 @@ class LevelOneScene: SKScene {
     private var wordToBeRated = SKLabelNode()
     private var wordToBeRatedBold = SKLabelNode()
     
+    private var stressMarks = [SKSpriteNode]()
     private let stressedParent = SKSpriteNode()
     private let stressed = SKLabelNode()
     private let unstressedParent = SKSpriteNode()
@@ -127,11 +128,46 @@ class LevelOneScene: SKScene {
         addChild(checkButton)
     }
     
+    // make three stress marks, one stressed and two unstressed
+    func generateStressMarks() {
+        // TODO BUG: when two stressMarks collide, one stressMark gets removed
+        let stressMarkParentOne = generateAStressMark(stressed: true, x: frame.midX-80, y: frame.midY-150)
+        stressMarks.append(stressMarkParentOne)
+        let stressMarkParentTwo = generateAStressMark(stressed: false, x: frame.midX, y: frame.midY-150)
+        stressMarks.append(stressMarkParentTwo)
+        let stressMarkParentThree = generateAStressMark(stressed: false, x: frame.midX+80, y: frame.midY-150)
+        stressMarks.append(stressMarkParentThree)
+    }
+    
+    // generate stress marks that are to be placed to syllables
+    func generateAStressMark(stressed: Bool, x: CGFloat, y: CGFloat) -> SKSpriteNode {
+        let stressMarkParent = SKSpriteNode()
+        // stressMarkParent.color = .white
+        stressMarkParent.color = .green
+        stressMarkParent.size = CGSize(width: 50, height: 50)
+        stressMarkParent.position = CGPoint(x: x, y: y)
+        stressMarkParent.zPosition = 1
+        
+        let stressMark = SKLabelNode()
+        stressMark.fontColor = SKColor.black
+        stressMark.fontSize = 40
+        stressMark.zPosition = 2
+        stressMark.position = CGPoint(x: -stressMarkParent.frame.width/4+10, y: -stressMarkParent.frame.height/4)
+        // TODO higher function
+        if stressed {
+            stressMark.text = "x́"
+        }
+        else {
+            stressMark.text = "x"
+        }
+        stressMarkParent.addChild(stressMark)
+        addChild(stressMarkParent)
+        return stressMarkParent
+    }
+    
     
     // make a gray bin per syllable dynamically positioned right over corresponding syllable
     func generateAccentuationBins(line: Line, wordToBeRated: SKLabelNode) {
-        var generatedBins = [SKSpriteNode]()
-        
         // unit per char: dynamically calculated by frame.width divided by amount of chars
         let amountOfCharsInLine = line.line.count
         let unit = CGFloat(wordToBeRated.frame.width / CGFloat(amountOfCharsInLine))
@@ -141,13 +177,14 @@ class LevelOneScene: SKScene {
             for syllable in word.syllables {
                 let accentBin = SKSpriteNode()
                 accentBin.color = SKColor.lightGray
-                accentBin.size = CGSize(width: 40, height: 40)
+                accentBin.size = CGSize(width: 45, height: 45)
                 
                 // half of amount of chars of syllable multiplied by unit plus counter
                 let positionOfBin = CGFloat(Double(syllable.syllableString.count)/2.0)*unit + counter
                 accentBin.position = CGPoint(x: wordToBeRated.frame.minX+positionOfBin, y: frame.midY+70)
                 accentBin.zPosition = 2
-                generatedBins.append(accentBin)
+                // append to global variable
+                accentBins.append(accentBin)
 
                 // counter shifts to the next syllable
                 counter += CGFloat(syllable.syllableString.count) * unit
@@ -156,7 +193,6 @@ class LevelOneScene: SKScene {
             // counter shifts to the next word
             counter += 25
         }
-        accentBins = generatedBins
     }
     
     func setUpUnfixedParts() {
@@ -180,33 +216,20 @@ class LevelOneScene: SKScene {
         
         // https://stackoverflow.com/questions/42026839/make-touch-area-for-sklabelnode-bigger-for-small-characters#comment71238691_42026839
         // TODO: dynamically via method
-        stressedParent.color = .white
-        stressedParent.size = CGSize(width: 50, height: 50)
-        stressedParent.position = CGPoint(x: frame.midX-40, y: frame.midY-150)
-        stressedParent.zPosition = 1
-        stressed.fontColor = SKColor.black
-        stressed.text = "x́"
-        stressed.fontSize = 40
-        stressed.zPosition = 2
-        stressedParent.addChild(stressed)
-        addChild(stressedParent)
-        
-        unstressedParent.color = .white
-        unstressedParent.size = CGSize(width: 50, height: 50)
-        unstressedParent.position = CGPoint(x: frame.midX+40, y: frame.midY-150)
-        unstressedParent.zPosition = 1
-        unstressed.fontColor = SKColor.black
-        unstressed.text = "x"
-        unstressed.fontSize = 40
-        unstressed.zPosition = 2
-        unstressedParent.addChild(unstressed)
-        addChild(unstressedParent)
+        generateStressMarks()
     }
     
     func check() {
         for accentBin in accentBins {
             accentBin.removeFromParent()
         }
+        accentBins.removeAll()
+        
+        for stressMark in stressMarks {
+            stressMark.removeFromParent()
+        }
+        stressMarks.removeAll()
+        
         wordToBeRated.removeFromParent()
         audioNode.removeFromParent()
         stressed.removeFromParent()
@@ -344,6 +367,13 @@ class LevelOneScene: SKScene {
         // get a touch
         let touch = touches.first!
         
+        // if it started in the stressMark, move it to the new location
+        for stressMark in stressMarks {
+            if stressMark.frame.contains(touch.previousLocation(in: self)) {
+                stressMark.position = touch.location(in: self)
+            }
+        }
+        
         // if it started in the accent, move it to the new location
         if stressedParent.frame.contains(touch.previousLocation(in: self)) {
             stressedParent.position = touch.location(in: self)
@@ -356,6 +386,22 @@ class LevelOneScene: SKScene {
     
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // TODO Bug: if stressMarks touches other stressMark, it gets removed
+        for (indexAccent, accentBin) in accentBins.enumerated() {
+            // https://www.hackingwithswift.com/example-code/games/how-to-color-an-skspritenode-using-colorblendfactor
+            // https://stackoverflow.com/questions/36136665/how-to-animate-a-matrix-changing-the-sprites-one-by-one
+            for (indexStressMark, stressMark) in stressMarks.enumerated() {
+                // einrasten
+                if accentBin.frame.contains(stressMark.position) {
+                    print("indexAccent: " + String(indexAccent))
+                    print("indexStressMark: " + String(indexStressMark))
+
+                    stressMark.position = accentBin.position
+                }
+            }
+        }
+        
+        
         for accentBin in accentBins {
             // https://www.hackingwithswift.com/example-code/games/how-to-color-an-skspritenode-using-colorblendfactor
             // https://stackoverflow.com/questions/36136665/how-to-animate-a-matrix-changing-the-sprites-one-by-one
