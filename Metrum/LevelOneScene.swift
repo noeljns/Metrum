@@ -53,8 +53,6 @@ class LevelOneScene: SKScene {
     private let taskLabel = SKLabelNode()
     
     private var accentBins = [SKSpriteNode]()
-    private let accentOneBin = SKSpriteNode()
-    private let accentTwoBin = SKSpriteNode()
     
     private var wordToBeRated = SKLabelNode()
     private var wordToBeRatedBold = SKLabelNode()
@@ -129,48 +127,40 @@ class LevelOneScene: SKScene {
         addChild(checkButton)
     }
     
-    // make a gray bin per syllable positioned right over corresponding syllable
+    
+    // make a gray bin per syllable dynamically positioned right over corresponding syllable
     func generateAccentuationBins(line: Line, wordToBeRated: SKLabelNode) {
         var generatedBins = [SKSpriteNode]()
-        // TODO
-        // var charCount = line.line.count
-        // var unit = Int(wordToBeRated.frame.width) / charCount
         
-        // var counter = CGFloat(23.0)
-        var counter = CGFloat(23.0)
+        // unit per char: dynamically calculated by frame.width divided by amount of chars
+        let amountOfCharsInLine = line.line.count
+        let unit = CGFloat(wordToBeRated.frame.width / CGFloat(amountOfCharsInLine))
+        var counter = CGFloat(10.0)
+        
         for word in line.words {
-            for _ in word.syllables {
+            for syllable in word.syllables {
                 let accentBin = SKSpriteNode()
                 accentBin.color = SKColor.lightGray
                 accentBin.size = CGSize(width: 40, height: 40)
-                accentBin.position = CGPoint(x: wordToBeRated.frame.minX+counter, y: frame.midY+70)
+                
+                // half of amount of chars of syllable multiplied by unit plus counter
+                let positionOfBin = CGFloat(Double(syllable.syllableString.count)/2.0)*unit + counter
+                accentBin.position = CGPoint(x: wordToBeRated.frame.minX+positionOfBin, y: frame.midY+70)
                 accentBin.zPosition = 2
                 generatedBins.append(accentBin)
-                // counter += 23.0
-                counter += 75.0
+
+                // counter shifts to the next syllable
+                counter += CGFloat(syllable.syllableString.count) * unit
                 addChild(accentBin)
             }
+            // counter shifts to the next word
+            counter += 25
         }
         accentBins = generatedBins
-        print("generatedBins: " + String(generatedBins.count))
     }
-    
     
     func setUpUnfixedParts() {
         selected = selection.randomElement()!
-        
-//        accentOneBin.color = SKColor.lightGray
-//        accentOneBin.size = CGSize(width: 40, height: 40)
-//        accentOneBin.position = CGPoint(x: frame.midX-30, y: frame.midY+70)
-//        accentOneBin.zPosition = 2
-//        addChild(accentOneBin)
-        
-//        accentTwoBin.color = SKColor.lightGray
-//        accentTwoBin.size = CGSize(width: 40, height: 40)
-//        accentTwoBin.position = CGPoint(x: frame.midX+30, y: frame.midY+70)
-//        accentTwoBin.zPosition = 2
-//        addChild(accentTwoBin)
-        
         
         wordToBeRated.fontColor = SKColor.black
         wordToBeRated.attributedText = makeAttributedString(stringToBeMutated: (selected.line), shallBecomeBold: false)
@@ -178,27 +168,7 @@ class LevelOneScene: SKScene {
         wordToBeRated.zPosition = 2
         addChild(wordToBeRated)
 
-        print("string: " + selected.line)
-        print("width: " + wordToBeRated.frame.width.description)
-        print("minX: " + wordToBeRated.frame.minX.description)
-        print("maxX: " + wordToBeRated.frame.maxX.description)
-        print("minY: " + wordToBeRated.frame.minY.description)
-        print("maxY: " + wordToBeRated.frame.maxY.description)
-        
-//        accentOneBin.color = SKColor.lightGray
-//        accentOneBin.size = CGSize(width: 40, height: 40)
-//        accentOneBin.position = CGPoint(x: wordToBeRated.frame.minX+10, y: frame.midY+70)
-//        accentOneBin.zPosition = 2
-//        addChild(accentOneBin)
-//
-//        accentTwoBin.color = SKColor.lightGray
-//        accentTwoBin.size = CGSize(width: 40, height: 40)
-//        accentTwoBin.position = CGPoint(x: wordToBeRated.frame.maxX-10, y: frame.midY+70)
-//        accentTwoBin.zPosition = 2
-//        addChild(accentTwoBin)
-        
         generateAccentuationBins(line: selected, wordToBeRated: wordToBeRated)
-        
         
         wordToBeRatedBold.fontColor = SKColor.black
         wordToBeRatedBold.attributedText = getWordToBeRatedBold(line: selected)
@@ -209,6 +179,7 @@ class LevelOneScene: SKScene {
         addChild(audioNode)
         
         // https://stackoverflow.com/questions/42026839/make-touch-area-for-sklabelnode-bigger-for-small-characters#comment71238691_42026839
+        // TODO: dynamically via method
         stressedParent.color = .white
         stressedParent.size = CGSize(width: 50, height: 50)
         stressedParent.position = CGPoint(x: frame.midX-40, y: frame.midY-150)
@@ -236,8 +207,6 @@ class LevelOneScene: SKScene {
         for accentBin in accentBins {
             accentBin.removeFromParent()
         }
-        // accentOneBin.removeFromParent()
-        // accentTwoBin.removeFromParent()
         wordToBeRated.removeFromParent()
         audioNode.removeFromParent()
         stressed.removeFromParent()
@@ -388,24 +357,21 @@ class LevelOneScene: SKScene {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for accentBin in accentBins {
+            // https://www.hackingwithswift.com/example-code/games/how-to-color-an-skspritenode-using-colorblendfactor
+            // https://stackoverflow.com/questions/36136665/how-to-animate-a-matrix-changing-the-sprites-one-by-one
+            // einrasten
             if accentBin.frame.contains(stressedParent.position) {
                 stressedParent.position = accentBin.position
                 stressedParent.position.y = accentBin.position.y - 15
             }
+            // einrasten
             if accentBin.frame.contains(unstressedParent.position) {
                 unstressedParent.position = accentBin.position
                 unstressedParent.position.y = accentBin.position.y - 15
             }
         }
         
-        if accentOneBin.frame.contains(stressedParent.position) {
-            // https://www.hackingwithswift.com/example-code/games/how-to-color-an-skspritenode-using-colorblendfactor
-            // https://stackoverflow.com/questions/36136665/how-to-animate-a-matrix-changing-the-sprites-one-by-one
-            // einrasten
-            stressedParent.position = accentOneBin.position
-            stressedParent.position.y = accentOneBin.position.y - 15
-
-            
+        
 //            if wordToBeRated.name == "jambus" {
 //                counter += 1
 //                jambusBin.run(SKAction.sequence([colorizeGreen, colorizeWhite]))
@@ -419,25 +385,6 @@ class LevelOneScene: SKScene {
 //                jambusBin.run(SKAction.sequence([colorizeRed, colorizeWhite]))
 //                wordToBeRated.position = CGPoint(x: frame.midX, y: frame.midY)
 //            }
-        }
-        
-        if accentOneBin.frame.contains(unstressedParent.position) {
-            // einrasten
-            unstressedParent.position = accentOneBin.position
-            unstressedParent.position.y = accentOneBin.position.y - 15
-        }
-        
-        if accentTwoBin.frame.contains(stressedParent.position) {
-            // einrasten
-            stressedParent.position = accentTwoBin.position
-            stressedParent.position.y = accentTwoBin.position.y - 15
-        }
-        
-        if accentTwoBin.frame.contains(unstressedParent.position) {
-            // einrasten
-            unstressedParent.position = accentTwoBin.position
-            unstressedParent.position.y = accentTwoBin.position.y - 15
-        }
     }
     
     override func update(_ currentTime: TimeInterval) {

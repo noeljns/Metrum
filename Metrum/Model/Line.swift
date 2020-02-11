@@ -18,7 +18,10 @@ struct Line {
     var line: String {
         // concatenate words to a line
         // https://medium.com/@abhimuralidharan/higher-order-functions-in-swift-filter-map-reduce-flatmap-1837646a63e8
-        return words.reduce("") { $0 + $1.word + " "}
+        var str = words.reduce("") { $0 + $1.word + " "}
+        // cut last character, so that last space is removed from line
+        str.removeLast()
+        return str
     }
     
     // " ", ",", ".", "!"
