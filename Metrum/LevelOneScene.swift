@@ -51,6 +51,8 @@ class LevelOneScene: SKScene {
     private var loadingBar = SKSpriteNode()
     
     private let taskLabel = SKLabelNode()
+    
+    private var accentBins = [SKSpriteNode]()
     private let accentOneBin = SKSpriteNode()
     private let accentTwoBin = SKSpriteNode()
     
@@ -71,11 +73,6 @@ class LevelOneScene: SKScene {
     private let audioNode = SKNode()
     
     private var checkButton = SKSpriteNode()
-
-    // old data model
-//    let selection = [(["x́", "x"], ["Sonne", "So", "nne", "Sonne.mp3"]),
-//                     (["x", "x́"], ["Gespenst", "Ge", "spenst", "Gespenst.mp3"])]
-//    var selected = (["x́", "x"], ["Sonne", "So", "nne", "Sonne.WAV"])
 
     // new data model
     lazy var selection = [lineOne, lineTwo, lineThree, lineSeven, lineEight]
@@ -110,14 +107,14 @@ class LevelOneScene: SKScene {
         
         accentuationInfoButton = SKSpriteNode(imageNamed: "info")
         accentuationInfoButton.name = "accentuationInfoBtn"
-        accentuationInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY+90)
+        accentuationInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY+120)
         accentuationInfoButton.size = CGSize(width: 50, height: 50)
         accentuationInfoButton.zPosition = 2
         addChild(accentuationInfoButton)
         
         soundBoxButton = SKSpriteNode(imageNamed: "sound")
         soundBoxButton.name = "soundBoxBtn"
-        soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY+90)
+        soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY+120)
         soundBoxButton.size = CGSize(width: 50, height: 50)
         soundBoxButton.zPosition = 2
         addChild(soundBoxButton)
@@ -132,14 +129,41 @@ class LevelOneScene: SKScene {
         addChild(checkButton)
     }
     
+    // make a gray bin per syllable positioned right over corresponding syllable
+    func generateAccentuationBins(line: Line, wordToBeRated: SKLabelNode) {
+        var generatedBins = [SKSpriteNode]()
+        // TODO
+        // var charCount = line.line.count
+        // var unit = Int(wordToBeRated.frame.width) / charCount
+        
+        // var counter = CGFloat(23.0)
+        var counter = CGFloat(23.0)
+        for word in line.words {
+            for _ in word.syllables {
+                let accentBin = SKSpriteNode()
+                accentBin.color = SKColor.lightGray
+                accentBin.size = CGSize(width: 40, height: 40)
+                accentBin.position = CGPoint(x: wordToBeRated.frame.minX+counter, y: frame.midY+70)
+                accentBin.zPosition = 2
+                generatedBins.append(accentBin)
+                // counter += 23.0
+                counter += 75.0
+                addChild(accentBin)
+            }
+        }
+        accentBins = generatedBins
+        print("generatedBins: " + String(generatedBins.count))
+    }
+    
+    
     func setUpUnfixedParts() {
         selected = selection.randomElement()!
         
-        accentOneBin.color = SKColor.lightGray
-        accentOneBin.size = CGSize(width: 40, height: 40)
-        accentOneBin.position = CGPoint(x: frame.midX-30, y: frame.midY+70)
-        accentOneBin.zPosition = 2
-        addChild(accentOneBin)
+//        accentOneBin.color = SKColor.lightGray
+//        accentOneBin.size = CGSize(width: 40, height: 40)
+//        accentOneBin.position = CGPoint(x: frame.midX-30, y: frame.midY+70)
+//        accentOneBin.zPosition = 2
+//        addChild(accentOneBin)
         
 //        accentTwoBin.color = SKColor.lightGray
 //        accentTwoBin.size = CGSize(width: 40, height: 40)
@@ -149,29 +173,34 @@ class LevelOneScene: SKScene {
         
         
         wordToBeRated.fontColor = SKColor.black
-        // old data model
-        // wordToBeRated.attributedText = makeAttributedString(stringToBeMutated: (selected.1[0]), shallBecomeBold: false)
         wordToBeRated.attributedText = makeAttributedString(stringToBeMutated: (selected.line), shallBecomeBold: false)
-        
         wordToBeRated.position = CGPoint(x: frame.midX, y: frame.midY)
         wordToBeRated.zPosition = 2
         addChild(wordToBeRated)
+
+        print("string: " + selected.line)
+        print("width: " + wordToBeRated.frame.width.description)
+        print("minX: " + wordToBeRated.frame.minX.description)
+        print("maxX: " + wordToBeRated.frame.maxX.description)
+        print("minY: " + wordToBeRated.frame.minY.description)
+        print("maxY: " + wordToBeRated.frame.maxY.description)
+        
+//        accentOneBin.color = SKColor.lightGray
+//        accentOneBin.size = CGSize(width: 40, height: 40)
+//        accentOneBin.position = CGPoint(x: wordToBeRated.frame.minX+10, y: frame.midY+70)
+//        accentOneBin.zPosition = 2
+//        addChild(accentOneBin)
+//
+//        accentTwoBin.color = SKColor.lightGray
+//        accentTwoBin.size = CGSize(width: 40, height: 40)
+//        accentTwoBin.position = CGPoint(x: wordToBeRated.frame.maxX-10, y: frame.midY+70)
+//        accentTwoBin.zPosition = 2
+//        addChild(accentTwoBin)
+        
+        generateAccentuationBins(line: selected, wordToBeRated: wordToBeRated)
+        
         
         wordToBeRatedBold.fontColor = SKColor.black
-        // old data model
-        // selected.1[1] contains "So, and selected.1[2] contains "nne"
-//        let firstSyllableIsStressed = (selected.0[0] == "x́")
-//        let firstSyllable = makeAttributedString(stringToBeMutated: (selected.1[1]), shallBecomeBold: firstSyllableIsStressed)
-//        let secondSyllableIsStressed = (selected.0[1] == "x́")
-//        let secondSyllable = makeAttributedString(stringToBeMutated: (selected.1[2]), shallBecomeBold: secondSyllableIsStressed)
-        // new data model
-//        let firstSyllableIsStressed = (selected.words[0].syllables[0].accentuation == Accentuation.stressed)
-//        let firstSyllable = makeAttributedString(stringToBeMutated: (selected.words[0].syllables[0].syllableString), shallBecomeBold: firstSyllableIsStressed)
-//        let secondSyllableIsStressed = (selected.words[0].syllables[1].accentuation == Accentuation.stressed)
-//        let secondSyllable = makeAttributedString(stringToBeMutated: (selected.words[0].syllables[1].syllableString), shallBecomeBold: secondSyllableIsStressed)
-//        firstSyllable.append(secondSyllable)
-        
-        // wordToBeRatedBold.attributedText = firstSyllable
         wordToBeRatedBold.attributedText = getWordToBeRatedBold(line: selected)
         wordToBeRatedBold.position = CGPoint(x: frame.midX, y: frame.midY)
         wordToBeRatedBold.zPosition = 2
@@ -204,7 +233,10 @@ class LevelOneScene: SKScene {
     }
     
     func check() {
-        accentOneBin.removeFromParent()
+        for accentBin in accentBins {
+            accentBin.removeFromParent()
+        }
+        // accentOneBin.removeFromParent()
         // accentTwoBin.removeFromParent()
         wordToBeRated.removeFromParent()
         audioNode.removeFromParent()
@@ -219,7 +251,7 @@ class LevelOneScene: SKScene {
     func getWordToBeRatedBold(line: Line) -> NSMutableAttributedString? {
         let wordToBeRatedBold = NSMutableAttributedString()
         
-        // TODO Higher Function
+        // TODO Higher Function instead of two for loops
         for word in line.words {
             for syllable in word.syllables {
                 if syllable.accentuation.rawValue == "unstressed" {
