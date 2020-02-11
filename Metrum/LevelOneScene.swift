@@ -387,6 +387,17 @@ class LevelOneScene: SKScene {
     
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for accentBin in accentBins {
+            if accentBin.frame.contains(stressedParent.position) {
+                stressedParent.position = accentBin.position
+                stressedParent.position.y = accentBin.position.y - 15
+            }
+            if accentBin.frame.contains(unstressedParent.position) {
+                unstressedParent.position = accentBin.position
+                unstressedParent.position.y = accentBin.position.y - 15
+            }
+        }
+        
         if accentOneBin.frame.contains(stressedParent.position) {
             // https://www.hackingwithswift.com/example-code/games/how-to-color-an-skspritenode-using-colorblendfactor
             // https://stackoverflow.com/questions/36136665/how-to-animate-a-matrix-changing-the-sprites-one-by-one
