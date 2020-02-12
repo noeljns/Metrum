@@ -368,9 +368,15 @@ class LevelOneScene: SKScene {
         
         // TODO higher function
         // dragging of stressMarks to new location by touching
-        for stressMark in stressMarks {
+        for (smIndex, stressMark) in stressMarks.enumerated() {
             if stressMark.frame.contains(touch.previousLocation(in: self)) {
                 stressMark.position = touch.location(in: self)
+            }
+            // debugged so that if stressMarks collide, they do not stick together anymore
+            for (sIndex, s) in stressMarks.enumerated() {
+                if (stressMark.position.equalTo(s.position)) && (smIndex != sIndex) {
+                    stressMark.position = CGPoint(x: stressMark.position.x-80, y: stressMark.position.y-40)
+                }
             }
         }
     }
@@ -386,21 +392,25 @@ class LevelOneScene: SKScene {
                 if accentBin.frame.contains(stressMark.position) {
                     print("indexAccent: " + String(indexAccent))
                     print("indexStressMark: " + String(indexStressMark))
+                    print("accentBin position: " + accentBin.position.x.description + " " +
+                        accentBin.position.y.description)
+                    print("stressMark position: " + stressMark.position.x.description + " " +
+                        stressMark.position.y.description)
                     stressMark.position = accentBin.position
                 }
             }
         }
-    
+        
+        // BUG TODO
         // TODO higher function
-        // debugged so that if stressMarks collide, they do not stick together anymore
-        for (smIndex, stressMark) in stressMarks.enumerated() {
-            for (sIndex, s) in stressMarks.enumerated() {
-                if (stressMark.frame.contains(s.position)) && (smIndex != sIndex) {
-                    print("test")
-                    stressMark.position = CGPoint(x: stressMark.position.x-30, y: stressMark.position.y-30)
-                }
+        // if stressMark.position not in frame anymore, position it back to the middle
+        for stressMark in stressMarks {
+            if !(frame.contains(stressMark.position)) {
+                print("lost a stressMark to the infinite nonentity")
+                stressMark.position = CGPoint(x: frame.midX, y: frame.midY-150)
             }
         }
+        
     }
     
     override func update(_ currentTime: TimeInterval) {
