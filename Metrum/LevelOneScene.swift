@@ -74,8 +74,10 @@ class LevelOneScene: SKScene {
     private var checkButton = SKSpriteNode()
 
     // new data model
-    lazy var selection = [lineOne, lineTwo, lineThree, lineSeven, lineEight]
+    // lazy var selection = [lineOne, lineTwo, lineThree, lineSeven, lineEight]
     // lazy var selection = [lineOne]
+    lazy var selection = [lineTwo, lineThree, lineSeven, lineEight]
+
     lazy var selected = lineOne
     
     func setUpScene() {
@@ -156,9 +158,11 @@ class LevelOneScene: SKScene {
         // TODO higher function
         if stressed {
             stressMark.text = "x́"
+            stressMarkParent.name = "stressed"
         }
         else {
             stressMark.text = "x"
+            stressMarkParent.name = "unstressed"
         }
         stressMarkParent.addChild(stressMark)
         addChild(stressMarkParent)
@@ -331,7 +335,20 @@ class LevelOneScene: SKScene {
         return false
     }
     
-     
+    // function to check whether the accentBins are filled with the correct stressMarks
+    func isSolutionCorrect() {
+        var solution = [String]()
+        
+        // get name of stressMarks sorted from left accentBin to the right
+        for accentBin in accentBins {
+            for stressMark in stressMarks {
+                if accentBin.position.equalTo(stressMark.position) {
+                    solution.append(stressMark.name!)
+                }
+            }
+        }
+        print("solution: " + solution.description)
+    }
     
     
 
@@ -376,6 +393,7 @@ class LevelOneScene: SKScene {
             
             if areAccentBinsFilledWithAStressmark() {
                 print("awesome")
+                isSolutionCorrect()
                 // if correct
                 // show correct overlay
                 // loadingBar progress
