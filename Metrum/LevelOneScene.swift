@@ -144,7 +144,7 @@ class LevelOneScene: SKScene {
         let stressMarkParent = SKSpriteNode()
         // stressMarkParent.color = .white
         stressMarkParent.color = .green
-        stressMarkParent.size = CGSize(width: 50, height: 50)
+        stressMarkParent.size = CGSize(width: 40, height: 50)
         stressMarkParent.position = CGPoint(x: x, y: y)
         stressMarkParent.zPosition = 1
         
@@ -177,7 +177,7 @@ class LevelOneScene: SKScene {
             for syllable in word.syllables {
                 let accentBin = SKSpriteNode()
                 accentBin.color = SKColor.lightGray
-                accentBin.size = CGSize(width: 45, height: 45)
+                accentBin.size = CGSize(width: 40, height: 45)
                 
                 // half of amount of chars of syllable multiplied by unit plus counter
                 let positionOfBin = CGFloat(Double(syllable.syllableString.count)/2.0)*unit + counter
@@ -277,6 +277,8 @@ class LevelOneScene: SKScene {
     
     func displayAccentuationInfo() {
         backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
+        // test
+        // backgroundBlocker.alpha = 0.0
         backgroundBlocker.zPosition = 4999
         addChild(backgroundBlocker)
 
@@ -333,12 +335,9 @@ class LevelOneScene: SKScene {
         if(touchedNode.name == "soundBoxBtn") {
             // https://www.reddit.com/r/swift/comments/2wpspa/running_parallel_skactions_with_different_nodes/
             // https://stackoverflow.com/questions/28823386/skaction-playsoundfilenamed-fails-to-load-sound
-            // worked
+            // worked as well
             // audioNode.run(SKAction.playSoundFileNamed("Sonne.WAV", waitForCompletion: false))
             // audioNode.run(SKAction.playSoundFileNamed("test.WAV", waitForCompletion: false))
-            // old data model
-//            let playSound = SKAction.playSoundFileNamed(selected.1[3], waitForCompletion: true)
-            // new data model
             let playSound = SKAction.playSoundFileNamed(selected.audioFile, waitForCompletion: true)
             let action =  SKAction.group([playSound,
                                           SKAction.run{self.addAndRemoveNode(node: self.wordToBeRatedBold)},
@@ -367,76 +366,46 @@ class LevelOneScene: SKScene {
         // get a touch
         let touch = touches.first!
         
-        // if it started in the stressMark, move it to the new location
+        // TODO higher function
+        // dragging of stressMarks to new location by touching
         for stressMark in stressMarks {
             if stressMark.frame.contains(touch.previousLocation(in: self)) {
                 stressMark.position = touch.location(in: self)
             }
         }
-        
-        // if it started in the accent, move it to the new location
-        if stressedParent.frame.contains(touch.previousLocation(in: self)) {
-            stressedParent.position = touch.location(in: self)
-        }
-        else if unstressedParent.frame.contains(touch.previousLocation(in: self)) {
-            unstressedParent.position = touch.location(in: self)
-        }
-        
     }
     
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // TODO Bug: if stressMarks touches other stressMark, it gets removed
+        // TODO higher function
+        // stressMarks clinch (einrasten) into accentBin
         for (indexAccent, accentBin) in accentBins.enumerated() {
             // https://www.hackingwithswift.com/example-code/games/how-to-color-an-skspritenode-using-colorblendfactor
             // https://stackoverflow.com/questions/36136665/how-to-animate-a-matrix-changing-the-sprites-one-by-one
             for (indexStressMark, stressMark) in stressMarks.enumerated() {
-                // einrasten
                 if accentBin.frame.contains(stressMark.position) {
                     print("indexAccent: " + String(indexAccent))
                     print("indexStressMark: " + String(indexStressMark))
-
                     stressMark.position = accentBin.position
                 }
             }
         }
-        
-        
-        for accentBin in accentBins {
-            // https://www.hackingwithswift.com/example-code/games/how-to-color-an-skspritenode-using-colorblendfactor
-            // https://stackoverflow.com/questions/36136665/how-to-animate-a-matrix-changing-the-sprites-one-by-one
-            // einrasten
-            if accentBin.frame.contains(stressedParent.position) {
-                stressedParent.position = accentBin.position
-                stressedParent.position.y = accentBin.position.y - 15
-            }
-            // einrasten
-            if accentBin.frame.contains(unstressedParent.position) {
-                unstressedParent.position = accentBin.position
-                unstressedParent.position.y = accentBin.position.y - 15
+    
+        // TODO higher function
+        // debugged so that if stressMarks collide, they do not stick together anymore
+        for (smIndex, stressMark) in stressMarks.enumerated() {
+            for (sIndex, s) in stressMarks.enumerated() {
+                if (stressMark.frame.contains(s.position)) && (smIndex != sIndex) {
+                    print("test")
+                    stressMark.position = CGPoint(x: stressMark.position.x-30, y: stressMark.position.y-30)
+                }
             }
         }
-        
-        
-//            if wordToBeRated.name == "jambus" {
-//                counter += 1
-//                jambusBin.run(SKAction.sequence([colorizeGreen, colorizeWhite]))
-//
-//                // remove it and create a new label
-//                wordToBeRated.removeFromParent()
-//                setupDragLabel()
-//            }
-//                // else if wordToBeRated.name == "trochaeus" or "daktylus" or "anapaest"
-//            else {
-//                jambusBin.run(SKAction.sequence([colorizeRed, colorizeWhite]))
-//                wordToBeRated.position = CGPoint(x: frame.midX, y: frame.midY)
-//            }
     }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
-    
 }
 
 

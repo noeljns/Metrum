@@ -23,6 +23,8 @@ class AccentuationInfo: SKSpriteNode {
         
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
+        // test
+        // background.alpha = 0.0
         background.drawBorder(color: .lightGray, width: 5)
         addChild(background)
         
