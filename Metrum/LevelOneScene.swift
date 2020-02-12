@@ -336,18 +336,36 @@ class LevelOneScene: SKScene {
     }
     
     // function to check whether the accentBins are filled with the correct stressMarks
-    func isSolutionCorrect() {
-        var solution = [String]()
-        
+    // returns correctSolution and true if correct and false otherwise
+    func isSolutionCorrect() -> (Bool, [String]) {
+        var givenSolution = [String]()
+        var realSolution = [String]()
+
+        // TODO higher function
         // get name of stressMarks sorted from left accentBin to the right
         for accentBin in accentBins {
             for stressMark in stressMarks {
                 if accentBin.position.equalTo(stressMark.position) {
-                    solution.append(stressMark.name!)
+                    givenSolution.append(stressMark.name!)
                 }
             }
         }
-        print("solution: " + solution.description)
+        
+        // TODO modularize
+        // get correct accentuation of line
+        for word in selected.words {
+            for syllable in word.syllables {
+                realSolution.append(syllable.accentuation.rawValue)
+            }
+        }
+        
+        if givenSolution.elementsEqual(realSolution) {
+            return (true, realSolution)
+        }
+        else {
+            return (false, realSolution)
+        }
+
     }
     
     
@@ -390,21 +408,25 @@ class LevelOneScene: SKScene {
         }
         
         if (touchedNode.name == "check") {
-            
             if areAccentBinsFilledWithAStressmark() {
-                print("awesome")
-                isSolutionCorrect()
-                // if correct
-                // show correct overlay
-                // loadingBar progress
-                // if level fullfilled
-                // save it to nsUserData
-                // click on Weiter: new selected word
-                // else
-                // show incorrect overlay
-                // click on Weiter: new selected word
-                
-                cleanAndSetupSceneForNewWord()
+                let (isSolutionCorrect, realSolution) = self.isSolutionCorrect()
+
+                if (isSolutionCorrect) {
+                    print("correct!")
+                    // show correct overlay
+                    // loadingBar progress
+                    // if level fullfilled
+                    // save it to nsUserData
+                    // click on Weiter: new selected word
+                    cleanAndSetupSceneForNewWord()
+                }
+                else {
+                    print("not correct!")
+                    print("correct solution: " + realSolution.description)
+                    // show incorrect overlay
+                    // click on Weiter: new selected word
+                    cleanAndSetupSceneForNewWord()
+                }
             }
             else {
                 print("do fill in every accentBin with a stressMark")
