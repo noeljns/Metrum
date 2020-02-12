@@ -219,27 +219,7 @@ class LevelOneScene: SKScene {
         generateStressMarks()
     }
     
-    func check() {
-        for accentBin in accentBins {
-            accentBin.removeFromParent()
-        }
-        accentBins.removeAll()
-        
-        for stressMark in stressMarks {
-            stressMark.removeFromParent()
-        }
-        stressMarks.removeAll()
-        
-        wordToBeRated.removeFromParent()
-        audioNode.removeFromParent()
-        stressed.removeFromParent()
-        stressedParent.removeFromParent()
-        unstressed.removeFromParent()
-        unstressedParent.removeFromParent()
-        
-        setUpUnfixedParts()
-    }
-    
+
     func getWordToBeRatedBold(line: Line) -> NSMutableAttributedString? {
         let wordToBeRatedBold = NSMutableAttributedString()
         
@@ -289,6 +269,7 @@ class LevelOneScene: SKScene {
         addChild(accentuationInfo)
     }
     
+    // function for an action to add and remove a node from the scene
     func addAndRemoveNode(node: SKLabelNode) {
         addChild(node)
         node.run(SKAction.sequence([
@@ -298,6 +279,7 @@ class LevelOneScene: SKScene {
         )
     }
     
+    // function for an action to hide and unhide a node from the scene
     func hideAndUnhideNode(node: SKLabelNode) {
         node.run(SKAction.sequence([
             SKAction.hide(),
@@ -306,6 +288,51 @@ class LevelOneScene: SKScene {
             ])
         )
     }
+    
+    // remove unnecessary nodes and set up scene for new word to be rated
+    func cleanAndSetupSceneForNewWord() {
+        // remove all accentBins and stressMarks from scene
+        accentBins.forEach { $0.removeFromParent() }
+        stressMarks.forEach { $0.removeFromParent() }
+
+        // empty accentBins array and stressMarks arraay since new word is selected
+        accentBins.removeAll()
+        stressMarks.removeAll()
+        
+        wordToBeRated.removeFromParent()
+        audioNode.removeFromParent()
+        stressed.removeFromParent()
+        stressedParent.removeFromParent()
+        unstressed.removeFromParent()
+        unstressedParent.removeFromParent()
+        
+        setUpUnfixedParts()
+    }
+    
+    // function to check if all accentBins are filled with a stressMark
+    // TODO higher function
+    func areAccentBinsFilledWithAStressmark() -> Bool {
+        // return false as soon as one accentBin is empty
+        for accentBin in accentBins {
+            if !(isAccentBinFilledWithAStressMark(accentBin: accentBin)) {
+                return false
+            }
+        }
+        return true
+    }
+    
+    // TODO higher function
+    func isAccentBinFilledWithAStressMark(accentBin: SKSpriteNode) -> Bool {
+        for stressMark in stressMarks {
+            if accentBin.position.equalTo(stressMark.position) {
+                return true
+            }
+        }
+        return false
+    }
+    
+     
+    
     
 
     override func didMove(to view: SKView) {
@@ -346,13 +373,27 @@ class LevelOneScene: SKScene {
         }
         
         if (touchedNode.name == "check") {
-            print("check!")
             
-            // if accent in correct order, then show green overlay
-            // if "weiter" clicked, then
-            // loadingBar with new image
-            // new selected word
-            check()
+            if areAccentBinsFilledWithAStressmark() {
+                print("awesome")
+                // if correct
+                // show correct overlay
+                // loadingBar progress
+                // if level fullfilled
+                // save it to nsUserData
+                // click on Weiter: new selected word
+                // else
+                // show incorrect overlay
+                // click on Weiter: new selected word
+                
+                cleanAndSetupSceneForNewWord()
+            }
+            else {
+                print("do fill in every accentBin with a stressMark")
+                // show message overlay: do fill in every accentBin with a stressMark
+                // click on ok, close message overlay window
+            }
+            
         }
         
         if (touchedNode.name == "exit") {
@@ -385,23 +426,16 @@ class LevelOneScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // TODO higher function
         // stressMarks clinch (einrasten) into accentBin
-        for (indexAccent, accentBin) in accentBins.enumerated() {
+        for accentBin in accentBins {
             // https://www.hackingwithswift.com/example-code/games/how-to-color-an-skspritenode-using-colorblendfactor
             // https://stackoverflow.com/questions/36136665/how-to-animate-a-matrix-changing-the-sprites-one-by-one
-            for (indexStressMark, stressMark) in stressMarks.enumerated() {
+            for stressMark in stressMarks {
                 if accentBin.frame.contains(stressMark.position) {
-                    print("indexAccent: " + String(indexAccent))
-                    print("indexStressMark: " + String(indexStressMark))
-                    print("accentBin position: " + accentBin.position.x.description + " " +
-                        accentBin.position.y.description)
-                    print("stressMark position: " + stressMark.position.x.description + " " +
-                        stressMark.position.y.description)
                     stressMark.position = accentBin.position
                 }
             }
         }
         
-        // BUG TODO
         // TODO higher function
         // if stressMark.position not in frame anymore, position it back to the middle
         for stressMark in stressMarks {
