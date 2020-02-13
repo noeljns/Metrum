@@ -9,7 +9,7 @@
 import SpriteKit
 
 protocol AccentuationInfoDelegate: class {
-    func close()
+    func closeAccentuationInfo()
 }
 
 // layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
@@ -92,7 +92,7 @@ class AccentuationInfo: SKSpriteNode {
     }
     
     func close() {
-        self.delegate?.close()
+        self.delegate?.closeAccentuationInfo()
     }
 }
 

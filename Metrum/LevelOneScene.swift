@@ -65,8 +65,11 @@ class LevelOneScene: SKScene {
     
     private var accentuationInfoButton = SKSpriteNode()
     private var accentuationInfo: AccentuationInfo!
-    private var backgroundBlocker: SKSpriteNode!
+    private var backgroundBlockerAccentuationInfo: SKSpriteNode!
     private var firstEntryOfLevelOne = true
+    
+    private var solutionIsCorrect: SolutionIsCorrect!
+    private var backgroundBlockerSolutionIsCorrect: SKSpriteNode!
     
     private var soundBoxButton = SKSpriteNode()
     private let audioNode = SKNode()
@@ -260,17 +263,31 @@ class LevelOneScene: SKScene {
     }
     
     func displayAccentuationInfo() {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
+        backgroundBlockerAccentuationInfo = SKSpriteNode(color: SKColor.white, size: self.size)
         // test
         // backgroundBlocker.alpha = 0.0
-        backgroundBlocker.zPosition = 4999
-        addChild(backgroundBlocker)
+        backgroundBlockerAccentuationInfo.zPosition = 4999
+        addChild(backgroundBlockerAccentuationInfo)
 
         accentuationInfo = AccentuationInfo(size: CGSize(width: 650, height: 800))
 
         accentuationInfo.delegate = self
         accentuationInfo.zPosition = 5000
         addChild(accentuationInfo)
+    }
+    
+    func displaySolutionIsCorrect() {
+        backgroundBlockerSolutionIsCorrect = SKSpriteNode(color: SKColor.white, size: self.size)
+        // test
+        // backgroundBlocker.alpha = 0.0
+        backgroundBlockerSolutionIsCorrect.zPosition = 4999
+        addChild(backgroundBlockerSolutionIsCorrect)
+        
+        solutionIsCorrect = SolutionIsCorrect(size: CGSize(width: 650, height: 800))
+        
+        solutionIsCorrect.delegate = self
+        solutionIsCorrect.zPosition = 5000
+        addChild(solutionIsCorrect)
     }
     
     // function for an action to add and remove a node from the scene
@@ -413,6 +430,7 @@ class LevelOneScene: SKScene {
 
                 if (isSolutionCorrect) {
                     print("correct!")
+                    displaySolutionIsCorrect()
                     // show correct overlay
                     // loadingBar progress
                     // if level fullfilled
@@ -494,12 +512,18 @@ class LevelOneScene: SKScene {
 
 
 
-extension LevelOneScene: AccentuationInfoDelegate {
-    func close() {
+extension LevelOneScene: AccentuationInfoDelegate, SolutionIsCorrectDelegate {
+    func closeAccentuationInfo() {
         //at this point you could update any GUI nesc. based on what happened in your dialog
-        backgroundBlocker.removeFromParent()
+        backgroundBlockerAccentuationInfo.removeFromParent()
         accentuationInfo?.removeFromParent()
     }
+    
+    func closeSolutionIsCorrect() {
+        backgroundBlockerSolutionIsCorrect.removeFromParent()
+        solutionIsCorrect?.removeFromParent()
+    }
+    
 }
 
 
