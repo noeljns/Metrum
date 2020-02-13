@@ -279,12 +279,11 @@ class LevelOneScene: SKScene {
     func displaySolutionIsCorrect() {
         backgroundBlockerSolutionIsCorrect = SKSpriteNode(color: SKColor.white, size: self.size)
         // test
-        // backgroundBlocker.alpha = 0.0
+        backgroundBlockerSolutionIsCorrect.alpha = 0.0
         backgroundBlockerSolutionIsCorrect.zPosition = 4999
         addChild(backgroundBlockerSolutionIsCorrect)
         
-        solutionIsCorrect = SolutionIsCorrect(size: CGSize(width: 650, height: 800))
-        
+        solutionIsCorrect = SolutionIsCorrect(size: CGSize(width: 747, height: 300))
         solutionIsCorrect.delegate = self
         solutionIsCorrect.zPosition = 5000
         addChild(solutionIsCorrect)
@@ -436,7 +435,7 @@ class LevelOneScene: SKScene {
                     // if level fullfilled
                     // save it to nsUserData
                     // click on Weiter: new selected word
-                    cleanAndSetupSceneForNewWord()
+                    // cleanAndSetupSceneForNewWord()
                 }
                 else {
                     print("not correct!")
@@ -522,6 +521,8 @@ extension LevelOneScene: AccentuationInfoDelegate, SolutionIsCorrectDelegate {
     func closeSolutionIsCorrect() {
         backgroundBlockerSolutionIsCorrect.removeFromParent()
         solutionIsCorrect?.removeFromParent()
+        
+        cleanAndSetupSceneForNewWord()
     }
     
 }

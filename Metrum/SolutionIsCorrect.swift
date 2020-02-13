@@ -21,18 +21,12 @@ class SolutionIsCorrect: SKSpriteNode {
         super.init(texture: nil, color: .clear, size: size)
         name = "solutionIsCorrect"
         
-        // brauchen oben und unten background, oben transparent, unten nicht transparent
-        // oben (size.height / 4) * 3, unten size.height / 4
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
-        // background.alpha = 0.0
-        background.drawBorder(color: .lightGray, width: 5)
+        background.position = CGPoint(x: frame.midX, y: frame.midY-175)
+        background.drawBorder(color: .green, width: 5)
         addChild(background)
-        
-        // background below
-        // accentuationInfo = AccentuationInfo(size: CGSize(width: 650, height: 800))
-
-        
+  
         let textLabel = SKLabelNode(text: "Super! Die Lösung ist korrekt.")
         textLabel.fontColor = SKColor.black
         textLabel.fontSize = 50
@@ -42,7 +36,7 @@ class SolutionIsCorrect: SKSpriteNode {
                 
         closeButton = SKSpriteNode(texture: SKTexture(imageNamed: "bereit"))
         closeButton.name = "close"
-        closeButton.position = CGPoint(x: frame.midX+200, y: frame.midY-300)
+        closeButton.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
         closeButton.size = CGSize(width: 175, height: 50)
         closeButton.zPosition = 5
         // not working
