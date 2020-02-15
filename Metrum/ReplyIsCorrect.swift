@@ -8,14 +8,14 @@
 
 import SpriteKit
 
-protocol SolutionIsCorrectDelegate: class {
-    func closeSolutionIsCorrect()
+protocol ReplyIsCorrectDelegate: class {
+    func closeReplyIsCorrect()
 }
 
 // layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
-class SolutionIsCorrect: SKSpriteNode {
+class ReplyIsCorrect: SKSpriteNode {
     private var closeButton: SKSpriteNode!
-    weak var delegate: SolutionIsCorrectDelegate?
+    weak var delegate: ReplyIsCorrectDelegate?
     
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
@@ -72,6 +72,6 @@ class SolutionIsCorrect: SKSpriteNode {
     }
     
     func close() {
-        self.delegate?.closeSolutionIsCorrect()
+        self.delegate?.closeReplyIsCorrect()
     }
 }

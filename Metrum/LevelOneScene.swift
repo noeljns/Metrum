@@ -68,8 +68,11 @@ class LevelOneScene: SKScene {
     private var backgroundBlockerAccentuationInfo: SKSpriteNode!
     private var firstEntryOfLevelOne = true
     
-    private var solutionIsCorrect: SolutionIsCorrect!
-    private var backgroundBlockerSolutionIsCorrect: SKSpriteNode!
+    private var replyIsCorrect: ReplyIsCorrect!
+    private var backgroundBlockerReplyIsCorrect: SKSpriteNode!
+    
+    private var replyIsFalse: ReplyIsFalse!
+    private var backgroundBlockerReplyIsFalse: SKSpriteNode!
     
     private var soundBoxButton = SKSpriteNode()
     private let audioNode = SKNode()
@@ -152,8 +155,8 @@ class LevelOneScene: SKScene {
     // generate stress marks that are to be placed to syllables
     func generateAStressMark(stressed: Bool, x: CGFloat, y: CGFloat) -> SKSpriteNode {
         let stressMarkParent = SKSpriteNode()
-        // stressMarkParent.color = .white
-        stressMarkParent.color = .green
+        stressMarkParent.color = .white
+        // stressMarkParent.color = .green
         stressMarkParent.size = CGSize(width: 40, height: 50)
         stressMarkParent.position = CGPoint(x: x, y: y)
         stressMarkParent.zPosition = 1
@@ -217,7 +220,7 @@ class LevelOneScene: SKScene {
         addChild(wordToBeRated)
 
         generateAccentuationBins(line: selected, wordToBeRated: wordToBeRated)
-        
+
         wordToBeRatedBold.fontColor = SKColor.black
         wordToBeRatedBold.attributedText = getWordToBeRatedBold(line: selected)
         wordToBeRatedBold.position = CGPoint(x: frame.midX, y: frame.midY)
@@ -281,18 +284,30 @@ class LevelOneScene: SKScene {
         addChild(accentuationInfo)
     }
     
-    func displaySolutionIsCorrect() {
+    func displayReplyIsCorrect() {
         manageLoadingBar()
         
-        backgroundBlockerSolutionIsCorrect = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlockerSolutionIsCorrect.alpha = 0.0
-        backgroundBlockerSolutionIsCorrect.zPosition = 4999
-        addChild(backgroundBlockerSolutionIsCorrect)
+        backgroundBlockerReplyIsCorrect = SKSpriteNode(color: SKColor.white, size: self.size)
+        backgroundBlockerReplyIsCorrect.alpha = 0.0
+        backgroundBlockerReplyIsCorrect.zPosition = 4999
+        addChild(backgroundBlockerReplyIsCorrect)
         
-        solutionIsCorrect = SolutionIsCorrect(size: CGSize(width: 747, height: 300))
-        solutionIsCorrect.delegate = self
-        solutionIsCorrect.zPosition = 5000
-        addChild(solutionIsCorrect)
+        replyIsCorrect = ReplyIsCorrect(size: CGSize(width: 747, height: 300))
+        replyIsCorrect.delegate = self
+        replyIsCorrect.zPosition = 5000
+        addChild(replyIsCorrect)
+    }
+    
+    func displayReplyIsFalse() {
+        backgroundBlockerReplyIsFalse = SKSpriteNode(color: SKColor.white, size: self.size)
+        backgroundBlockerReplyIsFalse.alpha = 0.0
+        backgroundBlockerReplyIsFalse.zPosition = 4999
+        addChild(backgroundBlockerReplyIsFalse)
+        
+        replyIsFalse = ReplyIsFalse(size: CGSize(width: 747, height: 300))
+        replyIsFalse.delegate = self
+        replyIsFalse.zPosition = 5000
+        addChild(replyIsFalse)
     }
     
     // function for an action to add and remove a node from the scene
@@ -458,18 +473,15 @@ class LevelOneScene: SKScene {
                 let (isSolutionCorrect, realSolution) = self.isSolutionCorrect()
 
                 if (isSolutionCorrect) {
-                    print("correct!")
-                    displaySolutionIsCorrect()
+                    displayReplyIsCorrect()
                     
+                    // TODO
                     // was wenn levelIsPassed = true?
               
                 }
                 else {
-                    print("not correct!")
                     print("correct solution: " + realSolution.description)
-                    // show incorrect overlay
-                    // click on Weiter: new selected word
-                    cleanAndSetupSceneForNewWord()
+                    displayReplyIsFalse()
                 }
             }
             else {
@@ -538,20 +550,25 @@ class LevelOneScene: SKScene {
 
 
 
-extension LevelOneScene: AccentuationInfoDelegate, SolutionIsCorrectDelegate {
+extension LevelOneScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, ReplyIsFalseDelegate {
+    
     func closeAccentuationInfo() {
         //at this point you could update any GUI nesc. based on what happened in your dialog
         backgroundBlockerAccentuationInfo.removeFromParent()
         accentuationInfo?.removeFromParent()
     }
     
-    func closeSolutionIsCorrect() {
-        backgroundBlockerSolutionIsCorrect.removeFromParent()
-        solutionIsCorrect?.removeFromParent()
-        
+    func closeReplyIsCorrect() {
+        backgroundBlockerReplyIsCorrect.removeFromParent()
+        replyIsCorrect?.removeFromParent()
         cleanAndSetupSceneForNewWord()
     }
     
+    func closeReplyIsFalse() {
+        backgroundBlockerReplyIsFalse.removeFromParent()
+        replyIsFalse?.removeFromParent()
+        cleanAndSetupSceneForNewWord()
+    }
 }
 
 
