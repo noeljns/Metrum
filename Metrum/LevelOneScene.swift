@@ -83,6 +83,11 @@ class LevelOneScene: SKScene {
 
     lazy var selected = lineOne
     
+    private var correctReplies = 0
+    // TODO nsUserDataVariable
+    private var levelIsPassed = false
+    private var amountOfCorrectRepliesToPassLevel = 4
+    
     func setUpScene() {
         exitLabel.name = "exit"
         exitLabel.fontColor = SKColor.black
@@ -92,7 +97,7 @@ class LevelOneScene: SKScene {
         exitLabel.zPosition = 2
         addChild(exitLabel)
         
-        loadingBar = SKSpriteNode(imageNamed: "loadingBarOne")
+        loadingBar = SKSpriteNode(imageNamed: "loadingBar0")
         loadingBar.position = CGPoint(x: frame.midX , y: frame.midY+450)
         loadingBar.size = CGSize(width: 600, height: 35)
         loadingBar.zPosition = 3
@@ -277,8 +282,9 @@ class LevelOneScene: SKScene {
     }
     
     func displaySolutionIsCorrect() {
+        manageLoadingBar()
+        
         backgroundBlockerSolutionIsCorrect = SKSpriteNode(color: SKColor.white, size: self.size)
-        // test
         backgroundBlockerSolutionIsCorrect.alpha = 0.0
         backgroundBlockerSolutionIsCorrect.zPosition = 4999
         addChild(backgroundBlockerSolutionIsCorrect)
@@ -309,6 +315,30 @@ class LevelOneScene: SKScene {
         )
     }
     
+
+    // function to load new texture for loading bar
+    func increaseLoadingBar() {
+        let imageName = "loadingBar" + String(correctReplies)
+        print(imageName)
+        loadingBar.texture = SKTexture(imageNamed: imageName)
+    }
+    
+    // function to update and manage status of level passing
+    func manageLoadingBar() {
+        correctReplies += 1
+        
+        // TODO check complexity / higher function
+        // only increase loadingbar if level has not been passed yet
+        if !(levelIsPassed) {
+            increaseLoadingBar()
+            
+            if (correctReplies >= amountOfCorrectRepliesToPassLevel) {
+                levelIsPassed = true
+            }
+        }
+    }
+
+
     // remove unnecessary nodes and set up scene for new word to be rated
     func cleanAndSetupSceneForNewWord() {
         // remove all accentBins and stressMarks from scene
@@ -416,7 +446,7 @@ class LevelOneScene: SKScene {
             // worked as well
             // audioNode.run(SKAction.playSoundFileNamed("Sonne.WAV", waitForCompletion: false))
             // audioNode.run(SKAction.playSoundFileNamed("test.WAV", waitForCompletion: false))
-            let playSound = SKAction.playSoundFileNamed(selected.audioFile, waitForCompletion: true)
+            let playSound = SKAction.playSoundFileNamed(selected.audioFile, waitForCompletion: false)
             let action =  SKAction.group([playSound,
                                           SKAction.run{self.addAndRemoveNode(node: self.wordToBeRatedBold)},
                                           SKAction.run{self.hideAndUnhideNode(node: self.wordToBeRated)}])
@@ -430,12 +460,9 @@ class LevelOneScene: SKScene {
                 if (isSolutionCorrect) {
                     print("correct!")
                     displaySolutionIsCorrect()
-                    // show correct overlay
-                    // loadingBar progress
-                    // if level fullfilled
-                    // save it to nsUserData
-                    // click on Weiter: new selected word
-                    // cleanAndSetupSceneForNewWord()
+                    
+                    // was wenn levelIsPassed = true?
+              
                 }
                 else {
                     print("not correct!")
