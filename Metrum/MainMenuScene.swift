@@ -29,11 +29,9 @@ class MainMenuScene: SKScene {
         
         let levelOneLabel = SKLabelNode(text: "Enter Level 1")
         levelOneLabel.name = "levelOne"
-        // position label to the center of scene
         levelOneLabel.position = CGPoint(x: frame.midX, y: frame.midY-10)
         levelOneLabel.fontColor = SKColor.black
         // levelOneLabel.addStroke(color: .yellow, width: 5)
-        // levelOneLabel.drawBorder(color: .orange, width: 5.0, position: CGPoint(x: frame.midX , y: frame.midY-250))
         levelOneCanvas.zPosition = 2
         levelOneCanvas.addChild(levelOneLabel)
         

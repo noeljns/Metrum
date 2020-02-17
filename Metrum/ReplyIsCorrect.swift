@@ -14,7 +14,6 @@ protocol ReplyIsCorrectDelegate: class {
 
 // layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
 class ReplyIsCorrect: SKSpriteNode {
-    private var closeButton: SKSpriteNode!
     weak var delegate: ReplyIsCorrectDelegate?
     
     init(size: CGSize) {
@@ -33,16 +32,20 @@ class ReplyIsCorrect: SKSpriteNode {
         textLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY-260)
         textLabel.zPosition = 4
         addChild(textLabel)
-                
-        closeButton = SKSpriteNode(texture: SKTexture(imageNamed: "bereit"))
+                        
+        let closeButtonFrame = SKSpriteNode(color: .green, size: CGSize(width: 150, height: 55))
+        closeButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
+        // closeButtonFrame.drawBorder(color: .orange, width: 5)
+        closeButtonFrame.zPosition = 4
+        addChild(closeButtonFrame)
+        
+        let closeButton = SKLabelNode(text: "Weiter")
         closeButton.name = "close"
-        closeButton.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
-        closeButton.size = CGSize(width: 175, height: 50)
+        closeButton.fontColor = SKColor.white
+        closeButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
         closeButton.zPosition = 5
-        // not working
-        // TODO: bei IPhone war der irgendwo rechts unten zu sehen außerhalb des Screens
-        // closeButton.drawBorder(color: .yellow, width: 5)
-        addChild(closeButton)
+        closeButton.addStroke(color: .white, width: 6.0)
+        closeButtonFrame.addChild(closeButton)
     }
     
     required init?(coder aDecoder: NSCoder) {

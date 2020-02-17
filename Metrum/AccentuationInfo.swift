@@ -14,7 +14,6 @@ protocol AccentuationInfoDelegate: class {
 
 // layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
 class AccentuationInfo: SKSpriteNode {
-    private var closeButton: SKSpriteNode!
     weak var delegate: AccentuationInfoDelegate?
     
     init(size: CGSize) {
@@ -52,14 +51,21 @@ class AccentuationInfo: SKSpriteNode {
         explanationLabel.zPosition = 2
         addChild(explanationLabel)
  
-        closeButton = SKSpriteNode(texture: SKTexture(imageNamed: "bereit"))
+        // let colorCloseButtonFrame = UIColor(hue: 0.9611, saturation: 0.93, brightness: 1, alpha: 1.0) /* #ff1149 */
+        // let closeButtonFrame = SKSpriteNode(color: colorCloseButtonFrame, size: CGSize(width: 180, height: 55))
+        let closeButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 150, height: 55))
+        closeButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
+        // closeButtonFrame.drawBorder(color: .orange, width: 5)
+        closeButtonFrame.zPosition = 4
+        addChild(closeButtonFrame)
+      
+        let closeButton = SKLabelNode(text: "Bereit")
         closeButton.name = "close"
-        closeButton.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
-        closeButton.size = CGSize(width: 175, height: 50)
+        closeButton.fontColor = SKColor.white
+        closeButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
         closeButton.zPosition = 5
-        // not working
-        // closeButton.drawBorder(color: .yellow, width: 5)
-        addChild(closeButton)
+        closeButton.addStroke(color: .white, width: 6.0)
+        closeButtonFrame.addChild(closeButton)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -80,7 +80,8 @@ class LevelOneScene: SKScene {
     private var soundBoxButton = SKSpriteNode()
     private let audioNode = SKNode()
     
-    private var checkButton = SKSpriteNode()
+    private var checkButtonFrame = SKSpriteNode()
+    private var checkButton = SKLabelNode()
 
     // new data model
     // lazy var selection = [lineOne, lineTwo, lineThree, lineSeven, lineEight]
@@ -134,14 +135,18 @@ class LevelOneScene: SKScene {
         soundBoxButton.zPosition = 2
         addChild(soundBoxButton)
         
-        checkButton = SKSpriteNode(imageNamed: "check")
+        checkButtonFrame.color = .lightGray
+        checkButtonFrame.size = CGSize(width: 150, height: 55)
+        checkButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
+        addChild(checkButtonFrame)
+        
+        checkButton.text = "Check"
         checkButton.name = "check"
-        checkButton.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
-        checkButton.size = CGSize(width: 175, height: 50)
+        checkButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
         checkButton.zPosition = 2
-        // not working
-        // checkButton.drawBorder(color: .yellow, width: 5)
-        addChild(checkButton)
+        checkButton.fontColor = SKColor.darkGray
+        checkButton.addStroke(color: .darkGray, width: 6.0)
+        checkButtonFrame.addChild(checkButton)
     }
     
     // make three stress marks, one stressed and two unstressed
@@ -239,6 +244,11 @@ class LevelOneScene: SKScene {
         // https://stackoverflow.com/questions/42026839/make-touch-area-for-sklabelnode-bigger-for-small-characters#comment71238691_42026839
         // TODO: dynamically via method
         generateStressMarks()
+        
+        // reset colors of check button
+        checkButtonFrame.color = .lightGray
+        checkButton.fontColor = .darkGray
+        checkButton.addStroke(color: .darkGray, width: 6.0)
     }
     
 
@@ -505,7 +515,7 @@ class LevelOneScene: SKScene {
                     updateLevelStatus()
                     // increase loadingbar but only if level has not been passed yet
                     manageLoadingBar()
-                    
+                
                     displayReplyIsCorrect()
                 }
                 else {
@@ -568,6 +578,18 @@ class LevelOneScene: SKScene {
                 print("lost a stressMark to the infinite nonentity")
                 stressMark.position = CGPoint(x: frame.midX, y: frame.midY-150)
             }
+        }
+        
+        // to signalize user that pushing the button would lead to an action now
+        if (areAccentBinsFilledWithAStressmark()) {
+            checkButtonFrame.color = .green
+            checkButton.fontColor = .white
+            checkButton.addStroke(color: .white, width: 6.0)
+        }
+        else {
+            checkButtonFrame.color = .lightGray
+            checkButton.fontColor = .darkGray
+            checkButton.addStroke(color: .darkGray, width: 6.0)
         }
         
     }
