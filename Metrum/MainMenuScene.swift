@@ -10,10 +10,17 @@ import SpriteKit
 
 class MainMenuScene: SKScene {
     var levelOneIsPassed = UserDefaults.standard.bool(forKey: "levelOne")
-    
-    override func didMove(to view: SKView) {
-        print("test: " + levelOneIsPassed.description)
+    var testOneIsPassed = UserDefaults.standard.bool(forKey: "testOne")
+    var levelTwoIsPassed = UserDefaults.standard.bool(forKey: "levelTwo")
+    var testTwoIsPassed = UserDefaults.standard.bool(forKey: "testTwo")
+    var levelThreeIsPassed = UserDefaults.standard.bool(forKey: "levelThree")
+    var testThreeIsPassed = UserDefaults.standard.bool(forKey: "testThree")
+    var levelFourIsPassed = UserDefaults.standard.bool(forKey: "levelFour")
+    var testFourIsPassed = UserDefaults.standard.bool(forKey: "testFour")
+    var levelFiveIsPassed = UserDefaults.standard.bool(forKey: "levelFive")
+    var testFiveIsPassed = UserDefaults.standard.bool(forKey: "testFive")
 
+    override func didMove(to view: SKView) {
         let header = SKLabelNode(text: "METRUM")
         header.position = CGPoint(x: frame.midX, y: frame.midY + 450)
         header.fontSize = 55
@@ -44,42 +51,10 @@ class MainMenuScene: SKScene {
         generateLevel(text: "Enter Level 5", name: "levelFive", canvasPosition: frame.midY - 340)
         generateLevel(text: "Test 5 🏆", name: "testFive", canvasPosition: frame.midY - 430)
         
-//        let testOneCanvas = SKSpriteNode(color: .lightGray, size: CGSize(width: 200, height: 50))
-//        testOneCanvas.position = CGPoint(x: frame.midX, y: frame.midY + 280)
-//        testOneCanvas.zPosition = 1
-//        addChild(testOneCanvas)
-//        let testOneLabel = SKLabelNode(text: "Test 1 🏆")
-//        testOneLabel.name = "testOne"
-//        testOneLabel.position = CGPoint(x: frame.midX, y: frame.midY-15)
-//        testOneLabel.fontColor = SKColor.darkGray
-//        testOneLabel.addStroke(color: .darkGray, width: 6.0)
-//        testOneLabel.zPosition = 2
-//        testOneCanvas.addChild(testOneLabel)
-        
-//        let levelTwoCanvas = SKSpriteNode(color: .lightGray, size: CGSize(width: 200, height: 50))
-//        levelTwoCanvas.position = CGPoint(x: frame.midX, y: frame.midY + 180)
-//        levelTwoCanvas.zPosition = 1
-//        addChild(levelTwoCanvas)
-//        let levelTwoLabel = SKLabelNode(text: "Enter Level 2")
-//        levelTwoLabel.name = "levelTwo"
-//        levelTwoLabel.position = CGPoint(x: frame.midX, y: frame.midY-15)
-//        levelTwoLabel.fontColor = SKColor.darkGray
-//        levelTwoLabel.addStroke(color: .darkGray, width: 6.0)
-//        levelTwoLabel.zPosition = 2
-//        levelTwoCanvas.addChild(levelTwoLabel)
-        
-//        let testTwoCanvas = SKSpriteNode(color: .lightGray, size: CGSize(width: 200, height: 50))
-//        testTwoCanvas.position = CGPoint(x: frame.midX, y: frame.midY + 80)
-//        testTwoCanvas.zPosition = 1
-//        addChild(testTwoCanvas)
-//        let testTwoLabel = SKLabelNode(text: "Test 2 🏆")
-//        testTwoLabel.name = "testTwo"
-//        testTwoLabel.position = CGPoint(x: frame.midX, y: frame.midY-15)
-//        testTwoLabel.fontColor = SKColor.darkGray
-//        testTwoLabel.addStroke(color: .darkGray, width: 6.0)
-//        testTwoLabel.zPosition = 2
-//        testTwoCanvas.addChild(testTwoLabel)
-
+        if levelOneIsPassed {
+            // node testOne needs other colors
+            // children.
+        }
     }
     
     func generateLevel(text: String, name: String, canvasPosition: CGFloat) {
