@@ -9,9 +9,12 @@
 import SpriteKit
 
 class MainMenuScene: SKScene {
+    var levelOneIsPassed = UserDefaults.standard.bool(forKey: "levelOne")
+    
     
     override func didMove(to view: SKView) {
-            
+        print("test: " + levelOneIsPassed.description)
+        
         let levelOneLabel = SKLabelNode(text: "Enter Level 1")
         levelOneLabel.name = "levelOne"
         // position label to the center of scene

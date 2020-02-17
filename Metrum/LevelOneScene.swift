@@ -90,9 +90,11 @@ class LevelOneScene: SKScene {
     lazy var selected = lineOne
     
     // TODO NSUserDataVariable
+    
+
     private var correctRepliesLevelOne = 0
     // TODO nsUserDataVariable
-    private var levelOneIsPassed = false
+    // private var levelOneIsPassed = false
     private var amountOfCorrectRepliesToPassLevel = 4
     
     func setUpScene() {
@@ -108,8 +110,8 @@ class LevelOneScene: SKScene {
         loadingBar.position = CGPoint(x: frame.midX , y: frame.midY+450)
         loadingBar.size = CGSize(width: 600, height: 35)
         loadingBar.zPosition = 3
-        // TODO
-        // manageLoadingBar()
+        
+        manageLoadingBar()
         addChild(loadingBar)
         
         taskLabel.fontColor = SKColor.black
@@ -276,6 +278,9 @@ class LevelOneScene: SKScene {
         }
     }
     
+    
+    
+    
     func displayAccentuationInfo() {
         backgroundBlockerAccentuationInfo = SKSpriteNode(color: SKColor.white, size: self.size)
         backgroundBlockerAccentuationInfo.zPosition = 4999
@@ -347,6 +352,9 @@ class LevelOneScene: SKScene {
     func manageLoadingBar() {
         // TODO check complexity / higher function
         // only increase loadingbar if level has not been passed yet
+        
+        let levelOneIsPassed = UserDefaults.standard.bool(forKey: "levelOne")
+
         if !(levelOneIsPassed) {
             let imageName = "loadingBar" + String(correctRepliesLevelOne)
             loadingBar.texture = SKTexture(imageNamed: imageName)
@@ -361,7 +369,9 @@ class LevelOneScene: SKScene {
     // func to check whether level is passed or not
     func updateLevelStatus() {
         if (correctRepliesLevelOne >= amountOfCorrectRepliesToPassLevel) {
-            levelOneIsPassed = true
+            
+            UserDefaults.standard.set(true, forKey: "levelOne")
+            // levelOneIsPassed = true
         }
     }
 
@@ -448,9 +458,12 @@ class LevelOneScene: SKScene {
         setUpUnfixedParts()
         
         // has to be stored as NSuserData
-        if firstEntryOfLevelOne {
+        if !(UserDefaults.standard.bool(forKey: "levelOne")) {
             displayAccentuationInfo()
-            firstEntryOfLevelOne = false
+            // firstEntryOfLevelOne = false
+        }
+        else {
+            correctRepliesLevelOne = 4
         }
     }
 
@@ -568,6 +581,7 @@ extension LevelOneScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, Reply
     
     func closeCongratulations() {
         // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
+        
         let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
         self.view?.presentScene(mainMenu)
     }
