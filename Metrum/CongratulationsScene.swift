@@ -1,43 +1,53 @@
 //
-//  ReplyIsIncorrect.swift
+//  CongratulationsScene.swift
 //  Metrum
 //
-//  Created by Jonas Jonas on 15.02.20.
+//  Created by Jonas Jonas on 17.02.20.
 //  Copyright © 2020 Jonas Jonas. All rights reserved.
 //
 
 import SpriteKit
 
-protocol ReplyIsFalseDelegate: class {
-    func closeReplyIsFalse()
+protocol CongratulationsDelegate: class {
+    func closeCongratulations()
 }
 
 // layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
-class ReplyIsFalse: SKSpriteNode {
+class Congratulations: SKSpriteNode {
     private var closeButton: SKSpriteNode!
-    weak var delegate: ReplyIsFalseDelegate?
+    weak var delegate: CongratulationsDelegate?
     
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
-        name = "solutionIsFalse"
-        
+        name = "congratulations"
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
-        background.position = CGPoint(x: frame.midX, y: frame.midY-175)
-        background.drawBorder(color: .red, width: 5)
+        // test
+        // background.alpha = 0.0
+        background.drawBorder(color: .orange, width: 5)
         addChild(background)
         
-        // TODO: richtige Lösung in init übergeben und hier einfügen
-        let textLabel = SKLabelNode(text: "Das war leider falsch.")
-        textLabel.fontColor = SKColor.black
-        textLabel.fontSize = 50
-        textLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY-260)
-        textLabel.zPosition = 4
-        addChild(textLabel)
+        let headerLabel = SKLabelNode(text: "Prima!")
+        headerLabel.fontColor = SKColor.black
+        headerLabel.fontSize = 50
+        headerLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY+250)
+        headerLabel.zPosition = 4
+        addChild(headerLabel)
+     
+        let explanationLabel = SKLabelNode(text: "test")
+        explanationLabel.fontColor = SKColor.black
+        explanationLabel.text = "Herzlichen Glückwünsch! Du hast das Level bestanden. Weiter geht es im nächsten Level."
+        explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-150)
+        // break line: https://forums.developer.apple.com/thread/82994
+        explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+        explanationLabel.numberOfLines = 0
+        explanationLabel.preferredMaxLayoutWidth = 480
+        explanationLabel.zPosition = 2
+        addChild(explanationLabel)
         
         closeButton = SKSpriteNode(texture: SKTexture(imageNamed: "bereit"))
         closeButton.name = "close"
-        closeButton.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
+        closeButton.position = CGPoint(x: frame.midX+200, y: frame.midY-300)
         closeButton.size = CGSize(width: 175, height: 50)
         closeButton.zPosition = 5
         // not working
@@ -73,6 +83,6 @@ class ReplyIsFalse: SKSpriteNode {
     }
     
     func close() {
-        self.delegate?.closeReplyIsFalse()
+        self.delegate?.closeCongratulations()
     }
 }

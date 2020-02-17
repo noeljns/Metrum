@@ -74,6 +74,9 @@ class LevelOneScene: SKScene {
     private var replyIsFalse: ReplyIsFalse!
     private var backgroundBlockerReplyIsFalse: SKSpriteNode!
     
+    private var congratulations: Congratulations!
+    private var backgroundBlockerCongratulations: SKSpriteNode!
+    
     private var soundBoxButton = SKSpriteNode()
     private let audioNode = SKNode()
     
@@ -86,9 +89,10 @@ class LevelOneScene: SKScene {
 
     lazy var selected = lineOne
     
-    private var correctReplies = 0
+    // TODO NSUserDataVariable
+    private var correctRepliesLevelOne = 0
     // TODO nsUserDataVariable
-    private var levelIsPassed = false
+    private var levelOneIsPassed = false
     private var amountOfCorrectRepliesToPassLevel = 4
     
     func setUpScene() {
@@ -104,6 +108,8 @@ class LevelOneScene: SKScene {
         loadingBar.position = CGPoint(x: frame.midX , y: frame.midY+450)
         loadingBar.size = CGSize(width: 600, height: 35)
         loadingBar.zPosition = 3
+        // TODO
+        // manageLoadingBar()
         addChild(loadingBar)
         
         taskLabel.fontColor = SKColor.black
@@ -272,23 +278,29 @@ class LevelOneScene: SKScene {
     
     func displayAccentuationInfo() {
         backgroundBlockerAccentuationInfo = SKSpriteNode(color: SKColor.white, size: self.size)
-        // test
-        // backgroundBlocker.alpha = 0.0
         backgroundBlockerAccentuationInfo.zPosition = 4999
         addChild(backgroundBlockerAccentuationInfo)
 
         accentuationInfo = AccentuationInfo(size: CGSize(width: 650, height: 800))
-
         accentuationInfo.delegate = self
         accentuationInfo.zPosition = 5000
         addChild(accentuationInfo)
     }
     
-    func displayReplyIsCorrect() {
-        manageLoadingBar()
+    func displayCongratulations() {
+        backgroundBlockerCongratulations = SKSpriteNode(color: SKColor.white, size: self.size)
+        backgroundBlockerCongratulations.zPosition = 4999
+        addChild(backgroundBlockerCongratulations)
         
+        congratulations = Congratulations(size: CGSize(width: 650, height: 800))
+        congratulations.delegate = self
+        congratulations.zPosition = 5000
+        addChild(congratulations)
+    }
+    
+    func displayReplyIsCorrect() {
         backgroundBlockerReplyIsCorrect = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlockerReplyIsCorrect.alpha = 0.0
+        backgroundBlockerReplyIsCorrect.alpha = 0.5
         backgroundBlockerReplyIsCorrect.zPosition = 4999
         addChild(backgroundBlockerReplyIsCorrect)
         
@@ -300,7 +312,7 @@ class LevelOneScene: SKScene {
     
     func displayReplyIsFalse() {
         backgroundBlockerReplyIsFalse = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlockerReplyIsFalse.alpha = 0.0
+        backgroundBlockerReplyIsFalse.alpha = 0.5
         backgroundBlockerReplyIsFalse.zPosition = 4999
         addChild(backgroundBlockerReplyIsFalse)
         
@@ -330,26 +342,26 @@ class LevelOneScene: SKScene {
         )
     }
     
-
-    // function to load new texture for loading bar
-    func increaseLoadingBar() {
-        let imageName = "loadingBar" + String(correctReplies)
-        print(imageName)
-        loadingBar.texture = SKTexture(imageNamed: imageName)
-    }
     
     // function to update and manage status of level passing
     func manageLoadingBar() {
-        correctReplies += 1
-        
         // TODO check complexity / higher function
         // only increase loadingbar if level has not been passed yet
-        if !(levelIsPassed) {
-            increaseLoadingBar()
-            
-            if (correctReplies >= amountOfCorrectRepliesToPassLevel) {
-                levelIsPassed = true
-            }
+        if !(levelOneIsPassed) {
+            let imageName = "loadingBar" + String(correctRepliesLevelOne)
+            loadingBar.texture = SKTexture(imageNamed: imageName)
+            print("correct replies: " + String(correctRepliesLevelOne))
+        }
+        else {
+            loadingBar.texture = SKTexture(imageNamed: "loadingBarFull")
+            print("correct replies: " + String(correctRepliesLevelOne))
+        }
+    }
+    
+    // func to check whether level is passed or not
+    func updateLevelStatus() {
+        if (correctRepliesLevelOne >= amountOfCorrectRepliesToPassLevel) {
+            levelOneIsPassed = true
         }
     }
 
@@ -473,11 +485,13 @@ class LevelOneScene: SKScene {
                 let (isSolutionCorrect, realSolution) = self.isSolutionCorrect()
 
                 if (isSolutionCorrect) {
-                    displayReplyIsCorrect()
+                    correctRepliesLevelOne += 1
+                    // check whether level is passed and save to boolean variable
+                    updateLevelStatus()
+                    // increase loadingbar but only if level has not been passed yet
+                    manageLoadingBar()
                     
-                    // TODO
-                    // was wenn levelIsPassed = true?
-              
+                    displayReplyIsCorrect()
                 }
                 else {
                     print("correct solution: " + realSolution.description)
@@ -550,7 +564,13 @@ class LevelOneScene: SKScene {
 
 
 
-extension LevelOneScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, ReplyIsFalseDelegate {
+extension LevelOneScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, ReplyIsFalseDelegate, CongratulationsDelegate {
+    
+    func closeCongratulations() {
+        // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
+        let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
+        self.view?.presentScene(mainMenu)
+    }
     
     func closeAccentuationInfo() {
         //at this point you could update any GUI nesc. based on what happened in your dialog
@@ -561,7 +581,15 @@ extension LevelOneScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, Reply
     func closeReplyIsCorrect() {
         backgroundBlockerReplyIsCorrect.removeFromParent()
         replyIsCorrect?.removeFromParent()
-        cleanAndSetupSceneForNewWord()
+        
+        if correctRepliesLevelOne == amountOfCorrectRepliesToPassLevel {
+            print("you passed level one!")
+            // open overlay to get to Hauptmenü
+            displayCongratulations()
+        }
+        else {
+            cleanAndSetupSceneForNewWord()
+        }
     }
     
     func closeReplyIsFalse() {

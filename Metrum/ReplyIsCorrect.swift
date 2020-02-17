@@ -30,7 +30,7 @@ class ReplyIsCorrect: SKSpriteNode {
         let textLabel = SKLabelNode(text: "Super! Die Lösung ist korrekt.")
         textLabel.fontColor = SKColor.black
         textLabel.fontSize = 50
-        textLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY-250)
+        textLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY-260)
         textLabel.zPosition = 4
         addChild(textLabel)
                 
@@ -40,6 +40,7 @@ class ReplyIsCorrect: SKSpriteNode {
         closeButton.size = CGSize(width: 175, height: 50)
         closeButton.zPosition = 5
         // not working
+        // TODO: bei IPhone war der irgendwo rechts unten zu sehen außerhalb des Screens
         closeButton.drawBorder(color: .yellow, width: 5)
         addChild(closeButton)
     }
