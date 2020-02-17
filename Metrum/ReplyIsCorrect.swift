@@ -20,10 +20,10 @@ class ReplyIsCorrect: SKSpriteNode {
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
         name = "solutionIsCorrect"
-        
+   
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
-        background.position = CGPoint(x: frame.midX, y: frame.midY-175)
+        background.position = CGPoint(x: frame.midX, y: frame.midY-323)
         background.drawBorder(color: .green, width: 5)
         addChild(background)
   
@@ -41,7 +41,7 @@ class ReplyIsCorrect: SKSpriteNode {
         closeButton.zPosition = 5
         // not working
         // TODO: bei IPhone war der irgendwo rechts unten zu sehen außerhalb des Screens
-        closeButton.drawBorder(color: .yellow, width: 5)
+        // closeButton.drawBorder(color: .yellow, width: 5)
         addChild(closeButton)
     }
     

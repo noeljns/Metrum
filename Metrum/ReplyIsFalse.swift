@@ -23,7 +23,7 @@ class ReplyIsFalse: SKSpriteNode {
         
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
-        background.position = CGPoint(x: frame.midX, y: frame.midY-175)
+        background.position = CGPoint(x: frame.midX, y: frame.midY-323)
         background.drawBorder(color: .red, width: 5)
         addChild(background)
         
@@ -41,7 +41,7 @@ class ReplyIsFalse: SKSpriteNode {
         closeButton.size = CGSize(width: 175, height: 50)
         closeButton.zPosition = 5
         // not working
-        closeButton.drawBorder(color: .yellow, width: 5)
+        // closeButton.drawBorder(color: .yellow, width: 5)
         addChild(closeButton)
     }
     

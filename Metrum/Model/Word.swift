@@ -19,6 +19,10 @@ struct Word {
     var word: String {
         // concatenate syllableStrings of word
         // https://medium.com/@abhimuralidharan/higher-order-functions-in-swift-filter-map-reduce-flatmap-1837646a63e8
-        return syllables.reduce("") { $0 + $1.syllableString}
+        
+        var str = syllables.reduce("") { $0 + $1.syllableString + "·"}
+        // cut last character, so that last middle point is removed from word
+        str.removeLast()
+        return str
     }
 }

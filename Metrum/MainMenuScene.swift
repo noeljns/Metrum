@@ -11,17 +11,31 @@ import SpriteKit
 class MainMenuScene: SKScene {
     var levelOneIsPassed = UserDefaults.standard.bool(forKey: "levelOne")
     
-    
     override func didMove(to view: SKView) {
         print("test: " + levelOneIsPassed.description)
+
+        let header = SKLabelNode(text: "METRUM")
+        header.position = CGPoint(x: frame.midX, y: frame.midY + 450)
+        header.fontSize = 55
+        header.fontColor = SKColor.black
+        header.zPosition = 2
+        addChild(header)
+        
+        let levelOneCanvas = SKSpriteNode(color: .white, size: CGSize(width: 200, height: 50))
+        levelOneCanvas.position = CGPoint(x: frame.midX, y: frame.midY + 380)
+        levelOneCanvas.zPosition = 1
+        levelOneCanvas.drawBorder(color: .yellow, width: 5)
+        addChild(levelOneCanvas)
         
         let levelOneLabel = SKLabelNode(text: "Enter Level 1")
         levelOneLabel.name = "levelOne"
         // position label to the center of scene
-        levelOneLabel.position = CGPoint(x: frame.midX, y: frame.midY+200)
+        levelOneLabel.position = CGPoint(x: frame.midX, y: frame.midY-10)
         levelOneLabel.fontColor = SKColor.black
-        levelOneLabel.addStroke(color: .yellow, width: 5)
-        addChild(levelOneLabel)
+        // levelOneLabel.addStroke(color: .yellow, width: 5)
+        // levelOneLabel.drawBorder(color: .orange, width: 5.0, position: CGPoint(x: frame.midX , y: frame.midY-250))
+        levelOneCanvas.zPosition = 2
+        levelOneCanvas.addChild(levelOneLabel)
         
         let levelTwoLabel = SKLabelNode(text: "Enter Level 2")
         levelTwoLabel.name = "levelTwo"

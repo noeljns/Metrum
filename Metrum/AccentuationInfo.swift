@@ -23,8 +23,6 @@ class AccentuationInfo: SKSpriteNode {
         
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
-        // test
-        // background.alpha = 0.0
         background.drawBorder(color: .lightGray, width: 5)
         addChild(background)
         
@@ -56,11 +54,11 @@ class AccentuationInfo: SKSpriteNode {
  
         closeButton = SKSpriteNode(texture: SKTexture(imageNamed: "bereit"))
         closeButton.name = "close"
-        closeButton.position = CGPoint(x: frame.midX+200, y: frame.midY-300)
+        closeButton.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
         closeButton.size = CGSize(width: 175, height: 50)
         closeButton.zPosition = 5
         // not working
-        closeButton.drawBorder(color: .yellow, width: 5)
+        // closeButton.drawBorder(color: .yellow, width: 5)
         addChild(closeButton)
     }
     
@@ -99,7 +97,7 @@ class AccentuationInfo: SKSpriteNode {
 extension SKSpriteNode {
     // https://stackoverflow.com/questions/20889222/can-i-add-a-border-to-an-skspritenode-similar-to-uiview
     func drawBorder(color: UIColor, width: CGFloat) {
-        let shapeNode = SKShapeNode(rect: frame)
+        let shapeNode = SKShapeNode(rectOf: size)
         shapeNode.fillColor = .clear
         shapeNode.strokeColor = color
         shapeNode.lineWidth = width

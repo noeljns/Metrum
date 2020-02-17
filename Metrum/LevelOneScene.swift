@@ -86,15 +86,9 @@ class LevelOneScene: SKScene {
     // lazy var selection = [lineOne, lineTwo, lineThree, lineSeven, lineEight]
     // lazy var selection = [lineOne]
     lazy var selection = [lineTwo, lineThree, lineSeven, lineEight]
-
     lazy var selected = lineOne
     
-    // TODO NSUserDataVariable
-    
-
     private var correctRepliesLevelOne = 0
-    // TODO nsUserDataVariable
-    // private var levelOneIsPassed = false
     private var amountOfCorrectRepliesToPassLevel = 4
     
     func setUpScene() {
@@ -115,8 +109,9 @@ class LevelOneScene: SKScene {
         addChild(loadingBar)
         
         taskLabel.fontColor = SKColor.black
-        taskLabel.text = "Markiere die betonten (x́) und unbetonten (x) Silben des Wortes.\n" +
-        "Ziehe dafür die Betonungszeichen in das jeweilige Kästchen über der Silbe."
+        taskLabel.text = "Markiere die betonten (x́) und unbetonten (x) Silben des Wortes.\n"
+                         + "Über jede Silbe des Wortes ist ein graues Kästchen. " +
+                        "Ziehe die Betonungszeichen in das jeweilige Kästchen über der Silbe.\n"
         taskLabel.position = CGPoint(x: frame.midX , y: frame.midY+150)
         // break line: https://forums.developer.apple.com/thread/82994
         taskLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
@@ -141,11 +136,11 @@ class LevelOneScene: SKScene {
         
         checkButton = SKSpriteNode(imageNamed: "check")
         checkButton.name = "check"
-        checkButton.position = CGPoint(x: frame.midX+200, y: frame.midY-300)
+        checkButton.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
         checkButton.size = CGSize(width: 175, height: 50)
         checkButton.zPosition = 2
         // not working
-        checkButton.drawBorder(color: .yellow, width: 5)
+        // checkButton.drawBorder(color: .yellow, width: 5)
         addChild(checkButton)
     }
     
@@ -194,8 +189,10 @@ class LevelOneScene: SKScene {
         // unit per char: dynamically calculated by frame.width divided by amount of chars
         let amountOfCharsInLine = line.line.count
         let unit = CGFloat(wordToBeRated.frame.width / CGFloat(amountOfCharsInLine))
-        var counter = CGFloat(10.0)
-        
+
+        // var counter = CGFloat(5.0)
+        var counter = CGFloat(0.0)
+
         for word in line.words {
             for syllable in word.syllables {
                 let accentBin = SKSpriteNode()
@@ -203,14 +200,16 @@ class LevelOneScene: SKScene {
                 accentBin.size = CGSize(width: 40, height: 45)
                 
                 // half of amount of chars of syllable multiplied by unit plus counter
-                let positionOfBin = CGFloat(Double(syllable.syllableString.count)/2.0)*unit + counter
-                accentBin.position = CGPoint(x: wordToBeRated.frame.minX+positionOfBin, y: frame.midY+70)
+                // unit/2 is added since middle of four chars is index 2.5 with a unit of 1
+                // 0.3 is subtracted since middlepoint has a very small width compared to regular chars
+                let positionOfBin = CGFloat((Double(syllable.syllableString.count)-0.3)/2.0)*unit + unit/2 + counter
+                accentBin.position = CGPoint(x: wordToBeRated.frame.minX+positionOfBin, y: frame.midY+35)
                 accentBin.zPosition = 2
                 // append to global variable
                 accentBins.append(accentBin)
 
                 // counter shifts to the next syllable
-                counter += CGFloat(syllable.syllableString.count) * unit
+                counter += CGFloat(syllable.syllableString.count) * unit + unit/2
                 addChild(accentBin)
             }
             // counter shifts to the next word
@@ -223,7 +222,7 @@ class LevelOneScene: SKScene {
         
         wordToBeRated.fontColor = SKColor.black
         wordToBeRated.attributedText = makeAttributedString(stringToBeMutated: (selected.line), shallBecomeBold: false)
-        wordToBeRated.position = CGPoint(x: frame.midX, y: frame.midY)
+        wordToBeRated.position = CGPoint(x: frame.midX, y: frame.midY-30)
         wordToBeRated.zPosition = 2
         addChild(wordToBeRated)
 
@@ -231,7 +230,7 @@ class LevelOneScene: SKScene {
 
         wordToBeRatedBold.fontColor = SKColor.black
         wordToBeRatedBold.attributedText = getWordToBeRatedBold(line: selected)
-        wordToBeRatedBold.position = CGPoint(x: frame.midX, y: frame.midY)
+        wordToBeRatedBold.position = CGPoint(x: frame.midX, y: frame.midY-30)
         wordToBeRatedBold.zPosition = 2
         // addChild(wordToBeRatedBold)
         
@@ -250,14 +249,16 @@ class LevelOneScene: SKScene {
         for word in line.words {
             for syllable in word.syllables {
                 if syllable.accentuation.rawValue == "unstressed" {
-                    let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString, shallBecomeBold: false)
+                    let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false)
                     wordToBeRatedBold.append(syllableNotBold)
                 }
                 else if syllable.accentuation.rawValue == "stressed" {
-                    let syllableBold = makeAttributedString(stringToBeMutated: syllable.syllableString, shallBecomeBold: true)
+                    let syllableBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: true)
                     wordToBeRatedBold.append(syllableBold)
                 }
             }
+            // cut last character, so that last middle point is removed from word
+            wordToBeRatedBold.deleteCharacters(in: NSRange(location:(wordToBeRatedBold.length) - 1,length:1))
             // space character between words
             wordToBeRatedBold.append(NSMutableAttributedString(string:"  "))
         }
@@ -309,7 +310,7 @@ class LevelOneScene: SKScene {
         backgroundBlockerReplyIsCorrect.zPosition = 4999
         addChild(backgroundBlockerReplyIsCorrect)
         
-        replyIsCorrect = ReplyIsCorrect(size: CGSize(width: 747, height: 300))
+        replyIsCorrect = ReplyIsCorrect(size: CGSize(width: 747, height: 350))
         replyIsCorrect.delegate = self
         replyIsCorrect.zPosition = 5000
         addChild(replyIsCorrect)
@@ -321,7 +322,7 @@ class LevelOneScene: SKScene {
         backgroundBlockerReplyIsFalse.zPosition = 4999
         addChild(backgroundBlockerReplyIsFalse)
         
-        replyIsFalse = ReplyIsFalse(size: CGSize(width: 747, height: 300))
+        replyIsFalse = ReplyIsFalse(size: CGSize(width: 747, height: 350))
         replyIsFalse.delegate = self
         replyIsFalse.zPosition = 5000
         addChild(replyIsFalse)
@@ -462,6 +463,7 @@ class LevelOneScene: SKScene {
             displayAccentuationInfo()
             // firstEntryOfLevelOne = false
         }
+        // level has been passed, so we do not need counter as threshold anymore
         else {
             correctRepliesLevelOne = 4
         }
