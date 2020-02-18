@@ -121,17 +121,19 @@ class LevelOneScene: SKScene {
         taskLabel.zPosition = 4
         addChild(taskLabel)
         
-        accentuationInfoButton = SKSpriteNode(imageNamed: "info")
+        // accentuationInfoButton = SKSpriteNode(imageNamed: "info")
+        accentuationInfoButton = SKSpriteNode(imageNamed: "icons8-info-50")
         accentuationInfoButton.name = "accentuationInfoBtn"
-        accentuationInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY+120)
+        accentuationInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY+100)
         accentuationInfoButton.size = CGSize(width: 50, height: 50)
         accentuationInfoButton.zPosition = 2
         addChild(accentuationInfoButton)
         
-        soundBoxButton = SKSpriteNode(imageNamed: "sound")
+        // soundBoxButton = SKSpriteNode(imageNamed: "sound")
+        soundBoxButton = SKSpriteNode(imageNamed: "QuickActions_Audio")
         soundBoxButton.name = "soundBoxBtn"
-        soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY+120)
-        soundBoxButton.size = CGSize(width: 50, height: 50)
+        soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY+100)
+        soundBoxButton.size = CGSize(width: 40, height: 40)
         soundBoxButton.zPosition = 2
         addChild(soundBoxButton)
         
