@@ -115,6 +115,8 @@ class MainMenuScene: SKScene {
         
         if(touchedNode.name == "level1") {
             let leveOneScene = LevelOneScene(fileNamed: "LevelOneScene")
+            leveOneScene?.provideAudioHelp = false;
+            leveOneScene?.provideInfoHelp = false;
             leveOneScene?.scaleMode = scaleMode
             view?.presentScene(leveOneScene)
         }

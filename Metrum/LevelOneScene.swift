@@ -45,7 +45,7 @@ class LevelOneScene: SKScene {
     lazy var keit = Syllable(syllableString: "keit", accentuation: Accentuation.unstressed)
     lazy var eitelkeit = Word(syllables: [ei, tel, keit])
     lazy var lineEight = Line(words: [eitelkeit], measure: Measure.daktylus, audioFile: "Eitelkeit.mp3")
-    
+  
     // variables
     private var exitLabel = SKLabelNode()
     private var loadingBar = SKSpriteNode()
@@ -58,10 +58,11 @@ class LevelOneScene: SKScene {
     private var wordToBeRatedBold = SKLabelNode()
     
     private var stressMarks = [SKSpriteNode]()
-    private let stressedParent = SKSpriteNode()
+    private let stressedStressMarkParentBin = SKSpriteNode()
     private let stressed = SKLabelNode()
-    private let unstressedParent = SKSpriteNode()
     private let unstressed = SKLabelNode()
+    private let unstressedStressMarkParentBin = SKSpriteNode()
+
 
     // overlay windows
     private var backgroundBlocker: SKSpriteNode!
@@ -81,13 +82,17 @@ class LevelOneScene: SKScene {
     // new data model
     // lazy var selection = [lineOne, lineTwo, lineThree, lineSeven, lineEight]
     // lazy var selection = [lineOne]
-    lazy var selection: Set<Line> = [lineTwo, lineThree, lineSeven, lineEight]
+    // lazy var selection: Set<Line> = [lineTwo, lineThree, lineSeven, lineEight]
+    lazy var selection: Set<Line> = [lineOne]
     lazy var selected = lineOne
     
     lazy var correctlyMarkedLines = Set<Line>()
 
     private var correctRepliesLevelOne = 0
     private var amountOfCorrectRepliesToPassLevel = 4
+    
+    public var provideAudioHelp = true;
+    public var provideInfoHelp = true;
     
     func setUpScene() {
         exitLabel.name = "exit"
@@ -148,22 +153,41 @@ class LevelOneScene: SKScene {
         checkButtonFrame.addChild(checkButton)
     }
     
-    // make three stress marks, one stressed and two unstressed
+    
+
+    
+    // make two stress marks, one stressed and two unstressed
     func generateStressMarks() {
-        // TODO BUG: when two stressMarks collide, one stressMark gets removed
-        let stressMarkParentOne = generateAStressMark(stressed: true, x: frame.midX-80, y: frame.midY-150)
-        stressMarks.append(stressMarkParentOne)
-        let stressMarkParentTwo = generateAStressMark(stressed: false, x: frame.midX, y: frame.midY-150)
-        stressMarks.append(stressMarkParentTwo)
-        let stressMarkParentThree = generateAStressMark(stressed: false, x: frame.midX+80, y: frame.midY-150)
-        stressMarks.append(stressMarkParentThree)
+        generateStressedStressMark()
+        generateUnstressedStressMark()
+        
+        stressedStressMarkParentBin.color = .clear
+        stressedStressMarkParentBin.size = CGSize(width: 40, height: 50)
+        stressedStressMarkParentBin.position = CGPoint(x: frame.midX-40, y: frame.midY-150)
+        stressedStressMarkParentBin.zPosition = 2
+        stressedStressMarkParentBin.drawBorder(color: .orange, width: 2)
+        addChild(stressedStressMarkParentBin)
+        unstressedStressMarkParentBin.color = .clear
+        unstressedStressMarkParentBin.size = CGSize(width: 40, height: 50)
+        unstressedStressMarkParentBin.position = CGPoint(x: frame.midX+40, y: frame.midY-150)
+        unstressedStressMarkParentBin.zPosition = 2
+        addChild(unstressedStressMarkParentBin)
+    }
+    
+    func generateStressedStressMark() {
+        let stressedStressMarkParent = generateAStressMark(stressed: true, x: frame.midX-40, y: frame.midY-150)
+        stressMarks.append(stressedStressMarkParent)
+    }
+    
+    func generateUnstressedStressMark() {
+        let unstressedStressMarkParent = generateAStressMark(stressed: false, x: frame.midX+40, y: frame.midY-150)
+        stressMarks.append(unstressedStressMarkParent)
     }
     
     // generate stress marks that are to be placed to syllables
     func generateAStressMark(stressed: Bool, x: CGFloat, y: CGFloat) -> SKSpriteNode {
         let stressMarkParent = SKSpriteNode()
         stressMarkParent.color = .white
-        // stressMarkParent.color = .green
         stressMarkParent.size = CGSize(width: 40, height: 50)
         stressMarkParent.position = CGPoint(x: x, y: y)
         stressMarkParent.zPosition = 1
@@ -280,7 +304,7 @@ class LevelOneScene: SKScene {
 
     func getWordToBeRatedBold(line: Line) -> NSMutableAttributedString? {
         let wordToBeRatedBold = NSMutableAttributedString()
-        
+
         // TODO Higher Function instead of two for loops
         for word in line.words {
             for syllable in word.syllables {
@@ -428,16 +452,15 @@ class LevelOneScene: SKScene {
         accentBins.forEach { $0.removeFromParent() }
         stressMarks.forEach { $0.removeFromParent() }
 
-        // empty accentBins array and stressMarks arraay since new word is selected
+        // empty accentBins array and stressMarks array since new word is selected
         accentBins.removeAll()
         stressMarks.removeAll()
         
         wordToBeRated.removeFromParent()
         audioNode.removeFromParent()
-        stressed.removeFromParent()
-        stressedParent.removeFromParent()
-        unstressed.removeFromParent()
-        unstressedParent.removeFromParent()
+        
+        stressedStressMarkParentBin.removeFromParent()
+        unstressedStressMarkParentBin.removeFromParent()
         
         setUpUnfixedParts()
     }
@@ -573,9 +596,8 @@ class LevelOneScene: SKScene {
                 }
             }
             else {
+                // nothing happens since not every accentBin is filled with a stressMark
                 print("do fill in every accentBin with a stressMark")
-                // show message overlay: do fill in every accentBin with a stressMark
-                // click on ok, close message overlay window
             }
             
         }
@@ -593,16 +615,15 @@ class LevelOneScene: SKScene {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // get a touch
         let touch = touches.first!
         
-        // TODO higher function
         // dragging of stressMarks to new location by touching
+        // TODO higher function
         for (smIndex, stressMark) in stressMarks.enumerated() {
             if stressMark.frame.contains(touch.previousLocation(in: self)) {
                 stressMark.position = touch.location(in: self)
             }
-            // debugged so that if stressMarks collide, they do not stick together anymore
+            // if stressMarks collide, they do not stick together anymore
             for (sIndex, s) in stressMarks.enumerated() {
                 if (stressMark.position.equalTo(s.position)) && (smIndex != sIndex) {
                     stressMark.position = CGPoint(x: stressMark.position.x-80, y: stressMark.position.y-40)
@@ -611,10 +632,10 @@ class LevelOneScene: SKScene {
         }
     }
     
-    
+
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // TODO higher function
         // stressMarks clinch (einrasten) into accentBin
+        // TODO higher function
         for accentBin in accentBins {
             // https://www.hackingwithswift.com/example-code/games/how-to-color-an-skspritenode-using-colorblendfactor
             // https://stackoverflow.com/questions/36136665/how-to-animate-a-matrix-changing-the-sprites-one-by-one
@@ -625,14 +646,31 @@ class LevelOneScene: SKScene {
             }
         }
         
-        // TODO higher function
         // if stressMark.position not in frame anymore, position it back to the middle
+        // TODO higher function
         for stressMark in stressMarks {
             if !(frame.contains(stressMark.position)) {
                 print("lost a stressMark to the infinite nonentity")
                 stressMark.position = CGPoint(x: frame.midX, y: frame.midY-150)
             }
         }
+        
+        // generate new stressMark if spawn is empty
+        // TODO higher function
+        var stressedStressMarkSpawnIsFilled = Set<Bool>()
+        var unstressedStressMarkSpawnIsFilled = Set<Bool>()
+        for stressMark in stressMarks {
+            stressedStressMarkSpawnIsFilled.insert((stressedStressMarkParentBin.frame.contains(stressMark.position)))
+            unstressedStressMarkSpawnIsFilled.insert((unstressedStressMarkParentBin.frame.contains(stressMark.position)))
+        }
+        if !(stressedStressMarkSpawnIsFilled.contains(true)) {
+            generateStressedStressMark()
+        }
+        if !(unstressedStressMarkSpawnIsFilled.contains(true)) {
+            generateUnstressedStressMark()
+        }
+        stressedStressMarkSpawnIsFilled.removeAll()
+        unstressedStressMarkSpawnIsFilled.removeAll()
         
         // to signalize user that pushing the button would lead to an action now
         if (areAccentBinsFilledWithAStressmark()) {
@@ -656,9 +694,7 @@ class LevelOneScene: SKScene {
 
 
 extension LevelOneScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, ReplyIsFalseDelegate, CongratulationsDelegate, WarningDelegate {
- 
     func closeAccentuationInfo() {
-        //at this point you could update any GUI nesc. based on what happened in your dialog
         backgroundBlocker.removeFromParent()
         accentuationInfo?.removeFromParent()
     }
@@ -674,8 +710,6 @@ extension LevelOneScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, Reply
         replyIsCorrect?.removeFromParent()
         
         if correctRepliesLevelOne == amountOfCorrectRepliesToPassLevel {
-            print("you passed level one!")
-            // open overlay to get to Hauptmenü
             displayCongratulations()
         }
         else {
