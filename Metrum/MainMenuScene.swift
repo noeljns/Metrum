@@ -9,16 +9,19 @@
 import SpriteKit
 
 class MainMenuScene: SKScene {
-    var levelOneIsPassed = UserDefaults.standard.bool(forKey: "levelOne")
-    var testOneIsPassed = UserDefaults.standard.bool(forKey: "testOne")
-    var levelTwoIsPassed = UserDefaults.standard.bool(forKey: "levelTwo")
-    var testTwoIsPassed = UserDefaults.standard.bool(forKey: "testTwo")
-    var levelThreeIsPassed = UserDefaults.standard.bool(forKey: "levelThree")
-    var testThreeIsPassed = UserDefaults.standard.bool(forKey: "testThree")
-    var levelFourIsPassed = UserDefaults.standard.bool(forKey: "levelFour")
-    var testFourIsPassed = UserDefaults.standard.bool(forKey: "testFour")
-    var levelFiveIsPassed = UserDefaults.standard.bool(forKey: "levelFive")
-    var testFiveIsPassed = UserDefaults.standard.bool(forKey: "testFive")
+    var levelOneIsPassed = UserDefaults.standard.bool(forKey: "level1")
+    var levelTwoIsPassed = UserDefaults.standard.bool(forKey: "level2")
+    var levelThreeIsPassed = UserDefaults.standard.bool(forKey: "level3")
+    var levelFourIsPassed = UserDefaults.standard.bool(forKey: "level4")
+    var levelFiveIsPassed = UserDefaults.standard.bool(forKey: "level5")
+    var levelSixIsPassed = UserDefaults.standard.bool(forKey: "level6")
+    var levelSevenIsPassed = UserDefaults.standard.bool(forKey: "level7")
+    var levelEightIsPassed = UserDefaults.standard.bool(forKey: "level8")
+    var levelNineIsPassed = UserDefaults.standard.bool(forKey: "level9")
+    var levenTenIsPassed = UserDefaults.standard.bool(forKey: "level10")
+    
+    lazy var levels = [levelOneIsPassed, levelTwoIsPassed, levelThreeIsPassed, levelFourIsPassed, levelFiveIsPassed,
+                       levelSixIsPassed, levelSevenIsPassed, levelEightIsPassed, levelNineIsPassed, levenTenIsPassed]
 
     override func didMove(to view: SKView) {
         let header = SKLabelNode(text: "METRUM")
@@ -28,37 +31,36 @@ class MainMenuScene: SKScene {
         header.zPosition = 2
         addChild(header)
         
-        let levelOneCanvas = SKSpriteNode(color: .orange, size: CGSize(width: 200, height: 50))
-        levelOneCanvas.position = CGPoint(x: frame.midX, y: frame.midY + 380)
-        levelOneCanvas.zPosition = 1
-        // levelOneCanvas.drawBorder(color: .yellow, width: 5)
-        addChild(levelOneCanvas)
-        let levelOneLabel = SKLabelNode(text: "Enter Level 1")
-        levelOneLabel.name = "levelOne"
-        levelOneLabel.position = CGPoint(x: frame.midX, y: frame.midY-15)
-        levelOneLabel.fontColor = SKColor.white
-        levelOneLabel.addStroke(color: .white, width: 6.0)
-        levelOneLabel.zPosition = 2
-        levelOneCanvas.addChild(levelOneLabel)
+        // draw buttons for level1 to level10
+        generateLevels()
+        // draw level1 colorful since it is always enterable
+        drawLevelColorful(levelName: "level1")
         
-        generateLevel(text: "Test 1 🏆", name: "testOne", canvasPosition: frame.midY + 290)
-        generateLevel(text: "Enter Level 2", name: "levelTwo", canvasPosition: frame.midY + 200)
-        generateLevel(text: "Test 2 🏆", name: "testTwo", canvasPosition: frame.midY + 110)
-        generateLevel(text: "Enter Level 3", name: "levelThree", canvasPosition: frame.midY + 20)
-        generateLevel(text: "Test 3 🏆", name: "testThree", canvasPosition: frame.midY - 70)
-        generateLevel(text: "Enter Level 4", name: "levelFour", canvasPosition: frame.midY - 160)
-        generateLevel(text: "Test 4 🏆", name: "testFour", canvasPosition: frame.midY - 250)
-        generateLevel(text: "Enter Level 5", name: "levelFive", canvasPosition: frame.midY - 340)
-        generateLevel(text: "Test 5 🏆", name: "testFive", canvasPosition: frame.midY - 430)
-        
-        if levelOneIsPassed {
-            // node testOne needs other colors
-            // children.
+        // colorize levels that are able to be entered and flag passed levels with trophy
+        markEnterableAndPassedLevels()
+
+        // debug function
+//        UserDefaults.standard.set(false, forKey: "level3")
+//        UserDefaults.standard.set(true, forKey: "level2")
+//        for level in levels {
+//            print(level.description)
+//        }
+    }
+    
+    func generateLevels() {
+        var canvasPosition = 380
+        for index in 1...10 {
+            let text = "Enter Level " + String(index)
+            let name = "level" + String(index)
+            generateLevel(text: text, name: name, canvasPosition: frame.midY + CGFloat(canvasPosition))
+            
+            canvasPosition = canvasPosition-90
         }
     }
     
     func generateLevel(text: String, name: String, canvasPosition: CGFloat) {
-        let canvas = SKSpriteNode(color: .lightGray, size: CGSize(width: 200, height: 50))
+        let canvas = SKSpriteNode(color: .lightGray, size: CGSize(width: 240, height: 50))
+        canvas.name = "canvas" + name
         canvas.position = CGPoint(x: frame.midX, y: canvasPosition)
         canvas.zPosition = 1
         addChild(canvas)
@@ -71,6 +73,36 @@ class MainMenuScene: SKScene {
         canvas.addChild(label)
     }
     
+    // colorize levels that are able to be entered and flag passed levels with trophy
+    func markEnterableAndPassedLevels() {
+        var trophyPosition = 370
+        for (index, levelIsPassed) in levels.enumerated() {
+            // last index / index = 9 is not necessary since there is no level11
+            if levelIsPassed && index<9 {
+                let indexOfNextLevel = index+2
+                let nameOfNextLevel = "level" + String(indexOfNextLevel)
+                drawLevelColorful(levelName: nameOfNextLevel)
+            }
+            
+            if levelIsPassed {
+                let trophyLabel = SKLabelNode(text: "🏆")
+                trophyLabel.position = CGPoint(x: frame.midX + 150, y: frame.midY + CGFloat(trophyPosition))
+                addChild(trophyLabel)
+            }
+            trophyPosition = trophyPosition-90
+        }
+    }
+    
+    // TODO caution optinals
+    func drawLevelColorful(levelName: String) {
+        let canvasName = "canvas" + levelName
+        let canvas = self.childNode(withName: canvasName) as? SKSpriteNode
+        canvas?.color = .orange
+        let label = canvas?.childNode(withName: levelName) as? SKLabelNode
+        label?.fontColor = SKColor.white
+        label?.addStroke(color: .white, width: 6.0)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // https://code.tutsplus.com/tutorials/spritekit-basics-nodes--cms-28785
         
@@ -81,16 +113,21 @@ class MainMenuScene: SKScene {
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
         
-        if(touchedNode.name == "levelOne") {
+        if(touchedNode.name == "level1") {
             let leveOneScene = LevelOneScene(fileNamed: "LevelOneScene")
             leveOneScene?.scaleMode = scaleMode
             view?.presentScene(leveOneScene)
         }
         
-        if(touchedNode.name == "levelTwo") {
-            let levelTwoScene = LevelTwoScene(fileNamed: "LevelTwoScene")
-            levelTwoScene?.scaleMode = scaleMode
-            view?.presentScene(levelTwoScene)
+        if(touchedNode.name == "level2") {
+            if levelOneIsPassed {
+                let levelTwoScene = LevelTwoScene(fileNamed: "LevelTwoScene")
+                levelTwoScene?.scaleMode = scaleMode
+                view?.presentScene(levelTwoScene)
+            }
+            else {
+                print("level 1 is not passed yet, you can't enter level 2!")
+            }
         }
     }
     

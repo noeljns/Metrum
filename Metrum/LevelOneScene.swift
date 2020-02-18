@@ -366,7 +366,7 @@ class LevelOneScene: SKScene {
         // TODO check complexity / higher function
         // only increase loadingbar if level has not been passed yet
         
-        let levelOneIsPassed = UserDefaults.standard.bool(forKey: "levelOne")
+        let levelOneIsPassed = UserDefaults.standard.bool(forKey: "level1")
 
         if !(levelOneIsPassed) {
             let imageName = "loadingBar" + String(correctRepliesLevelOne)
@@ -383,7 +383,7 @@ class LevelOneScene: SKScene {
     func updateLevelStatus() {
         if (correctRepliesLevelOne >= amountOfCorrectRepliesToPassLevel) {
             
-            UserDefaults.standard.set(true, forKey: "levelOne")
+            UserDefaults.standard.set(true, forKey: "level1")
             // levelOneIsPassed = true
         }
     }
@@ -471,7 +471,7 @@ class LevelOneScene: SKScene {
         setUpUnfixedParts()
         
         // has to be stored as NSuserData
-        if !(UserDefaults.standard.bool(forKey: "levelOne")) {
+        if !(UserDefaults.standard.bool(forKey: "level1")) {
             displayAccentuationInfo()
             // firstEntryOfLevelOne = false
         }

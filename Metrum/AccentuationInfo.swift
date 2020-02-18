@@ -34,7 +34,7 @@ class AccentuationInfo: SKSpriteNode {
         
         // let info = SKSpriteNode(imageNamed: "info")
         let info = SKSpriteNode(imageNamed: "icons8-info-50")
-        info.position = CGPoint(x: frame.midX-150 , y: frame.midY+275)
+        info.position = CGPoint(x: frame.midX-150 , y: frame.midY+270)
         info.size = CGSize(width: 50, height: 50)
         info.zPosition = 3
         addChild(info)
