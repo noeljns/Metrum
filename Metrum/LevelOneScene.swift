@@ -86,8 +86,11 @@ class LevelOneScene: SKScene {
     // new data model
     // lazy var selection = [lineOne, lineTwo, lineThree, lineSeven, lineEight]
     // lazy var selection = [lineOne]
-    lazy var selection = [lineTwo, lineThree, lineSeven, lineEight]
+    lazy var selection: Set<Line> = [lineTwo, lineThree, lineSeven, lineEight]
     lazy var selected = lineOne
+    
+    lazy var correctlyMarkedLines = Set<Line>()
+
     
     private var correctRepliesLevelOne = 0
     private var amountOfCorrectRepliesToPassLevel = 4
@@ -224,8 +227,35 @@ class LevelOneScene: SKScene {
         }
     }
     
+    // function to select next word to be solved
+    // does not contain element that was previously shown
+    func selectNextWord() -> Line {
+        // TODO caution correctlyMarkedLines is nil / empty in the beginning
+        let previousSelected = selected
+        
+        // loop over selection if all elements have been solved correctly
+        var notYetCorrectlyMarkedLines = selection.subtracting(correctlyMarkedLines)
+        if (notYetCorrectlyMarkedLines.isEmpty) {
+            correctlyMarkedLines.removeAll()
+            notYetCorrectlyMarkedLines = selection
+        }
+        
+        var newlySelected = notYetCorrectlyMarkedLines.randomElement()!
+        // only one remaining line to be solved
+        if (notYetCorrectlyMarkedLines.count==1) {
+            // newlySelected contains that one line
+            return newlySelected
+        }
+        
+        while(previousSelected == newlySelected ) {
+            newlySelected = notYetCorrectlyMarkedLines.randomElement()!
+        }
+        return newlySelected
+    }
+    
     func setUpUnfixedParts() {
-        selected = selection.randomElement()!
+        // selected = selection.randomElement()!
+        selected = selectNextWord()
         
         wordToBeRated.fontColor = SKColor.black
         wordToBeRated.attributedText = makeAttributedString(stringToBeMutated: (selected.line), shallBecomeBold: false)
@@ -512,6 +542,8 @@ class LevelOneScene: SKScene {
                 let (isSolutionCorrect, realSolution) = self.isSolutionCorrect()
 
                 if (isSolutionCorrect) {
+                    correctlyMarkedLines.insert(selected)
+                    
                     correctRepliesLevelOne += 1
                     // check whether level is passed and save to boolean variable
                     updateLevelStatus()

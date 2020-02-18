@@ -9,7 +9,7 @@
 import Foundation
 
 // line (engl.) = Vers (dt.)
-struct Line {
+struct Line: Hashable {
     let words: [Word]
     let measure: Measure
     let audioFile: String
@@ -22,6 +22,15 @@ struct Line {
         // cut last character, so that last space is removed from line
         str.removeLast()
         return str
+    }
+    
+    // make Line conform to protocol Hashable so that is can be used as Set
+    var hashValue: Int {
+        return line.hashValue
+    }
+    
+    static func == (lhs: Line, rhs: Line) -> Bool {
+        return lhs.line == rhs.line && lhs.measure == rhs.measure && lhs.audioFile == rhs.audioFile
     }
     
     // " ", ",", ".", "!"
