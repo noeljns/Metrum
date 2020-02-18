@@ -358,13 +358,13 @@ class LevelOneScene: SKScene {
         addChild(replyIsCorrect)
     }
     
-    func displayReplyIsFalse() {
+    func displayReplyIsFalse(solution: String) {
         backgroundBlockerReplyIsFalse = SKSpriteNode(color: SKColor.white, size: self.size)
         backgroundBlockerReplyIsFalse.alpha = 0.5
         backgroundBlockerReplyIsFalse.zPosition = 4999
         addChild(backgroundBlockerReplyIsFalse)
         
-        replyIsFalse = ReplyIsFalse(size: CGSize(width: 747, height: 350))
+        replyIsFalse = ReplyIsFalse(size: CGSize(width: 747, height: 350), solution: solution)
         replyIsFalse.delegate = self
         replyIsFalse.zPosition = 5000
         addChild(replyIsFalse)
@@ -494,6 +494,19 @@ class LevelOneScene: SKScene {
 
     }
     
+    // solution to make "x́  x" out of ["stressed", "unstressed"]
+    func solutionWithStressMarkSigns(solution: [String]) -> String{
+        var result = ""
+        for str in solution {
+            if str == "stressed" {
+                result.append("x́  ")
+            }
+            else {
+                result.append("x  ")
+            }
+        }
+        return result
+    }
     
 
     override func didMove(to view: SKView) {
@@ -540,7 +553,7 @@ class LevelOneScene: SKScene {
         if (touchedNode.name == "check") {
             if areAccentBinsFilledWithAStressmark() {
                 let (isSolutionCorrect, realSolution) = self.isSolutionCorrect()
-
+                
                 if (isSolutionCorrect) {
                     correctlyMarkedLines.insert(selected)
                     
@@ -553,8 +566,8 @@ class LevelOneScene: SKScene {
                     displayReplyIsCorrect()
                 }
                 else {
-                    print("correct solution: " + realSolution.description)
-                    displayReplyIsFalse()
+                    let solution = solutionWithStressMarkSigns(solution: realSolution)
+                    displayReplyIsFalse(solution: solution)
                 }
             }
             else {

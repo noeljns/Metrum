@@ -18,7 +18,7 @@ class ReplyIsCorrect: SKSpriteNode {
     
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
-        name = "solutionIsCorrect"
+        name = "replyIsCorrect"
    
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
@@ -28,7 +28,7 @@ class ReplyIsCorrect: SKSpriteNode {
   
         let textLabel = SKLabelNode(text: "Super! Die Lösung ist korrekt.")
         textLabel.fontColor = SKColor.black
-        textLabel.fontSize = 50
+        textLabel.fontSize = 40
         textLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY-260)
         textLabel.zPosition = 4
         addChild(textLabel)

@@ -16,9 +16,9 @@ protocol ReplyIsFalseDelegate: class {
 class ReplyIsFalse: SKSpriteNode {
     weak var delegate: ReplyIsFalseDelegate?
     
-    init(size: CGSize) {
+    init(size: CGSize, solution: String) {
         super.init(texture: nil, color: .clear, size: size)
-        name = "solutionIsFalse"
+        name = "replyIsFalse"
         
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
@@ -26,17 +26,24 @@ class ReplyIsFalse: SKSpriteNode {
         background.drawBorder(color: .red, width: 5)
         addChild(background)
         
-        // TODO: richtige Lösung in init übergeben und hier einfügen
-        let textLabel = SKLabelNode(text: "Das war leider falsch.")
+        let textLabel = SKLabelNode(text: "")
+        if solution.isEmpty {
+            textLabel.text = "Das war leider falsch."
+        } else {
+            textLabel.text = "Das war leider falsch. \nRichtig ist: \n" + solution
+        }
+        // break line: https://forums.developer.apple.com/thread/82994
+        textLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+        textLabel.numberOfLines = 0
+        textLabel.preferredMaxLayoutWidth = 520
         textLabel.fontColor = SKColor.black
-        textLabel.fontSize = 50
-        textLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY-260)
+        textLabel.fontSize = 40
+        textLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY-300)
         textLabel.zPosition = 4
         addChild(textLabel)
         
         let closeButtonFrame = SKSpriteNode(color: .red, size: CGSize(width: 150, height: 55))
         closeButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
-        // closeButtonFrame.drawBorder(color: .orange, width: 5)
         closeButtonFrame.zPosition = 4
         addChild(closeButtonFrame)
         
