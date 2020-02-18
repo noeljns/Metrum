@@ -114,18 +114,28 @@ class MainMenuScene: SKScene {
         let touchedNode = self.atPoint(touchLocation)
         
         if(touchedNode.name == "level1") {
-            let leveOneScene = LevelOneScene(fileNamed: "LevelOneScene")
-            leveOneScene?.provideAudioHelp = false;
-            leveOneScene?.provideInfoHelp = false;
-            leveOneScene?.scaleMode = scaleMode
-            view?.presentScene(leveOneScene)
+            let levelOneScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
+            levelOneScene?.provideHelp = true
+            levelOneScene?.inputFile = "level1 input file"
+            levelOneScene?.userDefaultsKey = "level1"
+            levelOneScene?.scaleMode = scaleMode
+            view?.presentScene(levelOneScene)
         }
         
         if(touchedNode.name == "level2") {
+            let levelTwoScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
+            levelTwoScene?.provideHelp = false
+            levelTwoScene?.inputFile = "level2 input file"
+            levelTwoScene?.userDefaultsKey = "level2"
+            levelTwoScene?.scaleMode = scaleMode
+            view?.presentScene(levelTwoScene)
+        }
+        
+        if(touchedNode.name == "level7") {
             if levelOneIsPassed {
-                let levelTwoScene = LevelTwoScene(fileNamed: "LevelTwoScene")
-                levelTwoScene?.scaleMode = scaleMode
-                view?.presentScene(levelTwoScene)
+                let levelSevenScene = LevelTwoScene(fileNamed: "LevelTwoScene")
+                levelSevenScene?.scaleMode = scaleMode
+                view?.presentScene(levelSevenScene)
             }
             else {
                 print("level 1 is not passed yet, you can't enter level 2!")

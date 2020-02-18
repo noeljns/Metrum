@@ -27,13 +27,13 @@ class Congratulations: SKSpriteNode {
         let headerLabel = SKLabelNode(text: "Prima!")
         headerLabel.fontColor = SKColor.black
         headerLabel.fontSize = 50
-        headerLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY+250)
+        headerLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY+300)
         headerLabel.zPosition = 4
         addChild(headerLabel)
         
         let trophy = SKLabelNode(text: "🏆")
         trophy.fontSize = 140
-        trophy.position = CGPoint(x: frame.midX , y: frame.midY+50)
+        trophy.position = CGPoint(x: frame.midX , y: frame.midY+120)
         trophy.zPosition = 4
         addChild(trophy)
      
@@ -41,7 +41,7 @@ class Congratulations: SKSpriteNode {
         explanationLabel.fontColor = SKColor.black
         explanationLabel.text = "Herzlichen Glückwünsch! Du hast das Level bestanden.\n\n" +              "Weiter geht es im nächsten Level."
         explanationLabel.fontSize = 40
-        explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-150)
+        explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-200)
         // break line: https://forums.developer.apple.com/thread/82994
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         explanationLabel.numberOfLines = 0

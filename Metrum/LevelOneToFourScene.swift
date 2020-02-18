@@ -1,5 +1,5 @@
 //
-//  LevelOneScene.swift
+//  LevelOneToFourScene.swift
 //  Metrum
 //
 //  Created by Jonas Jonas on 06.02.20.
@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class LevelOneScene: SKScene {
+class LevelOneToFourScene: SKScene {
     // examples of input data
     // https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
     lazy var freu = Syllable(syllableString: "Freu", accentuation: Accentuation.stressed)
@@ -63,7 +63,6 @@ class LevelOneScene: SKScene {
     private let unstressed = SKLabelNode()
     private let unstressedStressMarkParentBin = SKSpriteNode()
 
-
     // overlay windows
     private var backgroundBlocker: SKSpriteNode!
     private var accentuationInfoButton = SKSpriteNode()
@@ -79,20 +78,30 @@ class LevelOneScene: SKScene {
     private var checkButtonFrame = SKSpriteNode()
     private var checkButton = SKLabelNode()
 
-    // new data model
-    // lazy var selection = [lineOne, lineTwo, lineThree, lineSeven, lineEight]
-    // lazy var selection = [lineOne]
+    // lazy var selection: Set<Line> = [lineOne]
     // lazy var selection: Set<Line> = [lineTwo, lineThree, lineSeven, lineEight]
-    lazy var selection: Set<Line> = [lineOne]
+    lazy var selection: Set<Line> = [lineOne, lineTwo, lineThree, lineSeven, lineEight]
     lazy var selected = lineOne
     
     lazy var correctlyMarkedLines = Set<Line>()
-
     private var correctRepliesLevelOne = 0
     private var amountOfCorrectRepliesToPassLevel = 4
     
-    public var provideAudioHelp = true;
-    public var provideInfoHelp = true;
+    // TODO init properties by constructor
+    public var provideHelp = false
+    public var inputFile = ""
+    public var userDefaultsKey = ""
+    
+    
+    // both did not work
+    // https://forums.raywenderlich.com/t/swift-tutorial-initialization-in-depth-part-2-2/13209/3
+    // https://spritekitswift.wordpress.com/2015/10/21/spritekit-custom-skscene-class-from-abstract-skscene-class-with-swift/
+//    convenience init?(fileNamed: String, provideHelp: Bool, inputFile: String) {
+//        // super.init(size: size)
+//        self.init(fileNamed: "fileNamed")
+//        self.provideHelp = provideHelp
+//        self.inputFile = inputFile
+//    }
     
     func setUpScene() {
         exitLabel.name = "exit"
@@ -112,8 +121,8 @@ class LevelOneScene: SKScene {
         addChild(loadingBar)
         
         taskLabel.fontColor = SKColor.black
-        taskLabel.text = "Markiere die betonten (x́) und unbetonten (x) Silben des Wortes.\n"
-                         + "Über jede Silbe des Wortes ist ein graues Kästchen. " +
+        taskLabel.text = "Markiere die betonten (x́) und unbetonten (x) Silben.\n"
+                         + "Zu jeder Silbe gehört ein graues Kästchen, das über ihr platziert ist. " +
                         "Ziehe die Betonungszeichen in das jeweilige Kästchen über der Silbe.\n"
         taskLabel.position = CGPoint(x: frame.midX , y: frame.midY+150)
         // break line: https://forums.developer.apple.com/thread/82994
@@ -123,21 +132,24 @@ class LevelOneScene: SKScene {
         taskLabel.zPosition = 4
         addChild(taskLabel)
         
-        // accentuationInfoButton = SKSpriteNode(imageNamed: "info")
-        accentuationInfoButton = SKSpriteNode(imageNamed: "icons8-info-50")
-        accentuationInfoButton.name = "accentuationInfoBtn"
-        accentuationInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY+100)
-        accentuationInfoButton.size = CGSize(width: 50, height: 50)
-        accentuationInfoButton.zPosition = 2
-        addChild(accentuationInfoButton)
         
-        // soundBoxButton = SKSpriteNode(imageNamed: "sound")
-        soundBoxButton = SKSpriteNode(imageNamed: "QuickActions_Audio")
-        soundBoxButton.name = "soundBoxBtn"
-        soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY+100)
-        soundBoxButton.size = CGSize(width: 40, height: 40)
-        soundBoxButton.zPosition = 2
-        addChild(soundBoxButton)
+        if provideHelp {
+            // accentuationInfoButton = SKSpriteNode(imageNamed: "info")
+            accentuationInfoButton = SKSpriteNode(imageNamed: "icons8-info-50")
+            accentuationInfoButton.name = "accentuationInfoBtn"
+            accentuationInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY+100)
+            accentuationInfoButton.size = CGSize(width: 50, height: 50)
+            accentuationInfoButton.zPosition = 2
+            addChild(accentuationInfoButton)
+            
+            // soundBoxButton = SKSpriteNode(imageNamed: "sound")
+            soundBoxButton = SKSpriteNode(imageNamed: "QuickActions_Audio")
+            soundBoxButton.name = "soundBoxBtn"
+            soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY+100)
+            soundBoxButton.size = CGSize(width: 40, height: 40)
+            soundBoxButton.zPosition = 2
+            addChild(soundBoxButton)
+        }
         
         checkButtonFrame.color = .lightGray
         checkButtonFrame.size = CGSize(width: 150, height: 55)
@@ -155,17 +167,16 @@ class LevelOneScene: SKScene {
     
     
 
-    
     // make two stress marks, one stressed and two unstressed
     func generateStressMarks() {
         generateStressedStressMark()
         generateUnstressedStressMark()
         
+        // necessary to check whether spawn place of stressMarks are filled with stressMarks
         stressedStressMarkParentBin.color = .clear
         stressedStressMarkParentBin.size = CGSize(width: 40, height: 50)
         stressedStressMarkParentBin.position = CGPoint(x: frame.midX-40, y: frame.midY-150)
         stressedStressMarkParentBin.zPosition = 2
-        stressedStressMarkParentBin.drawBorder(color: .orange, width: 2)
         addChild(stressedStressMarkParentBin)
         unstressedStressMarkParentBin.color = .clear
         unstressedStressMarkParentBin.size = CGSize(width: 40, height: 50)
@@ -423,7 +434,7 @@ class LevelOneScene: SKScene {
         // TODO check complexity / higher function
         // only increase loadingbar if level has not been passed yet
         
-        let levelOneIsPassed = UserDefaults.standard.bool(forKey: "level1")
+        let levelOneIsPassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
 
         if !(levelOneIsPassed) {
             let imageName = "loadingBar" + String(correctRepliesLevelOne)
@@ -440,8 +451,7 @@ class LevelOneScene: SKScene {
     func updateLevelStatus() {
         if (correctRepliesLevelOne >= amountOfCorrectRepliesToPassLevel) {
             
-            UserDefaults.standard.set(true, forKey: "level1")
-            // levelOneIsPassed = true
+            UserDefaults.standard.set(true, forKey: userDefaultsKey)
         }
     }
 
@@ -536,11 +546,13 @@ class LevelOneScene: SKScene {
     
 
     override func didMove(to view: SKView) {
+        print(inputFile)
+        
         setUpScene()
         setUpUnfixedParts()
         
         // has to be stored as NSuserData
-        if !(UserDefaults.standard.bool(forKey: "level1")) {
+        if !(UserDefaults.standard.bool(forKey: userDefaultsKey)) {
             displayAccentuationInfo()
         }
         // level has been passed, so we do not need counter as threshold anymore
@@ -558,11 +570,11 @@ class LevelOneScene: SKScene {
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
         
-        if(touchedNode.name == "accentuationInfoBtn") {
+        if(provideHelp && touchedNode.name == "accentuationInfoBtn") {
             displayAccentuationInfo()
         }
         
-        if(touchedNode.name == "soundBoxBtn") {
+        if(provideHelp && touchedNode.name == "soundBoxBtn") {
             // https://www.reddit.com/r/swift/comments/2wpspa/running_parallel_skactions_with_different_nodes/
             // https://stackoverflow.com/questions/28823386/skaction-playsoundfilenamed-fails-to-load-sound
             // worked as well
@@ -603,7 +615,7 @@ class LevelOneScene: SKScene {
         }
         
         if (touchedNode.name == "exit") {
-            if(UserDefaults.standard.bool(forKey: "level1")) {
+            if(UserDefaults.standard.bool(forKey: userDefaultsKey)) {
                 // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
                 let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
                 self.view?.presentScene(mainMenu)
@@ -663,6 +675,7 @@ class LevelOneScene: SKScene {
             stressedStressMarkSpawnIsFilled.insert((stressedStressMarkParentBin.frame.contains(stressMark.position)))
             unstressedStressMarkSpawnIsFilled.insert((unstressedStressMarkParentBin.frame.contains(stressMark.position)))
         }
+        // if spawn set only contains false, it is empty
         if !(stressedStressMarkSpawnIsFilled.contains(true)) {
             generateStressedStressMark()
         }
@@ -693,7 +706,7 @@ class LevelOneScene: SKScene {
 
 
 
-extension LevelOneScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, ReplyIsFalseDelegate, CongratulationsDelegate, WarningDelegate {
+extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, ReplyIsFalseDelegate, CongratulationsDelegate, WarningDelegate {
     func closeAccentuationInfo() {
         backgroundBlocker.removeFromParent()
         accentuationInfo?.removeFromParent()
