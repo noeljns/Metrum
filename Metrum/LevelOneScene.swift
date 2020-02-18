@@ -67,9 +67,10 @@ class LevelOneScene: SKScene {
     private var backgroundBlocker: SKSpriteNode!
     private var accentuationInfoButton = SKSpriteNode()
     private var accentuationInfo: AccentuationInfo!
+    private var congratulations: Congratulations!
     private var replyIsCorrect: ReplyIsCorrect!
     private var replyIsFalse: ReplyIsFalse!
-    private var congratulations: Congratulations!
+    private var warning: Warning!
     
     private var soundBoxButton = SKSpriteNode()
     private let audioNode = SKNode()
@@ -85,7 +86,6 @@ class LevelOneScene: SKScene {
     
     lazy var correctlyMarkedLines = Set<Line>()
 
-    
     private var correctRepliesLevelOne = 0
     private var amountOfCorrectRepliesToPassLevel = 4
     
@@ -361,6 +361,18 @@ class LevelOneScene: SKScene {
         addChild(replyIsFalse)
     }
     
+    func displayWarning() {
+        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
+        backgroundBlocker.zPosition = 4999
+        backgroundBlocker.alpha = 0.5
+        addChild(backgroundBlocker)
+        
+        warning = Warning(size: CGSize(width: 650, height: 450))
+        warning.delegate = self
+        warning.zPosition = 5000
+        addChild(warning)
+    }
+    
     // function for an action to add and remove a node from the scene
     func addAndRemoveNode(node: SKLabelNode) {
         addChild(node)
@@ -569,9 +581,14 @@ class LevelOneScene: SKScene {
         }
         
         if (touchedNode.name == "exit") {
-            // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
-            let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
-            self.view?.presentScene(mainMenu)
+            if(UserDefaults.standard.bool(forKey: "level1")) {
+                // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
+                let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
+                self.view?.presentScene(mainMenu)
+            }
+            else {
+                displayWarning()
+            }
         }
     }
     
@@ -638,19 +655,18 @@ class LevelOneScene: SKScene {
 
 
 
-extension LevelOneScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, ReplyIsFalseDelegate, CongratulationsDelegate {
-    
-    func closeCongratulations() {
-        // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
-        
-        let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
-        self.view?.presentScene(mainMenu)
-    }
-    
+extension LevelOneScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, ReplyIsFalseDelegate, CongratulationsDelegate, WarningDelegate {
+ 
     func closeAccentuationInfo() {
         //at this point you could update any GUI nesc. based on what happened in your dialog
         backgroundBlocker.removeFromParent()
         accentuationInfo?.removeFromParent()
+    }
+    
+    func closeCongratulations() {
+        // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
+        let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
+        self.view?.presentScene(mainMenu)
     }
     
     func closeReplyIsCorrect() {
@@ -671,6 +687,17 @@ extension LevelOneScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, Reply
         backgroundBlocker.removeFromParent()
         replyIsFalse?.removeFromParent()
         cleanAndSetupSceneForNewWord()
+    }
+    
+    func exitWarning() {
+        // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
+        let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
+        self.view?.presentScene(mainMenu)
+    }
+    
+    func closeWarning() {
+        backgroundBlocker.removeFromParent()
+        warning?.removeFromParent()
     }
 }
 

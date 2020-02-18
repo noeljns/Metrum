@@ -21,8 +21,6 @@ class Congratulations: SKSpriteNode {
         name = "congratulations"
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
-        // test
-        // background.alpha = 0.0
         background.drawBorder(color: .orange, width: 5)
         addChild(background)
         
@@ -42,6 +40,7 @@ class Congratulations: SKSpriteNode {
         let explanationLabel = SKLabelNode(text: "test")
         explanationLabel.fontColor = SKColor.black
         explanationLabel.text = "Herzlichen Glückwünsch! Du hast das Level bestanden.\n\n" +              "Weiter geht es im nächsten Level."
+        explanationLabel.fontSize = 40
         explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-150)
         // break line: https://forums.developer.apple.com/thread/82994
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping

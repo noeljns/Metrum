@@ -35,7 +35,6 @@ class ReplyIsCorrect: SKSpriteNode {
                         
         let closeButtonFrame = SKSpriteNode(color: .green, size: CGSize(width: 150, height: 55))
         closeButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
-        // closeButtonFrame.drawBorder(color: .orange, width: 5)
         closeButtonFrame.zPosition = 4
         addChild(closeButtonFrame)
         
