@@ -62,20 +62,14 @@ class LevelOneScene: SKScene {
     private let stressed = SKLabelNode()
     private let unstressedParent = SKSpriteNode()
     private let unstressed = SKLabelNode()
-    
+
+    // overlay windows
+    private var backgroundBlocker: SKSpriteNode!
     private var accentuationInfoButton = SKSpriteNode()
     private var accentuationInfo: AccentuationInfo!
-    private var backgroundBlockerAccentuationInfo: SKSpriteNode!
-    private var firstEntryOfLevelOne = true
-    
     private var replyIsCorrect: ReplyIsCorrect!
-    private var backgroundBlockerReplyIsCorrect: SKSpriteNode!
-    
     private var replyIsFalse: ReplyIsFalse!
-    private var backgroundBlockerReplyIsFalse: SKSpriteNode!
-    
     private var congratulations: Congratulations!
-    private var backgroundBlockerCongratulations: SKSpriteNode!
     
     private var soundBoxButton = SKSpriteNode()
     private let audioNode = SKNode()
@@ -321,13 +315,10 @@ class LevelOneScene: SKScene {
         }
     }
     
-    
-    
-    
     func displayAccentuationInfo() {
-        backgroundBlockerAccentuationInfo = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlockerAccentuationInfo.zPosition = 4999
-        addChild(backgroundBlockerAccentuationInfo)
+        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
+        backgroundBlocker.zPosition = 4999
+        addChild(backgroundBlocker)
 
         accentuationInfo = AccentuationInfo(size: CGSize(width: 650, height: 800))
         accentuationInfo.delegate = self
@@ -336,9 +327,9 @@ class LevelOneScene: SKScene {
     }
     
     func displayCongratulations() {
-        backgroundBlockerCongratulations = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlockerCongratulations.zPosition = 4999
-        addChild(backgroundBlockerCongratulations)
+        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
+        backgroundBlocker.zPosition = 4999
+        addChild(backgroundBlocker)
         
         congratulations = Congratulations(size: CGSize(width: 650, height: 800))
         congratulations.delegate = self
@@ -347,10 +338,10 @@ class LevelOneScene: SKScene {
     }
     
     func displayReplyIsCorrect() {
-        backgroundBlockerReplyIsCorrect = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlockerReplyIsCorrect.alpha = 0.5
-        backgroundBlockerReplyIsCorrect.zPosition = 4999
-        addChild(backgroundBlockerReplyIsCorrect)
+        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
+        backgroundBlocker.zPosition = 4999
+        backgroundBlocker.alpha = 0.5
+        addChild(backgroundBlocker)
         
         replyIsCorrect = ReplyIsCorrect(size: CGSize(width: 747, height: 350))
         replyIsCorrect.delegate = self
@@ -359,10 +350,10 @@ class LevelOneScene: SKScene {
     }
     
     func displayReplyIsFalse(solution: String) {
-        backgroundBlockerReplyIsFalse = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlockerReplyIsFalse.alpha = 0.5
-        backgroundBlockerReplyIsFalse.zPosition = 4999
-        addChild(backgroundBlockerReplyIsFalse)
+        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
+        backgroundBlocker.zPosition = 4999
+        backgroundBlocker.alpha = 0.5
+        addChild(backgroundBlocker)
         
         replyIsFalse = ReplyIsFalse(size: CGSize(width: 747, height: 350), solution: solution)
         replyIsFalse.delegate = self
@@ -516,7 +507,6 @@ class LevelOneScene: SKScene {
         // has to be stored as NSuserData
         if !(UserDefaults.standard.bool(forKey: "level1")) {
             displayAccentuationInfo()
-            // firstEntryOfLevelOne = false
         }
         // level has been passed, so we do not need counter as threshold anymore
         else {
@@ -659,12 +649,12 @@ extension LevelOneScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, Reply
     
     func closeAccentuationInfo() {
         //at this point you could update any GUI nesc. based on what happened in your dialog
-        backgroundBlockerAccentuationInfo.removeFromParent()
+        backgroundBlocker.removeFromParent()
         accentuationInfo?.removeFromParent()
     }
     
     func closeReplyIsCorrect() {
-        backgroundBlockerReplyIsCorrect.removeFromParent()
+        backgroundBlocker.removeFromParent()
         replyIsCorrect?.removeFromParent()
         
         if correctRepliesLevelOne == amountOfCorrectRepliesToPassLevel {
@@ -678,7 +668,7 @@ extension LevelOneScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, Reply
     }
     
     func closeReplyIsFalse() {
-        backgroundBlockerReplyIsFalse.removeFromParent()
+        backgroundBlocker.removeFromParent()
         replyIsFalse?.removeFromParent()
         cleanAndSetupSceneForNewWord()
     }
