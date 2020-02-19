@@ -44,6 +44,7 @@ class LevelOneToFourScene: SKScene {
     // variables for input data
     lazy var loadedLines = Set<Line>()
     // TODO check whether forced unwrapping is appropriate here
+    // TODO: or is it only handed via functions parameters anyways? is a global variable necessary?
     private var selectedLine: Line!
     
     // TODO check if handing over properties via init / constructor is better
@@ -150,9 +151,9 @@ class LevelOneToFourScene: SKScene {
     /// If the user has passed the level, the loading bar remains full.
     func manageLoadingBar() {
         // TODO check complexity / higher function
-        let levelOneIsPassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
+        let levelOnePassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
         
-        if !(levelOneIsPassed) {
+        if !(levelOnePassed) {
             let imageName = "loadingBar" + String(correctRepliesLevelOne)
             loadingBar.texture = SKTexture(imageNamed: imageName)
             print("correct replies: " + String(correctRepliesLevelOne))
@@ -367,7 +368,6 @@ class LevelOneToFourScene: SKScene {
         addChild(stressMarkParent)
         return stressMarkParent
     }
-    
     
     // TODO modularize overlay nodes
 //    func displayOverlayNode(node: SKSpriteNode, size: CGSize, transparent: Bool) {
@@ -590,12 +590,12 @@ class LevelOneToFourScene: SKScene {
     }
     
     /// Empties lists, removes unfix nodes and sets up scene again for new line to be solved.
-    func cleanAndSetupSceneForNewWord() {
+    func cleanAndSetupSceneForNewLine() {
         // remove all accentBins and stressMarks from scene
         accentBins.forEach { $0.removeFromParent() }
         stressMarks.forEach { $0.removeFromParent() }
 
-        // empty accentBins array and stressMarks array since new word is selected
+        // empty accentBins array and stressMarks array since new line is selected
         accentBins.removeAll()
         stressMarks.removeAll()
         
@@ -788,14 +788,14 @@ extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate,
             displayCongratulations()
         }
         else {
-            cleanAndSetupSceneForNewWord()
+            cleanAndSetupSceneForNewLine()
         }
     }
     
     func closeReplyIsFalse() {
         backgroundBlocker.removeFromParent()
         replyIsFalse?.removeFromParent()
-        cleanAndSetupSceneForNewWord()
+        cleanAndSetupSceneForNewLine()
     }
     
     func exitWarning() {

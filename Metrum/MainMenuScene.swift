@@ -116,7 +116,6 @@ class MainMenuScene: SKScene {
         if(touchedNode.name == "level1") {
             let levelOneScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
             levelOneScene?.provideHelp = true
-            // levelOneScene?.inputFile = "input file for level1 and level2"
             levelOneScene?.inputFile = "words.json"
             levelOneScene?.userDefaultsKey = "level1"
             levelOneScene?.scaleMode = scaleMode
@@ -148,6 +147,22 @@ class MainMenuScene: SKScene {
             levelFourScene?.userDefaultsKey = "level4"
             levelFourScene?.scaleMode = scaleMode
             view?.presentScene(levelFourScene)
+        }
+        
+        if(touchedNode.name == "level5") {
+            let levelFiveScene = LevelFiveToSixScene(fileNamed: "LevelFiveToSixScene")
+            levelFiveScene?.provideHelp = true
+            levelFiveScene?.userDefaultsKey = "level5"
+            levelFiveScene?.scaleMode = scaleMode
+            view?.presentScene(levelFiveScene)
+        }
+        
+        if(touchedNode.name == "level6") {
+            let levelSixScene = LevelFiveToSixScene(fileNamed: "LevelFiveToSixScene")
+            levelSixScene?.provideHelp = false
+            levelSixScene?.userDefaultsKey = "level6"
+            levelSixScene?.scaleMode = scaleMode
+            view?.presentScene(levelSixScene)
         }
         
         if(touchedNode.name == "level7") {

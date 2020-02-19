@@ -28,13 +28,13 @@ class MeasureInfo: SKSpriteNode {
         let headerLabel = SKLabelNode(text: "Merke")
         headerLabel.fontColor = SKColor.black
         headerLabel.fontSize = 50
-        headerLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY+250)
+        headerLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY+300)
         headerLabel.zPosition = 4
         addChild(headerLabel)
         
         // let info = SKSpriteNode(imageNamed: "info")
         let info = SKSpriteNode(imageNamed: "icons8-info-50")
-        info.position = CGPoint(x: frame.midX-150 , y: frame.midY+270)
+        info.position = CGPoint(x: frame.midX-150 , y: frame.midY+320)
         info.size = CGSize(width: 50, height: 50)
         info.zPosition = 3
         addChild(info)
@@ -44,11 +44,11 @@ class MeasureInfo: SKSpriteNode {
         explanationLabel.text = "Die Verse vieler Gedichte haben ein bestimmtes Betonungsmuster. "
             + "Das heißt die betonten (x́) und unbetonten (x) Silben eines Verses wechseln sich in einer festen Reihenfolge ab. "
             + "Diese Abfolge nennt man Versmaß oder Metrum. Die vier wichtigsten Grundtypen sind: \n\n" +
-            "Jambus (x x́)    : Ge·spenst 👻\n" +
-            "Trochäus (x́ x)  : So·nne ☀️\n" +
-            "Anapäst (x x x́) : E·le·fant 🐘\n" +
-            "Daktylus (x́ x x): Bro·kko·li 🥦"
-        explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-150)
+            "   Jambus (x x́)    : Ge·spenst 👻\n" +
+            "   Trochäus (x́ x)  : So·nne ☀️\n" +
+            "   Anapäst (x x x́) : E·le·fant 🐘\n" +
+            "   Daktylus (x́ x x) : Bro·kko·li 🥦"
+        explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-250)
         // break line: https://forums.developer.apple.com/thread/82994
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         explanationLabel.numberOfLines = 0
