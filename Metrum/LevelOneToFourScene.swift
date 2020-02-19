@@ -9,318 +9,83 @@
 import SpriteKit
 
 class LevelOneToFourScene: SKScene {
-    // examples of input data
-    // https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
-    lazy var freu = Syllable(syllableString: "Freu", accentuation: Accentuation.stressed)
-    lazy var de = Syllable(syllableString: "de", accentuation: Accentuation.unstressed)
-    lazy var freude = Word(syllables: [freu, de])
-    lazy var schoe = Syllable(syllableString: "schö", accentuation: Accentuation.stressed)
-    lazy var ner = Syllable(syllableString: "ner", accentuation: Accentuation.unstressed)
-    lazy var schoener = Word(syllables: [schoe, ner])
-    lazy var goe = Syllable(syllableString: "Gö", accentuation: Accentuation.stressed)
-    lazy var tter = Syllable(syllableString: "tter", accentuation: Accentuation.unstressed)
-    lazy var fun = Syllable(syllableString: "fun", accentuation: Accentuation.stressed)
-    lazy var ken = Syllable(syllableString: "ken", accentuation: Accentuation.unstressed)
-    lazy var goetterfunken = Word(syllables: [goe, tter, fun, ken])
-    lazy var lineOne = Line(words: [freude, schoener, goetterfunken], measure: Measure.trochaeus, audioFile: "lineOne.mp3")
-    
-    lazy var so = Syllable(syllableString: "So", accentuation: Accentuation.stressed)
-    lazy var nne = Syllable(syllableString: "nne", accentuation: Accentuation.unstressed)
-    lazy var sonne = Word(syllables: [so, nne])
-    lazy var lineTwo = Line(words: [sonne], measure: Measure.trochaeus, audioFile: "Sonne.mp3")
-    
-    lazy var ge = Syllable(syllableString: "Ge", accentuation: Accentuation.unstressed)
-    lazy var spenst = Syllable(syllableString: "spenst", accentuation: Accentuation.stressed)
-    lazy var gespenst = Word(syllables: [ge, spenst])
-    lazy var lineThree = Line(words: [gespenst], measure: Measure.jambus, audioFile: "Gespenst.mp3")
-    
-    lazy var har = Syllable(syllableString: "Har", accentuation: Accentuation.unstressed)
-    lazy var mo = Syllable(syllableString: "mo", accentuation: Accentuation.unstressed)
-    lazy var nie = Syllable(syllableString: "nie", accentuation: Accentuation.stressed)
-    lazy var harmonie = Word(syllables: [har, mo, nie])
-    lazy var lineSeven = Line(words: [harmonie], measure: Measure.anapaest, audioFile: "Harmonie.mp3")
-    
-    lazy var ei = Syllable(syllableString: "Ei", accentuation: Accentuation.stressed)
-    lazy var tel = Syllable(syllableString: "tel", accentuation: Accentuation.unstressed)
-    lazy var keit = Syllable(syllableString: "keit", accentuation: Accentuation.unstressed)
-    lazy var eitelkeit = Word(syllables: [ei, tel, keit])
-    lazy var lineEight = Line(words: [eitelkeit], measure: Measure.daktylus, audioFile: "Eitelkeit.mp3")
-  
-    // variables
+    // UI variables
     private var exitLabel = SKLabelNode()
     private var loadingBar = SKSpriteNode()
-    
     private let taskLabel = SKLabelNode()
-    
     private var accentBins = [SKSpriteNode]()
-    
-    private var wordToBeRated = SKLabelNode()
-    private var wordToBeRatedBold = SKLabelNode()
-    
+    private var selectedLineLabel = SKLabelNode()
+    private var selectedLineBoldLabel = SKLabelNode()
     private var stressMarks = [SKSpriteNode]()
     private let stressedStressMarkParentBin = SKSpriteNode()
     private let stressed = SKLabelNode()
     private let unstressed = SKLabelNode()
     private let unstressedStressMarkParentBin = SKSpriteNode()
-
-    // overlay windows
-    private var backgroundBlocker: SKSpriteNode!
     private var accentuationInfoButton = SKSpriteNode()
     private var accentuationInfo: AccentuationInfo!
+    private var soundBoxButton = SKSpriteNode()
+    private var checkButtonFrame = SKSpriteNode()
+    private var checkButton = SKLabelNode()
+    // overlay nodes
+    // TODO check whether forced unwrapping is appropriate here
+    private var backgroundBlocker: SKSpriteNode!
+    private var overlay: SKSpriteNode!
     private var congratulations: Congratulations!
     private var replyIsCorrect: ReplyIsCorrect!
     private var replyIsFalse: ReplyIsFalse!
     private var warning: Warning!
     
-    private var soundBoxButton = SKSpriteNode()
-    private let audioNode = SKNode()
-    
-    private var checkButtonFrame = SKSpriteNode()
-    private var checkButton = SKLabelNode()
-
-    // lazy var selection: Set<Line> = [lineOne]
-    // lazy var selection: Set<Line> = [lineTwo, lineThree, lineSeven, lineEight]
-    // lazy var selection: Set<Line> = [lineOne, lineTwo, lineThree, lineSeven, lineEight]
-    // lazy var selected = lineOne
-    
-    lazy var correctlyMarkedLines = Set<Line>()
-    private var correctRepliesLevelOne = 0
+    // variables for level passing management
+    // lazy: https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
+    lazy private var correctlyMarkedLines = Set<Line>()
     private var amountOfCorrectRepliesToPassLevel = 4
+    private var correctRepliesLevelOne = 0
     
-    // TODO init properties by constructor
+    // variables for input data
+    lazy var loadedLines = Set<Line>()
+    // TODO check whether forced unwrapping is appropriate here
+    private var selectedLine: Line!
+    
+    // TODO check if handing over properties via init / constructor is better
     public var provideHelp = false
     public var inputFile = ""
     public var userDefaultsKey = ""
     
-    // test
-//    lazy var jsonString = """
-//    {
-//      "words": [
-//        {
-//          "syllables": [
-//            {
-//              "syllableString": "Die",
-//              "accentuation": "unstressed"
-//            }
-//          ]
-//        },
-//        {
-//          "syllables": [
-//            {
-//              "syllableString": "lin",
-//              "accentuation": "stressed"
-//            },
-//            {
-//              "syllableString": "den",
-//              "accentuation": "unstressed"
-//            }
-//          ]
-//        },
-//        {
-//          "syllables": [
-//            {
-//              "syllableString": "Lüf",
-//              "accentuation": "stressed"
-//            },
-//            {
-//              "syllableString": "te",
-//              "accentuation": "unstressed"
-//            }
-//          ]
-//        },
-//        {
-//          "syllables": [
-//            {
-//              "syllableString": "sind",
-//              "accentuation": "stressed"
-//            }
-//          ]
-//        },
-//        {
-//          "syllables": [
-//            {
-//              "syllableString": "er",
-//              "accentuation": "unstressed"
-//            },
-//            {
-//              "syllableString": "wacht",
-//              "accentuation": "stressed"
-//            }
-//          ]
-//        }
-//      ],
-//      "measure": "jambus",
-//      "audioFile": "lineTwo.mp3"
-//    }
-//    """
+    // both did not work
+    // https://forums.raywenderlich.com/t/swift-tutorial-initialization-in-depth-part-2-2/13209/3
+    // https://spritekitswift.wordpress.com/2015/10/21/spritekit-custom-skscene-class-from-abstract-skscene-class-with-swift/
+    //    convenience init?(fileNamed: String, provideHelp: Bool, inputFile: String) {
+    //        // super.init(size: size)
+    //        self.init(fileNamed: "fileNamed")
+    //        self.provideHelp = provideHelp
+    //        self.inputFile = inputFile
+    //    }
     
-    lazy var jsonString = """
-    [
-      {
-        "words": [
-          {
-            "syllables": [
-              {
-                "syllableString": "Freu",
-                "accentuation": "stressed"
-              },
-              {
-                "syllableString": "de",
-                "accentuation": "unstressed"
-              }
-            ]
-          },
-          {
-            "syllables": [
-              {
-                "syllableString": "schö",
-                "accentuation": "stressed"
-              },
-              {
-                "syllableString": "ner",
-                "accentuation": "unstressed"
-              }
-            ]
-          },
-          {
-            "syllables": [
-              {
-                "syllableString": "Gö",
-                "accentuation": "stressed"
-              },
-              {
-                "syllableString": "tter",
-                "accentuation": "unstressed"
-              }
-            ]
-          },
-          {
-            "syllables": [
-              {
-                "syllableString": "fun",
-                "accentuation": "stressed"
-              },
-              {
-                "syllableString": "ken",
-                "accentuation": "unstressed"
-              }
-            ]
-          }
-        ],
-        "measure": "trochaeus",
-        "audioFile": "lineOne.mp3"
-      },
-      {
-        "words": [
-          {
-            "syllables": [
-              {
-                "syllableString": "Die",
-                "accentuation": "unstressed"
-              }
-            ]
-          },
-          {
-            "syllables": [
-              {
-                "syllableString": "lin",
-                "accentuation": "stressed"
-              },
-              {
-                "syllableString": "den",
-                "accentuation": "unstressed"
-              }
-            ]
-          },
-          {
-            "syllables": [
-              {
-                "syllableString": "Lüf",
-                "accentuation": "stressed"
-              },
-              {
-                "syllableString": "te",
-                "accentuation": "unstressed"
-              }
-            ]
-          },
-          {
-            "syllables": [
-              {
-                "syllableString": "sind",
-                "accentuation": "stressed"
-              }
-            ]
-          },
-          {
-            "syllables": [
-              {
-                "syllableString": "er",
-                "accentuation": "unstressed"
-              },
-              {
-                "syllableString": "wacht  ",
-                "accentuation": "stressed"
-              }
-            ]
-          }
-        ],
-        "measure": "jambus",
-        "audioFile": "lineTwo.mp3"
-      }
-    ]
-    """
-   // catch exceptions https://learnappmaking.com/codable-json-swift-how-to/
-    lazy var jsonData = jsonString.data(using: .utf8)!
-    // lazy var lines = try! JSONDecoder().decode([Line].self, from: jsonData)
-    // lazy var line = try! JSONDecoder().decode(Line.self, from: jsonData)
-    
-    // lazy var selection: Set<Line> = Set<Line>(lines)
-    lazy var selection = Set<Line>()
-    // TODO BUG
-    // var selected: Line?
-    lazy var selected = lineThree
-    
-    // https://stackoverflow.com/a/58981897
+    /// Gets data from json file and saves deserialized Line objects to selection variable.
     func loadInputFile() {
-        // inputFile has "words.json" or lines.json
+        // https://stackoverflow.com/a/58981897
         let data: Data
         
+        // TODO get from Sandbox
+        // name of json file is in inputFile
         guard let file = Bundle.main.url(forResource: inputFile, withExtension: nil) else {
-            print("error one while loading inputFile")
-            fatalError("Error One: Could not find \(inputFile) in main bundle.")
+            fatalError("Could not find \(inputFile) in main bundle.")
         }
-        
         do {
             data = try Data(contentsOf: file)
         }
         catch {
-            print("error two while loading inputFile")
-            fatalError("Error Two: Could not find \(inputFile) in main bundle.")
+            fatalError("Could not find \(inputFile) in main bundle.")
         }
-        
         do {
             let lines = try! JSONDecoder().decode([Line].self, from: data)
-            selection = Set<Line>(lines)
-            selected = selection.first!
+            loadedLines = Set<Line>(lines)
+            selectedLine = loadedLines.first!
         }
     }
     
-    // both did not work
-    // https://forums.raywenderlich.com/t/swift-tutorial-initialization-in-depth-part-2-2/13209/3
-    // https://spritekitswift.wordpress.com/2015/10/21/spritekit-custom-skscene-class-from-abstract-skscene-class-with-swift/
-//    convenience init?(fileNamed: String, provideHelp: Bool, inputFile: String) {
-//        // super.init(size: size)
-//        self.init(fileNamed: "fileNamed")
-//        self.provideHelp = provideHelp
-//        self.inputFile = inputFile
-//    }
-    
+    /// Sets up the ui elements that don't get removed from and re-added to scene during level
     func setUpScene() {
-        // print("test json: " + lines[0].getLine())
-        // print("test json: " + line.getLine())
-
-        
         exitLabel.name = "exit"
         exitLabel.fontColor = SKColor.black
         exitLabel.text = "x"
@@ -333,7 +98,6 @@ class LevelOneToFourScene: SKScene {
         loadingBar.position = CGPoint(x: frame.midX , y: frame.midY+450)
         loadingBar.size = CGSize(width: 600, height: 35)
         loadingBar.zPosition = 3
-        
         manageLoadingBar()
         addChild(loadingBar)
         
@@ -381,113 +145,66 @@ class LevelOneToFourScene: SKScene {
         checkButtonFrame.addChild(checkButton)
     }
     
-    
-
-    // make two stress marks, one stressed and two unstressed
-    func generateStressMarks() {
-        generateStressedStressMark()
-        generateUnstressedStressMark()
+    /// Manages loading Bar.
+    /// Every time the user replies correctly, the loading bar gets increased.
+    /// If the user has passed the level, the loading bar remains full.
+    func manageLoadingBar() {
+        // TODO check complexity / higher function
+        let levelOneIsPassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
         
-        // necessary to check whether spawn place of stressMarks are filled with stressMarks
-        stressedStressMarkParentBin.color = .clear
-        stressedStressMarkParentBin.size = CGSize(width: 40, height: 50)
-        stressedStressMarkParentBin.position = CGPoint(x: frame.midX-40, y: frame.midY-150)
-        stressedStressMarkParentBin.zPosition = 2
-        addChild(stressedStressMarkParentBin)
-        unstressedStressMarkParentBin.color = .clear
-        unstressedStressMarkParentBin.size = CGSize(width: 40, height: 50)
-        unstressedStressMarkParentBin.position = CGPoint(x: frame.midX+40, y: frame.midY-150)
-        unstressedStressMarkParentBin.zPosition = 2
-        addChild(unstressedStressMarkParentBin)
-    }
-    
-    func generateStressedStressMark() {
-        let stressedStressMarkParent = generateAStressMark(stressed: true, x: frame.midX-40, y: frame.midY-150)
-        stressMarks.append(stressedStressMarkParent)
-    }
-    
-    func generateUnstressedStressMark() {
-        let unstressedStressMarkParent = generateAStressMark(stressed: false, x: frame.midX+40, y: frame.midY-150)
-        stressMarks.append(unstressedStressMarkParent)
-    }
-    
-    // generate stress marks that are to be placed to syllables
-    func generateAStressMark(stressed: Bool, x: CGFloat, y: CGFloat) -> SKSpriteNode {
-        let stressMarkParent = SKSpriteNode()
-        stressMarkParent.color = .white
-        stressMarkParent.size = CGSize(width: 40, height: 50)
-        stressMarkParent.position = CGPoint(x: x, y: y)
-        stressMarkParent.zPosition = 1
-        
-        let stressMark = SKLabelNode()
-        stressMark.fontColor = SKColor.black
-        stressMark.fontSize = 40
-        stressMark.zPosition = 2
-        stressMark.position = CGPoint(x: -stressMarkParent.frame.width/4+10, y: -stressMarkParent.frame.height/4)
-        // TODO higher function
-        if stressed {
-            stressMark.text = "x́"
-            stressMarkParent.name = "stressed"
+        if !(levelOneIsPassed) {
+            let imageName = "loadingBar" + String(correctRepliesLevelOne)
+            loadingBar.texture = SKTexture(imageNamed: imageName)
+            print("correct replies: " + String(correctRepliesLevelOne))
         }
         else {
-            stressMark.text = "x"
-            stressMarkParent.name = "unstressed"
+            loadingBar.texture = SKTexture(imageNamed: "loadingBarFull")
+            print("correct replies: " + String(correctRepliesLevelOne))
         }
-        stressMarkParent.addChild(stressMark)
-        addChild(stressMarkParent)
-        return stressMarkParent
     }
     
-    
-    // make a gray bin per syllable dynamically positioned right over corresponding syllable
-    func generateAccentuationBins(line: Line, wordToBeRated: SKLabelNode) {
-        // unit per char: dynamically calculated by frame.width divided by amount of chars
+    /// Sets up the ui elements that get removed from and re-added to scene during level.
+    /// Displays new Line for which user has to solve task for.
+    func setUpUnfixedParts() {
+        // TODO right position in code?
+        selectedLine = selectNextLine()
         
+        selectedLineLabel.fontColor = SKColor.black
         // CHECK
-        // let amountOfCharsInLine = line.line.count
-        let amountOfCharsInLine = line.getLine().count
-        let unit = CGFloat(wordToBeRated.frame.width / CGFloat(amountOfCharsInLine))
+        // selectedLineLabel = makeAttributedString(stringToBeMutated: (selected.line), shallBecomeBold: false)
+        selectedLineLabel.attributedText = makeAttributedString(stringToBeMutated: (selectedLine.getLine()), shallBecomeBold: false)
+        selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-50)
+        selectedLineLabel.zPosition = 2
+        addChild(selectedLineLabel)
 
-        // var counter = CGFloat(5.0)
-        var counter = CGFloat(0.0)
-
-        for word in line.words {
-            for syllable in word.syllables {
-                let accentBin = SKSpriteNode()
-                accentBin.color = SKColor.lightGray
-                accentBin.size = CGSize(width: 40, height: 45)
-                
-                // half of amount of chars of syllable multiplied by unit plus counter
-                // unit/2 is added since middle of four chars is index 2.5 with a unit of 1
-                // 0.3 is subtracted since middlepoint has a very small width compared to regular chars
-                let positionOfBin = CGFloat((Double(syllable.syllableString.count)-0.3)/2.0)*unit + unit/2 + counter
-                accentBin.position = CGPoint(x: wordToBeRated.frame.minX+positionOfBin, y: frame.midY+25)
-                accentBin.zPosition = 2
-                // append to global variable
-                accentBins.append(accentBin)
-
-                // counter shifts to the next syllable
-                counter += CGFloat(syllable.syllableString.count) * unit + unit/2
-                addChild(accentBin)
-            }
-            // counter shifts to the next word
-            // counter += 25
-            counter += 17
-            // counter += 15
-        }
+        selectedLineBoldLabel.fontColor = SKColor.black
+        selectedLineBoldLabel.attributedText = getLineToBeRatedBold(line: selectedLine)
+        selectedLineBoldLabel.position = CGPoint(x: frame.midX, y: frame.midY-50)
+        selectedLineBoldLabel.zPosition = 2
+        // addChild(selectedLineBoldLabel)
+        
+        generateAccentuationBins(line: selectedLine, lineToBeRated: selectedLineLabel)
+        generateStressMarks()
+        
+        // reset colors of check button
+        checkButtonFrame.color = .lightGray
+        checkButton.fontColor = .darkGray
+        checkButton.addStroke(color: .darkGray, width: 6.0)
     }
     
-    // function to select next word to be solved
-    // does not contain element that was previously shown
-    func selectNextWord() -> Line {
-        // TODO caution correctlyMarkedLines is nil / empty in the beginning
-        let previousSelected = selected
+    /// Returns the next Line for which the user has to solve the task.
+    /// Does not select the previous Line, only if it is the last not correctly solved Line.
+    ///
+    /// - Returns: The newly selected Line.
+    func selectNextLine() -> Line {
+        let previousSelected = selectedLine
         
-        // loop over selection if all elements have been solved correctly
-        var notYetCorrectlyMarkedLines = selection.subtracting(correctlyMarkedLines)
+        // notYetCorrectlyMarkedLines gets all loadedLines if correctlyMarkedLines is empty in the beginning
+        var notYetCorrectlyMarkedLines = loadedLines.subtracting(correctlyMarkedLines)
+        // loops over all loadedLines if all lines have already been solved correctly
         if (notYetCorrectlyMarkedLines.isEmpty) {
             correctlyMarkedLines.removeAll()
-            notYetCorrectlyMarkedLines = selection
+            notYetCorrectlyMarkedLines = loadedLines
         }
         
         var newlySelected = notYetCorrectlyMarkedLines.randomElement()!
@@ -503,63 +220,12 @@ class LevelOneToFourScene: SKScene {
         return newlySelected
     }
     
-    func setUpUnfixedParts() {
-        // selected = selection.randomElement()!
-        selected = selectNextWord()
-        
-        wordToBeRated.fontColor = SKColor.black
-        // CHECK
-        // wordToBeRated.attributedText = makeAttributedString(stringToBeMutated: (selected.line), shallBecomeBold: false)
-        wordToBeRated.attributedText = makeAttributedString(stringToBeMutated: (selected.getLine()), shallBecomeBold: false)
-        wordToBeRated.position = CGPoint(x: frame.midX, y: frame.midY-50)
-        wordToBeRated.zPosition = 2
-        addChild(wordToBeRated)
-
-        generateAccentuationBins(line: selected, wordToBeRated: wordToBeRated)
-
-        wordToBeRatedBold.fontColor = SKColor.black
-        wordToBeRatedBold.attributedText = getWordToBeRatedBold(line: selected)
-        wordToBeRatedBold.position = CGPoint(x: frame.midX, y: frame.midY-50)
-        wordToBeRatedBold.zPosition = 2
-        // addChild(wordToBeRatedBold)
-        
-        addChild(audioNode)
-        
-        // https://stackoverflow.com/questions/42026839/make-touch-area-for-sklabelnode-bigger-for-small-characters#comment71238691_42026839
-        // TODO: dynamically via method
-        generateStressMarks()
-        
-        // reset colors of check button
-        checkButtonFrame.color = .lightGray
-        checkButton.fontColor = .darkGray
-        checkButton.addStroke(color: .darkGray, width: 6.0)
-    }
-    
-
-    func getWordToBeRatedBold(line: Line) -> NSMutableAttributedString? {
-        let wordToBeRatedBold = NSMutableAttributedString()
-
-        // TODO Higher Function instead of two for loops
-        for word in line.words {
-            for syllable in word.syllables {
-                if syllable.accentuation.rawValue == "unstressed" {
-                    let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false)
-                    wordToBeRatedBold.append(syllableNotBold)
-                }
-                else if syllable.accentuation.rawValue == "stressed" {
-                    let syllableBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: true)
-                    wordToBeRatedBold.append(syllableBold)
-                }
-            }
-            // cut last character, so that last middle point is removed from word
-            wordToBeRatedBold.deleteCharacters(in: NSRange(location:(wordToBeRatedBold.length) - 1,length:1))
-            // space character between words
-            wordToBeRatedBold.append(NSMutableAttributedString(string:"  "))
-        }
-        
-        return wordToBeRatedBold
-    }
-    
+    /// Returns String as NSMutableAttributedString and when indicated in bold.
+    ///
+    /// - Parameters:
+    ///   - stringToBeMutated: The String which should be returnded.
+    ///   - shallBecomceBold: This Boolean says whether String shall be bold or not.
+    /// - Returns: The String as NSMutableAttributedString.
     func makeAttributedString(stringToBeMutated: String, shallBecomeBold: Bool) -> NSMutableAttributedString {
         if(shallBecomeBold) {
             let bold = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 55)]
@@ -573,17 +239,169 @@ class LevelOneToFourScene: SKScene {
         }
     }
     
+    /// Returns Line with stressed syllables in bold.
+    ///
+    /// - Parameters:
+    ///   - line: The Line which should be returnded.
+    /// - Returns: The Line with stressed syllables in bold.
+    func getLineToBeRatedBold(line: Line) -> NSMutableAttributedString? {
+        let lineToBeRatedBold = NSMutableAttributedString()
+        
+        // TODO Higher Function instead of two for loops
+        for word in line.words {
+            for syllable in word.syllables {
+                if syllable.accentuation.rawValue == "unstressed" {
+                    let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false)
+                    lineToBeRatedBold.append(syllableNotBold)
+                }
+                else if syllable.accentuation.rawValue == "stressed" {
+                    let syllableBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: true)
+                    lineToBeRatedBold.append(syllableBold)
+                }
+            }
+            // cut last character, so that last middle point is removed from word
+            lineToBeRatedBold.deleteCharacters(in: NSRange(location:(lineToBeRatedBold.length) - 1,length:1))
+            // space character between words
+            lineToBeRatedBold.append(NSMutableAttributedString(string:"  "))
+        }
+        return lineToBeRatedBold
+    }
+    
+    /// Generates target bins per each syllable in which the stressMarks shall be dragged and dropped.
+    /// Positions each target bin right over corresponding syllable.
+    ///
+    /// - Parameters:
+    ///   - line: The Line for which the target bins shall be generated.
+    ///   - linetoBeRated: The node of the Line to which the targets shall be added.
+    func generateAccentuationBins(line: Line, lineToBeRated: SKLabelNode) {
+        // CHECK
+        // let amountOfCharsInLine = line.line.count
+        let amountOfCharsInLine = line.getLine().count
+        // unit per char: dynamically calculated by frame.width divided by amount of chars
+        let unit = CGFloat(lineToBeRated.frame.width / CGFloat(amountOfCharsInLine))
+        
+        var counter = CGFloat(0.0)
+        for word in line.words {
+            for syllable in word.syllables {
+                let accentBin = SKSpriteNode()
+                accentBin.color = SKColor.lightGray
+                accentBin.size = CGSize(width: 40, height: 45)
+                
+                // half of amount of chars of syllable multiplied by unit plus counter
+                // unit/2 is added since middle of four chars is index 2.5 with a unit of 1
+                // 0.3 is subtracted since middlepoint has a very small width compared to regular chars
+                let positionOfBin = CGFloat((Double(syllable.syllableString.count)-0.3)/2.0)*unit + unit/2 + counter
+                accentBin.position = CGPoint(x: lineToBeRated.frame.minX+positionOfBin, y: frame.midY+25)
+                accentBin.zPosition = 2
+                // append to class variable
+                accentBins.append(accentBin)
+                
+                // counter shifts to the next syllable
+                counter += CGFloat(syllable.syllableString.count) * unit + unit/2
+                addChild(accentBin)
+            }
+            // counter shifts to the next word
+            // alternative values for counter: counter += 25, 15
+            counter += 17
+        }
+    }
+    
+    /// Generates a stressed and an unstressed stressMarks that the user shall drag and drop into the accentBins.
+    /// If the bin of a stress mark is empty a new stress mark spawns at the bin.
+    func generateStressMarks() {
+        // https://stackoverflow.com/questions/42026839/make-touch-area-for-sklabelnode-bigger-for-small-characters#comment71238691_42026839
+        generateStressedStressMark()
+        generateUnstressedStressMark()
+        
+        // necessary to check whether spawn place of stress marks are filled with stress marks or empty
+        stressedStressMarkParentBin.color = .clear
+        stressedStressMarkParentBin.size = CGSize(width: 40, height: 50)
+        stressedStressMarkParentBin.position = CGPoint(x: frame.midX-40, y: frame.midY-150)
+        stressedStressMarkParentBin.zPosition = 2
+        addChild(stressedStressMarkParentBin)
+        unstressedStressMarkParentBin.color = .clear
+        unstressedStressMarkParentBin.size = CGSize(width: 40, height: 50)
+        unstressedStressMarkParentBin.position = CGPoint(x: frame.midX+40, y: frame.midY-150)
+        unstressedStressMarkParentBin.zPosition = 2
+        addChild(unstressedStressMarkParentBin)
+    }
+    
+    /// Generates a stressed stress mark at specified stress mark spawning area.
+    func generateStressedStressMark() {
+        let stressedStressMarkParent = generateAStressMark(stressed: true, x: frame.midX-40, y: frame.midY-150)
+        stressMarks.append(stressedStressMarkParent)
+    }
+    
+    /// Generates an unstressed stress mark at specified stress mark spawning area.
+    func generateUnstressedStressMark() {
+        let unstressedStressMarkParent = generateAStressMark(stressed: false, x: frame.midX+40, y: frame.midY-150)
+        stressMarks.append(unstressedStressMarkParent)
+    }
+    
+    /// Returns parent node of a stress mark with a specified position.
+    ///
+    /// - Parameters:
+    ///   - stressed: Indicates whether the stress mark should be stressed or unstressed.
+    ///   - x: X position where the stress mark shall be positioned.
+    ///   - y: Y position where the stress mark shall be positioned.
+    /// - Returns: Parent node with stress mark with a specified position as a child.
+    func generateAStressMark(stressed: Bool, x: CGFloat, y: CGFloat) -> SKSpriteNode {
+        let stressMarkParent = SKSpriteNode()
+        stressMarkParent.color = .white
+        stressMarkParent.size = CGSize(width: 40, height: 50)
+        stressMarkParent.position = CGPoint(x: x, y: y)
+        stressMarkParent.zPosition = 1
+        
+        let stressMark = SKLabelNode()
+        stressMark.fontColor = SKColor.black
+        stressMark.fontSize = 40
+        stressMark.zPosition = 2
+        stressMark.position = CGPoint(x: -stressMarkParent.frame.width/4+10, y: -stressMarkParent.frame.height/4)
+        stressMark.addStroke(color: .black, width: 6)
+        // TODO higher function
+        if stressed {
+            stressMark.text = "x́"
+            stressMarkParent.name = "stressed"
+        }
+        else {
+            stressMark.text = "x"
+            stressMarkParent.name = "unstressed"
+        }
+        stressMarkParent.addChild(stressMark)
+        addChild(stressMarkParent)
+        return stressMarkParent
+    }
+    
+    
+    // TODO modularize overlay nodes
+//    func displayOverlayNode(node: SKSpriteNode, size: CGSize, transparent: Bool) {
+//        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
+//        backgroundBlocker.zPosition = 4999
+//        if transparent {
+//            backgroundBlocker.alpha = 0.5
+//        }
+//        addChild(backgroundBlocker)
+//
+//        // how to hand over custom node classes?
+//        let node = typeTest(node.type(of: init)(size: CGSize(size: size)))
+//        node.delegate = self
+//        node.zPosition = 5000
+//        addChild(node)
+//    }
+    
+    /// Adds AccentiationInfo as overlay node to scene.
     func displayAccentuationInfo() {
         backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
         backgroundBlocker.zPosition = 4999
         addChild(backgroundBlocker)
-
+        
         accentuationInfo = AccentuationInfo(size: CGSize(width: 650, height: 800))
         accentuationInfo.delegate = self
         accentuationInfo.zPosition = 5000
         addChild(accentuationInfo)
     }
     
+    /// Adds Congratualtions as overlay node to scene.
     func displayCongratulations() {
         backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
         backgroundBlocker.zPosition = 4999
@@ -595,6 +413,7 @@ class LevelOneToFourScene: SKScene {
         addChild(congratulations)
     }
     
+    /// Adds ReplyIsCorrect as overlay node to scene.
     func displayReplyIsCorrect() {
         backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
         backgroundBlocker.zPosition = 4999
@@ -607,6 +426,7 @@ class LevelOneToFourScene: SKScene {
         addChild(replyIsCorrect)
     }
     
+    /// Adds ReplyIsFalse as overlay node to scene.
     func displayReplyIsFalse(solution: String) {
         backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
         backgroundBlocker.zPosition = 4999
@@ -619,6 +439,7 @@ class LevelOneToFourScene: SKScene {
         addChild(replyIsFalse)
     }
     
+    // Adds Warning as overlay node to scene.
     func displayWarning() {
         backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
         backgroundBlocker.zPosition = 4999
@@ -631,77 +452,59 @@ class LevelOneToFourScene: SKScene {
         addChild(warning)
     }
     
-    // function for an action to add and remove a node from the scene
+    /// Relevant for sound button.
+    /// Runs an action that adds a node to the scene and removes it after some seconds.
+    /// Duration of action is longer in higher levels.
+    ///
+    /// - Parameters:
+    ///   - node: Node that should be added to and removed from the scene.
     func addAndRemoveNode(node: SKLabelNode) {
+        let duration = longerDurationIfHigherLevels()
+        
         addChild(node)
         node.run(SKAction.sequence([
-            SKAction.wait(forDuration: 3.0),
+            SKAction.wait(forDuration: duration),
             SKAction.removeFromParent(),
             ])
         )
     }
     
-    // function for an action to hide and unhide a node from the scene
+    /// Relevant for sound button.
+    /// Runs an action that hides a node frome the scene and unhides it after some seconds.
+    /// Duration of action is longer in higher levels.
+    ///
+    /// - Parameters:
+    ///   - node: Node that should be added to and removed from the scene.
     func hideAndUnhideNode(node: SKLabelNode) {
+        let duration = longerDurationIfHigherLevels()
+
         node.run(SKAction.sequence([
             SKAction.hide(),
-            SKAction.wait(forDuration: 3.0),
+            SKAction.wait(forDuration: duration),
             SKAction.unhide()
             ])
         )
     }
     
-    
-    // function to update and manage status of level passing
-    func manageLoadingBar() {
-        // TODO check complexity / higher function
-        // only increase loadingbar if level has not been passed yet
-        
-        let levelOneIsPassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
-
-        if !(levelOneIsPassed) {
-            let imageName = "loadingBar" + String(correctRepliesLevelOne)
-            loadingBar.texture = SKTexture(imageNamed: imageName)
-            print("correct replies: " + String(correctRepliesLevelOne))
+    /// Relevant for sound button.
+    /// Returns a duration regarding the game status.
+    ///
+    /// - Returns: A duration of one second or three seconds if it is a higher level.
+    func longerDurationIfHigherLevels() -> TimeInterval{
+        var duration = TimeInterval(1.0)
+        if (userDefaultsKey == "level3" || userDefaultsKey == "level4" || userDefaultsKey == "level9" || userDefaultsKey == "level10") {
+            duration = TimeInterval(3.0)
         }
-        else {
-            loadingBar.texture = SKTexture(imageNamed: "loadingBarFull")
-            print("correct replies: " + String(correctRepliesLevelOne))
-        }
-    }
-    
-    // func to check whether level is passed or not
-    func updateLevelStatus() {
-        if (correctRepliesLevelOne >= amountOfCorrectRepliesToPassLevel) {
-            
-            UserDefaults.standard.set(true, forKey: userDefaultsKey)
-        }
+        return duration
     }
 
-
-    // remove unnecessary nodes and set up scene for new word to be rated
-    func cleanAndSetupSceneForNewWord() {
-        // remove all accentBins and stressMarks from scene
-        accentBins.forEach { $0.removeFromParent() }
-        stressMarks.forEach { $0.removeFromParent() }
-
-        // empty accentBins array and stressMarks array since new word is selected
-        accentBins.removeAll()
-        stressMarks.removeAll()
-        
-        wordToBeRated.removeFromParent()
-        audioNode.removeFromParent()
-        
-        stressedStressMarkParentBin.removeFromParent()
-        unstressedStressMarkParentBin.removeFromParent()
-        
-        setUpUnfixedParts()
-    }
-    
-    // function to check if all accentBins are filled with a stressMark
-    // TODO higher function
+    /// Relevant for check button.
+    /// Checks if all accent bins contain a stress mark
+    ///
+    /// - Returns: True if all accent bins contain a stress mark, false otherwise.
     func areAccentBinsFilledWithAStressmark() -> Bool {
-        // return false as soon as one accentBin is empty
+        // TODO higher function
+        // quick return since false is returned as soon as one accentBin is empty
         for accentBin in accentBins {
             if !(isAccentBinFilledWithAStressMark(accentBin: accentBin)) {
                 return false
@@ -710,8 +513,14 @@ class LevelOneToFourScene: SKScene {
         return true
     }
     
-    // TODO higher function
+    /// Relevant for check button.
+    /// Checks whether an accent bin is filled with a stress mark.
+    ///
+    /// - Parameters:
+    ///   - accentBin: Accent bin that is empty or filled with a stress mark.
+    /// - Returns: True if the accent bin is filled with a stress mark, false otherwise.
     func isAccentBinFilledWithAStressMark(accentBin: SKSpriteNode) -> Bool {
+        // TODO higher function
         for stressMark in stressMarks {
             if accentBin.position.equalTo(stressMark.position) {
                 return true
@@ -720,40 +529,57 @@ class LevelOneToFourScene: SKScene {
         return false
     }
     
-    // function to check whether the accentBins are filled with the correct stressMarks
-    // returns correctSolution and true if correct and false otherwise
-    func isSolutionCorrect() -> (Bool, [String]) {
-        var givenSolution = [String]()
-        var realSolution = [String]()
-
+    /// Relevant for check button.
+    /// Checks whether reply of user is correct or not.
+    /// The reply is correct if the accentBins are filled with the correct stress marks.
+    ///
+    /// - Returns: The solution of the task and true if the reply is correct, false otherwise.
+    func isReplyCorrect() -> (Bool, [String]) {
+        var reply = [String]()
+        var correctSolution = [String]()
+        
+        // get reply by getting the name of stressMarks sorted from left accentBin to the right
         // TODO higher function
-        // get name of stressMarks sorted from left accentBin to the right
         for accentBin in accentBins {
             for stressMark in stressMarks {
                 if accentBin.position.equalTo(stressMark.position) {
-                    givenSolution.append(stressMark.name!)
+                    reply.append(stressMark.name!)
                 }
             }
         }
         
-        // TODO modularize
         // get correct accentuation of line
-        for word in selected.words {
+        // TODO modularize
+        for word in selectedLine.words {
             for syllable in word.syllables {
-                realSolution.append(syllable.accentuation.rawValue)
+                correctSolution.append(syllable.accentuation.rawValue)
             }
         }
         
-        if givenSolution.elementsEqual(realSolution) {
-            return (true, realSolution)
+        if reply.elementsEqual(correctSolution) {
+            return (true, correctSolution)
         }
         else {
-            return (false, realSolution)
+            return (false, correctSolution)
         }
-
+        
     }
     
-    // solution to make "x́  x" out of ["stressed", "unstressed"]
+    /// Relevant for check button.
+    /// Sets user data of the level to true, if the level has been passed.
+    func updateLevelStatus() {
+        if (correctRepliesLevelOne >= amountOfCorrectRepliesToPassLevel) {
+            UserDefaults.standard.set(true, forKey: userDefaultsKey)
+        }
+    }
+    
+    /// Relevant for check button.
+    /// Returns solution with stress mark signs.
+    /// Example: ["stressed", "unstressed"] is converted to "x́  x"
+    ///
+    /// - Parameters:
+    ///   - solution: List of Strings that should be converted.
+    /// - Returns: Converted String with stress mark signs.
     func solutionWithStressMarkSigns(solution: [String]) -> String{
         var result = ""
         for str in solution {
@@ -767,15 +593,31 @@ class LevelOneToFourScene: SKScene {
         return result
     }
     
+    /// Empties lists, removes unfix nodes and sets up scene again for new line to be solved.
+    func cleanAndSetupSceneForNewWord() {
+        // remove all accentBins and stressMarks from scene
+        accentBins.forEach { $0.removeFromParent() }
+        stressMarks.forEach { $0.removeFromParent() }
+
+        // empty accentBins array and stressMarks array since new word is selected
+        accentBins.removeAll()
+        stressMarks.removeAll()
+        
+        selectedLineLabel.removeFromParent()
+        
+        stressedStressMarkParentBin.removeFromParent()
+        unstressedStressMarkParentBin.removeFromParent()
+        
+        setUpUnfixedParts()
+    }
+    
 
     override func didMove(to view: SKView) {
-        print(inputFile)
         loadInputFile()
-        
         setUpScene()
         setUpUnfixedParts()
         
-        // only show, if level1 has not been passed yet
+        // only show AccentuationInfo, if level1 has not been passed yet
         if !(UserDefaults.standard.bool(forKey: "level1")) {
             displayAccentuationInfo()
         }
@@ -787,7 +629,6 @@ class LevelOneToFourScene: SKScene {
         }
     }
 
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // https://code.tutsplus.com/tutorials/spritekit-basics-nodes--cms-28785
         guard let touch = touches.first else {
@@ -806,19 +647,19 @@ class LevelOneToFourScene: SKScene {
             // worked as well
             // audioNode.run(SKAction.playSoundFileNamed("Sonne.WAV", waitForCompletion: false))
             // audioNode.run(SKAction.playSoundFileNamed("test.WAV", waitForCompletion: false))
-            let playSound = SKAction.playSoundFileNamed(selected.audioFile, waitForCompletion: false)
+            let playSound = SKAction.playSoundFileNamed(selectedLine.audioFile, waitForCompletion: false)
             let action =  SKAction.group([playSound,
-                                          SKAction.run{self.addAndRemoveNode(node: self.wordToBeRatedBold)},
-                                          SKAction.run{self.hideAndUnhideNode(node: self.wordToBeRated)}])
+                                          SKAction.run{self.addAndRemoveNode(node: self.selectedLineBoldLabel)},
+                                          SKAction.run{self.hideAndUnhideNode(node: self.selectedLineLabel)}])
             self.run(action)
         }
         
         if (touchedNode.name == "check") {
             if areAccentBinsFilledWithAStressmark() {
-                let (isSolutionCorrect, realSolution) = self.isSolutionCorrect()
+                let (isSolutionCorrect, realSolution) = self.isReplyCorrect()
                 
                 if (isSolutionCorrect) {
-                    correctlyMarkedLines.insert(selected)
+                    correctlyMarkedLines.insert(selectedLine)
                     
                     correctRepliesLevelOne += 1
                     // check whether level is passed and save to boolean variable
@@ -855,13 +696,13 @@ class LevelOneToFourScene: SKScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
         
-        // dragging of stressMarks to new location by touching
+        // dragging of stress marks to new location by touching
         // TODO higher function
         for (smIndex, stressMark) in stressMarks.enumerated() {
             if stressMark.frame.contains(touch.previousLocation(in: self)) {
                 stressMark.position = touch.location(in: self)
             }
-            // if stressMarks collide, they do not stick together anymore
+            // if stress marks collide, they do not stick together anymore
             for (sIndex, s) in stressMarks.enumerated() {
                 if (stressMark.position.equalTo(s.position)) && (smIndex != sIndex) {
                     stressMark.position = CGPoint(x: stressMark.position.x-80, y: stressMark.position.y-40)
@@ -870,9 +711,8 @@ class LevelOneToFourScene: SKScene {
         }
     }
     
-
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // stressMarks clinch (einrasten) into accentBin
+        // stress marks clinch (einrasten) into accentBin
         // TODO higher function
         for accentBin in accentBins {
             // https://www.hackingwithswift.com/example-code/games/how-to-color-an-skspritenode-using-colorblendfactor
@@ -884,7 +724,7 @@ class LevelOneToFourScene: SKScene {
             }
         }
         
-        // if stressMark.position not in frame anymore, position it back to the middle
+        // if stress mark.position is not in frame anymore, position it back to the center of the scene
         // TODO higher function
         for stressMark in stressMarks {
             if !(frame.contains(stressMark.position)) {
@@ -893,7 +733,7 @@ class LevelOneToFourScene: SKScene {
             }
         }
         
-        // generate new stressMark if spawn is empty
+        // generate new stress mark if spawn is empty
         // TODO higher function
         var stressedStressMarkSpawnIsFilled = Set<Bool>()
         var unstressedStressMarkSpawnIsFilled = Set<Bool>()
@@ -973,7 +813,3 @@ extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate,
         warning?.removeFromParent()
     }
 }
-
-
-
-

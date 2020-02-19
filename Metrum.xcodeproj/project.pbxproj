@@ -213,7 +213,6 @@
 				DD5749CC23EC405200C50423 /* GameScene.swift */,
 				DDC4906623EC47EC000F0942 /* MainMenuScene.swift */,
 				DDC4906823EC4F0B000F0942 /* LevelOneToFourScene.swift */,
-				DDC4907223ED7641000F0942 /* AccentuationInfo.swift */,
 				DD3276CD23F0E257007DAB87 /* LevelTwoScene.swift */,
 				DD5749CE23EC405200C50423 /* GameViewController.swift */,
 				DD5749D023EC405200C50423 /* Main.storyboard */,
@@ -254,6 +253,7 @@
 		DD969FF623FC5A8100C22624 /* OverlayWindows */ = {
 			isa = PBXGroup;
 			children = (
+				DDC4907223ED7641000F0942 /* AccentuationInfo.swift */,
 				DD19AB0B23FABEC60015D899 /* Congratulations.swift */,
 				DD969FF423FC52BE00C22624 /* Warning.swift */,
 				DD507EC023F551AC00D790E1 /* ReplyIsCorrect.swift */,
