@@ -102,14 +102,14 @@ class LevelOneToFourScene: SKScene {
         addChild(loadingBar)
         
         taskLabel.fontColor = SKColor.black
-        taskLabel.text = "Markiere die betonten (x́) und unbetonten (x) Silben.\n"
-                         + "Zu jeder Silbe gehört ein graues Kästchen, das über ihr platziert ist. " +
-                        "Ziehe die Betonungszeichen in das jeweilige Kästchen über der Silbe.\n"
-        taskLabel.position = CGPoint(x: frame.midX , y: frame.midY+150)
+        taskLabel.text = "Markiere die betonten (x́) und unbetonten (x) Silben."
+                         + " Zu jeder Silbe gehört ein graues Kästchen, das über ihr platziert ist." +
+                        "\nZiehe die Betonungszeichen in das jeweilige Kästchen über der Silbe."
+        taskLabel.position = CGPoint(x: frame.midX , y: frame.midY+200)
         // break line: https://forums.developer.apple.com/thread/82994
         taskLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         taskLabel.numberOfLines = 0
-        taskLabel.preferredMaxLayoutWidth = 480
+        taskLabel.preferredMaxLayoutWidth = 600
         taskLabel.zPosition = 4
         addChild(taskLabel)
         
@@ -170,9 +170,7 @@ class LevelOneToFourScene: SKScene {
         selectedLine = selectNextLine()
         
         selectedLineLabel.fontColor = SKColor.black
-        // CHECK
-        // selectedLineLabel = makeAttributedString(stringToBeMutated: (selected.line), shallBecomeBold: false)
-        selectedLineLabel.attributedText = makeAttributedString(stringToBeMutated: (selectedLine.getLine()), shallBecomeBold: false)
+        selectedLineLabel.attributedText = makeAttributedString(stringToBeMutated: (selectedLine.line), shallBecomeBold: false)
         selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-50)
         selectedLineLabel.zPosition = 2
         addChild(selectedLineLabel)
@@ -274,9 +272,7 @@ class LevelOneToFourScene: SKScene {
     ///   - line: The Line for which the target bins shall be generated.
     ///   - linetoBeRated: The node of the Line to which the targets shall be added.
     func generateAccentuationBins(line: Line, lineToBeRated: SKLabelNode) {
-        // CHECK
-        // let amountOfCharsInLine = line.line.count
-        let amountOfCharsInLine = line.getLine().count
+        let amountOfCharsInLine = line.line.count
         // unit per char: dynamically calculated by frame.width divided by amount of chars
         let unit = CGFloat(lineToBeRated.frame.width / CGFloat(amountOfCharsInLine))
         
@@ -316,25 +312,25 @@ class LevelOneToFourScene: SKScene {
         // necessary to check whether spawn place of stress marks are filled with stress marks or empty
         stressedStressMarkParentBin.color = .clear
         stressedStressMarkParentBin.size = CGSize(width: 40, height: 50)
-        stressedStressMarkParentBin.position = CGPoint(x: frame.midX-40, y: frame.midY-150)
+        stressedStressMarkParentBin.position = CGPoint(x: frame.midX-50, y: frame.midY-150)
         stressedStressMarkParentBin.zPosition = 2
         addChild(stressedStressMarkParentBin)
         unstressedStressMarkParentBin.color = .clear
         unstressedStressMarkParentBin.size = CGSize(width: 40, height: 50)
-        unstressedStressMarkParentBin.position = CGPoint(x: frame.midX+40, y: frame.midY-150)
+        unstressedStressMarkParentBin.position = CGPoint(x: frame.midX+50, y: frame.midY-150)
         unstressedStressMarkParentBin.zPosition = 2
         addChild(unstressedStressMarkParentBin)
     }
     
     /// Generates a stressed stress mark at specified stress mark spawning area.
     func generateStressedStressMark() {
-        let stressedStressMarkParent = generateAStressMark(stressed: true, x: frame.midX-40, y: frame.midY-150)
+        let stressedStressMarkParent = generateAStressMark(stressed: true, x: frame.midX-50, y: frame.midY-150)
         stressMarks.append(stressedStressMarkParent)
     }
     
     /// Generates an unstressed stress mark at specified stress mark spawning area.
     func generateUnstressedStressMark() {
-        let unstressedStressMarkParent = generateAStressMark(stressed: false, x: frame.midX+40, y: frame.midY-150)
+        let unstressedStressMarkParent = generateAStressMark(stressed: false, x: frame.midX+50, y: frame.midY-150)
         stressMarks.append(unstressedStressMarkParent)
     }
     
