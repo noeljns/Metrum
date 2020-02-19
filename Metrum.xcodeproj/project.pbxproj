@@ -41,6 +41,9 @@
 		DDC75EEF23FDE0F300B551BB /* lineFour.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EEB23FDE0F100B551BB /* lineFour.mp3 */; };
 		DDC75EF023FDE0F300B551BB /* lineThree.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EEC23FDE0F200B551BB /* lineThree.mp3 */; };
 		DDC75EF123FDE0F300B551BB /* lineTwo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EED23FDE0F300B551BB /* lineTwo.mp3 */; };
+		DDC75EF323FDE37600B551BB /* LevelFiveToSixScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC75EF223FDE37600B551BB /* LevelFiveToSixScene.swift */; };
+		DDC75EF523FDE39D00B551BB /* LevelFiveToSixScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EF423FDE39D00B551BB /* LevelFiveToSixScene.sks */; };
+		DDC75EF723FDE42000B551BB /* MeasureInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC75EF623FDE42000B551BB /* MeasureInfo.swift */; };
 		DDE2FBE423FD780E00118ADC /* Flasche.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBE323FD780E00118ADC /* Flasche.mp3 */; };
 		DDE2FBE823FD78C000118ADC /* Lampe.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBE723FD78C000118ADC /* Lampe.mp3 */; };
 		DDE2FBEA23FD78F000118ADC /* Sonne.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBE923FD78F000118ADC /* Sonne.mp3 */; };
@@ -113,6 +116,9 @@
 		DDC75EEB23FDE0F100B551BB /* lineFour.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = lineFour.mp3; sourceTree = "<group>"; };
 		DDC75EEC23FDE0F200B551BB /* lineThree.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = lineThree.mp3; sourceTree = "<group>"; };
 		DDC75EED23FDE0F300B551BB /* lineTwo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = lineTwo.mp3; sourceTree = "<group>"; };
+		DDC75EF223FDE37600B551BB /* LevelFiveToSixScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelFiveToSixScene.swift; sourceTree = "<group>"; };
+		DDC75EF423FDE39D00B551BB /* LevelFiveToSixScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelFiveToSixScene.sks; sourceTree = "<group>"; };
+		DDC75EF623FDE42000B551BB /* MeasureInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureInfo.swift; sourceTree = "<group>"; };
 		DDE2FBE323FD780E00118ADC /* Flasche.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Flasche.mp3; sourceTree = "<group>"; };
 		DDE2FBE723FD78C000118ADC /* Lampe.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Lampe.mp3; sourceTree = "<group>"; };
 		DDE2FBE923FD78F000118ADC /* Sonne.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Sonne.mp3; path = ../../../../Downloads/Sounds/Sonne.mp3; sourceTree = "<group>"; };
@@ -191,8 +197,6 @@
 		DD5749BA23EC405200C50423 = {
 			isa = PBXGroup;
 			children = (
-				DD95065323FD8B2400BF1291 /* lines.json */,
-				DD95065423FD8B2400BF1291 /* words.json */,
 				DD5749FA23EC407500C50423 /* Git */,
 				DD5749C523EC405200C50423 /* Metrum */,
 				DD5749E023EC405300C50423 /* MetrumTests */,
@@ -214,24 +218,28 @@
 		DD5749C523EC405200C50423 /* Metrum */ = {
 			isa = PBXGroup;
 			children = (
-				DD969FF623FC5A8100C22624 /* OverlayWindows */,
 				DD4363F623F18629001F2A48 /* Model */,
 				DD5749C623EC405200C50423 /* AppDelegate.swift */,
 				DD5749C823EC405200C50423 /* GameScene.sks */,
 				DDC4906C23EC507A000F0942 /* MainMenuScene.sks */,
 				DDC4907023EC5736000F0942 /* LevelOneToFourScene.sks */,
+				DDC75EF423FDE39D00B551BB /* LevelFiveToSixScene.sks */,
 				DD3276CF23F0E26F007DAB87 /* LevelTwoScene.sks */,
 				DD5749CA23EC405200C50423 /* Actions.sks */,
 				DD5749CC23EC405200C50423 /* GameScene.swift */,
 				DDC4906623EC47EC000F0942 /* MainMenuScene.swift */,
 				DDC4906823EC4F0B000F0942 /* LevelOneToFourScene.swift */,
+				DDC75EF223FDE37600B551BB /* LevelFiveToSixScene.swift */,
 				DD3276CD23F0E257007DAB87 /* LevelTwoScene.swift */,
+				DD969FF623FC5A8100C22624 /* OverlayWindows */,
 				DD5749CE23EC405200C50423 /* GameViewController.swift */,
 				DD5749D023EC405200C50423 /* Main.storyboard */,
 				DD5749D523EC405300C50423 /* LaunchScreen.storyboard */,
 				DD5749D823EC405300C50423 /* Info.plist */,
 				DD11698E23F054FF00E553CE /* Assets.xcassets */,
 				DD3E90CC23F03C9B00E72372 /* Sounds */,
+				DD95065323FD8B2400BF1291 /* lines.json */,
+				DD95065423FD8B2400BF1291 /* words.json */,
 			);
 			path = Metrum;
 			sourceTree = "<group>";
@@ -266,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				DDC4907223ED7641000F0942 /* AccentuationInfo.swift */,
+				DDC75EF623FDE42000B551BB /* MeasureInfo.swift */,
 				DD19AB0B23FABEC60015D899 /* Congratulations.swift */,
 				DD969FF423FC52BE00C22624 /* Warning.swift */,
 				DD507EC023F551AC00D790E1 /* ReplyIsCorrect.swift */,
@@ -397,6 +406,7 @@
 				DDE2FBF623FD7A7600118ADC /* Zauberei.mp3 in Resources */,
 				DDE2FBEA23FD78F000118ADC /* Sonne.mp3 in Resources */,
 				DDC4907123EC5736000F0942 /* LevelOneToFourScene.sks in Resources */,
+				DDC75EF523FDE39D00B551BB /* LevelFiveToSixScene.sks in Resources */,
 				DDC75EF123FDE0F300B551BB /* lineTwo.mp3 in Resources */,
 				DD95065523FD8B2500BF1291 /* lines.json in Resources */,
 				DDE2FBF023FD79C200118ADC /* Ersatz.mp3 in Resources */,
@@ -430,7 +440,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDC75EF723FDE42000B551BB /* MeasureInfo.swift in Sources */,
 				DD507EC123F551AC00D790E1 /* ReplyIsCorrect.swift in Sources */,
+				DDC75EF323FDE37600B551BB /* LevelFiveToSixScene.swift in Sources */,
 				DD969FF523FC52BE00C22624 /* Warning.swift in Sources */,
 				DD5749CD23EC405200C50423 /* GameScene.swift in Sources */,
 				DD4363F823F18645001F2A48 /* Word.swift in Sources */,

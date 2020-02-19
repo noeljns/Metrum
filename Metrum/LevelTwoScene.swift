@@ -134,7 +134,7 @@ class LevelTwoScene: SKScene {
         addChild(loadingBar)
         
         // setup the yellow bin with colour, dimensions and add to scene
-        jambus.text = "Jambus: Gespenst 👻"
+        jambus.text = "Jambus: Ge·spenst 👻"
         jambus.fontName = "HelveticaBold"
         jambus.fontColor = SKColor.black
         jambus.fontSize = 25
@@ -147,7 +147,7 @@ class LevelTwoScene: SKScene {
         jambusBin.zPosition = 1
         addChild(jambusBin)
         
-        trochaeus.text = "Trochäus: Sonne ☀️"
+        trochaeus.text = "Trochäus: So·nne ☀️"
         trochaeus.fontName = "HelveticaBold"
         trochaeus.fontColor = SKColor.black
         trochaeus.fontSize = 25
@@ -161,7 +161,7 @@ class LevelTwoScene: SKScene {
         trochaeusBin.zPosition = 1
         addChild(trochaeusBin)
         
-        anapaest.text = "Anapäst: Elefant 🐘"
+        anapaest.text = "Anapäst: E·le·fant 🐘"
         anapaest.fontName = "HelveticaBold"
         anapaest.fontColor = SKColor.black
         anapaest.fontSize = 25
@@ -175,7 +175,7 @@ class LevelTwoScene: SKScene {
         anapaestBin.zPosition = 1
         addChild(anapaestBin)
         
-        daktylus.text = "Daktylus: Brokkoli 🥦"
+        daktylus.text = "Daktylus: Bro·kko·li 🥦"
         daktylus.fontName = "HelveticaBold"
         daktylus.fontColor = SKColor.black
         daktylus.fontSize = 25

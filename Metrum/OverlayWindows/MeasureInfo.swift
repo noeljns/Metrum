@@ -1,24 +1,24 @@
 //
-//  AccentuationInfo.swift
+//  MeasureInfo.swift
 //  Metrum
 //
-//  Created by Jonas Jonas on 07.02.20.
+//  Created by Jonas Jonas on 19.02.20.
 //  Copyright © 2020 Jonas Jonas. All rights reserved.
 //
 
 import SpriteKit
 
-protocol AccentuationInfoDelegate: class {
-    func closeAccentuationInfo()
+protocol MeasureInfoDelegate: class {
+    func closeMeasureInfo()
 }
 
 // layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
-class AccentuationInfo: SKSpriteNode {
-    weak var delegate: AccentuationInfoDelegate?
+class MeasureInfo: SKSpriteNode {
+    weak var delegate: MeasureInfoDelegate?
     
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
-        name = "accentuationInfo"
+        name = "measureInfo"
         
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
@@ -38,12 +38,16 @@ class AccentuationInfo: SKSpriteNode {
         info.size = CGSize(width: 50, height: 50)
         info.zPosition = 3
         addChild(info)
-
+        
         let explanationLabel = SKLabelNode(text: "test")
         explanationLabel.fontColor = SKColor.black
-        explanationLabel.text = "Jedes Wort besteht aus einer oder mehreren Silben. Diese können betont (x́) oder unbetont (x) sein.\n\n" +
-            "Der Name Torben besteht zum Beispiel aus zwei Silben: Tor·ben.\n\n" +
-            "Dabei ist die erste Silbe betont (x́) und die zweite Silbe ist unbetont (x)."
+        explanationLabel.text = "Die Verse vieler Gedichte haben ein bestimmtes Betonungsmuster. "
+            + "Das heißt die betonten (x́) und unbetonten (x) Silben eines Verses wechseln sich in einer festen Reihenfolge ab. "
+            + "Diese Abfolge nennt man Versmaß oder Metrum. Die vier wichtigsten Grundtypen sind: \n\n" +
+            "Jambus (x x́)    : Ge·spenst 👻\n" +
+            "Trochäus (x́ x)  : So·nne ☀️\n" +
+            "Anapäst (x x x́) : E·le·fant 🐘\n" +
+            "Daktylus (x́ x x): Bro·kko·li 🥦"
         explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-150)
         // break line: https://forums.developer.apple.com/thread/82994
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
@@ -51,7 +55,7 @@ class AccentuationInfo: SKSpriteNode {
         explanationLabel.preferredMaxLayoutWidth = 480
         explanationLabel.zPosition = 2
         addChild(explanationLabel)
- 
+        
         // let colorCloseButtonFrame = UIColor(hue: 0.9611, saturation: 0.93, brightness: 1, alpha: 1.0) /* #ff1149 */
         // let closeButtonFrame = SKSpriteNode(color: colorCloseButtonFrame, size: CGSize(width: 180, height: 55))
         let closeButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 150, height: 55))
@@ -59,7 +63,7 @@ class AccentuationInfo: SKSpriteNode {
         // closeButtonFrame.drawBorder(color: .orange, width: 5)
         closeButtonFrame.zPosition = 4
         addChild(closeButtonFrame)
-      
+        
         let closeButton = SKLabelNode(text: "Bereit")
         closeButton.name = "close"
         closeButton.fontColor = SKColor.white
@@ -97,17 +101,6 @@ class AccentuationInfo: SKSpriteNode {
     }
     
     func close() {
-        self.delegate?.closeAccentuationInfo()
-    }
-}
-
-extension SKSpriteNode {
-    // https://stackoverflow.com/questions/20889222/can-i-add-a-border-to-an-skspritenode-similar-to-uiview
-    func drawBorder(color: UIColor, width: CGFloat) {
-        let shapeNode = SKShapeNode(rectOf: size)
-        shapeNode.fillColor = .clear
-        shapeNode.strokeColor = color
-        shapeNode.lineWidth = width
-        addChild(shapeNode)
+        self.delegate?.closeMeasureInfo()
     }
 }
