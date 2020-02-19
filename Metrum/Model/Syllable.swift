@@ -9,7 +9,12 @@
 import Foundation
 
 // syllable (engl.) = Silbe (dt.)
-struct Syllable {
+struct Syllable: Codable {
     let syllableString: String
     let accentuation: Accentuation
+    
+    enum CodingKeys: String, CodingKey {
+        case syllableString
+        case accentuation = "accentuation"
+    }
 }

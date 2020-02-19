@@ -113,7 +113,9 @@ class LevelTwoScene: SKScene {
         // wordToBeRated.text = picked!.1
         // wordToBeRated.name = picked!.0
         // new data model
-        wordToBeRated.text = picked!.line
+        // CHECK
+        // wordToBeRated.text = picked!.line
+        wordToBeRated.text = picked!.getLine()
         wordToBeRated.name = picked!.measure.rawValue
         
         // add the label to the scene

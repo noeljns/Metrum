@@ -80,8 +80,8 @@ class LevelOneToFourScene: SKScene {
 
     // lazy var selection: Set<Line> = [lineOne]
     // lazy var selection: Set<Line> = [lineTwo, lineThree, lineSeven, lineEight]
-    lazy var selection: Set<Line> = [lineOne, lineTwo, lineThree, lineSeven, lineEight]
-    lazy var selected = lineOne
+    // lazy var selection: Set<Line> = [lineOne, lineTwo, lineThree, lineSeven, lineEight]
+    // lazy var selected = lineOne
     
     lazy var correctlyMarkedLines = Set<Line>()
     private var correctRepliesLevelOne = 0
@@ -92,6 +92,219 @@ class LevelOneToFourScene: SKScene {
     public var inputFile = ""
     public var userDefaultsKey = ""
     
+    // test
+//    lazy var jsonString = """
+//    {
+//      "words": [
+//        {
+//          "syllables": [
+//            {
+//              "syllableString": "Die",
+//              "accentuation": "unstressed"
+//            }
+//          ]
+//        },
+//        {
+//          "syllables": [
+//            {
+//              "syllableString": "lin",
+//              "accentuation": "stressed"
+//            },
+//            {
+//              "syllableString": "den",
+//              "accentuation": "unstressed"
+//            }
+//          ]
+//        },
+//        {
+//          "syllables": [
+//            {
+//              "syllableString": "Lüf",
+//              "accentuation": "stressed"
+//            },
+//            {
+//              "syllableString": "te",
+//              "accentuation": "unstressed"
+//            }
+//          ]
+//        },
+//        {
+//          "syllables": [
+//            {
+//              "syllableString": "sind",
+//              "accentuation": "stressed"
+//            }
+//          ]
+//        },
+//        {
+//          "syllables": [
+//            {
+//              "syllableString": "er",
+//              "accentuation": "unstressed"
+//            },
+//            {
+//              "syllableString": "wacht",
+//              "accentuation": "stressed"
+//            }
+//          ]
+//        }
+//      ],
+//      "measure": "jambus",
+//      "audioFile": "lineTwo.mp3"
+//    }
+//    """
+    
+    lazy var jsonString = """
+    [
+      {
+        "words": [
+          {
+            "syllables": [
+              {
+                "syllableString": "Freu",
+                "accentuation": "stressed"
+              },
+              {
+                "syllableString": "de",
+                "accentuation": "unstressed"
+              }
+            ]
+          },
+          {
+            "syllables": [
+              {
+                "syllableString": "schö",
+                "accentuation": "stressed"
+              },
+              {
+                "syllableString": "ner",
+                "accentuation": "unstressed"
+              }
+            ]
+          },
+          {
+            "syllables": [
+              {
+                "syllableString": "Gö",
+                "accentuation": "stressed"
+              },
+              {
+                "syllableString": "tter",
+                "accentuation": "unstressed"
+              }
+            ]
+          },
+          {
+            "syllables": [
+              {
+                "syllableString": "fun",
+                "accentuation": "stressed"
+              },
+              {
+                "syllableString": "ken",
+                "accentuation": "unstressed"
+              }
+            ]
+          }
+        ],
+        "measure": "trochaeus",
+        "audioFile": "lineOne.mp3"
+      },
+      {
+        "words": [
+          {
+            "syllables": [
+              {
+                "syllableString": "Die",
+                "accentuation": "unstressed"
+              }
+            ]
+          },
+          {
+            "syllables": [
+              {
+                "syllableString": "lin",
+                "accentuation": "stressed"
+              },
+              {
+                "syllableString": "den",
+                "accentuation": "unstressed"
+              }
+            ]
+          },
+          {
+            "syllables": [
+              {
+                "syllableString": "Lüf",
+                "accentuation": "stressed"
+              },
+              {
+                "syllableString": "te",
+                "accentuation": "unstressed"
+              }
+            ]
+          },
+          {
+            "syllables": [
+              {
+                "syllableString": "sind",
+                "accentuation": "stressed"
+              }
+            ]
+          },
+          {
+            "syllables": [
+              {
+                "syllableString": "er",
+                "accentuation": "unstressed"
+              },
+              {
+                "syllableString": "wacht  ",
+                "accentuation": "stressed"
+              }
+            ]
+          }
+        ],
+        "measure": "jambus",
+        "audioFile": "lineTwo.mp3"
+      }
+    ]
+    """
+   // catch exceptions https://learnappmaking.com/codable-json-swift-how-to/
+    lazy var jsonData = jsonString.data(using: .utf8)!
+    // lazy var lines = try! JSONDecoder().decode([Line].self, from: jsonData)
+    // lazy var line = try! JSONDecoder().decode(Line.self, from: jsonData)
+    
+    // lazy var selection: Set<Line> = Set<Line>(lines)
+    lazy var selection = Set<Line>()
+    // TODO BUG
+    // var selected: Line?
+    lazy var selected = lineThree
+    
+    // https://stackoverflow.com/a/58981897
+    func loadInputFile() {
+        // inputFile has "words.json" or lines.json
+        let data: Data
+        
+        guard let file = Bundle.main.url(forResource: inputFile, withExtension: nil) else {
+            print("error one while loading inputFile")
+            fatalError("Error One: Could not find \(inputFile) in main bundle.")
+        }
+        
+        do {
+            data = try Data(contentsOf: file)
+        }
+        catch {
+            print("error two while loading inputFile")
+            fatalError("Error Two: Could not find \(inputFile) in main bundle.")
+        }
+        
+        do {
+            let lines = try! JSONDecoder().decode([Line].self, from: data)
+            selection = Set<Line>(lines)
+            selected = selection.first!
+        }
+    }
     
     // both did not work
     // https://forums.raywenderlich.com/t/swift-tutorial-initialization-in-depth-part-2-2/13209/3
@@ -104,6 +317,10 @@ class LevelOneToFourScene: SKScene {
 //    }
     
     func setUpScene() {
+        // print("test json: " + lines[0].getLine())
+        // print("test json: " + line.getLine())
+
+        
         exitLabel.name = "exit"
         exitLabel.fontColor = SKColor.black
         exitLabel.text = "x"
@@ -132,12 +349,11 @@ class LevelOneToFourScene: SKScene {
         taskLabel.zPosition = 4
         addChild(taskLabel)
         
-        
         if provideHelp {
             // accentuationInfoButton = SKSpriteNode(imageNamed: "info")
             accentuationInfoButton = SKSpriteNode(imageNamed: "icons8-info-50")
             accentuationInfoButton.name = "accentuationInfoBtn"
-            accentuationInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY+100)
+            accentuationInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY+90)
             accentuationInfoButton.size = CGSize(width: 50, height: 50)
             accentuationInfoButton.zPosition = 2
             addChild(accentuationInfoButton)
@@ -145,7 +361,7 @@ class LevelOneToFourScene: SKScene {
             // soundBoxButton = SKSpriteNode(imageNamed: "sound")
             soundBoxButton = SKSpriteNode(imageNamed: "QuickActions_Audio")
             soundBoxButton.name = "soundBoxBtn"
-            soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY+100)
+            soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY+90)
             soundBoxButton.size = CGSize(width: 40, height: 40)
             soundBoxButton.zPosition = 2
             addChild(soundBoxButton)
@@ -226,7 +442,10 @@ class LevelOneToFourScene: SKScene {
     // make a gray bin per syllable dynamically positioned right over corresponding syllable
     func generateAccentuationBins(line: Line, wordToBeRated: SKLabelNode) {
         // unit per char: dynamically calculated by frame.width divided by amount of chars
-        let amountOfCharsInLine = line.line.count
+        
+        // CHECK
+        // let amountOfCharsInLine = line.line.count
+        let amountOfCharsInLine = line.getLine().count
         let unit = CGFloat(wordToBeRated.frame.width / CGFloat(amountOfCharsInLine))
 
         // var counter = CGFloat(5.0)
@@ -242,7 +461,7 @@ class LevelOneToFourScene: SKScene {
                 // unit/2 is added since middle of four chars is index 2.5 with a unit of 1
                 // 0.3 is subtracted since middlepoint has a very small width compared to regular chars
                 let positionOfBin = CGFloat((Double(syllable.syllableString.count)-0.3)/2.0)*unit + unit/2 + counter
-                accentBin.position = CGPoint(x: wordToBeRated.frame.minX+positionOfBin, y: frame.midY+35)
+                accentBin.position = CGPoint(x: wordToBeRated.frame.minX+positionOfBin, y: frame.midY+25)
                 accentBin.zPosition = 2
                 // append to global variable
                 accentBins.append(accentBin)
@@ -252,7 +471,9 @@ class LevelOneToFourScene: SKScene {
                 addChild(accentBin)
             }
             // counter shifts to the next word
-            counter += 25
+            // counter += 25
+            counter += 17
+            // counter += 15
         }
     }
     
@@ -287,8 +508,10 @@ class LevelOneToFourScene: SKScene {
         selected = selectNextWord()
         
         wordToBeRated.fontColor = SKColor.black
-        wordToBeRated.attributedText = makeAttributedString(stringToBeMutated: (selected.line), shallBecomeBold: false)
-        wordToBeRated.position = CGPoint(x: frame.midX, y: frame.midY-30)
+        // CHECK
+        // wordToBeRated.attributedText = makeAttributedString(stringToBeMutated: (selected.line), shallBecomeBold: false)
+        wordToBeRated.attributedText = makeAttributedString(stringToBeMutated: (selected.getLine()), shallBecomeBold: false)
+        wordToBeRated.position = CGPoint(x: frame.midX, y: frame.midY-50)
         wordToBeRated.zPosition = 2
         addChild(wordToBeRated)
 
@@ -296,7 +519,7 @@ class LevelOneToFourScene: SKScene {
 
         wordToBeRatedBold.fontColor = SKColor.black
         wordToBeRatedBold.attributedText = getWordToBeRatedBold(line: selected)
-        wordToBeRatedBold.position = CGPoint(x: frame.midX, y: frame.midY-30)
+        wordToBeRatedBold.position = CGPoint(x: frame.midX, y: frame.midY-50)
         wordToBeRatedBold.zPosition = 2
         // addChild(wordToBeRatedBold)
         
@@ -547,17 +770,20 @@ class LevelOneToFourScene: SKScene {
 
     override func didMove(to view: SKView) {
         print(inputFile)
+        loadInputFile()
         
         setUpScene()
         setUpUnfixedParts()
         
-        // has to be stored as NSuserData
-        if !(UserDefaults.standard.bool(forKey: userDefaultsKey)) {
+        // only show, if level1 has not been passed yet
+        if !(UserDefaults.standard.bool(forKey: "level1")) {
             displayAccentuationInfo()
         }
-        // level has been passed, so we do not need counter as threshold anymore
-        else {
-            correctRepliesLevelOne = 4
+        // current level has been passed, so we do not need to show congratulation window anymore
+        // correctRepliesLevelOne as threshold has to be bigger than amountOfCorrectRepliesToPassLevel
+        // because if threshold = amountOfCorrectRepliesToPassLevel, the congratulation is shown
+        if (UserDefaults.standard.bool(forKey: userDefaultsKey)) {
+            correctRepliesLevelOne = amountOfCorrectRepliesToPassLevel+1
         }
     }
 

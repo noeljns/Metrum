@@ -1,0 +1,206 @@
+[
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "Freu",
+            "accentuation": "stressed"
+          },
+          {
+            "syllableString": "de",
+            "accentuation": "unstressed"
+          }
+        ]
+      },
+      {
+        "syllables": [
+          {
+            "syllableString": "schö",
+            "accentuation": "stressed"
+          },
+          {
+            "syllableString": "ner",
+            "accentuation": "unstressed"
+          }
+        ]
+      },
+      {
+        "syllables": [
+          {
+            "syllableString": "Gö",
+            "accentuation": "stressed"
+          },
+          {
+            "syllableString": "tter",
+            "accentuation": "unstressed"
+          }
+        ]
+      },
+      {
+        "syllables": [
+          {
+            "syllableString": "fun",
+            "accentuation": "stressed"
+          },
+          {
+            "syllableString": "ken",
+            "accentuation": "unstressed"
+          }
+        ]
+      }
+    ],
+    "measure": "trochaeus",
+    "audioFile": "lineOne.mp3"
+  },
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "Am",
+            "accentuation": "unstressed"
+          }
+        ]
+      },
+      {
+        "syllables": [
+          {
+            "syllableString": "Him",
+            "accentuation": "stressed"
+          },
+          {
+          "syllableString": "mel",
+          "accentuation": "unstressed"
+          }
+        ]
+      },
+      {
+          "syllables": [
+              {
+                  "syllableString": "hell",
+                  "accentuation": "stressed"
+              }
+          ]
+      },
+      {
+          "syllables": [
+              {
+                  "syllableString": "und",
+                  "accentuation": "unstressed"
+              }
+          ]
+      },
+      {
+        "syllables": [
+          {
+            "syllableString": "klar",
+            "accentuation": "stressed"
+          }
+        ]
+      }
+    ],
+    "measure": "jambus",
+    "audioFile": "lineTwo.mp3"
+  },
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "Öff",
+            "accentuation": "stressed"
+          },
+          {
+            "syllableString": "ne",
+            "accentuation": "unstressed"
+          }
+        ]
+      },
+      {
+        "syllables": [
+          {
+            "syllableString": "dich",
+            "accentuation": "unstressed"
+          }
+        ]
+      },
+      {
+        "syllables": [
+          {
+            "syllableString": "Er",
+            "accentuation": "stressed"
+          },
+          {
+            "syllableString": "de",
+            "accentuation": "unstressed"
+          }
+        ]
+      },
+      {
+        "syllables": [
+          {
+            "syllableString": "mit...",
+            "accentuation": "unstressed"
+          }
+        ]
+      }
+    ],
+    "measure": "daktylus",
+    "audioFile": "lineThree.mp3"
+  },
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "Und",
+            "accentuation": "unstressed"
+          }
+        ]
+      },
+      {
+        "syllables": [
+          {
+            "syllableString": "es",
+            "accentuation": "unstressed"
+          }
+        ]
+      },
+      {
+        "syllables": [
+          {
+            "syllableString": "wal",
+            "accentuation": "stressed"
+          },
+          {
+            "syllableString": "let",
+            "accentuation": "unstressed"
+          }
+        ]
+      },
+      {
+        "syllables": [
+          {
+            "syllableString": "und",
+            "accentuation": "unstressed"
+          }
+        ]
+      },
+      {
+        "syllables": [
+          {
+            "syllableString": "sie",
+            "accentuation": "stressed"
+          },
+          {
+            "syllableString": "det...",
+            "accentuation": "unstressed"
+          }
+        ]
+      }
+    ],
+    "measure": "daktylus",
+    "audioFile": "lineThree.mp3"
+  }
+]

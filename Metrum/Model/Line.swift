@@ -9,16 +9,31 @@
 import Foundation
 
 // line (engl.) = Vers (dt.)
-struct Line: Hashable {
+struct Line: Hashable, Codable {
     let words: [Word]
     let measure: Measure
     let audioFile: String
     
     // computed property
-    var line: String {
+//    var line: String {
+//        // concatenate words to a line
+//        // https://medium.com/@abhimuralidharan/higher-order-functions-in-swift-filter-map-reduce-flatmap-1837646a63e8
+//        var str = words.reduce("") { $0 + $1.word + " "}
+//        // cut last character, so that last space is removed from line
+//        str.removeLast()
+//        return str
+//    }
+    
+    enum CodingKeys: String, CodingKey {
+        case words = "words"
+        case measure = "measure"
+        case audioFile
+    }
+    
+    func getLine() -> String {
         // concatenate words to a line
         // https://medium.com/@abhimuralidharan/higher-order-functions-in-swift-filter-map-reduce-flatmap-1837646a63e8
-        var str = words.reduce("") { $0 + $1.word + " "}
+        var str = words.reduce("") { $0 + $1.getWord() + " "}
         // cut last character, so that last space is removed from line
         str.removeLast()
         return str
@@ -26,12 +41,34 @@ struct Line: Hashable {
     
     // make Line conform to protocol Hashable so that is can be used as Set
     var hashValue: Int {
-        return line.hashValue
+        // return line.hashValue
+        return getLine().hashValue
     }
     
     static func == (lhs: Line, rhs: Line) -> Bool {
-        return lhs.line == rhs.line && lhs.measure == rhs.measure && lhs.audioFile == rhs.audioFile
+        // return lhs.line == rhs.line && lhs.measure == rhs.measure && lhs.audioFile == rhs.audioFile
+        return lhs.getLine() == rhs.getLine() && lhs.measure == rhs.measure && lhs.audioFile == rhs.audioFile
     }
+    
+// not working
+//    enum CodingKeys: String, CodingKey {
+//        case words
+//        case measure
+//        case audioFile
+//        case line
+//    }
+//
+//    init() {}
+//
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        words = [try values.decode(Word.self, forKey: .words)]
+//        measure = try values.decode(Measure.self, forKey: .measure)
+//        audioFile = try values.decode(String.self, forKey: .audioFile)
+//        line = try values.decode(String.self, forKey: .line)
+//    }
+    
+    
     
     // " ", ",", ".", "!"
     // let wordSeparators: [String]

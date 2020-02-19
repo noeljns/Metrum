@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Word {
+struct Word: Codable {
     let syllables: [Syllable]
 
     // in case of two or more syllables, the word itself has a measure
@@ -16,10 +16,22 @@ struct Word {
     // let measureOfWord: Measure
     
     // computed property
-    var word: String {
+//    var word: String {
+//        // concatenate syllableStrings of word
+//        // https://medium.com/@abhimuralidharan/higher-order-functions-in-swift-filter-map-reduce-flatmap-1837646a63e8
+//        var str = syllables.reduce("") { $0 + $1.syllableString + "·"}
+//        // cut last character, so that last middle point is removed from word
+//        str.removeLast()
+//        return str
+//    }
+    
+    enum CodingKeys: String, CodingKey {
+        case syllables = "syllables"
+    }
+    
+    func getWord() -> String {
         // concatenate syllableStrings of word
         // https://medium.com/@abhimuralidharan/higher-order-functions-in-swift-filter-map-reduce-flatmap-1837646a63e8
-        
         var str = syllables.reduce("") { $0 + $1.syllableString + "·"}
         // cut last character, so that last middle point is removed from word
         str.removeLast()

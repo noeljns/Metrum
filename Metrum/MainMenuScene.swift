@@ -116,7 +116,8 @@ class MainMenuScene: SKScene {
         if(touchedNode.name == "level1") {
             let levelOneScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
             levelOneScene?.provideHelp = true
-            levelOneScene?.inputFile = "input file for level1 and level2"
+            // levelOneScene?.inputFile = "input file for level1 and level2"
+            levelOneScene?.inputFile = "words.json"
             levelOneScene?.userDefaultsKey = "level1"
             levelOneScene?.scaleMode = scaleMode
             view?.presentScene(levelOneScene)
@@ -125,7 +126,7 @@ class MainMenuScene: SKScene {
         if(touchedNode.name == "level2") {
             let levelTwoScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
             levelTwoScene?.provideHelp = false
-            levelTwoScene?.inputFile = "input file for level1 and level2"
+            levelTwoScene?.inputFile = "words.json"
             levelTwoScene?.userDefaultsKey = "level2"
             levelTwoScene?.scaleMode = scaleMode
             view?.presentScene(levelTwoScene)
@@ -134,7 +135,7 @@ class MainMenuScene: SKScene {
         if(touchedNode.name == "level3") {
             let levelThreeScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
             levelThreeScene?.provideHelp = true
-            levelThreeScene?.inputFile = "input file for level3 and level4"
+            levelThreeScene?.inputFile = "lines.json"
             levelThreeScene?.userDefaultsKey = "level3"
             levelThreeScene?.scaleMode = scaleMode
             view?.presentScene(levelThreeScene)
@@ -143,7 +144,7 @@ class MainMenuScene: SKScene {
         if(touchedNode.name == "level4") {
             let levelFourScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
             levelFourScene?.provideHelp = false
-            levelFourScene?.inputFile = "input file for level3 and level4"
+            levelFourScene?.inputFile = "lines.json"
             levelFourScene?.userDefaultsKey = "level4"
             levelFourScene?.scaleMode = scaleMode
             view?.presentScene(levelFourScene)

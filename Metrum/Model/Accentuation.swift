@@ -9,7 +9,7 @@
 import Foundation
 
 // accentuation (engl.) = Betonung (dt.)
-enum Accentuation: String {
+enum Accentuation: String, Codable {
     case stressed = "stressed"
     case unstressed = "unstressed"
 }

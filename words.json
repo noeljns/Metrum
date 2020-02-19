@@ -1,0 +1,242 @@
+[
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "So",
+            "accentuation": "stressed"
+          },
+          {
+            "syllableString": "nne",
+            "accentuation": "unstressed"
+          }
+        ]
+      }
+    ],
+    "measure": "trochaeus",
+    "audioFile": "Sonne.mp3"
+  },
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "Fla",
+            "accentuation": "stressed"
+          },
+          {
+            "syllableString": "sche",
+            "accentuation": "unstressed"
+          }
+        ]
+      }
+    ],
+    "measure": "trochaeus",
+    "audioFile": "Flasche.mp3"
+  },
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "Lam",
+            "accentuation": "stressed"
+          },
+          {
+            "syllableString": "pe",
+            "accentuation": "unstressed"
+          }
+        ]
+      }
+    ],
+    "measure": "trochaeus",
+    "audioFile": "Lampe.mp3"
+  },
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "Ver",
+            "accentuation": "unstressed"
+          },
+          {
+            "syllableString": "stand",
+            "accentuation": "stressed"
+          }
+        ]
+      }
+    ],
+    "measure": "jambus",
+    "audioFile": "Verstand.mp3"
+  },
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "ge",
+            "accentuation": "unstressed"
+          },
+          {
+            "syllableString": "nau",
+            "accentuation": "stressed"
+          }
+        ]
+      }
+    ],
+    "measure": "jambus",
+    "audioFile": "genau.mp3"
+  },
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "Er",
+            "accentuation": "unstressed"
+          },
+          {
+            "syllableString": "satz",
+            "accentuation": "stressed"
+          }
+        ]
+      }
+    ],
+    "measure": "jambus",
+    "audioFile": "Ersatz.mp3"
+  },
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "Har",
+            "accentuation": "unstressed"
+          },
+          {
+            "syllableString": "mo",
+            "accentuation": "unstressed"
+          },
+          {
+            "syllableString": "nie",
+            "accentuation": "stressed"
+          }
+        ]
+      }
+    ],
+    "measure": "anapaest",
+    "audioFile": "Harmonie.mp3"
+  },
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "Sin",
+            "accentuation": "unstressed"
+          },
+          {
+            "syllableString": "fo",
+            "accentuation": "unstressed"
+          },
+          {
+            "syllableString": "nie",
+            "accentuation": "stressed"
+          }
+        ]
+      }
+    ],
+    "measure": "anapaest",
+    "audioFile": "Sinfonie.mp3"
+  },
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": " Zau",
+            "accentuation": "unstressed"
+          },
+          {
+            "syllableString": "be",
+            "accentuation": "unstressed"
+          },
+          {
+            "syllableString": "rei ",
+            "accentuation": "stressed"
+          }
+        ]
+      }
+    ],
+    "measure": "anapaest",
+    "audioFile": "Zauberei.mp3"
+  },
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "Ei",
+            "accentuation": "stressed"
+          },
+          {
+            "syllableString": "tel",
+            "accentuation": "unstressed"
+          },
+          {
+            "syllableString": "keit",
+            "accentuation": "unstressed"
+          }
+        ]
+      }
+    ],
+    "measure": "daktylus",
+    "audioFile": "Eitelkeit.mp3"
+  },
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "Ach",
+            "accentuation": "stressed"
+          },
+          {
+            "syllableString": "ter",
+            "accentuation": "unstressed"
+          },
+          {
+            "syllableString": "bahn",
+            "accentuation": "unstressed"
+          }
+        ]
+      }
+    ],
+    "measure": "daktylus",
+    "audioFile": "Achterbahn.mp3"
+  },
+  {
+    "words": [
+      {
+        "syllables": [
+          {
+            "syllableString": "Au",
+            "accentuation": "stressed"
+          },
+          {
+            "syllableString": "to",
+            "accentuation": "unstressed"
+          },
+          {
+            "syllableString": "bahn",
+            "accentuation": "unstressed"
+          }
+        ]
+      }
+    ],
+    "measure": "daktylus",
+    "audioFile": "Autobahn.mp3"
+  }
+]
