@@ -485,11 +485,11 @@ class LevelOneToFourScene: SKScene {
     /// Relevant for sound button.
     /// Returns a duration regarding the game status.
     ///
-    /// - Returns: A duration of one second or three seconds if it is a higher level.
+    /// - Returns: A duration of one second or four seconds if it is a higher level.
     func longerDurationIfHigherLevels() -> TimeInterval{
         var duration = TimeInterval(1.0)
         if (userDefaultsKey == "level3" || userDefaultsKey == "level4" || userDefaultsKey == "level9" || userDefaultsKey == "level10") {
-            duration = TimeInterval(3.0)
+            duration = TimeInterval(4.0)
         }
         return duration
     }
