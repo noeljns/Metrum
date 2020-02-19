@@ -38,7 +38,7 @@ class LevelOneToFourScene: SKScene {
     // variables for level passing management
     // lazy: https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
     lazy private var correctlyMarkedLines = Set<Line>()
-    private var amountOfCorrectRepliesToPassLevel = 4
+    private var amountOfCorrectRepliesToPassLevel = 2
     private var correctRepliesLevelOne = 0
     
     // variables for input data
