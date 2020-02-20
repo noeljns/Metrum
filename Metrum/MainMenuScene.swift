@@ -80,8 +80,7 @@ class MainMenuScene: SKScene {
             print("levelisPassed: " + String(index) + " " + String(levelIsPassed))
             
             // last index / index = 9 is not necessary since there is no level11
-            // if levelIsPassed && index<9 {
-            if levelIsPassed {
+            if levelIsPassed && index<9 {
                 let indexOfNextLevel = index+2
                 let nameOfNextLevel = "level" + String(indexOfNextLevel)
                 drawLevelColorful(levelName: nameOfNextLevel)
