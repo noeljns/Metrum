@@ -20,9 +20,6 @@
 		DD43640023F18D87001F2A48 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363FF23F18D87001F2A48 /* Line.swift */; };
 		DD507EC123F551AC00D790E1 /* ReplyIsCorrect.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD507EC023F551AC00D790E1 /* ReplyIsCorrect.swift */; };
 		DD5749C723EC405200C50423 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749C623EC405200C50423 /* AppDelegate.swift */; };
-		DD5749C923EC405200C50423 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DD5749C823EC405200C50423 /* GameScene.sks */; };
-		DD5749CB23EC405200C50423 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = DD5749CA23EC405200C50423 /* Actions.sks */; };
-		DD5749CD23EC405200C50423 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749CC23EC405200C50423 /* GameScene.swift */; };
 		DD5749CF23EC405200C50423 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749CE23EC405200C50423 /* GameViewController.swift */; };
 		DD5749D223EC405200C50423 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD5749D023EC405200C50423 /* Main.storyboard */; };
 		DD5749D723EC405300C50423 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD5749D523EC405300C50423 /* LaunchScreen.storyboard */; };
@@ -44,6 +41,8 @@
 		DDC75EF323FDE37600B551BB /* LevelFiveToSixScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC75EF223FDE37600B551BB /* LevelFiveToSixScene.swift */; };
 		DDC75EF523FDE39D00B551BB /* LevelFiveToSixScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EF423FDE39D00B551BB /* LevelFiveToSixScene.sks */; };
 		DDC75EF723FDE42000B551BB /* MeasureInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC75EF623FDE42000B551BB /* MeasureInfo.swift */; };
+		DDC75EF923FE043200B551BB /* LevelSevenToTenScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC75EF823FE043200B551BB /* LevelSevenToTenScene.swift */; };
+		DDC75EFB23FE04E900B551BB /* LevelSevenToTenScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EFA23FE04E900B551BB /* LevelSevenToTenScene.sks */; };
 		DDE2FBE423FD780E00118ADC /* Flasche.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBE323FD780E00118ADC /* Flasche.mp3 */; };
 		DDE2FBE823FD78C000118ADC /* Lampe.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBE723FD78C000118ADC /* Lampe.mp3 */; };
 		DDE2FBEA23FD78F000118ADC /* Sonne.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBE923FD78F000118ADC /* Sonne.mp3 */; };
@@ -90,9 +89,6 @@
 		DD507EC023F551AC00D790E1 /* ReplyIsCorrect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyIsCorrect.swift; sourceTree = "<group>"; };
 		DD5749C323EC405200C50423 /* Metrum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metrum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD5749C623EC405200C50423 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DD5749C823EC405200C50423 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		DD5749CA23EC405200C50423 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
-		DD5749CC23EC405200C50423 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		DD5749CE23EC405200C50423 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		DD5749D123EC405200C50423 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DD5749D623EC405300C50423 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -119,6 +115,8 @@
 		DDC75EF223FDE37600B551BB /* LevelFiveToSixScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelFiveToSixScene.swift; sourceTree = "<group>"; };
 		DDC75EF423FDE39D00B551BB /* LevelFiveToSixScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelFiveToSixScene.sks; sourceTree = "<group>"; };
 		DDC75EF623FDE42000B551BB /* MeasureInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureInfo.swift; sourceTree = "<group>"; };
+		DDC75EF823FE043200B551BB /* LevelSevenToTenScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSevenToTenScene.swift; sourceTree = "<group>"; };
+		DDC75EFA23FE04E900B551BB /* LevelSevenToTenScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelSevenToTenScene.sks; sourceTree = "<group>"; };
 		DDE2FBE323FD780E00118ADC /* Flasche.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Flasche.mp3; sourceTree = "<group>"; };
 		DDE2FBE723FD78C000118ADC /* Lampe.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Lampe.mp3; sourceTree = "<group>"; };
 		DDE2FBE923FD78F000118ADC /* Sonne.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Sonne.mp3; path = ../../../../Downloads/Sounds/Sonne.mp3; sourceTree = "<group>"; };
@@ -218,19 +216,18 @@
 		DD5749C523EC405200C50423 /* Metrum */ = {
 			isa = PBXGroup;
 			children = (
-				DD4363F623F18629001F2A48 /* Model */,
 				DD5749C623EC405200C50423 /* AppDelegate.swift */,
-				DD5749C823EC405200C50423 /* GameScene.sks */,
-				DDC4906C23EC507A000F0942 /* MainMenuScene.sks */,
-				DDC4907023EC5736000F0942 /* LevelOneToFourScene.sks */,
-				DDC75EF423FDE39D00B551BB /* LevelFiveToSixScene.sks */,
-				DD3276CF23F0E26F007DAB87 /* LevelTwoScene.sks */,
-				DD5749CA23EC405200C50423 /* Actions.sks */,
-				DD5749CC23EC405200C50423 /* GameScene.swift */,
+				DD4363F623F18629001F2A48 /* Model */,
 				DDC4906623EC47EC000F0942 /* MainMenuScene.swift */,
+				DDC4906C23EC507A000F0942 /* MainMenuScene.sks */,
 				DDC4906823EC4F0B000F0942 /* LevelOneToFourScene.swift */,
+				DDC4907023EC5736000F0942 /* LevelOneToFourScene.sks */,
 				DDC75EF223FDE37600B551BB /* LevelFiveToSixScene.swift */,
+				DDC75EF423FDE39D00B551BB /* LevelFiveToSixScene.sks */,
+				DDC75EF823FE043200B551BB /* LevelSevenToTenScene.swift */,
+				DDC75EFA23FE04E900B551BB /* LevelSevenToTenScene.sks */,
 				DD3276CD23F0E257007DAB87 /* LevelTwoScene.swift */,
+				DD3276CF23F0E26F007DAB87 /* LevelTwoScene.sks */,
 				DD969FF623FC5A8100C22624 /* OverlayWindows */,
 				DD5749CE23EC405200C50423 /* GameViewController.swift */,
 				DD5749D023EC405200C50423 /* Main.storyboard */,
@@ -387,6 +384,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDC75EFB23FE04E900B551BB /* LevelSevenToTenScene.sks in Resources */,
 				DD5749D223EC405200C50423 /* Main.storyboard in Resources */,
 				DDE2FBF823FD7AA400118ADC /* Eitelkeit.mp3 in Resources */,
 				DDE2FBEE23FD798B00118ADC /* genau.mp3 in Resources */,
@@ -394,7 +392,6 @@
 				DDC4906D23EC507A000F0942 /* MainMenuScene.sks in Resources */,
 				DD3276D023F0E26F007DAB87 /* LevelTwoScene.sks in Resources */,
 				DDE2FBFA23FD7AD600118ADC /* Achterbahn.mp3 in Resources */,
-				DD5749C923EC405200C50423 /* GameScene.sks in Resources */,
 				DDE2FBE823FD78C000118ADC /* Lampe.mp3 in Resources */,
 				DD95065623FD8B2500BF1291 /* words.json in Resources */,
 				DDC75EEE23FDE0F300B551BB /* lineOne.mp3 in Resources */,
@@ -412,7 +409,6 @@
 				DDE2FBF023FD79C200118ADC /* Ersatz.mp3 in Resources */,
 				DDE2FBE423FD780E00118ADC /* Flasche.mp3 in Resources */,
 				DD5749FC23EC408800C50423 /* .gitignore in Resources */,
-				DD5749CB23EC405200C50423 /* Actions.sks in Resources */,
 				DDE2FBF423FD7A4700118ADC /* Sinfonie.mp3 in Resources */,
 				DDE2FBF223FD7A1300118ADC /* Harmonie.mp3 in Resources */,
 				DDE2FBEC23FD794D00118ADC /* Verstand.mp3 in Resources */,
@@ -442,9 +438,9 @@
 			files = (
 				DDC75EF723FDE42000B551BB /* MeasureInfo.swift in Sources */,
 				DD507EC123F551AC00D790E1 /* ReplyIsCorrect.swift in Sources */,
+				DDC75EF923FE043200B551BB /* LevelSevenToTenScene.swift in Sources */,
 				DDC75EF323FDE37600B551BB /* LevelFiveToSixScene.swift in Sources */,
 				DD969FF523FC52BE00C22624 /* Warning.swift in Sources */,
-				DD5749CD23EC405200C50423 /* GameScene.swift in Sources */,
 				DD4363F823F18645001F2A48 /* Word.swift in Sources */,
 				DDC4906923EC4F0B000F0942 /* LevelOneToFourScene.swift in Sources */,
 				DD3276CE23F0E257007DAB87 /* LevelTwoScene.swift in Sources */,

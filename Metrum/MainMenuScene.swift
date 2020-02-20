@@ -77,8 +77,11 @@ class MainMenuScene: SKScene {
     func markEnterableAndPassedLevels() {
         var trophyPosition = 370
         for (index, levelIsPassed) in levels.enumerated() {
+            print("levelisPassed: " + String(index) + " " + String(levelIsPassed))
+            
             // last index / index = 9 is not necessary since there is no level11
-            if levelIsPassed && index<9 {
+            // if levelIsPassed && index<9 {
+            if levelIsPassed {
                 let indexOfNextLevel = index+2
                 let nameOfNextLevel = "level" + String(indexOfNextLevel)
                 drawLevelColorful(levelName: nameOfNextLevel)
@@ -166,15 +169,51 @@ class MainMenuScene: SKScene {
         }
         
         if(touchedNode.name == "level7") {
-            if levelOneIsPassed {
-                let levelSevenScene = LevelTwoScene(fileNamed: "LevelTwoScene")
-                levelSevenScene?.scaleMode = scaleMode
-                view?.presentScene(levelSevenScene)
-            }
-            else {
-                print("level 1 is not passed yet, you can't enter level 2!")
-            }
+            let levelSevenScene = LevelSevenToTenScene(fileNamed: "LevelSevenToTenScene")
+            levelSevenScene?.provideHelp = true
+            levelSevenScene?.inputFile = "words.json"
+            levelSevenScene?.userDefaultsKey = "level7"
+            levelSevenScene?.scaleMode = scaleMode
+            view?.presentScene(levelSevenScene)
         }
+        
+        if(touchedNode.name == "level8") {
+            let levelEightScene = LevelSevenToTenScene(fileNamed: "LevelSevenToTenScene")
+            levelEightScene?.provideHelp = false
+            levelEightScene?.inputFile = "words.json"
+            levelEightScene?.userDefaultsKey = "level8"
+            levelEightScene?.scaleMode = scaleMode
+            view?.presentScene(levelEightScene)
+        }
+        
+        if(touchedNode.name == "level9") {
+            let levelNineScene = LevelSevenToTenScene(fileNamed: "LevelSevenToTenScene")
+            levelNineScene?.provideHelp = true
+            levelNineScene?.inputFile = "lines.json"
+            levelNineScene?.userDefaultsKey = "level9"
+            levelNineScene?.scaleMode = scaleMode
+            view?.presentScene(levelNineScene)
+        }
+        
+        if(touchedNode.name == "level10") {
+            let levelTenScene = LevelSevenToTenScene(fileNamed: "LevelSevenToTenScene")
+            levelTenScene?.provideHelp = false
+            levelTenScene?.inputFile = "lines.json"
+            levelTenScene?.userDefaultsKey = "level10"
+            levelTenScene?.scaleMode = scaleMode
+            view?.presentScene(levelTenScene)
+        }
+        
+//        if(touchedNode.name == "level7") {
+//            if levelOneIsPassed {
+//                let levelSevenScene = LevelTwoScene(fileNamed: "LevelTwoScene")
+//                levelSevenScene?.scaleMode = scaleMode
+//                view?.presentScene(levelSevenScene)
+//            }
+//            else {
+//                print("level 1 is not passed yet, you can't enter level 2!")
+//            }
+//        }
     }
     
 }

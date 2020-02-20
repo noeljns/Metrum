@@ -39,7 +39,7 @@ class LevelOneToFourScene: SKScene {
     // lazy: https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
     lazy private var correctlyMarkedLines = Set<Line>()
     private var amountOfCorrectRepliesToPassLevel = 2
-    private var correctRepliesLevelOne = 0
+    private var correctReplies = 0
     
     // variables for input data
     lazy var loadedLines = Set<Line>()
@@ -154,13 +154,13 @@ class LevelOneToFourScene: SKScene {
         let levelOnePassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
         
         if !(levelOnePassed) {
-            let imageName = "loadingBar" + String(correctRepliesLevelOne)
+            let imageName = "loadingBar" + String(correctReplies)
             loadingBar.texture = SKTexture(imageNamed: imageName)
-            print("correct replies: " + String(correctRepliesLevelOne))
+            print("correct replies: " + String(correctReplies))
         }
         else {
             loadingBar.texture = SKTexture(imageNamed: "loadingBarFull")
-            print("correct replies: " + String(correctRepliesLevelOne))
+            print("correct replies: " + String(correctReplies))
         }
     }
     
@@ -564,7 +564,7 @@ class LevelOneToFourScene: SKScene {
     /// Relevant for check button.
     /// Sets user data of the level to true, if the level has been passed.
     func updateLevelStatus() {
-        if (correctRepliesLevelOne >= amountOfCorrectRepliesToPassLevel) {
+        if (correctReplies >= amountOfCorrectRepliesToPassLevel) {
             UserDefaults.standard.set(true, forKey: userDefaultsKey)
         }
     }
@@ -618,10 +618,10 @@ class LevelOneToFourScene: SKScene {
             displayAccentuationInfo()
         }
         // current level has been passed, so we do not need to show congratulation window anymore
-        // correctRepliesLevelOne as threshold has to be bigger than amountOfCorrectRepliesToPassLevel
+        // correctReplies as threshold has to be bigger than amountOfCorrectRepliesToPassLevel
         // because if threshold = amountOfCorrectRepliesToPassLevel, the congratulation is shown
         if (UserDefaults.standard.bool(forKey: userDefaultsKey)) {
-            correctRepliesLevelOne = amountOfCorrectRepliesToPassLevel+1
+            correctReplies = amountOfCorrectRepliesToPassLevel+1
         }
     }
 
@@ -657,7 +657,7 @@ class LevelOneToFourScene: SKScene {
                 if (isSolutionCorrect) {
                     correctlyMarkedLines.insert(selectedLine)
                     
-                    correctRepliesLevelOne += 1
+                    correctReplies += 1
                     // check whether level is passed and save to boolean variable
                     updateLevelStatus()
                     // increase loadingbar but only if level has not been passed yet
@@ -784,7 +784,7 @@ extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate,
         backgroundBlocker.removeFromParent()
         replyIsCorrect?.removeFromParent()
         
-        if correctRepliesLevelOne == amountOfCorrectRepliesToPassLevel {
+        if correctReplies == amountOfCorrectRepliesToPassLevel {
             displayCongratulations()
         }
         else {
