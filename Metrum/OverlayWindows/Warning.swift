@@ -45,24 +45,26 @@ class Warning: SKSpriteNode {
         warningLabel.zPosition = 2
         addChild(warningLabel)
         
-        let exitButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 150, height: 55))
+        let exitButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 180, height: 55))
         exitButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-170)
         exitButtonFrame.zPosition = 4
         addChild(exitButtonFrame)
-        let exitButton = SKLabelNode(text: "Abbrechen")
+        let exitButton = SKLabelNode(text: "Level abbrechen")
         exitButton.name = "exit"
+        exitButton.fontSize = 25
         exitButton.fontColor = SKColor.white
         exitButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
         exitButton.zPosition = 5
         exitButton.addStroke(color: .white, width: 6.0)
         exitButtonFrame.addChild(exitButton)
         
-        let backButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 150, height: 55))
+        let backButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 180, height: 55))
         backButtonFrame.position = CGPoint(x: frame.midX-200, y: frame.midY-170)
         backButtonFrame.zPosition = 4
         addChild(backButtonFrame)
-        let backButton = SKLabelNode(text: "Zurück")
+        let backButton = SKLabelNode(text: "Level fortführen")
         backButton.name = "back"
+        backButton.fontSize = 25
         backButton.fontColor = SKColor.white
         backButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
         backButton.zPosition = 5

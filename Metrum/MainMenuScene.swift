@@ -9,6 +9,7 @@
 import SpriteKit
 
 class MainMenuScene: SKScene {
+    var firstEntryOfApp = UserDefaults.standard.bool(forKey: "firstEntry")
     var levelOneIsPassed = UserDefaults.standard.bool(forKey: "level1")
     var levelTwoIsPassed = UserDefaults.standard.bool(forKey: "level2")
     var levelThreeIsPassed = UserDefaults.standard.bool(forKey: "level3")
@@ -22,10 +23,31 @@ class MainMenuScene: SKScene {
     
     lazy var levels = [levelOneIsPassed, levelTwoIsPassed, levelThreeIsPassed, levelFourIsPassed, levelFiveIsPassed,
                        levelSixIsPassed, levelSevenIsPassed, levelEightIsPassed, levelNineIsPassed, levenTenIsPassed]
+    
+    private var backgroundBlocker: SKSpriteNode!
+    private var salutation: Salutation!
+    
+    func displaySalutation() {
+        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
+        backgroundBlocker.zPosition = 4999
+        addChild(backgroundBlocker)
+        
+        salutation = Salutation(size: CGSize(width: 650, height: 800))
+        salutation.delegate = self
+        salutation.zPosition = 5000
+        addChild(salutation)
+    }
+
 
     override func didMove(to view: SKView) {
+        if !(firstEntryOfApp) {
+            displaySalutation()
+            UserDefaults.standard.set(true, forKey: "firstEntry")
+        }
+        
         let header = SKLabelNode(text: "METRUM")
-        header.position = CGPoint(x: frame.midX, y: frame.midY + 450)
+        header.name = "header"
+        header.position = CGPoint(x: frame.midX, y: frame.midY + 440)
         header.fontSize = 55
         header.fontColor = SKColor.black
         header.zPosition = 2
@@ -48,13 +70,13 @@ class MainMenuScene: SKScene {
     }
     
     func generateLevels() {
-        var canvasPosition = 380
+        var canvasPosition = 370
         for index in 1...10 {
             let text = "Enter Level " + String(index)
             let name = "level" + String(index)
             generateLevel(text: text, name: name, canvasPosition: frame.midY + CGFloat(canvasPosition))
             
-            canvasPosition = canvasPosition-90
+            canvasPosition = canvasPosition-85
         }
     }
     
@@ -73,27 +95,6 @@ class MainMenuScene: SKScene {
         canvas.addChild(label)
     }
     
-    // colorize levels that are able to be entered and flag passed levels with trophy
-    func markEnterableAndPassedLevels() {
-        var trophyPosition = 370
-        for (index, levelIsPassed) in levels.enumerated() {
-            print("levelisPassed: " + String(index) + " " + String(levelIsPassed))
-            
-            // last index / index = 9 is not necessary since there is no level11
-            if levelIsPassed && index<9 {
-                let indexOfNextLevel = index+2
-                let nameOfNextLevel = "level" + String(indexOfNextLevel)
-                drawLevelColorful(levelName: nameOfNextLevel)
-            }
-            
-            if levelIsPassed {
-                let trophyLabel = SKLabelNode(text: "🏆")
-                trophyLabel.position = CGPoint(x: frame.midX + 150, y: frame.midY + CGFloat(trophyPosition))
-                addChild(trophyLabel)
-            }
-            trophyPosition = trophyPosition-90
-        }
-    }
     
     // TODO caution optinals
     func drawLevelColorful(levelName: String) {
@@ -105,6 +106,33 @@ class MainMenuScene: SKScene {
         label?.addStroke(color: .white, width: 6.0)
     }
     
+    
+    // colorize levels that are able to be entered and flag passed levels with trophy
+    func markEnterableAndPassedLevels() {
+        var trophyPosition = 365
+        for (index, levelIsPassed) in levels.enumerated() {
+            print("levelisPassed: " + String(index) + " " + String(levelIsPassed))
+            
+            // last index / index = 9 is not necessary since there is no level11
+            if levelIsPassed && index<9 {
+                print("levelisPassed: " + String(levelIsPassed) + " " + String(index))
+                let indexOfNextLevel = index+2
+                let nameOfNextLevel = "level" + String(indexOfNextLevel)
+                print("nameOfNextLevel: " + nameOfNextLevel)
+                drawLevelColorful(levelName: nameOfNextLevel)
+            }
+            
+            if levelIsPassed {
+                let trophyLabel = SKLabelNode(text: "🏆")
+                trophyLabel.position = CGPoint(x: frame.midX + 145, y: frame.midY + CGFloat(trophyPosition))
+                addChild(trophyLabel)
+            }
+            trophyPosition = trophyPosition-85
+        }
+    }
+    
+
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // https://code.tutsplus.com/tutorials/spritekit-basics-nodes--cms-28785
         
@@ -115,6 +143,10 @@ class MainMenuScene: SKScene {
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
         
+        if (touchedNode.name == "header") {
+            displaySalutation()
+        }
+        
         if(touchedNode.name == "level1") {
             let levelOneScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
             levelOneScene?.provideHelp = true
@@ -124,7 +156,7 @@ class MainMenuScene: SKScene {
             view?.presentScene(levelOneScene)
         }
         
-        if(touchedNode.name == "level2") {
+        if(touchedNode.name == "level2" && levelOneIsPassed) {
             let levelTwoScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
             levelTwoScene?.provideHelp = false
             levelTwoScene?.inputFile = "words.json"
@@ -133,7 +165,7 @@ class MainMenuScene: SKScene {
             view?.presentScene(levelTwoScene)
         }
         
-        if(touchedNode.name == "level3") {
+        if(touchedNode.name == "level3" && levelTwoIsPassed) {
             let levelThreeScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
             levelThreeScene?.provideHelp = true
             levelThreeScene?.inputFile = "lines.json"
@@ -142,7 +174,7 @@ class MainMenuScene: SKScene {
             view?.presentScene(levelThreeScene)
         }
         
-        if(touchedNode.name == "level4") {
+        if(touchedNode.name == "level4" && levelThreeIsPassed) {
             let levelFourScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
             levelFourScene?.provideHelp = false
             levelFourScene?.inputFile = "lines.json"
@@ -151,7 +183,7 @@ class MainMenuScene: SKScene {
             view?.presentScene(levelFourScene)
         }
         
-        if(touchedNode.name == "level5") {
+        if(touchedNode.name == "level5" && levelFourIsPassed) {
             let levelFiveScene = LevelFiveToSixScene(fileNamed: "LevelFiveToSixScene")
             levelFiveScene?.provideHelp = true
             levelFiveScene?.userDefaultsKey = "level5"
@@ -159,7 +191,7 @@ class MainMenuScene: SKScene {
             view?.presentScene(levelFiveScene)
         }
         
-        if(touchedNode.name == "level6") {
+        if(touchedNode.name == "level6" && levelFiveIsPassed) {
             let levelSixScene = LevelFiveToSixScene(fileNamed: "LevelFiveToSixScene")
             levelSixScene?.provideHelp = false
             levelSixScene?.userDefaultsKey = "level6"
@@ -167,7 +199,7 @@ class MainMenuScene: SKScene {
             view?.presentScene(levelSixScene)
         }
         
-        if(touchedNode.name == "level7") {
+        if(touchedNode.name == "level7" && levelSixIsPassed) {
             let levelSevenScene = LevelSevenToTenScene(fileNamed: "LevelSevenToTenScene")
             levelSevenScene?.provideHelp = true
             levelSevenScene?.inputFile = "words.json"
@@ -176,7 +208,7 @@ class MainMenuScene: SKScene {
             view?.presentScene(levelSevenScene)
         }
         
-        if(touchedNode.name == "level8") {
+        if(touchedNode.name == "level8" && levelSevenIsPassed) {
             let levelEightScene = LevelSevenToTenScene(fileNamed: "LevelSevenToTenScene")
             levelEightScene?.provideHelp = false
             levelEightScene?.inputFile = "words.json"
@@ -185,7 +217,7 @@ class MainMenuScene: SKScene {
             view?.presentScene(levelEightScene)
         }
         
-        if(touchedNode.name == "level9") {
+        if(touchedNode.name == "level9" && levelEightIsPassed) {
             let levelNineScene = LevelSevenToTenScene(fileNamed: "LevelSevenToTenScene")
             levelNineScene?.provideHelp = true
             levelNineScene?.inputFile = "lines.json"
@@ -194,7 +226,7 @@ class MainMenuScene: SKScene {
             view?.presentScene(levelNineScene)
         }
         
-        if(touchedNode.name == "level10") {
+        if(touchedNode.name == "level10" && levelNineIsPassed) {
             let levelTenScene = LevelSevenToTenScene(fileNamed: "LevelSevenToTenScene")
             levelTenScene?.provideHelp = false
             levelTenScene?.inputFile = "lines.json"
@@ -202,17 +234,6 @@ class MainMenuScene: SKScene {
             levelTenScene?.scaleMode = scaleMode
             view?.presentScene(levelTenScene)
         }
-        
-//        if(touchedNode.name == "level7") {
-//            if levelOneIsPassed {
-//                let levelSevenScene = LevelTwoScene(fileNamed: "LevelTwoScene")
-//                levelSevenScene?.scaleMode = scaleMode
-//                view?.presentScene(levelSevenScene)
-//            }
-//            else {
-//                print("level 1 is not passed yet, you can't enter level 2!")
-//            }
-//        }
     }
     
 }
@@ -238,5 +259,13 @@ extension SKLabelNode {
         attributedString.addAttributes(attributes, range: NSMakeRange(0, attributedString.length))
         
         self.attributedText = attributedString
+    }
+}
+
+
+extension MainMenuScene: SalutationDelegate {
+    func closeSalutation() {
+        backgroundBlocker.removeFromParent()
+        salutation?.removeFromParent()
     }
 }
