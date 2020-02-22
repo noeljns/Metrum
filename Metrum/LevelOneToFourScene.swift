@@ -282,7 +282,7 @@ class LevelOneToFourScene: SKScene {
             for syllable in word.syllables {
                 let accentBin = SKSpriteNode()
                 accentBin.color = SKColor.lightGray
-                accentBin.size = CGSize(width: 40, height: 45)
+                accentBin.size = CGSize(width: 40, height: 50)
                 
                 // half of amount of chars of syllable multiplied by unit plus counter
                 // unit/2 is added since middle of four chars is index 2.5 with a unit of 1
@@ -290,6 +290,7 @@ class LevelOneToFourScene: SKScene {
                 let positionOfBin = CGFloat((Double(syllable.syllableString.count)-0.3)/2.0)*unit + unit/2 + counter
                 accentBin.position = CGPoint(x: lineToBeRated.frame.minX+positionOfBin, y: frame.midY+25)
                 accentBin.zPosition = 2
+                accentBin.drawBorder(color: .orange, width: 4)
                 // append to class variable
                 accentBins.append(accentBin)
                 
@@ -313,25 +314,25 @@ class LevelOneToFourScene: SKScene {
         // necessary to check whether spawn place of stress marks are filled with stress marks or empty
         stressedStressMarkParentBin.color = .clear
         stressedStressMarkParentBin.size = CGSize(width: 40, height: 50)
-        stressedStressMarkParentBin.position = CGPoint(x: frame.midX-50, y: frame.midY-150)
+        stressedStressMarkParentBin.position = CGPoint(x: frame.midX-50, y: frame.midY-170)
         stressedStressMarkParentBin.zPosition = 2
         addChild(stressedStressMarkParentBin)
         unstressedStressMarkParentBin.color = .clear
         unstressedStressMarkParentBin.size = CGSize(width: 40, height: 50)
-        unstressedStressMarkParentBin.position = CGPoint(x: frame.midX+50, y: frame.midY-150)
+        unstressedStressMarkParentBin.position = CGPoint(x: frame.midX+50, y: frame.midY-170)
         unstressedStressMarkParentBin.zPosition = 2
         addChild(unstressedStressMarkParentBin)
     }
     
     /// Generates a stressed stress mark at specified stress mark spawning area.
     func generateStressedStressMark() {
-        let stressedStressMarkParent = generateAStressMark(stressed: true, x: frame.midX-50, y: frame.midY-150)
+        let stressedStressMarkParent = generateAStressMark(stressed: true, x: frame.midX-50, y: frame.midY-170)
         stressMarks.append(stressedStressMarkParent)
     }
     
     /// Generates an unstressed stress mark at specified stress mark spawning area.
     func generateUnstressedStressMark() {
-        let unstressedStressMarkParent = generateAStressMark(stressed: false, x: frame.midX+50, y: frame.midY-150)
+        let unstressedStressMarkParent = generateAStressMark(stressed: false, x: frame.midX+50, y: frame.midY-170)
         stressMarks.append(unstressedStressMarkParent)
     }
     
@@ -347,6 +348,7 @@ class LevelOneToFourScene: SKScene {
         stressMarkParent.color = .white
         stressMarkParent.size = CGSize(width: 40, height: 50)
         stressMarkParent.position = CGPoint(x: x, y: y)
+        stressMarkParent.drawBorder(color: .orange, width: 4)
         stressMarkParent.zPosition = 1
         
         let stressMark = SKLabelNode()
@@ -701,7 +703,7 @@ class LevelOneToFourScene: SKScene {
             // if stress marks collide, they do not stick together anymore
             for (sIndex, s) in stressMarks.enumerated() {
                 if (stressMark.position.equalTo(s.position)) && (smIndex != sIndex) {
-                    stressMark.position = CGPoint(x: stressMark.position.x-80, y: stressMark.position.y-40)
+                    stressMark.position = CGPoint(x: stressMark.position.x, y: stressMark.position.y-100)
                 }
             }
         }
