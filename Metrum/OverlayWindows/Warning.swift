@@ -41,7 +41,7 @@ class Warning: SKSpriteNode {
         // break line: https://forums.developer.apple.com/thread/82994
         warningLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         warningLabel.numberOfLines = 0
-        warningLabel.preferredMaxLayoutWidth = 480
+        warningLabel.preferredMaxLayoutWidth = 400
         warningLabel.zPosition = 2
         addChild(warningLabel)
         

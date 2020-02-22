@@ -11,8 +11,6 @@
 		DD19AB0A23F80D960015D899 /* ReplyIsFalse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD19AB0923F80D960015D899 /* ReplyIsFalse.swift */; };
 		DD19AB0C23FABEC60015D899 /* Congratulations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD19AB0B23FABEC60015D899 /* Congratulations.swift */; };
 		DD3276CA23F0DE93007DAB87 /* Gespenst.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD3276C923F0DE93007DAB87 /* Gespenst.mp3 */; };
-		DD3276CE23F0E257007DAB87 /* LevelTwoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3276CD23F0E257007DAB87 /* LevelTwoScene.swift */; };
-		DD3276D023F0E26F007DAB87 /* LevelTwoScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DD3276CF23F0E26F007DAB87 /* LevelTwoScene.sks */; };
 		DD4363F823F18645001F2A48 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363F723F18645001F2A48 /* Word.swift */; };
 		DD4363FA23F18676001F2A48 /* Syllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363F923F18676001F2A48 /* Syllable.swift */; };
 		DD4363FC23F18692001F2A48 /* Accentuation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363FB23F18692001F2A48 /* Accentuation.swift */; };
@@ -29,6 +27,7 @@
 		DD95065523FD8B2500BF1291 /* lines.json in Resources */ = {isa = PBXBuildFile; fileRef = DD95065323FD8B2400BF1291 /* lines.json */; };
 		DD95065623FD8B2500BF1291 /* words.json in Resources */ = {isa = PBXBuildFile; fileRef = DD95065423FD8B2400BF1291 /* words.json */; };
 		DD969FF523FC52BE00C22624 /* Warning.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD969FF423FC52BE00C22624 /* Warning.swift */; };
+		DD9C91EE2401482C00C753C3 /* LevelExplanation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9C91ED2401482C00C753C3 /* LevelExplanation.swift */; };
 		DDBF72AE24002AE3001587B6 /* Salutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBF72AD24002AE3001587B6 /* Salutation.swift */; };
 		DDC4906723EC47EC000F0942 /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4906623EC47EC000F0942 /* MainMenuScene.swift */; };
 		DDC4906923EC4F0B000F0942 /* LevelOneToFourScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4906823EC4F0B000F0942 /* LevelOneToFourScene.swift */; };
@@ -80,8 +79,6 @@
 		DD19AB0923F80D960015D899 /* ReplyIsFalse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyIsFalse.swift; sourceTree = "<group>"; };
 		DD19AB0B23FABEC60015D899 /* Congratulations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Congratulations.swift; sourceTree = "<group>"; };
 		DD3276C923F0DE93007DAB87 /* Gespenst.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Gespenst.mp3; sourceTree = "<group>"; };
-		DD3276CD23F0E257007DAB87 /* LevelTwoScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelTwoScene.swift; sourceTree = "<group>"; };
-		DD3276CF23F0E26F007DAB87 /* LevelTwoScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelTwoScene.sks; sourceTree = "<group>"; };
 		DD4363F723F18645001F2A48 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		DD4363F923F18676001F2A48 /* Syllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Syllable.swift; sourceTree = "<group>"; };
 		DD4363FB23F18692001F2A48 /* Accentuation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accentuation.swift; sourceTree = "<group>"; };
@@ -104,6 +101,7 @@
 		DD95065323FD8B2400BF1291 /* lines.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = lines.json; sourceTree = "<group>"; };
 		DD95065423FD8B2400BF1291 /* words.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = words.json; sourceTree = "<group>"; };
 		DD969FF423FC52BE00C22624 /* Warning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Warning.swift; sourceTree = "<group>"; };
+		DD9C91ED2401482C00C753C3 /* LevelExplanation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelExplanation.swift; sourceTree = "<group>"; };
 		DDBF72AD24002AE3001587B6 /* Salutation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salutation.swift; sourceTree = "<group>"; };
 		DDC4906623EC47EC000F0942 /* MainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
 		DDC4906823EC4F0B000F0942 /* LevelOneToFourScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelOneToFourScene.swift; sourceTree = "<group>"; };
@@ -228,8 +226,6 @@
 				DDC75EF423FDE39D00B551BB /* LevelFiveToSixScene.sks */,
 				DDC75EF823FE043200B551BB /* LevelSevenToTenScene.swift */,
 				DDC75EFA23FE04E900B551BB /* LevelSevenToTenScene.sks */,
-				DD3276CD23F0E257007DAB87 /* LevelTwoScene.swift */,
-				DD3276CF23F0E26F007DAB87 /* LevelTwoScene.sks */,
 				DD969FF623FC5A8100C22624 /* OverlayWindows */,
 				DD5749CE23EC405200C50423 /* GameViewController.swift */,
 				DD5749D023EC405200C50423 /* Main.storyboard */,
@@ -279,6 +275,7 @@
 				DD969FF423FC52BE00C22624 /* Warning.swift */,
 				DD507EC023F551AC00D790E1 /* ReplyIsCorrect.swift */,
 				DD19AB0923F80D960015D899 /* ReplyIsFalse.swift */,
+				DD9C91ED2401482C00C753C3 /* LevelExplanation.swift */,
 			);
 			path = OverlayWindows;
 			sourceTree = "<group>";
@@ -393,7 +390,6 @@
 				DDE2FBEE23FD798B00118ADC /* genau.mp3 in Resources */,
 				DD3276CA23F0DE93007DAB87 /* Gespenst.mp3 in Resources */,
 				DDC4906D23EC507A000F0942 /* MainMenuScene.sks in Resources */,
-				DD3276D023F0E26F007DAB87 /* LevelTwoScene.sks in Resources */,
 				DDE2FBFA23FD7AD600118ADC /* Achterbahn.mp3 in Resources */,
 				DDE2FBE823FD78C000118ADC /* Lampe.mp3 in Resources */,
 				DD95065623FD8B2500BF1291 /* words.json in Resources */,
@@ -443,11 +439,11 @@
 				DD507EC123F551AC00D790E1 /* ReplyIsCorrect.swift in Sources */,
 				DDC75EF923FE043200B551BB /* LevelSevenToTenScene.swift in Sources */,
 				DDC75EF323FDE37600B551BB /* LevelFiveToSixScene.swift in Sources */,
+				DD9C91EE2401482C00C753C3 /* LevelExplanation.swift in Sources */,
 				DDBF72AE24002AE3001587B6 /* Salutation.swift in Sources */,
 				DD969FF523FC52BE00C22624 /* Warning.swift in Sources */,
 				DD4363F823F18645001F2A48 /* Word.swift in Sources */,
 				DDC4906923EC4F0B000F0942 /* LevelOneToFourScene.swift in Sources */,
-				DD3276CE23F0E257007DAB87 /* LevelTwoScene.swift in Sources */,
 				DD4363FE23F186F2001F2A48 /* Measure.swift in Sources */,
 				DD19AB0A23F80D960015D899 /* ReplyIsFalse.swift in Sources */,
 				DD5749CF23EC405200C50423 /* GameViewController.swift in Sources */,

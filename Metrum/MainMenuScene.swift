@@ -20,12 +20,14 @@ class MainMenuScene: SKScene {
     var levelEightIsPassed = UserDefaults.standard.bool(forKey: "level8")
     var levelNineIsPassed = UserDefaults.standard.bool(forKey: "level9")
     var levenTenIsPassed = UserDefaults.standard.bool(forKey: "level10")
-    
+
     lazy var levels = [levelOneIsPassed, levelTwoIsPassed, levelThreeIsPassed, levelFourIsPassed, levelFiveIsPassed,
                        levelSixIsPassed, levelSevenIsPassed, levelEightIsPassed, levelNineIsPassed, levenTenIsPassed]
     
+    // overlay windows
     private var backgroundBlocker: SKSpriteNode!
     private var salutation: Salutation!
+    private var levelExplanation: LevelExplanation!
     
     func displaySalutation() {
         backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
@@ -36,6 +38,18 @@ class MainMenuScene: SKScene {
         salutation.delegate = self
         salutation.zPosition = 5000
         addChild(salutation)
+    }
+    
+    func displayLevelExplanation(levelIndex: String) {
+        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
+        backgroundBlocker.alpha = 0.5
+        backgroundBlocker.zPosition = 4999
+        addChild(backgroundBlocker)
+        
+        levelExplanation = LevelExplanation(size: CGSize(width: 550, height: 250), levelIndex: levelIndex)
+        levelExplanation.delegate = self
+        levelExplanation.zPosition = 5000
+        addChild(levelExplanation)
     }
 
 
@@ -58,6 +72,9 @@ class MainMenuScene: SKScene {
         // draw level1 colorful since it is always enterable
         drawLevelColorful(levelName: "level1")
         
+        // draw info buttons next to levels
+        generateLevelExplanation()
+        
         // colorize levels that are able to be entered and flag passed levels with trophy
         markEnterableAndPassedLevels()
 
@@ -77,6 +94,19 @@ class MainMenuScene: SKScene {
             generateLevel(text: text, name: name, canvasPosition: frame.midY + CGFloat(canvasPosition))
             
             canvasPosition = canvasPosition-85
+        }
+    }
+    
+    func generateLevelExplanation() {
+        var infoButtonPosition = 370
+        for index in 1...10 {
+            let infoButton = SKSpriteNode(imageNamed: "icons8-info-50")
+            infoButton.name = "infoButtonLevel" + String(index)
+            infoButton.position = CGPoint(x: frame.midX-150, y: frame.midY + CGFloat(infoButtonPosition))
+            infoButton.size = CGSize(width: 50, height: 50)
+            addChild(infoButton)
+            
+            infoButtonPosition = infoButtonPosition-85
         }
     }
     
@@ -109,7 +139,7 @@ class MainMenuScene: SKScene {
     
     // colorize levels that are able to be entered and flag passed levels with trophy
     func markEnterableAndPassedLevels() {
-        var trophyPosition = 365
+        var trophyPosition = 360
         for (index, levelIsPassed) in levels.enumerated() {
             print("levelisPassed: " + String(index) + " " + String(levelIsPassed))
             
@@ -124,13 +154,60 @@ class MainMenuScene: SKScene {
             
             if levelIsPassed {
                 let trophyLabel = SKLabelNode(text: "🏆")
-                trophyLabel.position = CGPoint(x: frame.midX + 145, y: frame.midY + CGFloat(trophyPosition))
+                trophyLabel.position = CGPoint(x: frame.midX+145, y: frame.midY + CGFloat(trophyPosition))
                 addChild(trophyLabel)
             }
             trophyPosition = trophyPosition-85
         }
     }
     
+    // https://docs.swift.org/swift-book/LanguageGuide/TypeCasting.html
+    // https://developer.apple.com/swift/blog/?id=23
+    // https://thatthinginswift.com/guard-statement-swift/
+//    func openLevelIfClicked(touchedNode: SKNode) {
+//        for index in 1...10 {
+//            if (touchedNode.name == "level" + String(index)) {
+//                // generate correct Level Class
+//
+//                var levelScene = SKScene()
+//                if [1, 2, 3, 4].contains(index) {
+//                    guard levelScene == SKScene(fileNamed: "LevelOneToFourScene") as! LevelOneToFourScene else {
+//                        return
+//                    }
+//                }
+//                else if [5, 6].contains(index) {
+//                    guard levelScene == SKScene(fileNamed: "LevelFiveToSixScene") as! LevelFiveToSixScene else {
+//                        return
+//                    }
+//                }
+//                else if [7, 8, 9, 10].contains(index) {
+//                    guard levelScene == SKScene(fileNamed: "LevelSevenToTenScene") as! LevelSevenToTenScene else {
+//                        return
+//                    }
+//                }
+//
+//                // set provideHelp variable
+//                if index % 2 != 0 {
+//                    // in level 1, 3, 5, 7, 9 help is provided
+//                    levelScene.provideHelp = true
+//                } else {
+//                    levelScene.provideHelp = false
+//                }
+//
+//                // set inputFile variable
+//                if [1, 2, 7, 8].contains(index) {
+//                    levelScene.inputFile = "words.json"
+//                }
+//                else if [3, 4, 9, 10].contains(index) {
+//                    levelScene.inputFile = "lines.json"
+//                }
+//
+//                levelScene.userDefaultsKey = "level" + String(index)
+//                levelScene.scaleMode = scaleMode
+//                view?.presentScene(levelScene)
+//            }
+//        }
+//    }
 
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -145,6 +222,12 @@ class MainMenuScene: SKScene {
         
         if (touchedNode.name == "header") {
             displaySalutation()
+        }
+        
+        for index in 1...10 {
+            if(touchedNode.name == "infoButtonLevel" + String(index)) {
+                displayLevelExplanation(levelIndex: "level" + String(index))
+            }
         }
         
         if(touchedNode.name == "level1") {
@@ -263,9 +346,14 @@ extension SKLabelNode {
 }
 
 
-extension MainMenuScene: SalutationDelegate {
+extension MainMenuScene: SalutationDelegate, LevelExplanationDelegate {
     func closeSalutation() {
         backgroundBlocker.removeFromParent()
         salutation?.removeFromParent()
+    }
+    
+    func closeLevelExplanation() {
+        backgroundBlocker.removeFromParent()
+        levelExplanation?.removeFromParent()
     }
 }
