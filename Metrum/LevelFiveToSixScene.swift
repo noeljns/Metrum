@@ -474,7 +474,7 @@ class LevelFiveToSixScene: SKScene {
         setUpScene()
         setUpUnfixedParts()
         
-        // only show AccentuationInfo, if level1 has not been passed yet
+        // only show AccentuationInfo, if level5 has not been passed yet
         if !(UserDefaults.standard.bool(forKey: "level5")) {
             displayMeasureInfo()
         }

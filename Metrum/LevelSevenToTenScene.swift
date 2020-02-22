@@ -171,7 +171,7 @@ class LevelSevenToTenScene: SKScene {
         if provideHelp {
             // measureInfoButton = SKSpriteNode(imageNamed: "info")
             measureInfoButton = SKSpriteNode(imageNamed: "icons8-info-50")
-            measureInfoButton.name = "measureInfoButtonBtn"
+            measureInfoButton.name = "measureInfoButton"
             measureInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY-75)
             measureInfoButton.size = CGSize(width: 40, height: 40)
             measureInfoButton.zPosition = 2
@@ -180,7 +180,7 @@ class LevelSevenToTenScene: SKScene {
             // soundBoxButton = SKSpriteNode(imageNamed: "sound")
             soundBoxButton = SKSpriteNode(imageNamed: "QuickActions_Audio")
             soundBoxButton.name = "soundBoxBtn"
-            soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY-75)
+            soundBoxButton.position = CGPoint(x: frame.midX+165 , y: frame.midY-75)
             soundBoxButton.size = CGSize(width: 30, height: 30)
             soundBoxButton.zPosition = 2
             addChild(soundBoxButton)
@@ -436,7 +436,7 @@ class LevelSevenToTenScene: SKScene {
         setUpScene()
         setUpUnfixedParts()
         
-        // only show MeasureInfo, if level1 has not been passed yet
+        // only show MeasureInfo, if level7 has not been passed yet
         if !(UserDefaults.standard.bool(forKey: "level7")) {
             displayMeasureInfo()
         }
@@ -456,7 +456,7 @@ class LevelSevenToTenScene: SKScene {
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
         
-        if(provideHelp && touchedNode.name == "measureInfoBtn") {
+        if(provideHelp && touchedNode.name == "measureInfoButton") {
             displayMeasureInfo()
         }
         

@@ -16,6 +16,65 @@ protocol AccentuationInfoDelegate: class {
 class AccentuationInfo: SKSpriteNode {
     weak var delegate: AccentuationInfoDelegate?
     
+    
+    func generateExampleWord() {
+        let accentBinOne = SKSpriteNode()
+        accentBinOne.color = SKColor.lightGray
+        accentBinOne.size = CGSize(width: 40, height: 50)
+        accentBinOne.position = CGPoint(x: frame.midX-50, y: frame.midY-195)
+        accentBinOne.zPosition = 2
+        accentBinOne.drawBorder(color: .orange, width: 4)
+        let stressMarkOne = SKLabelNode()
+        stressMarkOne.fontColor = SKColor.black
+        stressMarkOne.fontSize = 40
+        stressMarkOne.zPosition = 2
+        stressMarkOne.position = CGPoint(x: -accentBinOne.frame.width/4+10, y: -accentBinOne.frame.height/4)
+        stressMarkOne.addStroke(color: .black, width: 6)
+        stressMarkOne.text = "x́"
+        accentBinOne.addChild(stressMarkOne)
+        addChild(accentBinOne)
+        
+        let accentBinTwo = SKSpriteNode()
+        accentBinTwo.color = SKColor.lightGray
+        accentBinTwo.size = CGSize(width: 40, height: 50)
+        accentBinTwo.position = CGPoint(x: frame.midX+50, y: frame.midY-195)
+        accentBinTwo.zPosition = 2
+        accentBinTwo.drawBorder(color: .orange, width: 4)
+        let stressMarkTwo = SKLabelNode()
+        stressMarkTwo.fontColor = SKColor.black
+        stressMarkTwo.fontSize = 40
+        stressMarkTwo.zPosition = 2
+        stressMarkTwo.position = CGPoint(x: -accentBinOne.frame.width/4+10, y: -accentBinOne.frame.height/4)
+        stressMarkTwo.addStroke(color: .black, width: 6)
+        stressMarkTwo.text = "x"
+        accentBinTwo.addChild(stressMarkTwo)
+        addChild(accentBinTwo)
+        
+        let exampleWordLabel = SKLabelNode()
+        let exampleWord = NSMutableAttributedString()
+        exampleWord.append(makeAttributedString(stringToBeMutated: "Tor·", shallBecomeBold: true))
+        exampleWord.append(makeAttributedString(stringToBeMutated: "ben", shallBecomeBold: false))
+        exampleWordLabel.attributedText = exampleWord
+        exampleWordLabel.fontColor = SKColor.black
+        exampleWordLabel.position = CGPoint(x: frame.midX, y: frame.midY-270)
+        exampleWordLabel.zPosition = 2
+        addChild(exampleWordLabel)
+    }
+    
+    
+    func makeAttributedString(stringToBeMutated: String, shallBecomeBold: Bool) -> NSMutableAttributedString {
+        if(shallBecomeBold) {
+            let bold = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 50)]
+            let attributedString =  NSMutableAttributedString(string:stringToBeMutated, attributes:bold)
+            return attributedString
+        }
+        else {
+            let notBold = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 50)]
+            let normalString = NSMutableAttributedString(string:stringToBeMutated, attributes: notBold)
+            return normalString
+        }
+    }
+    
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
         name = "accentuationInfo"
@@ -28,7 +87,7 @@ class AccentuationInfo: SKSpriteNode {
         let headerLabel = SKLabelNode(text: "Merke")
         headerLabel.fontColor = SKColor.black
         headerLabel.fontSize = 50
-        headerLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY+250)
+        headerLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY+300)
         headerLabel.zPosition = 4
         addChild(headerLabel)
  
@@ -37,14 +96,16 @@ class AccentuationInfo: SKSpriteNode {
         explanationLabel.text = "Jedes Wort besteht aus einer oder mehreren Silben. Diese können betont (x́) oder unbetont (x) sein.\n\n" +
             "Der Name Torben besteht zum Beispiel aus zwei Silben: Tor·ben.\n\n" +
             "Dabei ist die erste Silbe betont (x́) und die zweite Silbe ist unbetont (x)."
-        explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-150)
+        explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-110)
         // break line: https://forums.developer.apple.com/thread/82994
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         explanationLabel.numberOfLines = 0
         explanationLabel.preferredMaxLayoutWidth = 480
         explanationLabel.zPosition = 2
         addChild(explanationLabel)
- 
+        
+        generateExampleWord()
+        
         // let colorCloseButtonFrame = UIColor(hue: 0.9611, saturation: 0.93, brightness: 1, alpha: 1.0) /* #ff1149 */
         // let closeButtonFrame = SKSpriteNode(color: colorCloseButtonFrame, size: CGSize(width: 180, height: 55))
         let closeButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 150, height: 55))

@@ -15,15 +15,15 @@ protocol LevelExplanationDelegate: class {
 // layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
 class LevelExplanation: SKSpriteNode {
     var levelExplanations = ["level1": "In Level 1 findest du heraus, welche Silben eines Wortes betont werden und welche nicht.",
-                             "level2": "In Level 2 kannst du dein Wissen aus Level 1 testen.",
+                             "level2": "In Level 2 kannst du dein Wissen aus Level 1 über die Betonung von Worten testen.",
                              "level3": "In Level 3 übst du, die betonten und unbetonten Silben eines Verses zu bestimmen.",
-                             "level4": "In Level 4 kannst du zeigen, was du in Level 3 gelernt hast.",
-                             "level5": "In Level 5 entdeckst du die vier wichtigsten Versmetriken",
-                             "level6": "In Level 6 kannst du dein Wissen aus Level 5 testen.",
+                             "level4": "In Level 4 kannst du zeigen, was du in Level 3 über die Betonung von Versen gelernt hast.",
+                             "level5": "In Level 5 entdeckst du die vier wichtigsten Versmetriken.",
+                             "level6": "In Level 6 kannst du dein Wissen aus Level 5 über Versmetriken testen.",
                              "level7": "In Level 7 erkundest du das Versmaß eines Wortes.",
-                             "level8": "In Level 8 kannst du zeigen, was du in Level 7 gelernt hast.",
-                             "level9": "In Level 9 geht es darum, das Versmaß eines ganzen Verses zu bstimmen.",
-                             "level10": "In Level 10 kannst du dein Wissen aus Level 9 testen."]
+                             "level8": "In Level 8 kannst du zeigen, was du in Level 7 über Versmetriken von Worten gelernt hast.",
+                             "level9": "In Level 9 geht es darum, das Versmaß eines ganzen Verses zu bestimmen.",
+                             "level10": "In Level 10 kannst du dein Wissen aus Level 9 über das Metrum von Versen testen."]
     
     weak var delegate: LevelExplanationDelegate?
     

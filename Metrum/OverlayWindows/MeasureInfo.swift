@@ -37,7 +37,7 @@ class MeasureInfo: SKSpriteNode {
         explanationLabel.text = "Die Verse vieler Gedichte haben ein bestimmtes Betonungsmuster. "
             + "Das heißt die betonten (x́) und unbetonten (x) Silben eines Verses wechseln sich in einer festen Reihenfolge ab. "
             + "Diese Abfolge nennt man Versmaß oder Metrum. Die vier wichtigsten Grundtypen sind: \n\n" +
-            "   Jambus (x x́)    : Ge·spenst 👻\n" +
+            "   Jambus (x x́)   : Ge·spenst 👻\n" +
             "   Trochäus (x́ x)  : So·nne ☀️\n" +
             "   Anapäst (x x x́) : E·le·fant 🐘\n" +
             "   Daktylus (x́ x x) : Bro·kko·li 🥦"
