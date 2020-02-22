@@ -52,40 +52,6 @@ class MainMenuScene: SKScene {
         addChild(levelExplanation)
     }
 
-
-    override func didMove(to view: SKView) {
-        if !(firstEntryOfApp) {
-            displaySalutation()
-            UserDefaults.standard.set(true, forKey: "firstEntry")
-        }
-        
-        let header = SKLabelNode(text: "METRUM")
-        header.name = "header"
-        header.position = CGPoint(x: frame.midX, y: frame.midY + 440)
-        header.fontSize = 55
-        header.fontColor = SKColor.black
-        header.zPosition = 2
-        addChild(header)
-        
-        // draw buttons for level1 to level10
-        generateLevels()
-        // draw level1 colorful since it is always enterable
-        drawLevelColorful(levelName: "level1")
-        
-        // draw info buttons next to levels
-        generateLevelExplanation()
-        
-        // colorize levels that are able to be entered and flag passed levels with trophy
-        markEnterableAndPassedLevels()
-
-        // debug function
-//        UserDefaults.standard.set(false, forKey: "level3")
-//        UserDefaults.standard.set(true, forKey: "level2")
-//        for level in levels {
-//            print(level.description)
-//        }
-    }
-    
     func generateLevels() {
         var canvasPosition = 370
         for index in 1...10 {
@@ -164,51 +130,83 @@ class MainMenuScene: SKScene {
     // https://docs.swift.org/swift-book/LanguageGuide/TypeCasting.html
     // https://developer.apple.com/swift/blog/?id=23
     // https://thatthinginswift.com/guard-statement-swift/
-//    func openLevelIfClicked(touchedNode: SKNode) {
-//        for index in 1...10 {
-//            if (touchedNode.name == "level" + String(index)) {
-//                // generate correct Level Class
-//
-//                var levelScene = SKScene()
-//                if [1, 2, 3, 4].contains(index) {
-//                    guard levelScene == SKScene(fileNamed: "LevelOneToFourScene") as! LevelOneToFourScene else {
-//                        return
-//                    }
-//                }
-//                else if [5, 6].contains(index) {
-//                    guard levelScene == SKScene(fileNamed: "LevelFiveToSixScene") as! LevelFiveToSixScene else {
-//                        return
-//                    }
-//                }
-//                else if [7, 8, 9, 10].contains(index) {
-//                    guard levelScene == SKScene(fileNamed: "LevelSevenToTenScene") as! LevelSevenToTenScene else {
-//                        return
-//                    }
-//                }
-//
-//                // set provideHelp variable
-//                if index % 2 != 0 {
-//                    // in level 1, 3, 5, 7, 9 help is provided
-//                    levelScene.provideHelp = true
-//                } else {
-//                    levelScene.provideHelp = false
-//                }
-//
-//                // set inputFile variable
-//                if [1, 2, 7, 8].contains(index) {
-//                    levelScene.inputFile = "words.json"
-//                }
-//                else if [3, 4, 9, 10].contains(index) {
-//                    levelScene.inputFile = "lines.json"
-//                }
-//
-//                levelScene.userDefaultsKey = "level" + String(index)
-//                levelScene.scaleMode = scaleMode
-//                view?.presentScene(levelScene)
-//            }
-//        }
-//    }
+    //    func openLevelIfClicked(touchedNode: SKNode) {
+    //        for index in 1...10 {
+    //            if (touchedNode.name == "level" + String(index)) {
+    //                // generate correct Level Class
+    //
+    //                var levelScene = SKScene()
+    //                if [1, 2, 3, 4].contains(index) {
+    //                    guard levelScene == SKScene(fileNamed: "LevelOneToFourScene") as! LevelOneToFourScene else {
+    //                        return
+    //                    }
+    //                }
+    //                else if [5, 6].contains(index) {
+    //                    guard levelScene == SKScene(fileNamed: "LevelFiveToSixScene") as! LevelFiveToSixScene else {
+    //                        return
+    //                    }
+    //                }
+    //                else if [7, 8, 9, 10].contains(index) {
+    //                    guard levelScene == SKScene(fileNamed: "LevelSevenToTenScene") as! LevelSevenToTenScene else {
+    //                        return
+    //                    }
+    //                }
+    //
+    //                // set provideHelp variable
+    //                if index % 2 != 0 {
+    //                    // in level 1, 3, 5, 7, 9 help is provided
+    //                    levelScene.provideHelp = true
+    //                } else {
+    //                    levelScene.provideHelp = false
+    //                }
+    //
+    //                // set inputFile variable
+    //                if [1, 2, 7, 8].contains(index) {
+    //                    levelScene.inputFile = "words.json"
+    //                }
+    //                else if [3, 4, 9, 10].contains(index) {
+    //                    levelScene.inputFile = "lines.json"
+    //                }
+    //
+    //                levelScene.userDefaultsKey = "level" + String(index)
+    //                levelScene.scaleMode = scaleMode
+    //                view?.presentScene(levelScene)
+    //            }
+    //        }
+    //    }
 
+    override func didMove(to view: SKView) {
+        if !(firstEntryOfApp) {
+            displaySalutation()
+            UserDefaults.standard.set(true, forKey: "firstEntry")
+        }
+        
+        let header = SKLabelNode(text: "METRUM")
+        header.name = "header"
+        header.position = CGPoint(x: frame.midX, y: frame.midY + 440)
+        header.fontSize = 55
+        header.fontColor = SKColor.black
+        header.zPosition = 2
+        addChild(header)
+        
+        // draw buttons for level1 to level10
+        generateLevels()
+        // draw level1 colorful since it is always enterable
+        drawLevelColorful(levelName: "level1")
+        
+        // draw info buttons next to levels
+        generateLevelExplanation()
+        
+        // colorize levels that are able to be entered and flag passed levels with trophy
+        markEnterableAndPassedLevels()
+
+        // debug function
+//        UserDefaults.standard.set(false, forKey: "level3")
+//        UserDefaults.standard.set(true, forKey: "level2")
+//        for level in levels {
+//            print(level.description)
+//        }
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // https://code.tutsplus.com/tutorials/spritekit-basics-nodes--cms-28785

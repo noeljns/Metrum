@@ -341,7 +341,7 @@ class LevelSevenToTenScene: SKScene {
         addChild(congratulations)
     }
     
-    // Adds Warning as overlay node to scene.
+    /// Adds Warning as overlay node to scene.
     func displayWarning() {
         backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
         backgroundBlocker.zPosition = 4999
@@ -414,6 +414,7 @@ class LevelSevenToTenScene: SKScene {
         setUpUnfixedParts()
     }
     
+    /// Manages level status and loading bar for correct replies
     func manageCorrectReply() {
         correctReplies += 1
         
@@ -430,7 +431,6 @@ class LevelSevenToTenScene: SKScene {
         }
     }
 
-    
     override func didMove(to view: SKView) {
         loadInputFile()
         setUpScene()
@@ -495,8 +495,7 @@ class LevelSevenToTenScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // TODO: hier muss irgendwo cleanAndSetupSceneForNewLine() aufgerufen werden
-
+        // bold label is dragged to new position too
         if (selectedLineBoldLabel.position != selectedLineLabel.position) {
             selectedLineBoldLabel.position = selectedLineLabel.position
         }
@@ -508,7 +507,7 @@ class LevelSevenToTenScene: SKScene {
                 jambusBin.run(SKAction.sequence([colorizeGreen, colorizeWhite]))
                 manageCorrectReply()
             }
-                // else if wordToBeRated.name == "trochaeus" or "daktylus" or "anapaest"
+            // else if wordToBeRated.name == "trochaeus" or "daktylus" or "anapaest"
             else {
                 jambusBin.run(SKAction.sequence([colorizeRed, colorizeWhite]))
                 selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-120)

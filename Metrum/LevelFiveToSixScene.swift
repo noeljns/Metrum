@@ -359,7 +359,7 @@ class LevelFiveToSixScene: SKScene {
         addChild(replyIsFalse)
     }
     
-    // Adds Warning as overlay node to scene.
+    /// Adds Warning as overlay node to scene.
     func displayWarning() {
         backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
         backgroundBlocker.zPosition = 4999
