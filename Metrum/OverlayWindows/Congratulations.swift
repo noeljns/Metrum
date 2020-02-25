@@ -16,6 +16,30 @@ protocol CongratulationsDelegate: class {
 class Congratulations: SKSpriteNode {
     weak var delegate: CongratulationsDelegate?
     
+    // https://gist.github.com/mihailt/d793236f31f0b8f8722e
+    func shakeSprite(layer:SKSpriteNode, duration:Float) {
+        let position = layer.position
+        let amplitudeX:Float = 15
+        let amplitudeY:Float = 15
+        let numberOfShakes = duration / 0.2
+        var actionsArray:[SKAction] = []
+        for _ in 1...Int(numberOfShakes) {
+            let moveX = Float(arc4random_uniform(UInt32(amplitudeX))) - amplitudeX / 2
+            let moveY = Float(arc4random_uniform(UInt32(amplitudeY))) - amplitudeY / 2
+            let shakeAction = SKAction.moveBy(x: CGFloat(moveX), y: CGFloat(moveY), duration: 0.2)
+            shakeAction.timingMode = SKActionTimingMode.easeOut
+            actionsArray.append(shakeAction)
+            actionsArray.append(shakeAction.reversed())
+        }
+        
+        actionsArray.append(SKAction.move(to: position, duration: 0.0))
+        
+        let actionSeq = SKAction.sequence(actionsArray)
+        // http://spritekitlessons.com/sprite-kit-skactions-example/
+        let actionLoop = SKAction.repeatForever(actionSeq)
+        layer.run(actionLoop)
+    }
+    
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
         name = "congratulations"
@@ -31,11 +55,14 @@ class Congratulations: SKSpriteNode {
         headerLabel.zPosition = 4
         addChild(headerLabel)
         
+        
+        let trophyButton = SKSpriteNode(color: .green, size: CGSize(width: 300, height: 300))
+        addChild(trophyButton)
         let trophy = SKLabelNode(text: "🏆")
         trophy.fontSize = 140
         trophy.position = CGPoint(x: frame.midX , y: frame.midY+120)
         trophy.zPosition = 4
-        addChild(trophy)
+        trophyButton.addChild(trophy)
      
         let explanationLabel = SKLabelNode(text: "test")
         explanationLabel.fontColor = SKColor.black
@@ -54,6 +81,8 @@ class Congratulations: SKSpriteNode {
         // closeButtonFrame.drawBorder(color: .orange, width: 5)
         closeButtonFrame.zPosition = 4
         addChild(closeButtonFrame)
+        
+        shakeSprite(layer: trophyButton, duration: 6.0)
         
         let closeButton = SKLabelNode(text: "Weiter")
         closeButton.name = "close"

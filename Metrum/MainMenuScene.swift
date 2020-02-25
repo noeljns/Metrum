@@ -206,6 +206,18 @@ class MainMenuScene: SKScene {
 //        for level in levels {
 //            print(level.description)
 //        }
+        
+        let resetButtonFrame = SKSpriteNode(color: .red, size: CGSize(width: 130, height: 55))
+        resetButtonFrame.position = CGPoint(x: frame.midX+270, y: frame.midY-440)
+        resetButtonFrame.zPosition = 4
+        addChild(resetButtonFrame)
+        let resetButton = SKLabelNode(text: "Neustart")
+        resetButton.name = "reset"
+        resetButton.fontColor = SKColor.white
+        resetButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
+        resetButton.zPosition = 5
+        resetButton.addStroke(color: .white, width: 6.0)
+        resetButtonFrame.addChild(resetButton)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -226,6 +238,13 @@ class MainMenuScene: SKScene {
             if(touchedNode.name == "infoButtonLevel" + String(index)) {
                 displayLevelExplanation(levelIndex: "level" + String(index))
             }
+        }
+        
+        if(touchedNode.name == "reset") {
+            for index in 1...10{
+                UserDefaults.standard.set(false, forKey: "level" + String(index))
+            }
+            didMove(to: self.view!)
         }
         
         if(touchedNode.name == "level1") {

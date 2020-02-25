@@ -110,10 +110,8 @@ class AccentuationInfo: SKSpriteNode {
         // let closeButtonFrame = SKSpriteNode(color: colorCloseButtonFrame, size: CGSize(width: 180, height: 55))
         let closeButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 150, height: 55))
         closeButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
-        // closeButtonFrame.drawBorder(color: .orange, width: 5)
         closeButtonFrame.zPosition = 4
-        addChild(closeButtonFrame)
-      
+        addChild(closeButtonFrame)      
         let closeButton = SKLabelNode(text: "Bereit")
         closeButton.name = "close"
         closeButton.fontColor = SKColor.white
