@@ -34,18 +34,24 @@ class MeasureInfo: SKSpriteNode {
         
         let explanationLabel = SKLabelNode(text: "test")
         explanationLabel.fontColor = SKColor.black
-        explanationLabel.text = "Die Verse vieler Gedichte haben ein bestimmtes Betonungsmuster. "
-            + "Das heißt die betonten (x́) und unbetonten (x) Silben eines Verses wechseln sich in einer festen Reihenfolge ab. "
-            + "Diese Abfolge nennt man Versmaß oder Metrum. Die vier wichtigsten Grundtypen sind: \n\n" +
-            "   Jambus (x x́)   : Ge·spenst 👻\n" +
-            "   Trochäus (x́ x)  : So·nne ☀️\n" +
-            "   Anapäst (x x x́) : E·le·fant 🐘\n" +
-            "   Daktylus (x́ x x) : Bro·kko·li 🥦"
+        let attributedText = makeAttributedString(stringToBeMutated: "Die Verse vieler Gedichte haben ein bestimmtes Betonungsmuster. "
+            + "Das heißt die betonten (x́) und unbetonten (x) Silben eines Verses wechseln sich in einer festen Reihenfolge ab. \n"
+            + "Diese Abfolge nennt man Versmaß oder Metrum. Die vier wichtigsten Grundtypen sind: \n\n"
+            + "   Jambus (x x́)   : Ge·", shallBecomeBold: false, size: 32)
+        attributedText.append(makeAttributedString(stringToBeMutated: "spenst 👻", shallBecomeBold: true, size: 32))
+        attributedText.append(makeAttributedString(stringToBeMutated: "\n   Trochäus (x́ x)  :", shallBecomeBold: false, size: 32))
+        attributedText.append(makeAttributedString(stringToBeMutated: " So", shallBecomeBold: true, size: 32))
+        attributedText.append(makeAttributedString(stringToBeMutated: "·nne ☀️\n   Anapäst (x x x́) : E·le·", shallBecomeBold: false, size: 32))
+        attributedText.append(makeAttributedString(stringToBeMutated: "fant 🐘", shallBecomeBold: true, size: 32))
+        attributedText.append(makeAttributedString(stringToBeMutated: "\n   Daktylus (x́ x x) : ", shallBecomeBold: false, size: 32))
+        attributedText.append(makeAttributedString(stringToBeMutated: "Bro", shallBecomeBold: true, size: 32))
+        attributedText.append(makeAttributedString(stringToBeMutated: "·kko·li 🥦", shallBecomeBold: false, size: 32))
+        explanationLabel.attributedText = attributedText
         explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-250)
         // break line: https://forums.developer.apple.com/thread/82994
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         explanationLabel.numberOfLines = 0
-        explanationLabel.preferredMaxLayoutWidth = 480
+        explanationLabel.preferredMaxLayoutWidth = 500
         explanationLabel.zPosition = 2
         addChild(explanationLabel)
         
@@ -65,7 +71,7 @@ class MeasureInfo: SKSpriteNode {
         closeButton.addStroke(color: .white, width: 6.0)
         closeButtonFrame.addChild(closeButton)
     }
-    
+        
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         // fatalError("init(coder:) has not been implemented")

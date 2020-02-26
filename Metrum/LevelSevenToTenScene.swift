@@ -116,10 +116,11 @@ class LevelSevenToTenScene: SKScene {
         taskLabel.zPosition = 4
         addChild(taskLabel)
         
-        jambus.text = "Jambus: Ge·spenst 👻"
+        let jambusLabel = makeAttributedString(stringToBeMutated: "Jambus: Ge·", shallBecomeBold: false, size: 25)
+        jambusLabel.append(makeAttributedString(stringToBeMutated: "spenst 👻", shallBecomeBold: true, size: 25))
+        jambus.attributedText = jambusLabel
         jambus.fontColor = SKColor.black
-        jambus.fontSize = 25
-        jambus.position = CGPoint(x: -200, y: 180)
+        jambus.position = CGPoint(x: -200, y: 200)
         jambus.zPosition = 2
         addChild(jambus)
         jambusBin.color = SKColor.white
@@ -129,10 +130,12 @@ class LevelSevenToTenScene: SKScene {
         jambusBin.zPosition = 1
         addChild(jambusBin)
         
-        trochaeus.text = "Trochäus: So·nne ☀️"
+        let trochaeusLabel = makeAttributedString(stringToBeMutated: "Trochäus: ", shallBecomeBold: false, size: 25)
+        trochaeusLabel.append(makeAttributedString(stringToBeMutated: "So", shallBecomeBold: true, size: 25))
+        trochaeusLabel.append(makeAttributedString(stringToBeMutated: "·nne ☀️", shallBecomeBold: false, size: 25))
+        trochaeus.attributedText = trochaeusLabel
         trochaeus.fontColor = SKColor.black
-        trochaeus.fontSize = 25
-        trochaeus.position = CGPoint(x: 200, y: 180)
+        trochaeus.position = CGPoint(x: 200, y: 200)
         trochaeus.zPosition = 2
         addChild(trochaeus)
         trochaeusBin.color = SKColor.white
@@ -142,10 +145,11 @@ class LevelSevenToTenScene: SKScene {
         trochaeusBin.zPosition = 1
         addChild(trochaeusBin)
         
-        anapaest.text = "Anapäst: E·le·fant 🐘"
+        let anapaestLabel = makeAttributedString(stringToBeMutated: "Anapäst: E·le·", shallBecomeBold: false, size: 25)
+        anapaestLabel.append(makeAttributedString(stringToBeMutated: "fant 🐘", shallBecomeBold: true, size: 25))
+        anapaest.attributedText = anapaestLabel
         anapaest.fontColor = SKColor.black
-        anapaest.fontSize = 25
-        anapaest.position = CGPoint(x: -200, y: -220)
+        anapaest.position = CGPoint(x: -200, y: -200)
         anapaest.zPosition = 2
         addChild(anapaest)
         anapaestBin.color = SKColor.white
@@ -155,10 +159,12 @@ class LevelSevenToTenScene: SKScene {
         anapaestBin.zPosition = 1
         addChild(anapaestBin)
         
-        daktylus.text = "Daktylus: Bro·kko·li 🥦"
+        let daktylusLabel = makeAttributedString(stringToBeMutated: "Daktylus: ", shallBecomeBold: false, size: 25)
+        daktylusLabel.append(makeAttributedString(stringToBeMutated: "Bro", shallBecomeBold: true, size: 25))
+        daktylusLabel.append(makeAttributedString(stringToBeMutated: "·kko·li 🥦", shallBecomeBold: false, size: 25))
+        daktylus.attributedText = daktylusLabel
         daktylus.fontColor = SKColor.black
-        daktylus.fontSize = 25
-        daktylus.position = CGPoint(x: 200, y: -220)
+        daktylus.position = CGPoint(x: 200, y: -200)
         daktylus.zPosition = 2
         addChild(daktylus)
         daktylusBin.color = SKColor.white
@@ -212,7 +218,7 @@ class LevelSevenToTenScene: SKScene {
         selectedLine = selectNextLine()
         
         selectedLineLabel.fontColor = SKColor.black
-        selectedLineLabel.attributedText = makeAttributedString(stringToBeMutated: (selectedLine.line), shallBecomeBold: false)
+        selectedLineLabel.attributedText = makeAttributedString(stringToBeMutated: selectedLine.line, shallBecomeBold: false, size: 40)
         selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-125)
         selectedLineLabel.zPosition = 3
         selectedLineLabel.name = selectedLine.measure.rawValue
@@ -254,25 +260,6 @@ class LevelSevenToTenScene: SKScene {
         return newlySelected
     }
     
-    /// Returns String as NSMutableAttributedString and when indicated in bold.
-    ///
-    /// - Parameters:
-    ///   - stringToBeMutated: The String which should be returnded.
-    ///   - shallBecomceBold: This Boolean says whether String shall be bold or not.
-    /// - Returns: The String as NSMutableAttributedString.
-    func makeAttributedString(stringToBeMutated: String, shallBecomeBold: Bool) -> NSMutableAttributedString {
-        if(shallBecomeBold) {
-            let bold = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 40)]
-            let attributedString =  NSMutableAttributedString(string:stringToBeMutated, attributes:bold)
-            return attributedString
-        }
-        else {
-            let notBold = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 35)]
-            let normalString = NSMutableAttributedString(string:stringToBeMutated, attributes: notBold)
-            return normalString
-        }
-    }
-    
     /// Returns Line with stressed syllables in bold.
     ///
     /// - Parameters:
@@ -285,11 +272,11 @@ class LevelSevenToTenScene: SKScene {
         for word in line.words {
             for syllable in word.syllables {
                 if syllable.accentuation.rawValue == "unstressed" {
-                    let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false)
+                    let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false, size: 40)
                     lineToBeRatedBold.append(syllableNotBold)
                 }
                 else if syllable.accentuation.rawValue == "stressed" {
-                    let syllableBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: true)
+                    let syllableBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: true, size: 40)
                     lineToBeRatedBold.append(syllableBold)
                 }
             }

@@ -156,22 +156,22 @@
       {
         "syllables": [
           {
-            "syllableString": " Zau",
+            "syllableString": "Di",
             "accentuation": "unstressed"
           },
           {
-            "syllableString": "be",
+            "syllableString": "rek",
             "accentuation": "unstressed"
           },
           {
-            "syllableString": "rei ",
+            "syllableString": "tion",
             "accentuation": "stressed"
           }
         ]
       }
     ],
     "measure": "anapaest",
-    "audioFile": "Zauberei.mp3"
+    "audioFile": "Direktion.mp3"
   },
   {
     "words": [

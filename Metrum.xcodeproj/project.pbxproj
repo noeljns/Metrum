@@ -24,6 +24,7 @@
 		DD5749E223EC405300C50423 /* MetrumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749E123EC405300C50423 /* MetrumTests.swift */; };
 		DD5749ED23EC405400C50423 /* MetrumUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749EC23EC405400C50423 /* MetrumUITests.swift */; };
 		DD5749FC23EC408800C50423 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DD5749FB23EC408800C50423 /* .gitignore */; };
+		DD86857F24072F8A000C44CE /* Direktion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD86857E24072F89000C44CE /* Direktion.mp3 */; };
 		DD95065523FD8B2500BF1291 /* lines.json in Resources */ = {isa = PBXBuildFile; fileRef = DD95065323FD8B2400BF1291 /* lines.json */; };
 		DD95065623FD8B2500BF1291 /* words.json in Resources */ = {isa = PBXBuildFile; fileRef = DD95065423FD8B2400BF1291 /* words.json */; };
 		DD969FF523FC52BE00C22624 /* Warning.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD969FF423FC52BE00C22624 /* Warning.swift */; };
@@ -52,7 +53,6 @@
 		DDE2FBF023FD79C200118ADC /* Ersatz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBEF23FD79C200118ADC /* Ersatz.mp3 */; };
 		DDE2FBF223FD7A1300118ADC /* Harmonie.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBF123FD7A1200118ADC /* Harmonie.mp3 */; };
 		DDE2FBF423FD7A4700118ADC /* Sinfonie.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBF323FD7A4700118ADC /* Sinfonie.mp3 */; };
-		DDE2FBF623FD7A7600118ADC /* Zauberei.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBF523FD7A7600118ADC /* Zauberei.mp3 */; };
 		DDE2FBF823FD7AA400118ADC /* Eitelkeit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBF723FD7AA300118ADC /* Eitelkeit.mp3 */; };
 		DDE2FBFA23FD7AD600118ADC /* Achterbahn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBF923FD7AD600118ADC /* Achterbahn.mp3 */; };
 		DDE2FBFC23FD7B1200118ADC /* Autobahn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBFB23FD7B1200118ADC /* Autobahn.mp3 */; };
@@ -99,6 +99,7 @@
 		DD5749EC23EC405400C50423 /* MetrumUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetrumUITests.swift; sourceTree = "<group>"; };
 		DD5749EE23EC405400C50423 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD5749FB23EC408800C50423 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		DD86857E24072F89000C44CE /* Direktion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Direktion.mp3; sourceTree = "<group>"; };
 		DD95065323FD8B2400BF1291 /* lines.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = lines.json; sourceTree = "<group>"; };
 		DD95065423FD8B2400BF1291 /* words.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = words.json; sourceTree = "<group>"; };
 		DD969FF423FC52BE00C22624 /* Warning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Warning.swift; sourceTree = "<group>"; };
@@ -127,7 +128,6 @@
 		DDE2FBEF23FD79C200118ADC /* Ersatz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Ersatz.mp3; sourceTree = "<group>"; };
 		DDE2FBF123FD7A1200118ADC /* Harmonie.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Harmonie.mp3; path = ../../../../Downloads/Sounds/Harmonie.mp3; sourceTree = "<group>"; };
 		DDE2FBF323FD7A4700118ADC /* Sinfonie.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Sinfonie.mp3; sourceTree = "<group>"; };
-		DDE2FBF523FD7A7600118ADC /* Zauberei.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Zauberei.mp3; sourceTree = "<group>"; };
 		DDE2FBF723FD7AA300118ADC /* Eitelkeit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Eitelkeit.mp3; path = ../../../../Downloads/Sounds/Eitelkeit.mp3; sourceTree = "<group>"; };
 		DDE2FBF923FD7AD600118ADC /* Achterbahn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Achterbahn.mp3; sourceTree = "<group>"; };
 		DDE2FBFB23FD7B1200118ADC /* Autobahn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Autobahn.mp3; sourceTree = "<group>"; };
@@ -170,7 +170,7 @@
 				DDE2FBEF23FD79C200118ADC /* Ersatz.mp3 */,
 				DDE2FBF123FD7A1200118ADC /* Harmonie.mp3 */,
 				DDE2FBF323FD7A4700118ADC /* Sinfonie.mp3 */,
-				DDE2FBF523FD7A7600118ADC /* Zauberei.mp3 */,
+				DD86857E24072F89000C44CE /* Direktion.mp3 */,
 				DDE2FBF723FD7AA300118ADC /* Eitelkeit.mp3 */,
 				DDE2FBF923FD7AD600118ADC /* Achterbahn.mp3 */,
 				DDE2FBFB23FD7B1200118ADC /* Autobahn.mp3 */,
@@ -399,11 +399,11 @@
 				DDC75EEE23FDE0F300B551BB /* lineOne.mp3 in Resources */,
 				DDA5BD282405D6850060E766 /* Torben.mp3 in Resources */,
 				DD11698F23F054FF00E553CE /* Assets.xcassets in Resources */,
+				DD86857F24072F8A000C44CE /* Direktion.mp3 in Resources */,
 				DDE2FBFC23FD7B1200118ADC /* Autobahn.mp3 in Resources */,
 				DD5749D723EC405300C50423 /* LaunchScreen.storyboard in Resources */,
 				DDC75EF023FDE0F300B551BB /* lineThree.mp3 in Resources */,
 				DDC75EEF23FDE0F300B551BB /* lineFour.mp3 in Resources */,
-				DDE2FBF623FD7A7600118ADC /* Zauberei.mp3 in Resources */,
 				DDE2FBEA23FD78F000118ADC /* Sonne.mp3 in Resources */,
 				DDC4907123EC5736000F0942 /* LevelOneToFourScene.sks in Resources */,
 				DDC75EF523FDE39D00B551BB /* LevelFiveToSixScene.sks in Resources */,

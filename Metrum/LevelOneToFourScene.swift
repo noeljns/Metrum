@@ -171,7 +171,8 @@ class LevelOneToFourScene: SKScene {
         selectedLine = selectNextLine()
         
         selectedLineLabel.fontColor = SKColor.black
-        selectedLineLabel.attributedText = makeAttributedString(stringToBeMutated: (selectedLine.line), shallBecomeBold: false)
+        // selectedLineLabel.attributedText = makeAttributedString(stringToBeMutated: (selectedLine.line), shallBecomeBold: false)
+        selectedLineLabel.attributedText = makeAttributedString(stringToBeMutated: selectedLine.line, shallBecomeBold: false, size: 50)
         selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-50)
         selectedLineLabel.zPosition = 2
         addChild(selectedLineLabel)
@@ -219,25 +220,6 @@ class LevelOneToFourScene: SKScene {
         return newlySelected
     }
     
-    /// Returns String as NSMutableAttributedString and when indicated in bold.
-    ///
-    /// - Parameters:
-    ///   - stringToBeMutated: The String which should be returnded.
-    ///   - shallBecomceBold: This Boolean says whether String shall be bold or not.
-    /// - Returns: The String as NSMutableAttributedString.
-    func makeAttributedString(stringToBeMutated: String, shallBecomeBold: Bool) -> NSMutableAttributedString {
-        if(shallBecomeBold) {
-            let bold = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 55)]
-            let attributedString =  NSMutableAttributedString(string:stringToBeMutated, attributes:bold)
-            return attributedString
-        }
-        else {
-            let notBold = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 50)]
-            let normalString = NSMutableAttributedString(string:stringToBeMutated, attributes: notBold)
-            return normalString
-        }
-    }
-    
     /// Returns Line with stressed syllables in bold.
     ///
     /// - Parameters:
@@ -250,11 +232,13 @@ class LevelOneToFourScene: SKScene {
         for word in line.words {
             for syllable in word.syllables {
                 if syllable.accentuation.rawValue == "unstressed" {
-                    let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false)
+                    // let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false)
+                    let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false, size: 50)
+
                     lineToBeRatedBold.append(syllableNotBold)
                 }
                 else if syllable.accentuation.rawValue == "stressed" {
-                    let syllableBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: true)
+                    let syllableBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: true, size: 50)
                     lineToBeRatedBold.append(syllableBold)
                 }
             }
@@ -819,5 +803,27 @@ extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate,
     func closeWarning() {
         backgroundBlocker.removeFromParent()
         warning?.removeFromParent()
+    }
+}
+
+extension SKScene {
+    /// Returns String as NSMutableAttributedString and when indicated in bold.
+    ///
+    /// - Parameters:
+    ///   - stringToBeMutated: The String which should be returnded.
+    ///   - shallBecomceBold: This Boolean says whether String shall be bold or not.
+    ///   - size: Size of the String
+    /// - Returns: The String as NSMutableAttributedString.
+    func makeAttributedString(stringToBeMutated: String, shallBecomeBold: Bool, size: CGFloat) -> NSMutableAttributedString {
+        if(shallBecomeBold) {
+            let bold = [NSAttributedString.Key.font : UIFont(name: "HelveticaNeue-Bold", size: size)]
+            let attributedString =  NSMutableAttributedString(string:stringToBeMutated, attributes:bold as [NSAttributedString.Key : Any])
+            return attributedString
+        }
+        else {
+            let notBold = [NSAttributedString.Key.font : UIFont(name: "HelveticaNeue-UltraLight", size: size)]
+            let normalString = NSMutableAttributedString(string:stringToBeMutated, attributes: notBold as [NSAttributedString.Key : Any])
+            return normalString
+        }
     }
 }

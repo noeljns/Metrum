@@ -29,7 +29,7 @@ class AccentuationInfo: SKSpriteNode {
         let accentBinOne = SKSpriteNode()
         accentBinOne.color = SKColor.lightGray
         accentBinOne.size = CGSize(width: 40, height: 50)
-        accentBinOne.position = CGPoint(x: frame.midX-50, y: frame.midY-195)
+        accentBinOne.position = CGPoint(x: frame.midX-45, y: frame.midY-195)
         accentBinOne.zPosition = 2
         accentBinOne.drawBorder(color: .orange, width: 4)
         let stressMarkOne = SKLabelNode()
@@ -45,7 +45,7 @@ class AccentuationInfo: SKSpriteNode {
         let accentBinTwo = SKSpriteNode()
         accentBinTwo.color = SKColor.lightGray
         accentBinTwo.size = CGSize(width: 40, height: 50)
-        accentBinTwo.position = CGPoint(x: frame.midX+50, y: frame.midY-195)
+        accentBinTwo.position = CGPoint(x: frame.midX+45, y: frame.midY-195)
         accentBinTwo.zPosition = 2
         accentBinTwo.drawBorder(color: .orange, width: 4)
         let stressMarkTwo = SKLabelNode()
@@ -59,7 +59,8 @@ class AccentuationInfo: SKSpriteNode {
         addChild(accentBinTwo)
         
         let exampleWord = NSMutableAttributedString()
-        exampleWord.append(makeAttributedString(stringToBeMutated: "Tor·ben", shallBecomeBold: false))
+        
+        exampleWord.append(makeAttributedString(stringToBeMutated: "Tor·ben", shallBecomeBold: false, size: 50))
         exampleWordLabel.attributedText = exampleWord
         exampleWordLabel.fontColor = SKColor.black
         exampleWordLabel.position = CGPoint(x: frame.midX, y: frame.midY-270)
@@ -67,29 +68,15 @@ class AccentuationInfo: SKSpriteNode {
         addChild(exampleWordLabel)
         
         let exampleWordBold = NSMutableAttributedString()
-        exampleWordBold.append(makeAttributedString(stringToBeMutated: "Tor·", shallBecomeBold: true))
-        exampleWordBold.append(makeAttributedString(stringToBeMutated: "ben", shallBecomeBold: false))
+        exampleWordBold.append(makeAttributedString(stringToBeMutated: "Tor·", shallBecomeBold: true, size: 50))
+        exampleWordBold.append(makeAttributedString(stringToBeMutated: "ben", shallBecomeBold: false, size: 50))
         exampleWordBoldLabel.attributedText = exampleWordBold
         exampleWordBoldLabel.fontColor = SKColor.black
         exampleWordBoldLabel.position = CGPoint(x: frame.midX, y: frame.midY-270)
         exampleWordBoldLabel.zPosition = 2
         // addChild(exampleWordBoldLabel)
     }
-    
-    
-    func makeAttributedString(stringToBeMutated: String, shallBecomeBold: Bool) -> NSMutableAttributedString {
-        if(shallBecomeBold) {
-            let bold = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 50)]
-            let attributedString =  NSMutableAttributedString(string:stringToBeMutated, attributes:bold)
-            return attributedString
-        }
-        else {
-            let notBold = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 50)]
-            let normalString = NSMutableAttributedString(string:stringToBeMutated, attributes: notBold)
-            return normalString
-        }
-    }
-    
+        
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
         name = "accentuationInfo"
@@ -219,5 +206,25 @@ extension SKSpriteNode {
         shapeNode.strokeColor = color
         shapeNode.lineWidth = width
         addChild(shapeNode)
+    }
+    
+    /// Returns String as NSMutableAttributedString and when indicated in bold.
+    ///
+    /// - Parameters:
+    ///   - stringToBeMutated: The String which should be returnded.
+    ///   - shallBecomceBold: This Boolean says whether String shall be bold or not.
+    ///   - size: Size of the String
+    /// - Returns: The String as NSMutableAttributedString.
+    func makeAttributedString(stringToBeMutated: String, shallBecomeBold: Bool, size: CGFloat) -> NSMutableAttributedString {
+        if(shallBecomeBold) {
+            let bold = [NSAttributedString.Key.font : UIFont(name: "HelveticaNeue-Bold", size: size)]
+            let attributedString =  NSMutableAttributedString(string:stringToBeMutated, attributes:bold as [NSAttributedString.Key : Any])
+            return attributedString
+        }
+        else {
+            let notBold = [NSAttributedString.Key.font : UIFont(name: "HelveticaNeue-UltraLight", size: size)]
+            let normalString = NSMutableAttributedString(string:stringToBeMutated, attributes: notBold as [NSAttributedString.Key : Any])
+            return normalString
+        }
     }
 }
