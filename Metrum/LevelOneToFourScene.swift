@@ -489,7 +489,7 @@ class LevelOneToFourScene: SKScene {
     ///
     /// - Returns: A duration of one second or four seconds if it is a higher level.
     func longerDurationIfHigherLevels() -> TimeInterval{
-        var duration = TimeInterval(1.0)
+        var duration = TimeInterval(1.5)
         if (userDefaultsKey == "level3" || userDefaultsKey == "level4" || userDefaultsKey == "level9" || userDefaultsKey == "level10") {
             duration = TimeInterval(4.0)
         }

@@ -55,7 +55,7 @@ class LevelExplanation: SKSpriteNode {
         exitButton.name = "exit"
         exitButton.fontSize = 25
         exitButton.fontColor = SKColor.white
-        exitButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
+        exitButton.position = CGPoint(x: frame.midX, y: frame.midY-10)
         exitButton.zPosition = 5
         exitButton.addStroke(color: .white, width: 6.0)
         exitButtonFrame.addChild(exitButton)

@@ -30,7 +30,8 @@ class ReplyIsFalse: SKSpriteNode {
         if solution.isEmpty {
             textLabel.text = "Das war leider falsch."
         } else {
-            textLabel.text = "Das war leider falsch. \nRichtig ist: \n" + solution
+            textLabel.text = "Das war leider falsch. \nRichtig ist: \n" + solution // + "\n\n" +
+                             // "Tipp: Im Deutschen wird meistens die erste Silbe von Worten betont."
         }
         // break line: https://forums.developer.apple.com/thread/82994
         textLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
@@ -38,15 +39,14 @@ class ReplyIsFalse: SKSpriteNode {
         textLabel.preferredMaxLayoutWidth = 520
         textLabel.fontColor = SKColor.black
         textLabel.fontSize = 40
-        textLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY-300)
+        textLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY-340)
         textLabel.zPosition = 4
         addChild(textLabel)
         
         let closeButtonFrame = SKSpriteNode(color: .red, size: CGSize(width: 150, height: 55))
-        closeButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
+        closeButtonFrame.position = CGPoint(x: frame.midX+250, y: frame.midY-420)
         closeButtonFrame.zPosition = 4
         addChild(closeButtonFrame)
-        
         let closeButton = SKLabelNode(text: "Weiter")
         closeButton.name = "close"
         closeButton.fontColor = SKColor.white

@@ -15,9 +15,17 @@ protocol AccentuationInfoDelegate: class {
 // layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
 class AccentuationInfo: SKSpriteNode {
     weak var delegate: AccentuationInfoDelegate?
-    
+    private var exampleWordLabel = SKLabelNode()
+    private var exampleWordBoldLabel = SKLabelNode()
     
     func generateExampleWord() {
+        let soundBoxButton = SKSpriteNode(imageNamed: "QuickActions_Audio")
+        soundBoxButton.name = "soundBoxBtn"
+        soundBoxButton.position = CGPoint(x: frame.midX+120 , y: frame.midY-140)
+        soundBoxButton.size = CGSize(width: 40, height: 40)
+        soundBoxButton.zPosition = 2
+        addChild(soundBoxButton)
+        
         let accentBinOne = SKSpriteNode()
         accentBinOne.color = SKColor.lightGray
         accentBinOne.size = CGSize(width: 40, height: 50)
@@ -50,15 +58,22 @@ class AccentuationInfo: SKSpriteNode {
         accentBinTwo.addChild(stressMarkTwo)
         addChild(accentBinTwo)
         
-        let exampleWordLabel = SKLabelNode()
         let exampleWord = NSMutableAttributedString()
-        exampleWord.append(makeAttributedString(stringToBeMutated: "Tor·", shallBecomeBold: true))
-        exampleWord.append(makeAttributedString(stringToBeMutated: "ben", shallBecomeBold: false))
+        exampleWord.append(makeAttributedString(stringToBeMutated: "Tor·ben", shallBecomeBold: false))
         exampleWordLabel.attributedText = exampleWord
         exampleWordLabel.fontColor = SKColor.black
         exampleWordLabel.position = CGPoint(x: frame.midX, y: frame.midY-270)
         exampleWordLabel.zPosition = 2
         addChild(exampleWordLabel)
+        
+        let exampleWordBold = NSMutableAttributedString()
+        exampleWordBold.append(makeAttributedString(stringToBeMutated: "Tor·", shallBecomeBold: true))
+        exampleWordBold.append(makeAttributedString(stringToBeMutated: "ben", shallBecomeBold: false))
+        exampleWordBoldLabel.attributedText = exampleWordBold
+        exampleWordBoldLabel.fontColor = SKColor.black
+        exampleWordBoldLabel.position = CGPoint(x: frame.midX, y: frame.midY-270)
+        exampleWordBoldLabel.zPosition = 2
+        // addChild(exampleWordBoldLabel)
     }
     
     
@@ -87,20 +102,21 @@ class AccentuationInfo: SKSpriteNode {
         let headerLabel = SKLabelNode(text: "Merke")
         headerLabel.fontColor = SKColor.black
         headerLabel.fontSize = 50
-        headerLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY+300)
+        headerLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY+340)
         headerLabel.zPosition = 4
         addChild(headerLabel)
  
         let explanationLabel = SKLabelNode(text: "test")
         explanationLabel.fontColor = SKColor.black
         explanationLabel.text = "Jedes Wort besteht aus einer oder mehreren Silben. Diese können betont (x́) oder unbetont (x) sein.\n\n" +
-            "Der Name Torben besteht zum Beispiel aus zwei Silben: Tor·ben.\n\n" +
-            "Dabei ist die erste Silbe betont (x́) und die zweite Silbe ist unbetont (x)."
+            "Der Name Torben besteht zum Beispiel aus zwei Silben: Tor·ben.\n" +
+            "Die erste Silbe ist betont (x́) und die zweite Silbe ist unbetont (x).\n\n" +
+            "Klicke auf den Lautsprecher und die betonte Silbe erscheint fett markiert."
         explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-110)
         // break line: https://forums.developer.apple.com/thread/82994
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         explanationLabel.numberOfLines = 0
-        explanationLabel.preferredMaxLayoutWidth = 480
+        explanationLabel.preferredMaxLayoutWidth = 500
         explanationLabel.zPosition = 2
         addChild(explanationLabel)
         
@@ -126,6 +142,40 @@ class AccentuationInfo: SKSpriteNode {
         // fatalError("init(coder:) has not been implemented")
     }
     
+    /// Relevant for sound button.
+    /// Runs an action that adds a node to the scene and removes it after some seconds.
+    /// Duration of action is longer in higher levels.
+    ///
+    /// - Parameters:
+    ///   - node: Node that should be added to and removed from the scene.
+    func addAndRemoveNode(node: SKLabelNode) {
+        let duration = 1.5
+        
+        addChild(node)
+        node.run(SKAction.sequence([
+            SKAction.wait(forDuration: duration),
+            SKAction.removeFromParent(),
+            ])
+        )
+    }
+    
+    /// Relevant for sound button.
+    /// Runs an action that hides a node frome the scene and unhides it after some seconds.
+    /// Duration of action is longer in higher levels.
+    ///
+    /// - Parameters:
+    ///   - node: Node that should be added to and removed from the scene.
+    func hideAndUnhideNode(node: SKLabelNode) {
+        let duration = 1.5
+        
+        node.run(SKAction.sequence([
+            SKAction.hide(),
+            SKAction.wait(forDuration: duration),
+            SKAction.unhide()
+            ])
+        )
+    }
+    
     // https://developer.apple.com/documentation/spritekit/sknode/controlling_user_interaction_on_nodes
     override var isUserInteractionEnabled: Bool {
         set {
@@ -140,9 +190,17 @@ class AccentuationInfo: SKSpriteNode {
         guard let touch = touches.first else {
             return
         }
-        
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
+        
+        if(touchedNode.name == "soundBoxBtn") {
+            let playSound = SKAction.playSoundFileNamed("Torben.mp3", waitForCompletion: false)
+            let action =  SKAction.group([playSound,
+                                          SKAction.run{self.addAndRemoveNode(node: self.exampleWordBoldLabel)},
+                                          SKAction.run{self.hideAndUnhideNode(node: self.exampleWordLabel)}])
+            self.run(action)
+        }
+        
         if (touchedNode.name == "close") {
             close()
         }

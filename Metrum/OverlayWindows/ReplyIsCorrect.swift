@@ -29,15 +29,14 @@ class ReplyIsCorrect: SKSpriteNode {
         let textLabel = SKLabelNode(text: "Super! Die Lösung ist korrekt.")
         textLabel.fontColor = SKColor.black
         textLabel.fontSize = 40
-        textLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY-260)
+        textLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY-300)
         textLabel.zPosition = 4
         addChild(textLabel)
                         
         let closeButtonFrame = SKSpriteNode(color: .green, size: CGSize(width: 150, height: 55))
-        closeButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
+        closeButtonFrame.position = CGPoint(x: frame.midX+250, y: frame.midY-420)
         closeButtonFrame.zPosition = 4
         addChild(closeButtonFrame)
-        
         let closeButton = SKLabelNode(text: "Weiter")
         closeButton.name = "close"
         closeButton.fontColor = SKColor.white
