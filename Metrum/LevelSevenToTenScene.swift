@@ -436,10 +436,10 @@ class LevelSevenToTenScene: SKScene {
         setUpScene()
         setUpUnfixedParts()
         
-        // only show MeasureInfo, if level7 has not been passed yet
-        if !(UserDefaults.standard.bool(forKey: "level7")) {
-            displayMeasureInfo()
-        }
+//        // only show MeasureInfo, if level7 has not been passed yet
+//        if !(UserDefaults.standard.bool(forKey: "level7")) {
+//            displayMeasureInfo()
+//        }
         // current level has been passed, so we do not need to show congratulation window anymore
         // correctReplies as threshold has to be bigger than amountOfCorrectRepliesToPassLevel
         // because if threshold = amountOfCorrectRepliesToPassLevel, the congratulation is shown
