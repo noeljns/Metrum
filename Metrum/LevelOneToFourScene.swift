@@ -489,9 +489,9 @@ class LevelOneToFourScene: SKScene {
     ///
     /// - Returns: A duration of one second or four seconds if it is a higher level.
     func longerDurationIfHigherLevels() -> TimeInterval{
-        var duration = TimeInterval(1.5)
+        var duration = TimeInterval(2.5)
         if (userDefaultsKey == "level3" || userDefaultsKey == "level4" || userDefaultsKey == "level9" || userDefaultsKey == "level10") {
-            duration = TimeInterval(4.0)
+            duration = TimeInterval(5.5)
         }
         return duration
     }
@@ -645,11 +645,21 @@ class LevelOneToFourScene: SKScene {
             // worked as well
             // audioNode.run(SKAction.playSoundFileNamed("Sonne.WAV", waitForCompletion: false))
             // audioNode.run(SKAction.playSoundFileNamed("test.WAV", waitForCompletion: false))
+
+            // node no longer receives touch events
+            self.soundBoxButton.isUserInteractionEnabled = true
+            
             let playSound = SKAction.playSoundFileNamed(selectedLine.audioFile, waitForCompletion: false)
             let action =  SKAction.group([playSound,
                                           SKAction.run{self.addAndRemoveNode(node: self.selectedLineBoldLabel)},
                                           SKAction.run{self.hideAndUnhideNode(node: self.selectedLineLabel)}])
             self.run(action)
+            
+            // node waits 1.5 for lower levels, 4.0 for higher levels and reveices touch events again
+            // otherwise app would crash since addAndRemoveNode would be operated although node is still in scene
+            self.run(SKAction.wait(forDuration: longerDurationIfHigherLevels()), completion: {() -> Void in
+                self.soundBoxButton.isUserInteractionEnabled = false
+                print(self.soundBoxButton.isUserInteractionEnabled.description)})
         }
         
         if (touchedNode.name == "check") {
