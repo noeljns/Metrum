@@ -174,23 +174,23 @@ class LevelSevenToTenScene: SKScene {
         daktylusBin.zPosition = 1
         addChild(daktylusBin)
         
-        if provideHelp {
-            // measureInfoButton = SKSpriteNode(imageNamed: "info")
-            measureInfoButton = SKSpriteNode(imageNamed: "icons8-info-50")
-            measureInfoButton.name = "measureInfoButton"
-            measureInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY-75)
-            measureInfoButton.size = CGSize(width: 40, height: 40)
-            measureInfoButton.zPosition = 2
-            addChild(measureInfoButton)
-            
-            // soundBoxButton = SKSpriteNode(imageNamed: "sound")
-            soundBoxButton = SKSpriteNode(imageNamed: "QuickActions_Audio")
-            soundBoxButton.name = "soundBoxBtn"
-            soundBoxButton.position = CGPoint(x: frame.midX+165 , y: frame.midY-75)
-            soundBoxButton.size = CGSize(width: 30, height: 30)
-            soundBoxButton.zPosition = 2
-            addChild(soundBoxButton)
-        }
+//        if provideHelp {
+//            // measureInfoButton = SKSpriteNode(imageNamed: "info")
+//            measureInfoButton = SKSpriteNode(imageNamed: "icons8-info-50")
+//            measureInfoButton.name = "measureInfoButton"
+//            measureInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY-75)
+//            measureInfoButton.size = CGSize(width: 40, height: 40)
+//            measureInfoButton.zPosition = 2
+//            addChild(measureInfoButton)
+//
+//            // soundBoxButton = SKSpriteNode(imageNamed: "sound")
+//            soundBoxButton = SKSpriteNode(imageNamed: "QuickActions_Audio")
+//            soundBoxButton.name = "soundBoxBtn"
+//            soundBoxButton.position = CGPoint(x: frame.midX+165 , y: frame.midY-75)
+//            soundBoxButton.size = CGSize(width: 30, height: 30)
+//            soundBoxButton.zPosition = 2
+//            addChild(soundBoxButton)
+//        }
     }
     
     /// Manages loading Bar.
@@ -222,7 +222,6 @@ class LevelSevenToTenScene: SKScene {
         selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-125)
         selectedLineLabel.zPosition = 3
         selectedLineLabel.name = selectedLine.measure.rawValue
-        addChild(selectedLineLabel)
         
         selectedLineBoldLabel.fontColor = SKColor.black
         selectedLineBoldLabel.attributedText = getLineToBeRatedBold(line: selectedLine)
@@ -230,6 +229,26 @@ class LevelSevenToTenScene: SKScene {
         selectedLineBoldLabel.zPosition = 3
         selectedLineBoldLabel.name = selectedLine.measure.rawValue
         // addChild(selectedLineBoldLabel)
+        
+        if provideHelp {
+            // measureInfoButton = SKSpriteNode(imageNamed: "info")
+            measureInfoButton = SKSpriteNode(imageNamed: "icons8-info-50")
+            measureInfoButton.name = "measureInfoButton"
+            measureInfoButton.position = CGPoint(x: selectedLineLabel.frame.maxX+70 , y: frame.midY+40)
+            measureInfoButton.size = CGSize(width: 40, height: 40)
+            measureInfoButton.zPosition = 2
+            selectedLineLabel.addChild(measureInfoButton)
+            selectedLineBoldLabel.addChild(measureInfoButton.copy() as! SKNode)
+            // soundBoxButton = SKSpriteNode(imageNamed: "sound")
+            soundBoxButton = SKSpriteNode(imageNamed: "QuickActions_Audio")
+            soundBoxButton.name = "soundBoxBtn"
+            soundBoxButton.position = CGPoint(x: selectedLineLabel.frame.maxX+20 , y: frame.midY+40)
+            soundBoxButton.size = CGSize(width: 30, height: 30)
+            soundBoxButton.zPosition = 2
+            selectedLineLabel.addChild(soundBoxButton)
+            selectedLineBoldLabel.addChild(soundBoxButton.copy() as! SKNode)
+        }
+        addChild(selectedLineLabel)
     }
     
     /// Returns the next Line for which the user has to solve the task.
@@ -397,7 +416,9 @@ class LevelSevenToTenScene: SKScene {
     
     /// Empties lists, removes unfix nodes and sets up scene again for new line to be solved.
     func cleanAndSetupSceneForNewLine() {
+        selectedLineLabel.removeAllChildren()
         selectedLineLabel.removeFromParent()
+        selectedLineBoldLabel.removeAllChildren()
         setUpUnfixedParts()
     }
     
