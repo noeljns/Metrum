@@ -39,7 +39,8 @@ class LevelFiveToSixScene: SKScene {
     private var correctReplies = 0
     
     // variables for input data
-    lazy var measures = Set<Measure>()
+    // lazy var measures = Set<Measure>()
+    lazy var measures: Set<Measure> = [Measure.jambus, Measure.trochaeus, Measure.anapaest, Measure.daktylus]
     // TODO check whether forced unwrapping is appropriate here
     private var selectedMeasure: Measure!
     
@@ -141,17 +142,51 @@ class LevelFiveToSixScene: SKScene {
     /// Does not select the previous Measure.
     ///
     /// - Returns: The newly selected Measure.
+//    func selectNextMeasure() -> Measure {
+//        let previousSelected = selectedMeasure
+//        var newlySelected = previousSelected
+//
+//        while(previousSelected == newlySelected ) {
+//            newlySelected = [Measure.jambus, Measure.trochaeus, Measure.anapaest, Measure.daktylus].randomElement()
+//        }
+//        // TODO rethink forced unwrapping
+//        return newlySelected!
+//    }
+    
+    
     func selectNextMeasure() -> Measure {
+        print("in selectNextMeasure")
+
         let previousSelected = selectedMeasure
-        var newlySelected = previousSelected
+        
+        // notYetCorrectlyBuildMeasures gets all measures if correctlyBuildMeasures is empty in the beginning
+        var notYetCorrectlyBuildMeasures = measures.subtracting(correctlyBuildMeasures)
+        print("notYetCorrectlyBuildMeasures: " + notYetCorrectlyBuildMeasures.count.description)
+        
+        // loops over all measures if all measures have already been build correctly
+        if (notYetCorrectlyBuildMeasures.isEmpty) {
+            correctlyBuildMeasures.removeAll()
+            notYetCorrectlyBuildMeasures = measures
+            print("all correct")
+            print("notYetCorrectlyBuildMeasures: " + notYetCorrectlyBuildMeasures.count.description)
+        }
+        
+        var newlySelected = notYetCorrectlyBuildMeasures.randomElement()!
+        // only one remaining measure to be build
+        if (notYetCorrectlyBuildMeasures.count==1) {
+            // newlySelected contains that one measure
+            print("last remaining")
+            return newlySelected
+        }
         
         while(previousSelected == newlySelected ) {
-            newlySelected = [Measure.jambus, Measure.trochaeus, Measure.anapaest, Measure.daktylus].randomElement()
+            newlySelected = notYetCorrectlyBuildMeasures.randomElement()!
         }
-        // TODO rethink forced unwrapping
-        return newlySelected!
+        print("newlySelected: " + newlySelected.rawValue + "\n")
+        return newlySelected
     }
     
+
     /// Generates the text for the task label.
     ///
     /// - Parameters:
@@ -503,6 +538,8 @@ class LevelFiveToSixScene: SKScene {
                 let (isSolutionCorrect, realSolution) = self.isReplyCorrect()
                 
                 if (isSolutionCorrect) {
+                    correctlyBuildMeasures.insert(selectedMeasure)
+
                     correctReplies += 1
                     // check whether level is passed and save to boolean variable
                     updateLevelStatus()
