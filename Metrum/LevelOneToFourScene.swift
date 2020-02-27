@@ -8,10 +8,47 @@
 
 import SpriteKit
 
+class ProgressBar: SKNode {
+    var bar: SKSpriteNode?
+    var _progress: CGFloat = 0.0
+    var progress: CGFloat {
+        get {
+            return _progress
+        }
+        set {
+            let value = max(min(newValue, 1.0), 0.0)
+            if let bar = bar {
+                bar.xScale = value
+                _progress = value
+            }
+        }
+    }
+    
+    convenience init(color: SKColor, size: CGSize) {
+        self.init()
+        bar = SKSpriteNode(color: color, size: size)
+        if let bar = bar {
+            bar.xScale = 0.0
+            bar.position = CGPoint(x: -size.width / 2, y: 0)
+            bar.anchorPoint = CGPoint(x: 0.0, y: 0.5)
+            addChild(bar)
+        }
+    }
+}
+
+
 class LevelOneToFourScene: SKScene {
     // UI variables
     private var exitLabel = SKLabelNode()
     private var loadingBar = SKSpriteNode()
+    
+    private var progressBarContainer = SKShapeNode()
+    let progressBar: ProgressBar = {
+        let progressBar = ProgressBar(color: .green, size: CGSize(width: 600, height: 26))
+        progressBar.position =  CGPoint(x: 0 , y: 400)
+        return progressBar
+    }()
+    
     private let taskLabel = SKLabelNode()
     private var accentBins = [SKSpriteNode]()
     private var selectedLineLabel = SKLabelNode()
@@ -102,6 +139,15 @@ class LevelOneToFourScene: SKScene {
         manageLoadingBar()
         addChild(loadingBar)
         
+        // https://www.youtube.com/watch?v=rAwOlR7lT3A
+        progressBarContainer = SKShapeNode(rectOf: CGSize(width: 600, height: 30), cornerRadius: 5)
+        progressBarContainer.position = CGPoint(x: frame.midX , y: frame.midY+400)
+        progressBarContainer.strokeColor = .lightGray
+        progressBarContainer.lineWidth = 4
+        addChild(progressBarContainer)
+        progressBar.progress = 0.0
+        // addChild(progressBar)
+        
         taskLabel.fontColor = SKColor.black
         taskLabel.text = "Markiere die betonten (x́) und unbetonten (x) Silben."
                          + " Zu jeder Silbe gehört ein graues Kästchen, das über ihr platziert ist." +
@@ -154,11 +200,18 @@ class LevelOneToFourScene: SKScene {
         let levelOnePassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
         
         if !(levelOnePassed) {
+            
+            print(progressBar.progress.description)
+            progressBar.progress += 0.5
+            print(progressBar.progress.description + "\n")
+            
             let imageName = "loadingBar" + String(correctReplies)
             loadingBar.texture = SKTexture(imageNamed: imageName)
             print("correct replies: " + String(correctReplies))
         }
         else {
+            progressBar.progress = 1.0
+            
             loadingBar.texture = SKTexture(imageNamed: "loadingBarFull")
             print("correct replies: " + String(correctReplies))
         }
@@ -167,6 +220,9 @@ class LevelOneToFourScene: SKScene {
     /// Sets up the ui elements that get removed from and re-added to scene during level.
     /// Displays new Line for which user has to solve task for.
     func setUpUnfixedParts() {
+        
+        addChild(progressBar)
+        
         // TODO right position in code?
         selectedLine = selectNextLine()
         
@@ -577,6 +633,8 @@ class LevelOneToFourScene: SKScene {
     
     /// Empties lists, removes unfix nodes and sets up scene again for new line to be solved.
     func cleanAndSetupSceneForNewLine() {
+        progressBar.removeFromParent()
+        
         // remove all accentBins and stressMarks from scene
         accentBins.forEach { $0.removeFromParent() }
         stressMarks.forEach { $0.removeFromParent() }
