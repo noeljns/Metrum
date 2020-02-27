@@ -198,9 +198,9 @@ class LevelSevenToTenScene: SKScene {
     /// If the user has passed the level, the loading bar remains full.
     func manageLoadingBar() {
         // TODO check complexity / higher function
-        let levelOnePassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
+        let levelIsPassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
         
-        if !(levelOnePassed) {
+        if !(levelIsPassed) {
             let imageName = "loadingBar" + String(correctReplies)
             loadingBar.texture = SKTexture(imageNamed: imageName)
             print("correct replies: " + String(correctReplies))

@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class ProgressBar: SKNode {
+class LoadingBar: SKNode {
     var bar: SKSpriteNode?
     var _progress: CGFloat = 0.0
     var progress: CGFloat {
@@ -40,13 +40,11 @@ class ProgressBar: SKNode {
 class LevelOneToFourScene: SKScene {
     // UI variables
     private var exitLabel = SKLabelNode()
-    private var loadingBar = SKSpriteNode()
-    
-    private var progressBarContainer = SKShapeNode()
-    let progressBar: ProgressBar = {
-        let progressBar = ProgressBar(color: .green, size: CGSize(width: 600, height: 26))
-        progressBar.position =  CGPoint(x: 0 , y: 400)
-        return progressBar
+    private var loadingBarContainer = SKShapeNode()
+    let loadingBar: LoadingBar = {
+        let loadingBar = LoadingBar(color: .green, size: CGSize(width: 600, height: 26))
+        loadingBar.position =  CGPoint(x: 0 , y: 450)
+        return loadingBar
     }()
     
     private let taskLabel = SKLabelNode()
@@ -75,7 +73,7 @@ class LevelOneToFourScene: SKScene {
     // variables for level passing management
     // lazy: https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
     lazy private var correctlyMarkedLines = Set<Line>()
-    private var amountOfCorrectRepliesToPassLevel = 2
+    private var amountOfCorrectRepliesToPassLevel = 4
     private var correctReplies = 0
     
     // variables for input data
@@ -132,20 +130,14 @@ class LevelOneToFourScene: SKScene {
         exitLabel.zPosition = 2
         addChild(exitLabel)
         
-        loadingBar = SKSpriteNode(imageNamed: "loadingBar0")
-        loadingBar.position = CGPoint(x: frame.midX , y: frame.midY+450)
-        loadingBar.size = CGSize(width: 600, height: 35)
-        loadingBar.zPosition = 3
-        manageLoadingBar()
-        addChild(loadingBar)
-        
         // https://www.youtube.com/watch?v=rAwOlR7lT3A
-        progressBarContainer = SKShapeNode(rectOf: CGSize(width: 600, height: 30), cornerRadius: 5)
-        progressBarContainer.position = CGPoint(x: frame.midX , y: frame.midY+400)
-        progressBarContainer.strokeColor = .lightGray
-        progressBarContainer.lineWidth = 4
-        addChild(progressBarContainer)
-        progressBar.progress = 0.0
+        loadingBarContainer = SKShapeNode(rectOf: CGSize(width: 600, height: 30), cornerRadius: 5)
+        loadingBarContainer.position = CGPoint(x: frame.midX , y: frame.midY+450)
+        loadingBarContainer.strokeColor = .lightGray
+        loadingBarContainer.lineWidth = 4
+        addChild(loadingBarContainer)
+        manageLoadingBar()
+        // progressBar.progress = 0.0
         // addChild(progressBar)
         
         taskLabel.fontColor = SKColor.black
@@ -197,23 +189,13 @@ class LevelOneToFourScene: SKScene {
     /// If the user has passed the level, the loading bar remains full.
     func manageLoadingBar() {
         // TODO check complexity / higher function
-        let levelOnePassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
+        let levelIsPassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
         
-        if !(levelOnePassed) {
-            
-            print(progressBar.progress.description)
-            progressBar.progress += 0.5
-            print(progressBar.progress.description + "\n")
-            
-            let imageName = "loadingBar" + String(correctReplies)
-            loadingBar.texture = SKTexture(imageNamed: imageName)
-            print("correct replies: " + String(correctReplies))
+        if !(levelIsPassed) {
+            loadingBar.progress = CGFloat(correctReplies)/CGFloat(amountOfCorrectRepliesToPassLevel)
         }
         else {
-            progressBar.progress = 1.0
-            
-            loadingBar.texture = SKTexture(imageNamed: "loadingBarFull")
-            print("correct replies: " + String(correctReplies))
+            loadingBar.progress = 1.0
         }
     }
     
@@ -221,7 +203,7 @@ class LevelOneToFourScene: SKScene {
     /// Displays new Line for which user has to solve task for.
     func setUpUnfixedParts() {
         
-        addChild(progressBar)
+        addChild(loadingBar)
         
         // TODO right position in code?
         selectedLine = selectNextLine()
@@ -633,7 +615,7 @@ class LevelOneToFourScene: SKScene {
     
     /// Empties lists, removes unfix nodes and sets up scene again for new line to be solved.
     func cleanAndSetupSceneForNewLine() {
-        progressBar.removeFromParent()
+        loadingBar.removeFromParent()
         
         // remove all accentBins and stressMarks from scene
         accentBins.forEach { $0.removeFromParent() }
