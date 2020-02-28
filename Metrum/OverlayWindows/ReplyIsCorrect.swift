@@ -12,7 +12,6 @@ protocol ReplyIsCorrectDelegate: class {
     func closeReplyIsCorrect()
 }
 
-// layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
 class ReplyIsCorrect: SKSpriteNode {
     weak var delegate: ReplyIsCorrectDelegate?
     
@@ -50,10 +49,9 @@ class ReplyIsCorrect: SKSpriteNode {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        // fatalError("init(coder:) has not been implemented")
+        fatalError("init(coder:) has not been implemented")
     }
     
-    // https://developer.apple.com/documentation/spritekit/sknode/controlling_user_interaction_on_nodes
     override var isUserInteractionEnabled: Bool {
         set {
             // ignore

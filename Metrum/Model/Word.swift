@@ -10,15 +10,13 @@ import Foundation
 
 struct Word: Codable {
     let syllables: [Syllable]
-
+    // neglected since "Mitternacht" is as single word daktylus but in a line can be used within a jambus
     // in case of two or more syllables, the word itself has a measure
-    // verworfen, wegen Mitternacht einzeln Daktylus und z.B. in Vers in Jambus eingebettet
     // let measureOfWord: Measure
     
     // computed property
     var word: String {
         // concatenate syllableStrings of word
-        // https://medium.com/@abhimuralidharan/higher-order-functions-in-swift-filter-map-reduce-flatmap-1837646a63e8
         var str = syllables.reduce("") { $0 + $1.syllableString + "·"}
         // cut last character, so that last middle point is removed from word
         str.removeLast()

@@ -12,11 +12,6 @@ import GameplayKit
 
 class GameViewController: UIViewController {
 
-    // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
-    // did not work to retain the Scene by making strong reference in controller
-    // var levelOneScene = LevelOneScene(fileNamed: "LevelOneScene")
-    // lazy var skView: SKView = self.view as! SKView
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

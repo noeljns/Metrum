@@ -12,7 +12,6 @@ protocol MeasureInfoDelegate: class {
     func closeMeasureInfo()
 }
 
-// layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
 class MeasureInfo: SKSpriteNode {
     weak var delegate: MeasureInfoDelegate?
     
@@ -33,7 +32,7 @@ class MeasureInfo: SKSpriteNode {
         headerLabel.zPosition = 4
         addChild(headerLabel)
         
-        let explanationLabel = SKLabelNode(text: "test")
+        let explanationLabel = SKLabelNode()
         explanationLabel.fontColor = SKColor.black
         let attributedText = makeAttributedString(stringToBeMutated: "Die Verse vieler Gedichte haben ein bestimmtes Betonungsmuster. "
             + "Das heißt die betonten (x́) und unbetonten (x) Silben eines Verses wechseln sich in einer festen Reihenfolge ab. \n"
@@ -49,7 +48,6 @@ class MeasureInfo: SKSpriteNode {
         attributedText.append(makeAttributedString(stringToBeMutated: "·kko·li 🥦", shallBecomeBold: false, size: 32))
         explanationLabel.attributedText = attributedText
         explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-250)
-        // break line: https://forums.developer.apple.com/thread/82994
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         explanationLabel.numberOfLines = 0
         explanationLabel.preferredMaxLayoutWidth = 500
@@ -74,10 +72,9 @@ class MeasureInfo: SKSpriteNode {
         
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        // fatalError("init(coder:) has not been implemented")
+        fatalError("init(coder:) has not been implemented")
     }
     
-    // https://developer.apple.com/documentation/spritekit/sknode/controlling_user_interaction_on_nodes
     override var isUserInteractionEnabled: Bool {
         set {
             // ignore

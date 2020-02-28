@@ -41,7 +41,6 @@ class LevelOneToFourScene: SKScene {
     private var warning = Warning(size: CGSize(width: 650, height: 450))
     
     // variables for level passing management
-    // lazy: https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
     private lazy var correctlyMarkedLines = Set<Line>()
     private var amountOfCorrectRepliesToPassLevel = 4
     private var correctReplies = 0
@@ -55,17 +54,6 @@ class LevelOneToFourScene: SKScene {
     public var provideHelp = false
     public var inputFile = ""
     public var userDefaultsKey = ""
-    
-    // both did not work
-    // https://forums.raywenderlich.com/t/swift-tutorial-initialization-in-depth-part-2-2/13209/3
-    // https://spritekitswift.wordpress.com/2015/10/21/spritekit-custom-skscene-class-from-abstract-skscene-class-with-swift/
-    //    convenience init?(fileNamed: String, provideHelp: Bool, inputFile: String) {
-    //        // super.init(size: size)
-    //        self.init(fileNamed: "fileNamed")
-    //        self.provideHelp = provideHelp
-    //        self.inputFile = inputFile
-    //    }
-    
     
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
     func setUpScene() {
@@ -219,7 +207,6 @@ class LevelOneToFourScene: SKScene {
     /// Generates a stressed and an unstressed stressMarks that the user shall drag and drop into the accentBins.
     /// If the bin of a stress mark is empty a new stress mark spawns at the bin.
     func generateStressMarks() {
-        // https://stackoverflow.com/questions/42026839/make-touch-area-for-sklabelnode-bigger-for-small-characters#comment71238691_42026839
         generateStressedStressMark()
         generateUnstressedStressMark()
         
@@ -282,24 +269,6 @@ class LevelOneToFourScene: SKScene {
         addChild(stressMarkParent)
         return stressMarkParent
     }
-    
-    // TODO modularize overlay nodes
-//    func displayOverlayNode(node: SKSpriteNode, size: CGSize, transparent: Bool) {
-//        getBackgroundBlockerTest(shallBeTransparent: false, size: self.size)
-//        backgroundBlocker = backgroundBlockerTest
-//        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-//        backgroundBlocker.zPosition = 4999
-//        if transparent {
-//            backgroundBlocker.alpha = 0.5
-//        }
-//        addChild(backgroundBlocker)
-//
-//        // how to hand over custom node classes?
-//        let node = typeTest(node.type(of: init)(size: CGSize(size: size)))
-//        node.delegate = self
-//        node.zPosition = 5000
-//        addChild(node)
-//    }
     
     /// Adds AccentiationInfo as overlay node to scene.
     func displayAccentuationInfo() {
@@ -522,7 +491,6 @@ class LevelOneToFourScene: SKScene {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // https://code.tutsplus.com/tutorials/spritekit-basics-nodes--cms-28785
         guard let touch = touches.first else {
             return
         }
@@ -534,12 +502,6 @@ class LevelOneToFourScene: SKScene {
         }
         
         if(provideHelp && touchedNode.isEqual(to: soundButton)) {
-            // https://www.reddit.com/r/swift/comments/2wpspa/running_parallel_skactions_with_different_nodes/
-            // https://stackoverflow.com/questions/28823386/skaction-playsoundfilenamed-fails-to-load-sound
-            // worked as well
-            // audioNode.run(SKAction.playSoundFileNamed("Sonne.WAV", waitForCompletion: false))
-            // audioNode.run(SKAction.playSoundFileNamed("test.WAV", waitForCompletion: false))
-
             // node no longer receives touch events
             self.soundButton.isUserInteractionEnabled = true
             
@@ -584,7 +546,6 @@ class LevelOneToFourScene: SKScene {
         
         if (touchedNode.isEqual(to: exitLabel)) {
             if(UserDefaults.standard.bool(forKey: userDefaultsKey)) {
-                // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
                 let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
                 self.view?.presentScene(mainMenu)
             }
@@ -618,8 +579,6 @@ class LevelOneToFourScene: SKScene {
         // stress marks clinch (einrasten) into accentBin
         // TODO higher function
         for accentBin in accentBins {
-            // https://www.hackingwithswift.com/example-code/games/how-to-color-an-skspritenode-using-colorblendfactor
-            // https://stackoverflow.com/questions/36136665/how-to-animate-a-matrix-changing-the-sprites-one-by-one
             for stressMark in stressMarks {
                 if accentBin.frame.contains(stressMark.position) {
                     stressMark.position = accentBin.position
@@ -680,7 +639,6 @@ extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate,
     }
     
     func closeCongratulations() {
-        // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
         let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
         self.view?.presentScene(mainMenu)
     }
@@ -704,7 +662,6 @@ extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate,
     }
     
     func exitWarning() {
-        // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
         let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
         self.view?.presentScene(mainMenu)
     }
@@ -713,4 +670,32 @@ extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate,
         backgroundBlocker.removeFromParent()
         warning.removeFromParent()
     }
+    
+    // both did not work
+    // https://forums.raywenderlich.com/t/swift-tutorial-initialization-in-depth-part-2-2/13209/3
+    // https://spritekitswift.wordpress.com/2015/10/21/spritekit-custom-skscene-class-from-abstract-skscene-class-with-swift/
+    //    convenience init?(fileNamed: String, provideHelp: Bool, inputFile: String) {
+    //        // super.init(size: size)
+    //        self.init(fileNamed: "fileNamed")
+    //        self.provideHelp = provideHelp
+    //        self.inputFile = inputFile
+    //    }
+    
+    // TODO modularize overlay nodes
+    //    func displayOverlayNode(node: SKSpriteNode, size: CGSize, transparent: Bool) {
+    //        getBackgroundBlockerTest(shallBeTransparent: false, size: self.size)
+    //        backgroundBlocker = backgroundBlockerTest
+    //        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
+    //        backgroundBlocker.zPosition = 4999
+    //        if transparent {
+    //            backgroundBlocker.alpha = 0.5
+    //        }
+    //        addChild(backgroundBlocker)
+    //
+    //        // how to hand over custom node classes?
+    //        let node = typeTest(node.type(of: init)(size: CGSize(size: size)))
+    //        node.delegate = self
+    //        node.zPosition = 5000
+    //        addChild(node)
+    //    }
 }

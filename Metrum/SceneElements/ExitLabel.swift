@@ -15,7 +15,6 @@ class ExitLabel: SKLabelNode {
         text = "x"
         fontColor = SKColor.black
         fontSize = 60
-        // position = CGPoint(x: frame.midX-330, y: frame.midY+435)
         position = CGPoint(x: -330, y: 433)
         zPosition = 2
     }

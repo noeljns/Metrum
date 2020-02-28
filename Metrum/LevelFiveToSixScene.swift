@@ -31,7 +31,6 @@ class LevelFiveToSixScene: SKScene {
     private var warning = Warning(size: CGSize(width: 650, height: 450))
     
     // variables for level passing management
-    // lazy: https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
     private lazy var correctlyBuildMeasures = Set<Measure>()
     private var amountOfCorrectRepliesToPassLevel = 4
     private var correctReplies = 0
@@ -194,7 +193,6 @@ class LevelFiveToSixScene: SKScene {
     /// Generates a stressed and an unstressed stressMarks that the user shall drag and drop into the accentBins.
     /// If the bin of a stress mark is empty a new stress mark spawns at the bin.
     func generateStressMarks() {
-        // https://stackoverflow.com/questions/42026839/make-touch-area-for-sklabelnode-bigger-for-small-characters#comment71238691_42026839
         generateStressedStressMark()
         generateUnstressedStressMark()
         
@@ -416,7 +414,6 @@ class LevelFiveToSixScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // https://code.tutsplus.com/tutorials/spritekit-basics-nodes--cms-28785
         guard let touch = touches.first else {
             return
         }
@@ -456,7 +453,6 @@ class LevelFiveToSixScene: SKScene {
         
         if (touchedNode.isEqual(to: exitLabel)) {
             if(UserDefaults.standard.bool(forKey: userDefaultsKey)) {
-                // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
                 let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
                 self.view?.presentScene(mainMenu)
             }
@@ -490,8 +486,6 @@ class LevelFiveToSixScene: SKScene {
         // stress marks clinch (einrasten) into accentBin
         // TODO higher function
         for accentBin in accentBins {
-            // https://www.hackingwithswift.com/example-code/games/how-to-color-an-skspritenode-using-colorblendfactor
-            // https://stackoverflow.com/questions/36136665/how-to-animate-a-matrix-changing-the-sprites-one-by-one
             for stressMark in stressMarks {
                 if accentBin.frame.contains(stressMark.position) {
                     stressMark.position = accentBin.position
@@ -549,7 +543,6 @@ extension LevelFiveToSixScene: MeasureInfoDelegate, ReplyIsCorrectDelegate, Repl
     }
     
     func closeCongratulations() {
-        // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
         let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
         self.view?.presentScene(mainMenu)
     }
@@ -573,7 +566,6 @@ extension LevelFiveToSixScene: MeasureInfoDelegate, ReplyIsCorrectDelegate, Repl
     }
     
     func exitWarning() {
-        // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
         let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
         self.view?.presentScene(mainMenu)
     }

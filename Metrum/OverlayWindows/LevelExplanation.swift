@@ -12,7 +12,6 @@ protocol LevelExplanationDelegate: class {
     func closeLevelExplanation()
 }
 
-// layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
 class LevelExplanation: SKSpriteNode {
     var levelExplanations = ["level1": "In Level 1 findest du heraus, welche Silben eines Wortes betont werden und welche nicht.",
                              "level2": "In Level 2 kannst du dein Wissen aus Level 1 über die Betonung von Worten testen.",
@@ -40,7 +39,6 @@ class LevelExplanation: SKSpriteNode {
         explanationLabel.fontColor = SKColor.black
         explanationLabel.fontSize = 30
         explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-30)
-        // break line: https://forums.developer.apple.com/thread/82994
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         explanationLabel.numberOfLines = 0
         explanationLabel.preferredMaxLayoutWidth = 480
@@ -68,10 +66,9 @@ class LevelExplanation: SKSpriteNode {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        // fatalError("init(coder:) has not been implemented")
+        fatalError("init(coder:) has not been implemented")
     }
     
-    // https://developer.apple.com/documentation/spritekit/sknode/controlling_user_interaction_on_nodes
     override var isUserInteractionEnabled: Bool {
         set {
             // ignore

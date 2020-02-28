@@ -8,7 +8,6 @@
 
 import SpriteKit
 
-// https://www.youtube.com/watch?v=rAwOlR7lT3A
 class LoadingBar: SKNode {
     var bar: SKSpriteNode?
     var barContainer: SKShapeNode?
@@ -38,8 +37,7 @@ class LoadingBar: SKNode {
         bar = SKSpriteNode(color: color, size: size)
         if let bar = bar {
             bar.xScale = 0.0
-            // bar.position = CGPoint(x: 0 , y: 450)
-            bar.position = CGPoint(x: -size.width / 2, y: 450)
+            bar.position = CGPoint(x: -size.width/2, y: 450)
             bar.anchorPoint = CGPoint(x: 0.0, y: 0.5)
             addChild(bar)
         }

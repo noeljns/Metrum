@@ -12,7 +12,6 @@ protocol AccentuationInfoDelegate: class {
     func closeAccentuationInfo()
 }
 
-// layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
 class AccentuationInfo: SKSpriteNode {
     weak var delegate: AccentuationInfoDelegate?
     private var exampleWordLabel = SKLabelNode()
@@ -59,7 +58,6 @@ class AccentuationInfo: SKSpriteNode {
         addChild(accentBinTwo)
         
         let exampleWord = NSMutableAttributedString()
-        
         exampleWord.append(makeAttributedString(stringToBeMutated: "Tor·ben", shallBecomeBold: false, size: 50))
         exampleWordLabel.attributedText = exampleWord
         exampleWordLabel.fontColor = SKColor.black
@@ -74,7 +72,6 @@ class AccentuationInfo: SKSpriteNode {
         exampleWordBoldLabel.fontColor = SKColor.black
         exampleWordBoldLabel.position = CGPoint(x: frame.midX, y: frame.midY-270)
         exampleWordBoldLabel.zPosition = 2
-        // addChild(exampleWordBoldLabel)
     }
         
     init(size: CGSize) {
@@ -94,14 +91,13 @@ class AccentuationInfo: SKSpriteNode {
         headerLabel.zPosition = 4
         addChild(headerLabel)
  
-        let explanationLabel = SKLabelNode(text: "test")
+        let explanationLabel = SKLabelNode()
         explanationLabel.fontColor = SKColor.black
         explanationLabel.text = "Jedes Wort besteht aus einer oder mehreren Silben. Diese können betont (x́) oder unbetont (x) sein.\n\n" +
             "Der Name Torben besteht zum Beispiel aus zwei Silben: Tor·ben.\n" +
             "Die erste Silbe ist betont (x́) und die zweite Silbe ist unbetont (x).\n\n" +
             "Klicke auf den Lautsprecher und die betonte Silbe erscheint fett markiert."
         explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-110)
-        // break line: https://forums.developer.apple.com/thread/82994
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         explanationLabel.numberOfLines = 0
         explanationLabel.preferredMaxLayoutWidth = 500
@@ -128,7 +124,7 @@ class AccentuationInfo: SKSpriteNode {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        // fatalError("init(coder:) has not been implemented")
+        fatalError("init(coder:) has not been implemented")
     }
     
     /// Relevant for sound button.
@@ -165,7 +161,6 @@ class AccentuationInfo: SKSpriteNode {
         )
     }
     
-    // https://developer.apple.com/documentation/spritekit/sknode/controlling_user_interaction_on_nodes
     override var isUserInteractionEnabled: Bool {
         set {
             // ignore

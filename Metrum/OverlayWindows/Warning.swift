@@ -13,7 +13,6 @@ protocol WarningDelegate: class {
     func closeWarning()
 }
 
-// layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
 class Warning: SKSpriteNode {
     weak var delegate: WarningDelegate?
     
@@ -34,7 +33,7 @@ class Warning: SKSpriteNode {
         headerLabel.zPosition = 4
         addChild(headerLabel)
  
-        let warningLabel = SKLabelNode(text: "test")
+        let warningLabel = SKLabelNode()
         warningLabel.fontColor = SKColor.black
         warningLabel.text = "Bist du dir sicher, dass du abbrechen willst?\n\n" +
         "Alle Fortschritte in diesem Level werden verloren gehen."
@@ -76,10 +75,9 @@ class Warning: SKSpriteNode {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        // fatalError("init(coder:) has not been implemented")
+        fatalError("init(coder:) has not been implemented")
     }
     
-    // https://developer.apple.com/documentation/spritekit/sknode/controlling_user_interaction_on_nodes
     override var isUserInteractionEnabled: Bool {
         set {
             // ignore

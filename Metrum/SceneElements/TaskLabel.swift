@@ -14,7 +14,6 @@ class TaskLabel: SKLabelNode {
         fontColor = SKColor.black
         self.text = text
         self.position = position
-        // break line: https://forums.developer.apple.com/thread/82994
         lineBreakMode = NSLineBreakMode.byWordWrapping
         numberOfLines = 0
         preferredMaxLayoutWidth = 600

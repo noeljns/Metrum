@@ -34,7 +34,6 @@ class LevelSevenToTenScene: SKScene {
     private var warning = Warning(size: CGSize(width: 650, height: 450))
     
     // variables for level passing management
-    // lazy: https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
     private lazy var correctlyDraggedLines = Set<Line>()
     private var amountOfCorrectRepliesToPassLevel = 4
     private var correctReplies = 0
@@ -344,7 +343,6 @@ class LevelSevenToTenScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // https://code.tutsplus.com/tutorials/spritekit-basics-nodes--cms-28785
         guard let touch = touches.first else {
             return
         }
@@ -356,12 +354,6 @@ class LevelSevenToTenScene: SKScene {
         }
         
         if(provideHelp && touchedNode.isEqual(to: soundButton)) {
-            // https://www.reddit.com/r/swift/comments/2wpspa/running_parallel_skactions_with_different_nodes/
-            // https://stackoverflow.com/questions/28823386/skaction-playsoundfilenamed-fails-to-load-sound
-            // worked as well
-            // audioNode.run(SKAction.playSoundFileNamed("Sonne.WAV", waitForCompletion: false))
-            // audioNode.run(SKAction.playSoundFileNamed("test.WAV", waitForCompletion: false))
- 
             // sound and line nodes no longer receives touch events
             self.soundButton.isUserInteractionEnabled = true
             self.selectedLineBoldLabel.isUserInteractionEnabled = true
@@ -382,7 +374,6 @@ class LevelSevenToTenScene: SKScene {
         
         if (touchedNode.isEqual(to: exitLabel)) {
             if(UserDefaults.standard.bool(forKey: userDefaultsKey)) {
-                // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
                 let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
                 self.view?.presentScene(mainMenu)
             }
@@ -409,8 +400,6 @@ class LevelSevenToTenScene: SKScene {
         }
         
         if jambusBin.frame.contains(selectedLineLabel.position) {
-            // https://www.hackingwithswift.com/example-code/games/how-to-color-an-skspritenode-using-colorblendfactor
-            // https://stackoverflow.com/questions/36136665/how-to-animate-a-matrix-changing-the-sprites-one-by-one
             if selectedLineLabel.name == Measure.jambus.rawValue {
                 jambusBin.run(SKAction.sequence([colorizeGreen, colorizeWhite]))
                 manageCorrectReply()
@@ -467,13 +456,11 @@ extension LevelSevenToTenScene: MeasureInfoDelegate, CongratulationsDelegate, Wa
     }
     
     func closeCongratulations() {
-        // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
         let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
         self.view?.presentScene(mainMenu)
     }
     
     func exitWarning() {
-        // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
         let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
         self.view?.presentScene(mainMenu)
     }

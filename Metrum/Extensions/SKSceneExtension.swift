@@ -35,7 +35,6 @@ extension SKScene {
     ///   - inputFile: inputFile to be loaded
     /// - Returns: Set of loaded Line objects
     func loadInputFile(inputFile: String) -> Set<Line>{
-        // https://stackoverflow.com/a/58981897
         let data: Data
         
         // TODO get from Sandbox
@@ -71,20 +70,20 @@ extension SKScene {
         return backgroundBlocker
     }
     
-    // TODO: test to modularize overlay nodes
-    var backgroundBlockerTest: SKSpriteNode {
-        let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: CGSize(width: 768, height: 1024))
-        backgroundBlocker.name = "backgroundBlockerTest"
-        backgroundBlocker.zPosition = 4999
-        return backgroundBlocker
-    }
-    // TODO: test to modularize overlay nodes
-    func getBackgroundBlockerTest(shallBeTransparent: Bool, size: CGSize) {
-        let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: size)
-        backgroundBlocker.name = "backgroundBlocker"
-        backgroundBlocker.zPosition = 4999
-        if shallBeTransparent {
-            backgroundBlocker.alpha = 0.5
-        }
-    }
+//    // TODO: test to modularize overlay nodes
+//    var backgroundBlockerTest: SKSpriteNode {
+//        let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: CGSize(width: 768, height: 1024))
+//        backgroundBlocker.name = "backgroundBlockerTest"
+//        backgroundBlocker.zPosition = 4999
+//        return backgroundBlocker
+//    }
+//    // TODO: test to modularize overlay nodes
+//    func getBackgroundBlockerTest(shallBeTransparent: Bool, size: CGSize) {
+//        let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: size)
+//        backgroundBlocker.name = "backgroundBlocker"
+//        backgroundBlocker.zPosition = 4999
+//        if shallBeTransparent {
+//            backgroundBlocker.alpha = 0.5
+//        }
+//    }
 }
