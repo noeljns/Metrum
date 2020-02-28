@@ -9,7 +9,6 @@
 import SpriteKit
 
 class SoundButton: SKSpriteNode {
-    
     init(size: CGSize, position: CGPoint) {
         super.init(texture: SKTexture(imageNamed: "QuickActions_Audio"), color: .clear, size: size)
         self.size = size

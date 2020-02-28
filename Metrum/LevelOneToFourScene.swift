@@ -24,7 +24,6 @@ class LevelOneToFourScene: SKScene {
     private var infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: 225 , y: 90))
     private var soundButton = SoundButton(size: CGSize(width: 40, height: 40), position: CGPoint(x: 150 , y: 90))
     private var checkButton = CheckButton(size: CGSize(width: 150, height: 55))
- 
     private var accentBins = [SKSpriteNode]()
     private var selectedLineLabel = SKLabelNode()
     private var selectedLineBoldLabel = SKLabelNode()
@@ -35,7 +34,6 @@ class LevelOneToFourScene: SKScene {
     private let unstressedStressMarkParentBin = SKSpriteNode()
     
     // overlay nodes
-    // TODO check whether forced unwrapping is appropriate here
     private var backgroundBlocker = SKSpriteNode()
     private var congratulations = Congratulations(size: CGSize(width: 650, height: 800))
     private var replyIsCorrect = ReplyIsCorrect(size: CGSize(width: 766, height: 350))
@@ -51,7 +49,6 @@ class LevelOneToFourScene: SKScene {
     // variables for input data
     private lazy var loadedLines = Set<Line>()
     // TODO check whether forced unwrapping is appropriate here
-    // TODO: or is it only handed via functions parameters anyways? is a global variable necessary?
     private var selectedLine: Line!
     
     // TODO check if handing over properties via init / constructor is better
