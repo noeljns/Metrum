@@ -10,7 +10,9 @@ import SpriteKit
 
 class LevelSevenToTenScene: SKScene {
     // UI variables
-    private var exitLabel = SKLabelNode()
+    private var exitLabel = ExitLabel()
+
+    
     private var loadingBar = SKSpriteNode()
     private let taskLabel = SKLabelNode()
     private var jambus = SKLabelNode()
@@ -91,12 +93,6 @@ class LevelSevenToTenScene: SKScene {
     
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
     func setUpScene() {
-        exitLabel.name = "exit"
-        exitLabel.fontColor = SKColor.black
-        exitLabel.text = "x"
-        exitLabel.fontSize = 60
-        exitLabel.position = CGPoint(x: frame.midX-330, y: frame.midY+435)
-        exitLabel.zPosition = 2
         addChild(exitLabel)
         
         
@@ -493,7 +489,7 @@ class LevelSevenToTenScene: SKScene {
                 print(self.soundBoxButton.isUserInteractionEnabled.description)})
         }
         
-        if (touchedNode.name == "exit") {
+        if (touchedNode.isEqual(to: exitLabel)) {
             if(UserDefaults.standard.bool(forKey: userDefaultsKey)) {
                 // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
                 let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")

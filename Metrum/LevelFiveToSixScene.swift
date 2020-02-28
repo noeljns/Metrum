@@ -10,19 +10,25 @@ import SpriteKit
 
 class LevelFiveToSixScene: SKScene {
     // UI variables
-    private var exitLabel = SKLabelNode()
+    private var exitLabel = ExitLabel()
+
+    
     private var loadingBar = SKSpriteNode()
     private let selectedMeasureLabel = SKLabelNode()
+    
     private var accentBins = [SKSpriteNode]()
     private var stressMarks = [SKSpriteNode]()
     private let stressedStressMarkParentBin = SKSpriteNode()
     private let stressed = SKLabelNode()
     private let unstressed = SKLabelNode()
     private let unstressedStressMarkParentBin = SKSpriteNode()
+    
     private var measureInfoButton = SKSpriteNode()
     private var measureInfo: MeasureInfo!
+    
     private var checkButtonFrame = SKSpriteNode()
     private var checkButton = SKLabelNode()
+    
     // overlay nodes
     // TODO check whether forced unwrapping is appropriate here
     private var backgroundBlocker: SKSpriteNode!
@@ -60,12 +66,6 @@ class LevelFiveToSixScene: SKScene {
     
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
     func setUpScene() {
-        exitLabel.name = "exit"
-        exitLabel.fontColor = SKColor.black
-        exitLabel.text = "x"
-        exitLabel.fontSize = 60
-        exitLabel.position = CGPoint(x: frame.midX-330, y: frame.midY+435)
-        exitLabel.zPosition = 2
         addChild(exitLabel)
         
         
@@ -564,7 +564,7 @@ class LevelFiveToSixScene: SKScene {
             
         }
         
-        if (touchedNode.name == "exit") {
+        if (touchedNode.isEqual(to: exitLabel)) {
             if(UserDefaults.standard.bool(forKey: userDefaultsKey)) {
                 // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
                 let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
