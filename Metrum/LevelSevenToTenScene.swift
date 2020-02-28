@@ -23,16 +23,11 @@ class LevelSevenToTenScene: SKScene {
     private var soundButton = SoundButton(size: CGSize(width: 30, height: 30), position: CGPoint(x: 0 , y: 0))
     private var selectedLineLabel = SKLabelNode()
     private var selectedLineBoldLabel = SKLabelNode()
-    
-    private var jambus = SKLabelNode()
-    private var jambusBin = SKSpriteNode()
-    private var trochaeus = SKLabelNode()
-    private var trochaeusBin = SKSpriteNode()
-    private var daktylus = SKLabelNode()
-    private var daktylusBin = SKSpriteNode()
-    private var anapaest = SKLabelNode()
-    private var anapaestBin = SKSpriteNode()
-    
+    private let jambusBin = MeasureContainer(position: CGPoint(x: -200, y: 100))
+    private let trochaeusBin = MeasureContainer(position: CGPoint(x: 200, y: 100))
+    private let anapaestBin = MeasureContainer(position: CGPoint(x: -200, y: -300))
+    private let daktylusBin = MeasureContainer(position: CGPoint(x: 200, y: -300))
+
     // overlay nodes
     private var backgroundBlocker = SKSpriteNode()
     private var congratulations = Congratulations(size: CGSize(width: 650, height: 800))
@@ -66,62 +61,39 @@ class LevelSevenToTenScene: SKScene {
         addChild(loadingBar)
         addChild(taskLabel)
         
-        let jambusLabel = makeAttributedString(stringToBeMutated: "Jambus: Ge·", shallBecomeBold: false, size: 25)
-        jambusLabel.append(makeAttributedString(stringToBeMutated: "spenst 👻", shallBecomeBold: true, size: 25))
-        jambus.attributedText = jambusLabel
-        jambus.fontColor = SKColor.black
-        jambus.position = CGPoint(x: -200, y: 200)
-        jambus.zPosition = 2
-        addChild(jambus)
-        jambusBin.color = SKColor.white
-        jambusBin.size = CGSize(width: 300, height: 300)
-        jambusBin.position = CGPoint(x: -200, y: 100)
-        jambusBin.drawBorder(color: .lightGray, width: 5.0)
-        jambusBin.zPosition = 1
+        let jambusLabelText = makeAttributedString(stringToBeMutated: "Jambus: Ge·", shallBecomeBold: false, size: 25)
+         jambusLabelText.append(makeAttributedString(stringToBeMutated: "spenst 👻", shallBecomeBold: true, size: 25))
+        if let jambusLabel = jambusBin.childNode(withName: "measureLabel") as? SKLabelNode {
+            print("one")
+            jambusLabel.attributedText = jambusLabelText
+        }
         addChild(jambusBin)
-        
-        let trochaeusLabel = makeAttributedString(stringToBeMutated: "Trochäus: ", shallBecomeBold: false, size: 25)
-        trochaeusLabel.append(makeAttributedString(stringToBeMutated: "So", shallBecomeBold: true, size: 25))
-        trochaeusLabel.append(makeAttributedString(stringToBeMutated: "·nne ☀️", shallBecomeBold: false, size: 25))
-        trochaeus.attributedText = trochaeusLabel
-        trochaeus.fontColor = SKColor.black
-        trochaeus.position = CGPoint(x: 200, y: 200)
-        trochaeus.zPosition = 2
-        addChild(trochaeus)
-        trochaeusBin.color = SKColor.white
-        trochaeusBin.size = CGSize(width: 300, height: 300)
-        trochaeusBin.position = CGPoint(x: 200, y: 100)
-        trochaeusBin.drawBorder(color: .lightGray, width: 5.0)
-        trochaeusBin.zPosition = 1
+    
+        let trochaeusLabelText = makeAttributedString(stringToBeMutated: "Trochäus: ", shallBecomeBold: false, size: 25)
+        trochaeusLabelText.append(makeAttributedString(stringToBeMutated: "So", shallBecomeBold: true, size: 25))
+        trochaeusLabelText.append(makeAttributedString(stringToBeMutated: "·nne ☀️", shallBecomeBold: false, size: 25))
+        if let trochaeusLabel = trochaeusBin.childNode(withName: "measureLabel") as? SKLabelNode {
+            print("two")
+            print(trochaeusLabelText)
+            trochaeusLabel.attributedText = trochaeusLabelText
+        }
         addChild(trochaeusBin)
         
-        let anapaestLabel = makeAttributedString(stringToBeMutated: "Anapäst: E·le·", shallBecomeBold: false, size: 25)
-        anapaestLabel.append(makeAttributedString(stringToBeMutated: "fant 🐘", shallBecomeBold: true, size: 25))
-        anapaest.attributedText = anapaestLabel
-        anapaest.fontColor = SKColor.black
-        anapaest.position = CGPoint(x: -200, y: -200)
-        anapaest.zPosition = 2
-        addChild(anapaest)
-        anapaestBin.color = SKColor.white
-        anapaestBin.size = CGSize(width: 300, height: 300)
-        anapaestBin.position = CGPoint(x: -200, y: -300)
-        anapaestBin.drawBorder(color: .lightGray, width: 5.0)
-        anapaestBin.zPosition = 1
+        
+        let anapaestLabelText = makeAttributedString(stringToBeMutated: "Anapäst: E·le·", shallBecomeBold: false, size: 25)
+        anapaestLabelText.append(makeAttributedString(stringToBeMutated: "fant 🐘", shallBecomeBold: true, size: 25))
+        if let anapaestLabel = anapaestBin.childNode(withName: "measureLabel") as? SKLabelNode {
+            anapaestLabel.attributedText = anapaestLabelText
+        }
         addChild(anapaestBin)
         
-        let daktylusLabel = makeAttributedString(stringToBeMutated: "Daktylus: ", shallBecomeBold: false, size: 25)
-        daktylusLabel.append(makeAttributedString(stringToBeMutated: "Bro", shallBecomeBold: true, size: 25))
-        daktylusLabel.append(makeAttributedString(stringToBeMutated: "·kko·li 🥦", shallBecomeBold: false, size: 25))
-        daktylus.attributedText = daktylusLabel
-        daktylus.fontColor = SKColor.black
-        daktylus.position = CGPoint(x: 200, y: -200)
-        daktylus.zPosition = 2
-        addChild(daktylus)
-        daktylusBin.color = SKColor.white
-        daktylusBin.size = CGSize(width: 300, height: 300)
-        daktylusBin.position = CGPoint(x: 200, y: -300)
-        daktylusBin.drawBorder(color: .lightGray, width: 5.0)
-        daktylusBin.zPosition = 1
+        
+        let daktylusLabelText = makeAttributedString(stringToBeMutated: "Daktylus: ", shallBecomeBold: false, size: 25)
+        daktylusLabelText.append(makeAttributedString(stringToBeMutated: "Bro", shallBecomeBold: true, size: 25))
+        daktylusLabelText.append(makeAttributedString(stringToBeMutated: "·kko·li 🥦", shallBecomeBold: false, size: 25))
+        if let daktylusLabel = daktylusBin.childNode(withName: "measureLabel") as? SKLabelNode {
+            daktylusLabel.attributedText = daktylusLabelText
+        }
         addChild(daktylusBin)
     }
     
