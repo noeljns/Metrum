@@ -23,6 +23,9 @@
 		DD56778E240879BD007B6025 /* CheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD56778D240879BD007B6025 /* CheckButton.swift */; };
 		DD56779024088B73007B6025 /* InfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD56778F24088B73007B6025 /* InfoButton.swift */; };
 		DD56779224088B83007B6025 /* SoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD56779124088B83007B6025 /* SoundButton.swift */; };
+		DD56779524093F86007B6025 /* SKLabelNodeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD56779424093F86007B6025 /* SKLabelNodeExtension.swift */; };
+		DD56779724093FC6007B6025 /* SKSceneExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD56779624093FC6007B6025 /* SKSceneExtension.swift */; };
+		DD56779924094002007B6025 /* SKSpriteNodeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD56779824094002007B6025 /* SKSpriteNodeExtension.swift */; };
 		DD5749C723EC405200C50423 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749C623EC405200C50423 /* AppDelegate.swift */; };
 		DD5749CF23EC405200C50423 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749CE23EC405200C50423 /* GameViewController.swift */; };
 		DD5749D223EC405200C50423 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD5749D023EC405200C50423 /* Main.storyboard */; };
@@ -98,6 +101,9 @@
 		DD56778D240879BD007B6025 /* CheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckButton.swift; sourceTree = "<group>"; };
 		DD56778F24088B73007B6025 /* InfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoButton.swift; sourceTree = "<group>"; };
 		DD56779124088B83007B6025 /* SoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundButton.swift; sourceTree = "<group>"; };
+		DD56779424093F86007B6025 /* SKLabelNodeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKLabelNodeExtension.swift; sourceTree = "<group>"; };
+		DD56779624093FC6007B6025 /* SKSceneExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKSceneExtension.swift; sourceTree = "<group>"; };
+		DD56779824094002007B6025 /* SKSpriteNodeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKSpriteNodeExtension.swift; sourceTree = "<group>"; };
 		DD5749C323EC405200C50423 /* Metrum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metrum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD5749C623EC405200C50423 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD5749CE23EC405200C50423 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -220,6 +226,16 @@
 			path = SceneElements;
 			sourceTree = "<group>";
 		};
+		DD56779324093F72007B6025 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DD56779424093F86007B6025 /* SKLabelNodeExtension.swift */,
+				DD56779624093FC6007B6025 /* SKSceneExtension.swift */,
+				DD56779824094002007B6025 /* SKSpriteNodeExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		DD5749BA23EC405200C50423 = {
 			isa = PBXGroup;
 			children = (
@@ -245,7 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				DD5749C623EC405200C50423 /* AppDelegate.swift */,
-				DD4363F623F18629001F2A48 /* Model */,
+				DD5749CE23EC405200C50423 /* GameViewController.swift */,
 				DDC4906623EC47EC000F0942 /* MainMenuScene.swift */,
 				DDC4906C23EC507A000F0942 /* MainMenuScene.sks */,
 				DDC4906823EC4F0B000F0942 /* LevelOneToFourScene.swift */,
@@ -254,9 +270,10 @@
 				DDC75EF423FDE39D00B551BB /* LevelFiveToSixScene.sks */,
 				DDC75EF823FE043200B551BB /* LevelSevenToTenScene.swift */,
 				DDC75EFA23FE04E900B551BB /* LevelSevenToTenScene.sks */,
+				DD4363F623F18629001F2A48 /* Model */,
 				DD56778824087061007B6025 /* SceneElements */,
 				DD969FF623FC5A8100C22624 /* OverlayWindows */,
-				DD5749CE23EC405200C50423 /* GameViewController.swift */,
+				DD56779324093F72007B6025 /* Extensions */,
 				DD5749D023EC405200C50423 /* Main.storyboard */,
 				DD5749D523EC405300C50423 /* LaunchScreen.storyboard */,
 				DD5749D823EC405300C50423 /* Info.plist */,
@@ -474,10 +491,12 @@
 				DDC75EF923FE043200B551BB /* LevelSevenToTenScene.swift in Sources */,
 				DDC75EF323FDE37600B551BB /* LevelFiveToSixScene.swift in Sources */,
 				DD56778C24087642007B6025 /* TaskLabel.swift in Sources */,
+				DD56779924094002007B6025 /* SKSpriteNodeExtension.swift in Sources */,
 				DD9C91EE2401482C00C753C3 /* LevelExplanation.swift in Sources */,
 				DDBF72AE24002AE3001587B6 /* Salutation.swift in Sources */,
 				DD969FF523FC52BE00C22624 /* Warning.swift in Sources */,
 				DD4363F823F18645001F2A48 /* Word.swift in Sources */,
+				DD56779724093FC6007B6025 /* SKSceneExtension.swift in Sources */,
 				DDC4906923EC4F0B000F0942 /* LevelOneToFourScene.swift in Sources */,
 				DD56778A240873A6007B6025 /* ExitLabel.swift in Sources */,
 				DD4363FE23F186F2001F2A48 /* Measure.swift in Sources */,
@@ -485,6 +504,7 @@
 				DD5749CF23EC405200C50423 /* GameViewController.swift in Sources */,
 				DD4363FA23F18676001F2A48 /* Syllable.swift in Sources */,
 				DDC4906723EC47EC000F0942 /* MainMenuScene.swift in Sources */,
+				DD56779524093F86007B6025 /* SKLabelNodeExtension.swift in Sources */,
 				DD5749C723EC405200C50423 /* AppDelegate.swift in Sources */,
 				DD43640023F18D87001F2A48 /* Line.swift in Sources */,
 				DDC4907323ED7641000F0942 /* AccentuationInfo.swift in Sources */,

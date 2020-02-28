@@ -24,7 +24,7 @@ class ReplyIsFalse: SKSpriteNode {
         
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
-        background.position = CGPoint(x: frame.midX, y: frame.midY-323)
+        background.position = CGPoint(x: 0, y: -335)
         background.drawBorder(color: .red, width: 5)
         addChild(background)
         

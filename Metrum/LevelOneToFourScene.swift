@@ -38,18 +38,18 @@ class LevelOneToFourScene: SKScene {
     // TODO check whether forced unwrapping is appropriate here
     private var backgroundBlocker = SKSpriteNode()
     private var congratulations = Congratulations(size: CGSize(width: 650, height: 800))
-    private var replyIsCorrect = ReplyIsCorrect(size: CGSize(width: 747, height: 350))
-    private var replyIsFalse = ReplyIsFalse(size: CGSize(width: 747, height: 350))
+    private var replyIsCorrect = ReplyIsCorrect(size: CGSize(width: 766, height: 350))
+    private var replyIsFalse = ReplyIsFalse(size: CGSize(width: 766, height: 350))
     private var warning = Warning(size: CGSize(width: 650, height: 450))
     
     // variables for level passing management
     // lazy: https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
-    lazy private var correctlyMarkedLines = Set<Line>()
+    private lazy var correctlyMarkedLines = Set<Line>()
     private var amountOfCorrectRepliesToPassLevel = 4
     private var correctReplies = 0
     
     // variables for input data
-    lazy var loadedLines = Set<Line>()
+    private lazy var loadedLines = Set<Line>()
     // TODO check whether forced unwrapping is appropriate here
     // TODO: or is it only handed via functions parameters anyways? is a global variable necessary?
     private var selectedLine: Line!
@@ -74,7 +74,6 @@ class LevelOneToFourScene: SKScene {
     func setUpScene() {
         addChild(exitLabel)
         addChild(loadingBar)
-        // https://www.youtube.com/watch?v=rAwOlR7lT3A
         manageLoadingBar()
         addChild(taskLabel)
         if provideHelp {
@@ -88,7 +87,6 @@ class LevelOneToFourScene: SKScene {
     /// Every time the user replies correctly, the loading bar gets increased.
     /// If the user has passed the level, the loading bar remains full.
     func manageLoadingBar() {
-        // TODO check complexity / higher function
         let levelIsPassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
         
         if !(levelIsPassed) {
@@ -102,11 +100,9 @@ class LevelOneToFourScene: SKScene {
     /// Sets up the ui elements that get removed from and re-added to scene during level.
     /// Displays new Line for which user has to solve task for.
     func setUpUnfixedParts() {
-        // TODO right position in code?
         selectedLine = selectNextLine()
         
         selectedLineLabel.fontColor = SKColor.black
-        // selectedLineLabel.attributedText = makeAttributedString(stringToBeMutated: (selectedLine.line), shallBecomeBold: false)
         selectedLineLabel.attributedText = makeAttributedString(stringToBeMutated: selectedLine.line, shallBecomeBold: false, size: 50)
         selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-50)
         selectedLineLabel.zPosition = 2
@@ -116,12 +112,11 @@ class LevelOneToFourScene: SKScene {
         selectedLineBoldLabel.attributedText = getLineToBeRatedBold(line: selectedLine)
         selectedLineBoldLabel.position = CGPoint(x: frame.midX, y: frame.midY-50)
         selectedLineBoldLabel.zPosition = 2
-        // addChild(selectedLineBoldLabel)
         
         generateAccentuationBins(line: selectedLine, lineToBeRated: selectedLineLabel)
         generateStressMarks()
         
-        // reset colors of check button
+        // reset colors of check button to gray
         checkButton.deactivate()
     }
     
@@ -134,13 +129,16 @@ class LevelOneToFourScene: SKScene {
         
         // notYetCorrectlyMarkedLines gets all loadedLines if correctlyMarkedLines is empty in the beginning
         var notYetCorrectlyMarkedLines = loadedLines.subtracting(correctlyMarkedLines)
+        
         // loops over all loadedLines if all lines have already been solved correctly
         if (notYetCorrectlyMarkedLines.isEmpty) {
             correctlyMarkedLines.removeAll()
             notYetCorrectlyMarkedLines = loadedLines
         }
-        
-        var newlySelected = notYetCorrectlyMarkedLines.randomElement()!
+    
+        guard var newlySelected = notYetCorrectlyMarkedLines.randomElement() else {
+            fatalError("error with loadedLines")
+        }
         // only one remaining line to be solved
         if (notYetCorrectlyMarkedLines.count==1) {
             // newlySelected contains that one line
@@ -290,6 +288,8 @@ class LevelOneToFourScene: SKScene {
     
     // TODO modularize overlay nodes
 //    func displayOverlayNode(node: SKSpriteNode, size: CGSize, transparent: Bool) {
+//        getBackgroundBlockerTest(shallBeTransparent: false, size: self.size)
+//        backgroundBlocker = backgroundBlockerTest
 //        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
 //        backgroundBlocker.zPosition = 4999
 //        if transparent {
@@ -306,14 +306,12 @@ class LevelOneToFourScene: SKScene {
     
     /// Adds AccentiationInfo as overlay node to scene.
     func displayAccentuationInfo() {
-        getBackgroundBlockerTest(shallBeTransparent: false, size: self.size)
-        // backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
         addChild(backgroundBlocker)
         accentuationInfo.delegate = self
         addChild(accentuationInfo)
     }
 
-    
     /// Adds Congratualtions as overlay node to scene.
     func displayCongratulations() {
         backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
@@ -444,7 +442,7 @@ class LevelOneToFourScene: SKScene {
         }
         
         // get correct accentuation of line
-        // TODO modularize
+        // TODO higher order function
         for word in selectedLine.words {
             for syllable in word.syllables {
                 correctSolution.append(syllable.accentuation.rawValue)
@@ -490,18 +488,14 @@ class LevelOneToFourScene: SKScene {
     
     /// Empties lists, removes unfix nodes and sets up scene again for new line to be solved.
     func cleanAndSetupSceneForNewLine() {
-        // loadingBar.removeFromParent()
-        
         // remove all accentBins and stressMarks from scene
         accentBins.forEach { $0.removeFromParent() }
         stressMarks.forEach { $0.removeFromParent() }
-
         // empty accentBins array and stressMarks array since new line is selected
         accentBins.removeAll()
         stressMarks.removeAll()
         
         selectedLineLabel.removeFromParent()
-        
         stressedStressMarkParentBin.removeFromParent()
         unstressedStressMarkParentBin.removeFromParent()
         
@@ -512,8 +506,7 @@ class LevelOneToFourScene: SKScene {
     override func didMove(to view: SKView) {
         // loadInputFile()
         loadedLines = loadInputFile(inputFile: inputFile)
-        selectedLine = loadedLines.first!
-        
+        selectedLine = loadedLines.first
         
         setUpScene()
         setUpUnfixedParts()
@@ -542,7 +535,7 @@ class LevelOneToFourScene: SKScene {
             displayAccentuationInfo()
         }
         
-        if(provideHelp && touchedNode.name == "soundBoxBtn") {
+        if(provideHelp && touchedNode.isEqual(to: soundButton)) {
             // https://www.reddit.com/r/swift/comments/2wpspa/running_parallel_skactions_with_different_nodes/
             // https://stackoverflow.com/questions/28823386/skaction-playsoundfilenamed-fails-to-load-sound
             // worked as well
@@ -587,12 +580,11 @@ class LevelOneToFourScene: SKScene {
             }
             else {
                 // nothing happens since not every accentBin is filled with a stressMark
-                print("do fill in every accentBin with a stressMark")
             }
             
         }
         
-        if (touchedNode.name == "exit") {
+        if (touchedNode.isEqual(to: exitLabel)) {
             if(UserDefaults.standard.bool(forKey: userDefaultsKey)) {
                 // https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
                 let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
@@ -605,7 +597,9 @@ class LevelOneToFourScene: SKScene {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first!
+        guard let touch = touches.first else {
+            return
+        }
         
         // dragging of stress marks to new location by touching
         // TODO higher function
@@ -662,7 +656,7 @@ class LevelOneToFourScene: SKScene {
         stressedStressMarkSpawnIsFilled.removeAll()
         unstressedStressMarkSpawnIsFilled.removeAll()
         
-        // to signalize user that pushing the button would lead to an action now
+        // signalize user that pushing the button would lead to an action now
         if (areAccentBinsFilledWithAStressmark()) {
             checkButton.activate()
         }
@@ -681,8 +675,10 @@ class LevelOneToFourScene: SKScene {
 
 extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, ReplyIsFalseDelegate, CongratulationsDelegate, WarningDelegate {
     func closeAccentuationInfo() {
+        // self.backgroundBlockerTest.removeFromParent()
         //backgroundBlocker.removeFromParent()
-        self.childNode(withName: "backgroundBlocker")?.removeFromParent()
+        //self.childNode(withName: "backgroundBlocker")?.removeFromParent()
+        backgroundBlocker.removeFromParent()
         accentuationInfo.removeFromParent()
     }
     
@@ -719,27 +715,5 @@ extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate,
     func closeWarning() {
         backgroundBlocker.removeFromParent()
         warning.removeFromParent()
-    }
-}
-
-extension SKScene {
-    /// Returns String as NSMutableAttributedString and when indicated in bold.
-    ///
-    /// - Parameters:
-    ///   - stringToBeMutated: The String which should be returnded.
-    ///   - shallBecomceBold: This Boolean says whether String shall be bold or not.
-    ///   - size: Size of the String
-    /// - Returns: The String as NSMutableAttributedString.
-    func makeAttributedString(stringToBeMutated: String, shallBecomeBold: Bool, size: CGFloat) -> NSMutableAttributedString {
-        if(shallBecomeBold) {
-            let bold = [NSAttributedString.Key.font : UIFont(name: "HelveticaNeue-Bold", size: size)]
-            let attributedString =  NSMutableAttributedString(string:stringToBeMutated, attributes:bold as [NSAttributedString.Key : Any])
-            return attributedString
-        }
-        else {
-            let notBold = [NSAttributedString.Key.font : UIFont(name: "HelveticaNeue-UltraLight", size: size)]
-            let normalString = NSMutableAttributedString(string:stringToBeMutated, attributes: notBold as [NSAttributedString.Key : Any])
-            return normalString
-        }
     }
 }

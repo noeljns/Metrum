@@ -8,53 +8,6 @@
 
 import SpriteKit
 
-extension SKScene {
-    
-    // func getBackgroundBlocker(shallBeTransparent: Bool, size: CGSize) -> SKSpriteNode {
-    func getBackgroundBlockerTest(shallBeTransparent: Bool, size: CGSize) {
-        let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: size)
-        backgroundBlocker.name = "backgroundBlocker"
-        backgroundBlocker.zPosition = 4999
-        if shallBeTransparent {
-            backgroundBlocker.alpha = 0.5
-        }
-        // return backgroundBlocker
-    }
-    
-    func getBackgroundBlocker(shallBeTransparent: Bool, size: CGSize) -> SKSpriteNode {
-        let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: size)
-        backgroundBlocker.name = "backgroundBlocker"
-        backgroundBlocker.zPosition = 4999
-        if shallBeTransparent {
-            backgroundBlocker.alpha = 0.5
-        }
-        return backgroundBlocker
-    }
-    
-
-    /// Gets data from json file and saves deserialized Line objects to selection variable.
-    func loadInputFile(inputFile: String) -> Set<Line>{
-        // https://stackoverflow.com/a/58981897
-        let data: Data
-        
-        // TODO get from Sandbox
-        // name of json file is in inputFile
-        guard let file = Bundle.main.url(forResource: inputFile, withExtension: nil) else {
-            fatalError("Could not find \(inputFile) in main bundle.")
-        }
-        do {
-            data = try Data(contentsOf: file)
-        }
-        catch {
-            fatalError("Could not find \(inputFile) in main bundle.")
-        }
-        do {
-            let lines = try! JSONDecoder().decode([Line].self, from: data)
-            return Set<Line>(lines)
-        }
-    }
-}
-
 class MainMenuScene: SKScene {
     private var firstEntryOfApp = UserDefaults.standard.bool(forKey: "firstEntry")
     private var levelOneIsPassed = UserDefaults.standard.bool(forKey: "level1")
@@ -75,6 +28,7 @@ class MainMenuScene: SKScene {
     private let salutation = Salutation(size: CGSize(width: 650, height: 800))
     private var levelExplanation = LevelExplanation(size: CGSize(width: 550, height: 250))
 
+    /// Adds Salutation as overlay node to scene.
     func displaySalutation() {
         backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
         addChild(backgroundBlocker)
@@ -82,6 +36,7 @@ class MainMenuScene: SKScene {
         addChild(salutation)
     }
     
+    /// Adds LevelExplanation as overlay node to scene.
     func displayLevelExplanation(levelIndex: String) {
         backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
         addChild(backgroundBlocker)
@@ -89,29 +44,24 @@ class MainMenuScene: SKScene {
         levelExplanation.delegate = self
         addChild(levelExplanation)
     }
-
+    
+    /// Generates ten levels
     func generateLevels() {
         var canvasPosition = 370
         for index in 1...10 {
             let text = "Enter Level " + String(index)
             let name = "level" + String(index)
             generateLevel(text: text, name: name, canvasPosition: frame.midY + CGFloat(canvasPosition))
-            
             canvasPosition = canvasPosition-85
         }
     }
     
-    func generateLevelExplanation() {
-        var infoButtonPosition = 370
-        for index in 1...10 {
-            let infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: -150 , y: infoButtonPosition))
-            infoButton.name = "infoButtonLevel" + String(index)
-            addChild(infoButton)
-            
-            infoButtonPosition = infoButtonPosition-85
-        }
-    }
-    
+    /// Generates a level and adds it to scene
+    ///
+    /// - Parameters:
+    ///   - text: screened label of the generated level
+    ///   - name: name of the node of the generated level
+    ///   - canvasPosition: position of the node's container of the generated level
     func generateLevel(text: String, name: String, canvasPosition: CGFloat) {
         let canvas = SKSpriteNode(color: .lightGray, size: CGSize(width: 240, height: 50))
         canvas.name = "canvas" + name
@@ -127,20 +77,19 @@ class MainMenuScene: SKScene {
         canvas.addChild(label)
     }
     
-    
-    func drawLevelColorful(levelName: String) {
-        let canvasName = "canvas" + levelName
-        if let canvas = self.childNode(withName: canvasName) as? SKSpriteNode {
-            canvas.color = .orange
-            if let label = canvas.childNode(withName: levelName) as? SKLabelNode {
-                label.fontColor = SKColor.white
-                label.addStroke(color: .white, width: 6.0)
-            }
+    /// Generates the levels' info buttons and adds them to scene
+    func generateLevelExplanation() {
+        var infoButtonPosition = 370
+        for index in 1...10 {
+            let infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: -150 , y: infoButtonPosition))
+            infoButton.name = "infoButtonLevel" + String(index)
+            addChild(infoButton)
+            infoButtonPosition = infoButtonPosition-85
         }
     }
     
-    
-    // colorize levels that are able to be entered and flag passed levels with trophy
+    /// Draws levels that are enterable in orange, not yet enterable levels remain gray
+    /// Adds a trophy emoji next to passed levels
     func markEnterableAndPassedLevels() {
         var trophyPosition = 360
         for (index, levelIsPassed) in levels.enumerated() {
@@ -164,6 +113,19 @@ class MainMenuScene: SKScene {
         }
     }
     
+    /// Draws node's container of a level in orange
+    func drawLevelColorful(levelName: String) {
+        let canvasName = "canvas" + levelName
+        if let canvas = self.childNode(withName: canvasName) as? SKSpriteNode {
+            canvas.color = .orange
+            if let label = canvas.childNode(withName: levelName) as? SKLabelNode {
+                label.fontColor = SKColor.white
+                label.addStroke(color: .white, width: 6.0)
+            }
+        }
+    }
+    
+    // TODO modularize touching level buttons
     // https://docs.swift.org/swift-book/LanguageGuide/TypeCasting.html
     // https://developer.apple.com/swift/blog/?id=23
     // https://thatthinginswift.com/guard-statement-swift/
@@ -230,10 +192,8 @@ class MainMenuScene: SKScene {
         generateLevels()
         // draw level1 colorful since it is always enterable
         drawLevelColorful(levelName: "level1")
-        
         // draw info buttons next to levels
         generateLevelExplanation()
-        
         // colorize levels that are able to be entered and flag passed levels with trophy
         markEnterableAndPassedLevels()
         
@@ -266,13 +226,6 @@ class MainMenuScene: SKScene {
             if(touchedNode.name == "infoButtonLevel" + String(index)) {
                 displayLevelExplanation(levelIndex: "level" + String(index))
             }
-        }
-        
-        if(touchedNode.name == "reset") {
-            for index in 1...10{
-                UserDefaults.standard.set(false, forKey: "level" + String(index))
-            }
-            didMove(to: self.view!)
         }
         
         if(touchedNode.name == "level1") {
@@ -362,6 +315,13 @@ class MainMenuScene: SKScene {
             levelTenScene?.scaleMode = scaleMode
             view?.presentScene(levelTenScene)
         }
+        
+        if(touchedNode.name == "reset") {
+            for index in 1...10{
+                UserDefaults.standard.set(false, forKey: "level" + String(index))
+            }
+            didMove(to: self.view!)
+        }
     }
     
 }
@@ -374,31 +334,6 @@ extension MainMenuScene: SalutationDelegate, LevelExplanationDelegate {
     
     func closeLevelExplanation() {
         backgroundBlocker.removeFromParent()
-        // TODO hier war mal levelExplanation?.removeFromParent()
         levelExplanation.removeFromParent()
-    }
-}
-
-
-// https://living-sun.com/swift/825957-sklabelnode-border-and-bounds-issue-swift-text-sprite-kit-border-sklabelnode.html
-extension SKLabelNode {
-    
-    func addStroke(color:UIColor, width: CGFloat) {
-        guard let labelText = self.text else { return }
-        
-        let font = UIFont(name: self.fontName!, size: self.fontSize)
-        
-        let attributedString:NSMutableAttributedString
-        if let labelAttributedText = self.attributedText {
-            attributedString = NSMutableAttributedString(attributedString: labelAttributedText)
-        }
-        else {
-            attributedString = NSMutableAttributedString(string: labelText)
-        }
-        
-        let attributes:[NSAttributedString.Key:Any] = [.strokeColor: color, .strokeWidth: -width, .font: font!, .foregroundColor: self.fontColor!]
-        attributedString.addAttributes(attributes, range: NSMakeRange(0, attributedString.length))
-        
-        self.attributedText = attributedString
     }
 }
