@@ -11,9 +11,10 @@ import SpriteKit
 class LevelFiveToSixScene: SKScene {
     // UI variables
     private var exitLabel = ExitLabel()
+    private let loadingBar = LoadingBar(color: .green, size: CGSize(width: 600, height: 26))
+
 
     
-    private var loadingBar = SKSpriteNode()
     private let selectedMeasureLabel = SKLabelNode()
     
     private var accentBins = [SKSpriteNode]()
@@ -67,16 +68,9 @@ class LevelFiveToSixScene: SKScene {
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
     func setUpScene() {
         addChild(exitLabel)
-        
-        
-        
-        loadingBar = SKSpriteNode(imageNamed: "loadingBar0")
-        loadingBar.position = CGPoint(x: frame.midX , y: frame.midY+450)
-        loadingBar.size = CGSize(width: 600, height: 35)
-        loadingBar.zPosition = 3
-        manageLoadingBar()
         addChild(loadingBar)
-        
+        manageLoadingBar()
+
         if provideHelp {
             // measureInfoButton = SKSpriteNode(imageNamed: "info")
             measureInfoButton = SKSpriteNode(imageNamed: "icons8-info-50")
@@ -105,17 +99,13 @@ class LevelFiveToSixScene: SKScene {
     /// Every time the user replies correctly, the loading bar gets increased.
     /// If the user has passed the level, the loading bar remains full.
     func manageLoadingBar() {
-        // TODO check complexity / higher function
         let levelIsPassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
         
         if !(levelIsPassed) {
-            let imageName = "loadingBar" + String(correctReplies)
-            loadingBar.texture = SKTexture(imageNamed: imageName)
-            print("correct replies: " + String(correctReplies))
+            loadingBar.progress = CGFloat(correctReplies)/CGFloat(amountOfCorrectRepliesToPassLevel)
         }
         else {
-            loadingBar.texture = SKTexture(imageNamed: "loadingBarFull")
-            print("correct replies: " + String(correctReplies))
+            loadingBar.progress = 1.0
         }
     }
     
