@@ -32,29 +32,18 @@ class LevelFiveToSixScene: SKScene {
     
     // variables for level passing management
     // lazy: https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
-    lazy private var correctlyBuildMeasures = Set<Measure>()
-    private var amountOfCorrectRepliesToPassLevel = 2
+    private lazy var correctlyBuildMeasures = Set<Measure>()
+    private var amountOfCorrectRepliesToPassLevel = 4
     private var correctReplies = 0
     
     // variables for input data
-    // lazy var measures = Set<Measure>()
-    lazy var measures: Set<Measure> = [Measure.jambus, Measure.trochaeus, Measure.anapaest, Measure.daktylus]
+    private lazy var measures: Set<Measure> = [Measure.jambus, Measure.trochaeus, Measure.anapaest, Measure.daktylus]
     // TODO check whether forced unwrapping is appropriate here
     private var selectedMeasure: Measure!
     
     // TODO check if handing over properties via init / constructor is better
     public var provideHelp = false
     public var userDefaultsKey = ""
-    
-    // both did not work
-    // https://forums.raywenderlich.com/t/swift-tutorial-initialization-in-depth-part-2-2/13209/3
-    // https://spritekitswift.wordpress.com/2015/10/21/spritekit-custom-skscene-class-from-abstract-skscene-class-with-swift/
-    //    convenience init?(fileNamed: String, provideHelp: Bool, inputFile: String) {
-    //        // super.init(size: size)
-    //        self.init(fileNamed: "fileNamed")
-    //        self.provideHelp = provideHelp
-    //        self.inputFile = inputFile
-    //    }
     
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
     func setUpScene() {
@@ -116,7 +105,9 @@ class LevelFiveToSixScene: SKScene {
             notYetCorrectlyBuildMeasures = measures
         }
         
-        var newlySelected = notYetCorrectlyBuildMeasures.randomElement()!
+        guard var newlySelected = notYetCorrectlyBuildMeasures.randomElement() else {
+            fatalError("error with loadedLines")
+        }
         // only one remaining measure to be build
         if (notYetCorrectlyBuildMeasures.count==1) {
             // newlySelected contains that one measure
@@ -129,7 +120,6 @@ class LevelFiveToSixScene: SKScene {
         return newlySelected
     }
     
-
     /// Generates the text for the task label.
     ///
     /// - Parameters:
@@ -271,22 +261,6 @@ class LevelFiveToSixScene: SKScene {
         return stressMarkParent
     }
     
-    // TODO modularize overlay nodes
-    //    func displayOverlayNode(node: SKSpriteNode, size: CGSize, transparent: Bool) {
-    //        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-    //        backgroundBlocker.zPosition = 4999
-    //        if transparent {
-    //            backgroundBlocker.alpha = 0.5
-    //        }
-    //        addChild(backgroundBlocker)
-    //
-    //        // how to hand over custom node classes?
-    //        let node = typeTest(node.type(of: init)(size: CGSize(size: size)))
-    //        node.delegate = self
-    //        node.zPosition = 5000
-    //        addChild(node)
-    //    }
-    
     /// Adds MeasureInfo as overlay node to scene.
     func displayMeasureInfo() {
         backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
@@ -373,6 +347,7 @@ class LevelFiveToSixScene: SKScene {
         for accentBin in accentBins {
             for stressMark in stressMarks {
                 if accentBin.position.equalTo(stressMark.position) {
+                    // TODO: Optional handling
                     reply.append(stressMark.name!)
                 }
             }
@@ -412,13 +387,11 @@ class LevelFiveToSixScene: SKScene {
         // remove all accentBins and stressMarks from scene
         accentBins.forEach { $0.removeFromParent() }
         stressMarks.forEach { $0.removeFromParent() }
-        
         // empty accentBins array and stressMarks array since new Measure is selected
         accentBins.removeAll()
         stressMarks.removeAll()
         
         selectedMeasureLabel.removeFromParent()
-        
         stressedStressMarkParentBin.removeFromParent()
         unstressedStressMarkParentBin.removeFromParent()
         
@@ -477,7 +450,6 @@ class LevelFiveToSixScene: SKScene {
             }
             else {
                 // nothing happens since not every accentBin is filled with a stressMark
-                print("do fill in every accentBin with a stressMark")
             }
             
         }
@@ -568,7 +540,6 @@ class LevelFiveToSixScene: SKScene {
         // Called before each frame is rendered
     }
 }
-
 
 
 extension LevelFiveToSixScene: MeasureInfoDelegate, ReplyIsCorrectDelegate, ReplyIsFalseDelegate, CongratulationsDelegate, WarningDelegate {

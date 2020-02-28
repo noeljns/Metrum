@@ -40,14 +40,13 @@ class LevelSevenToTenScene: SKScene {
     
     // variables for level passing management
     // lazy: https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
-    lazy private var correctlyDraggedLines = Set<Line>()
+    private lazy var correctlyDraggedLines = Set<Line>()
     private var amountOfCorrectRepliesToPassLevel = 2
     private var correctReplies = 0
     
     // variables for input data
-    lazy var loadedLines = Set<Line>()
+    private lazy var loadedLines = Set<Line>()
     // TODO check whether forced unwrapping is appropriate here
-    // TODO: or is it only handed via functions parameters anyways? is a global variable necessary?
     private var selectedLine: Line!
     
     // TODO check if handing over properties via init / constructor is better
@@ -70,28 +69,6 @@ class LevelSevenToTenScene: SKScene {
     //        self.inputFile = inputFile
     //    }
     
-    /// Gets data from json file and saves deserialized Line objects to selection variable.
-    func loadInputFile() {
-        // https://stackoverflow.com/a/58981897
-        let data: Data
-        
-        // TODO get from Sandbox
-        // name of json file is in inputFile
-        guard let file = Bundle.main.url(forResource: inputFile, withExtension: nil) else {
-            fatalError("Could not find \(inputFile) in main bundle.")
-        }
-        do {
-            data = try Data(contentsOf: file)
-        }
-        catch {
-            fatalError("Could not find \(inputFile) in main bundle.")
-        }
-        do {
-            let lines = try! JSONDecoder().decode([Line].self, from: data)
-            loadedLines = Set<Line>(lines)
-            selectedLine = loadedLines.first!
-        }
-    }
     
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
     func setUpScene() {
@@ -399,14 +376,17 @@ class LevelSevenToTenScene: SKScene {
     }
 
     override func didMove(to view: SKView) {
-        loadInputFile()
+        // loadInputFile()
+        loadedLines = loadInputFile(inputFile: inputFile)
+        selectedLine = loadedLines.first
+        
         setUpScene()
         setUpUnfixedParts()
         
-//        // only show MeasureInfo, if level7 has not been passed yet
-//        if !(UserDefaults.standard.bool(forKey: "level7")) {
-//            displayMeasureInfo()
-//        }
+        // only show MeasureInfo, if level5 has not been passed yet
+        if !(UserDefaults.standard.bool(forKey: "level5")) {
+            displayMeasureInfo()
+        }
         // current level has been passed, so we do not need to show congratulation window anymore
         // correctReplies as threshold has to be bigger than amountOfCorrectRepliesToPassLevel
         // because if threshold = amountOfCorrectRepliesToPassLevel, the congratulation is shown

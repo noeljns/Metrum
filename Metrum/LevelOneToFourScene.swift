@@ -433,6 +433,7 @@ class LevelOneToFourScene: SKScene {
         for accentBin in accentBins {
             for stressMark in stressMarks {
                 if accentBin.position.equalTo(stressMark.position) {
+                    // TODO: Optional handling
                     reply.append(stressMark.name!)
                 }
             }
@@ -667,7 +668,6 @@ class LevelOneToFourScene: SKScene {
         // Called before each frame is rendered
     }
 }
-
 
 
 extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, ReplyIsFalseDelegate, CongratulationsDelegate, WarningDelegate {

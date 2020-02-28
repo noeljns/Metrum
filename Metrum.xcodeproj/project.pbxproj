@@ -232,8 +232,8 @@
 		DD56779324093F72007B6025 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DD56779424093F86007B6025 /* SKLabelNodeExtension.swift */,
 				DD56779624093FC6007B6025 /* SKSceneExtension.swift */,
+				DD56779424093F86007B6025 /* SKLabelNodeExtension.swift */,
 				DD56779824094002007B6025 /* SKSpriteNodeExtension.swift */,
 			);
 			path = Extensions;
