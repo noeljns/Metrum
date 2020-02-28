@@ -11,6 +11,11 @@ import SpriteKit
 // https://living-sun.com/swift/825957-sklabelnode-border-and-bounds-issue-swift-text-sprite-kit-border-sklabelnode.html
 extension SKLabelNode {
     
+    /// Adds stroke to label in specified color and width
+    ///
+    /// - Parameters:
+    ///   - color: color for the label to be drawn
+    ///   - width: width for the label to be drawn
     func addStroke(color:UIColor, width: CGFloat) {
         guard let labelText = self.text else { return }
         

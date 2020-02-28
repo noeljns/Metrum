@@ -10,6 +10,11 @@ import SpriteKit
 
 extension SKSpriteNode {
     // https://stackoverflow.com/questions/20889222/can-i-add-a-border-to-an-skspritenode-similar-to-uiview
+    /// Draws border around sprite node and adds border to scene
+    ///
+    /// - Parameters:
+    ///   - color: color in which border shall be drawn
+    ///   - width: width in which border shall be drawn
     func drawBorder(color: UIColor, width: CGFloat) {
         let shapeNode = SKShapeNode(rectOf: size)
         shapeNode.fillColor = .clear

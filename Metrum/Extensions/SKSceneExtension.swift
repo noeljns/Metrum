@@ -30,6 +30,10 @@ extension SKScene {
     }
     
     /// Gets data from json file and saves deserialized Line objects to selection variable.
+    ///
+    /// - Parameters:
+    ///   - inputFile: inputFile to be loaded
+    /// - Returns: Set of loaded Line objects
     func loadInputFile(inputFile: String) -> Set<Line>{
         // https://stackoverflow.com/a/58981897
         let data: Data
@@ -51,23 +55,12 @@ extension SKScene {
         }
     }
     
-    var backgroundBlockerTest: SKSpriteNode {
-        let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: CGSize(width: 768, height: 1024))
-        backgroundBlocker.name = "backgroundBlockerTest"
-        backgroundBlocker.zPosition = 4999
-        return backgroundBlocker
-    }
-    
-    
-    func getBackgroundBlockerTest(shallBeTransparent: Bool, size: CGSize) {
-        let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: size)
-        backgroundBlocker.name = "backgroundBlocker"
-        backgroundBlocker.zPosition = 4999
-        if shallBeTransparent {
-            backgroundBlocker.alpha = 0.5
-        }
-    }
-    
+    /// Returns white background blocker sprite node with z position of 4999
+    ///
+    /// - Parameters:
+    ///   - shallBeTransparent: Bool that determines whether background blocker shall be transparent or not
+    ///   - size: size of background blocker
+    /// - Returns: background blocker sprite node
     func getBackgroundBlocker(shallBeTransparent: Bool, size: CGSize) -> SKSpriteNode {
         let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: size)
         backgroundBlocker.name = "backgroundBlocker"
@@ -76,5 +69,22 @@ extension SKScene {
             backgroundBlocker.alpha = 0.5
         }
         return backgroundBlocker
+    }
+    
+    // TODO: test to modularize overlay nodes
+    var backgroundBlockerTest: SKSpriteNode {
+        let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: CGSize(width: 768, height: 1024))
+        backgroundBlocker.name = "backgroundBlockerTest"
+        backgroundBlocker.zPosition = 4999
+        return backgroundBlocker
+    }
+    // TODO: test to modularize overlay nodes
+    func getBackgroundBlockerTest(shallBeTransparent: Bool, size: CGSize) {
+        let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: size)
+        backgroundBlocker.name = "backgroundBlocker"
+        backgroundBlocker.zPosition = 4999
+        if shallBeTransparent {
+            backgroundBlocker.alpha = 0.5
+        }
     }
 }
