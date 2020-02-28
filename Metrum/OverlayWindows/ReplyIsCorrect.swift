@@ -19,6 +19,7 @@ class ReplyIsCorrect: SKSpriteNode {
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
         name = "replyIsCorrect"
+        zPosition = 5000
    
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
@@ -34,11 +35,12 @@ class ReplyIsCorrect: SKSpriteNode {
         addChild(textLabel)
                         
         let closeButtonFrame = SKSpriteNode(color: .green, size: CGSize(width: 150, height: 55))
+        closeButtonFrame.name = "closeButtonFrame"
         closeButtonFrame.position = CGPoint(x: frame.midX+250, y: frame.midY-420)
         closeButtonFrame.zPosition = 4
         addChild(closeButtonFrame)
         let closeButton = SKLabelNode(text: "Weiter")
-        closeButton.name = "close"
+        closeButton.name = "closeButton"
         closeButton.fontColor = SKColor.white
         closeButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
         closeButton.zPosition = 5
@@ -68,7 +70,7 @@ class ReplyIsCorrect: SKSpriteNode {
         
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
-        if (touchedNode.name == "close") {
+        if (touchedNode.name == "closeButton") || (touchedNode.name == "closeButtonFrame") {
             close()
         }
     }

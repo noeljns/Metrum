@@ -19,6 +19,7 @@ class MeasureInfo: SKSpriteNode {
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
         name = "measureInfo"
+        zPosition = 5000
         
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
@@ -58,13 +59,12 @@ class MeasureInfo: SKSpriteNode {
         // let colorCloseButtonFrame = UIColor(hue: 0.9611, saturation: 0.93, brightness: 1, alpha: 1.0) /* #ff1149 */
         // let closeButtonFrame = SKSpriteNode(color: colorCloseButtonFrame, size: CGSize(width: 180, height: 55))
         let closeButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 150, height: 55))
+        closeButtonFrame.name = "closeButtonFrame"
         closeButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
-        // closeButtonFrame.drawBorder(color: .orange, width: 5)
         closeButtonFrame.zPosition = 4
         addChild(closeButtonFrame)
-        
         let closeButton = SKLabelNode(text: "Bereit")
-        closeButton.name = "close"
+        closeButton.name = "closeButton"
         closeButton.fontColor = SKColor.white
         closeButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
         closeButton.zPosition = 5
@@ -94,7 +94,7 @@ class MeasureInfo: SKSpriteNode {
         
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
-        if (touchedNode.name == "close") {
+        if (touchedNode.name == "closeButton") || (touchedNode.name == "closeButtonFrame") {
             close()
         }
     }

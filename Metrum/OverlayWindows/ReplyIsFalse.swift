@@ -15,10 +15,12 @@ protocol ReplyIsFalseDelegate: class {
 // layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
 class ReplyIsFalse: SKSpriteNode {
     weak var delegate: ReplyIsFalseDelegate?
-    
-    init(size: CGSize, solution: String) {
+    let textLabel = SKLabelNode()
+
+    init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
         name = "replyIsFalse"
+        zPosition = 5000
         
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
@@ -26,13 +28,6 @@ class ReplyIsFalse: SKSpriteNode {
         background.drawBorder(color: .red, width: 5)
         addChild(background)
         
-        let textLabel = SKLabelNode(text: "")
-        if solution.isEmpty {
-            textLabel.text = "Das war leider falsch."
-        } else {
-            textLabel.text = "Das war leider falsch. \nRichtig ist: \n" + solution // + "\n\n" +
-                             // "Tipp: Im Deutschen wird meistens die erste Silbe von Worten betont."
-        }
         // break line: https://forums.developer.apple.com/thread/82994
         textLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         textLabel.numberOfLines = 0
@@ -44,16 +39,22 @@ class ReplyIsFalse: SKSpriteNode {
         addChild(textLabel)
         
         let closeButtonFrame = SKSpriteNode(color: .red, size: CGSize(width: 150, height: 55))
+        closeButtonFrame.name = "closeButtonFrame"
         closeButtonFrame.position = CGPoint(x: frame.midX+250, y: frame.midY-420)
         closeButtonFrame.zPosition = 4
         addChild(closeButtonFrame)
         let closeButton = SKLabelNode(text: "Weiter")
-        closeButton.name = "close"
+        closeButton.name = "closeButton"
         closeButton.fontColor = SKColor.white
         closeButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
         closeButton.zPosition = 5
         closeButton.addStroke(color: .white, width: 6.0)
         closeButtonFrame.addChild(closeButton)
+    }
+    
+    func addSolutionToText(solution: String) {
+        textLabel.text = "Das war leider falsch. \nRichtig ist: \n" + solution // + "\n\n" +
+        // "Tipp: Im Deutschen wird meistens die erste Silbe von Worten betont."
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -78,7 +79,7 @@ class ReplyIsFalse: SKSpriteNode {
         
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
-        if (touchedNode.name == "close") {
+        if (touchedNode.name == "closeButton") || (touchedNode.name == "closeButtonFrame") {
             close()
         }
     }

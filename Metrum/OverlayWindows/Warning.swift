@@ -20,6 +20,8 @@ class Warning: SKSpriteNode {
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
         name = "warning"
+        zPosition = 5000
+        
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
         background.drawBorder(color: .gray, width: 5)

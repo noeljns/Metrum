@@ -68,6 +68,8 @@ class LevelFiveToSixScene: SKScene {
         exitLabel.zPosition = 2
         addChild(exitLabel)
         
+        
+        
         loadingBar = SKSpriteNode(imageNamed: "loadingBar0")
         loadingBar.position = CGPoint(x: frame.midX , y: frame.midY+450)
         loadingBar.size = CGSize(width: 600, height: 35)
@@ -388,7 +390,8 @@ class LevelFiveToSixScene: SKScene {
         backgroundBlocker.alpha = 0.5
         addChild(backgroundBlocker)
         
-        replyIsFalse = ReplyIsFalse(size: CGSize(width: 747, height: 350), solution: solution)
+        replyIsFalse = ReplyIsFalse(size: CGSize(width: 747, height: 350))
+        replyIsFalse.addSolutionToText(solution: solution)
         replyIsFalse.delegate = self
         replyIsFalse.zPosition = 5000
         addChild(replyIsFalse)

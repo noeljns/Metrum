@@ -43,6 +43,8 @@ class Congratulations: SKSpriteNode {
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
         name = "congratulations"
+        zPosition = 5000
+        
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
         background.drawBorder(color: .orange, width: 5)
@@ -77,15 +79,15 @@ class Congratulations: SKSpriteNode {
         addChild(explanationLabel)
         
         let closeButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 150, height: 55))
+        closeButtonFrame.name = "closeButtonFrame"
         closeButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
-        // closeButtonFrame.drawBorder(color: .orange, width: 5)
         closeButtonFrame.zPosition = 4
         addChild(closeButtonFrame)
         
         shakeSprite(layer: trophyButton, duration: 6.0)
         
         let closeButton = SKLabelNode(text: "Weiter")
-        closeButton.name = "close"
+        closeButton.name = "closeButton"
         closeButton.fontColor = SKColor.white
         closeButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
         closeButton.zPosition = 5
@@ -115,7 +117,7 @@ class Congratulations: SKSpriteNode {
         
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
-        if (touchedNode.name == "close") {
+        if (touchedNode.name == "closeButton") || (touchedNode.name == "closeButtonFrame") {
             close()
         }
     }

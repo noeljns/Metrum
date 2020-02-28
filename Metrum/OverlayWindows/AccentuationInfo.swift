@@ -80,7 +80,8 @@ class AccentuationInfo: SKSpriteNode {
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
         name = "accentuationInfo"
-        
+        zPosition = 5000
+
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
         background.drawBorder(color: .lightGray, width: 5)
@@ -112,11 +113,12 @@ class AccentuationInfo: SKSpriteNode {
         // let colorCloseButtonFrame = UIColor(hue: 0.9611, saturation: 0.93, brightness: 1, alpha: 1.0) /* #ff1149 */
         // let closeButtonFrame = SKSpriteNode(color: colorCloseButtonFrame, size: CGSize(width: 180, height: 55))
         let closeButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 150, height: 55))
+        closeButtonFrame.name = "closeButtonFrame"
         closeButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
         closeButtonFrame.zPosition = 4
         addChild(closeButtonFrame)      
         let closeButton = SKLabelNode(text: "Bereit")
-        closeButton.name = "close"
+        closeButton.name = "closeButton"
         closeButton.fontColor = SKColor.white
         closeButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
         closeButton.zPosition = 5
@@ -188,43 +190,12 @@ class AccentuationInfo: SKSpriteNode {
             self.run(action)
         }
         
-        if (touchedNode.name == "close") {
+        if (touchedNode.name == "closeButton") || (touchedNode.name == "closeButtonFrame"){
             close()
         }
     }
     
     func close() {
         self.delegate?.closeAccentuationInfo()
-    }
-}
-
-extension SKSpriteNode {
-    // https://stackoverflow.com/questions/20889222/can-i-add-a-border-to-an-skspritenode-similar-to-uiview
-    func drawBorder(color: UIColor, width: CGFloat) {
-        let shapeNode = SKShapeNode(rectOf: size)
-        shapeNode.fillColor = .clear
-        shapeNode.strokeColor = color
-        shapeNode.lineWidth = width
-        addChild(shapeNode)
-    }
-    
-    /// Returns String as NSMutableAttributedString and when indicated in bold.
-    ///
-    /// - Parameters:
-    ///   - stringToBeMutated: The String which should be returnded.
-    ///   - shallBecomceBold: This Boolean says whether String shall be bold or not.
-    ///   - size: Size of the String
-    /// - Returns: The String as NSMutableAttributedString.
-    func makeAttributedString(stringToBeMutated: String, shallBecomeBold: Bool, size: CGFloat) -> NSMutableAttributedString {
-        if(shallBecomeBold) {
-            let bold = [NSAttributedString.Key.font : UIFont(name: "HelveticaNeue-Bold", size: size)]
-            let attributedString =  NSMutableAttributedString(string:stringToBeMutated, attributes:bold as [NSAttributedString.Key : Any])
-            return attributedString
-        }
-        else {
-            let notBold = [NSAttributedString.Key.font : UIFont(name: "HelveticaNeue-UltraLight", size: size)]
-            let normalString = NSMutableAttributedString(string:stringToBeMutated, attributes: notBold as [NSAttributedString.Key : Any])
-            return normalString
-        }
     }
 }

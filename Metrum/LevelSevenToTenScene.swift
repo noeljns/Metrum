@@ -99,6 +99,8 @@ class LevelSevenToTenScene: SKScene {
         exitLabel.zPosition = 2
         addChild(exitLabel)
         
+        
+        
         loadingBar = SKSpriteNode(imageNamed: "loadingBar0")
         loadingBar.position = CGPoint(x: frame.midX , y: frame.midY+450)
         loadingBar.size = CGSize(width: 600, height: 35)

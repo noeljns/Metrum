@@ -24,20 +24,20 @@ class LevelExplanation: SKSpriteNode {
                              "level8": "In Level 8 kannst du zeigen, was du in Level 7 über Versmetriken von Worten gelernt hast.",
                              "level9": "In Level 9 geht es darum, das Versmaß eines ganzen Verses zu bestimmen.",
                              "level10": "In Level 10 kannst du dein Wissen aus Level 9 über das Metrum von Versen testen."]
-    
+    let explanationLabel = SKLabelNode()
     weak var delegate: LevelExplanationDelegate?
     
-    init(size: CGSize, levelIndex: String) {
+    init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
-        name = "levelExplatation"
+        name = "levelExplanation"
+        zPosition = 5000
+        
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
         background.drawBorder(color: .orange, width: 5)
         addChild(background)
         
-        let explanationLabel = SKLabelNode(text: "test")
         explanationLabel.fontColor = SKColor.black
-        explanationLabel.text = levelExplanations[levelIndex]
         explanationLabel.fontSize = 30
         explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-30)
         // break line: https://forums.developer.apple.com/thread/82994
@@ -48,17 +48,22 @@ class LevelExplanation: SKSpriteNode {
         addChild(explanationLabel)
         
         let exitButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 100, height: 55))
+        exitButtonFrame.name = "exitButtonFrame"
         exitButtonFrame.position = CGPoint(x: frame.midX+160, y: frame.midY-70)
         exitButtonFrame.zPosition = 4
         addChild(exitButtonFrame)
         let exitButton = SKLabelNode(text: "Ok")
-        exitButton.name = "exit"
+        exitButton.name = "exitButton"
         exitButton.fontSize = 25
         exitButton.fontColor = SKColor.white
         exitButton.position = CGPoint(x: frame.midX, y: frame.midY-10)
         exitButton.zPosition = 5
         exitButton.addStroke(color: .white, width: 6.0)
         exitButtonFrame.addChild(exitButton)
+    }
+    
+    func setLevelExplanationText(levelIndex: String) {
+        explanationLabel.text = levelExplanations[levelIndex]
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -83,7 +88,7 @@ class LevelExplanation: SKSpriteNode {
         
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
-        if (touchedNode.name == "exit") {
+        if (touchedNode.name == "exitButton") || (touchedNode.name == "exitButtonFrame"){
             close()
         }
     }

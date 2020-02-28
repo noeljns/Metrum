@@ -8,47 +8,85 @@
 
 import SpriteKit
 
-class MainMenuScene: SKScene {
-    var firstEntryOfApp = UserDefaults.standard.bool(forKey: "firstEntry")
-    var levelOneIsPassed = UserDefaults.standard.bool(forKey: "level1")
-    var levelTwoIsPassed = UserDefaults.standard.bool(forKey: "level2")
-    var levelThreeIsPassed = UserDefaults.standard.bool(forKey: "level3")
-    var levelFourIsPassed = UserDefaults.standard.bool(forKey: "level4")
-    var levelFiveIsPassed = UserDefaults.standard.bool(forKey: "level5")
-    var levelSixIsPassed = UserDefaults.standard.bool(forKey: "level6")
-    var levelSevenIsPassed = UserDefaults.standard.bool(forKey: "level7")
-    var levelEightIsPassed = UserDefaults.standard.bool(forKey: "level8")
-    var levelNineIsPassed = UserDefaults.standard.bool(forKey: "level9")
-    var levenTenIsPassed = UserDefaults.standard.bool(forKey: "level10")
+extension SKScene {
+    
+    // func getBackgroundBlocker(shallBeTransparent: Bool, size: CGSize) -> SKSpriteNode {
+    func getBackgroundBlockerTest(shallBeTransparent: Bool, size: CGSize) {
+        let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: size)
+        backgroundBlocker.name = "backgroundBlocker"
+        backgroundBlocker.zPosition = 4999
+        if shallBeTransparent {
+            backgroundBlocker.alpha = 0.5
+        }
+        // return backgroundBlocker
+    }
+    
+    func getBackgroundBlocker(shallBeTransparent: Bool, size: CGSize) -> SKSpriteNode {
+        let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: size)
+        backgroundBlocker.name = "backgroundBlocker"
+        backgroundBlocker.zPosition = 4999
+        if shallBeTransparent {
+            backgroundBlocker.alpha = 0.5
+        }
+        return backgroundBlocker
+    }
+    
 
-    lazy var levels = [levelOneIsPassed, levelTwoIsPassed, levelThreeIsPassed, levelFourIsPassed, levelFiveIsPassed,
+    /// Gets data from json file and saves deserialized Line objects to selection variable.
+    func loadInputFile(inputFile: String) -> Set<Line>{
+        // https://stackoverflow.com/a/58981897
+        let data: Data
+        
+        // TODO get from Sandbox
+        // name of json file is in inputFile
+        guard let file = Bundle.main.url(forResource: inputFile, withExtension: nil) else {
+            fatalError("Could not find \(inputFile) in main bundle.")
+        }
+        do {
+            data = try Data(contentsOf: file)
+        }
+        catch {
+            fatalError("Could not find \(inputFile) in main bundle.")
+        }
+        do {
+            let lines = try! JSONDecoder().decode([Line].self, from: data)
+            return Set<Line>(lines)
+        }
+    }
+}
+
+class MainMenuScene: SKScene {
+    private var firstEntryOfApp = UserDefaults.standard.bool(forKey: "firstEntry")
+    private var levelOneIsPassed = UserDefaults.standard.bool(forKey: "level1")
+    private var levelTwoIsPassed = UserDefaults.standard.bool(forKey: "level2")
+    private var levelThreeIsPassed = UserDefaults.standard.bool(forKey: "level3")
+    private var levelFourIsPassed = UserDefaults.standard.bool(forKey: "level4")
+    private var levelFiveIsPassed = UserDefaults.standard.bool(forKey: "level5")
+    private var levelSixIsPassed = UserDefaults.standard.bool(forKey: "level6")
+    private var levelSevenIsPassed = UserDefaults.standard.bool(forKey: "level7")
+    private var levelEightIsPassed = UserDefaults.standard.bool(forKey: "level8")
+    private var levelNineIsPassed = UserDefaults.standard.bool(forKey: "level9")
+    private var levenTenIsPassed = UserDefaults.standard.bool(forKey: "level10")
+    private lazy var levels = [levelOneIsPassed, levelTwoIsPassed, levelThreeIsPassed, levelFourIsPassed, levelFiveIsPassed,
                        levelSixIsPassed, levelSevenIsPassed, levelEightIsPassed, levelNineIsPassed, levenTenIsPassed]
     
     // overlay windows
-    private var backgroundBlocker: SKSpriteNode!
-    private var salutation: Salutation!
-    private var levelExplanation: LevelExplanation!
-    
+    private var backgroundBlocker = SKSpriteNode()
+    private let salutation = Salutation(size: CGSize(width: 650, height: 800))
+    private var levelExplanation = LevelExplanation(size: CGSize(width: 550, height: 250))
+
     func displaySalutation() {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.zPosition = 4999
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
         addChild(backgroundBlocker)
-        
-        salutation = Salutation(size: CGSize(width: 650, height: 800))
         salutation.delegate = self
-        salutation.zPosition = 5000
         addChild(salutation)
     }
     
     func displayLevelExplanation(levelIndex: String) {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.alpha = 0.5
-        backgroundBlocker.zPosition = 4999
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
         addChild(backgroundBlocker)
-        
-        levelExplanation = LevelExplanation(size: CGSize(width: 550, height: 250), levelIndex: levelIndex)
+        levelExplanation.setLevelExplanationText(levelIndex: levelIndex)
         levelExplanation.delegate = self
-        levelExplanation.zPosition = 5000
         addChild(levelExplanation)
     }
 
@@ -66,10 +104,8 @@ class MainMenuScene: SKScene {
     func generateLevelExplanation() {
         var infoButtonPosition = 370
         for index in 1...10 {
-            let infoButton = SKSpriteNode(imageNamed: "icons8-info-50")
+            let infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: -150 , y: infoButtonPosition))
             infoButton.name = "infoButtonLevel" + String(index)
-            infoButton.position = CGPoint(x: frame.midX-150, y: frame.midY + CGFloat(infoButtonPosition))
-            infoButton.size = CGSize(width: 50, height: 50)
             addChild(infoButton)
             
             infoButtonPosition = infoButtonPosition-85
@@ -92,14 +128,15 @@ class MainMenuScene: SKScene {
     }
     
     
-    // TODO caution optinals
     func drawLevelColorful(levelName: String) {
         let canvasName = "canvas" + levelName
-        let canvas = self.childNode(withName: canvasName) as? SKSpriteNode
-        canvas?.color = .orange
-        let label = canvas?.childNode(withName: levelName) as? SKLabelNode
-        label?.fontColor = SKColor.white
-        label?.addStroke(color: .white, width: 6.0)
+        if let canvas = self.childNode(withName: canvasName) as? SKSpriteNode {
+            canvas.color = .orange
+            if let label = canvas.childNode(withName: levelName) as? SKLabelNode {
+                label.fontColor = SKColor.white
+                label.addStroke(color: .white, width: 6.0)
+            }
+        }
     }
     
     
@@ -199,13 +236,6 @@ class MainMenuScene: SKScene {
         
         // colorize levels that are able to be entered and flag passed levels with trophy
         markEnterableAndPassedLevels()
-
-        // debug function
-//        UserDefaults.standard.set(false, forKey: "level3")
-//        UserDefaults.standard.set(true, forKey: "level2")
-//        for level in levels {
-//            print(level.description)
-//        }
         
         let resetButtonFrame = SKSpriteNode(color: .red, size: CGSize(width: 130, height: 55))
         resetButtonFrame.position = CGPoint(x: frame.midX+270, y: frame.midY-440)
@@ -222,11 +252,9 @@ class MainMenuScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // https://code.tutsplus.com/tutorials/spritekit-basics-nodes--cms-28785
-        
         guard let touch = touches.first else {
             return
         }
-        
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
         
@@ -338,6 +366,19 @@ class MainMenuScene: SKScene {
     
 }
 
+extension MainMenuScene: SalutationDelegate, LevelExplanationDelegate {
+    func closeSalutation() {
+        backgroundBlocker.removeFromParent()
+        salutation.removeFromParent()
+    }
+    
+    func closeLevelExplanation() {
+        backgroundBlocker.removeFromParent()
+        // TODO hier war mal levelExplanation?.removeFromParent()
+        levelExplanation.removeFromParent()
+    }
+}
+
 
 // https://living-sun.com/swift/825957-sklabelnode-border-and-bounds-issue-swift-text-sprite-kit-border-sklabelnode.html
 extension SKLabelNode {
@@ -359,18 +400,5 @@ extension SKLabelNode {
         attributedString.addAttributes(attributes, range: NSMakeRange(0, attributedString.length))
         
         self.attributedText = attributedString
-    }
-}
-
-
-extension MainMenuScene: SalutationDelegate, LevelExplanationDelegate {
-    func closeSalutation() {
-        backgroundBlocker.removeFromParent()
-        salutation?.removeFromParent()
-    }
-    
-    func closeLevelExplanation() {
-        backgroundBlocker.removeFromParent()
-        levelExplanation?.removeFromParent()
     }
 }

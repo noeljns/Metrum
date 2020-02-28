@@ -8,46 +8,23 @@
 
 import SpriteKit
 
-class LoadingBar: SKNode {
-    var bar: SKSpriteNode?
-    var _progress: CGFloat = 0.0
-    var progress: CGFloat {
-        get {
-            return _progress
-        }
-        set {
-            let value = max(min(newValue, 1.0), 0.0)
-            if let bar = bar {
-                bar.xScale = value
-                _progress = value
-            }
-        }
-    }
-    
-    convenience init(color: SKColor, size: CGSize) {
-        self.init()
-        bar = SKSpriteNode(color: color, size: size)
-        if let bar = bar {
-            bar.xScale = 0.0
-            bar.position = CGPoint(x: -size.width / 2, y: 0)
-            bar.anchorPoint = CGPoint(x: 0.0, y: 0.5)
-            addChild(bar)
-        }
-    }
-}
-
-
 class LevelOneToFourScene: SKScene {
     // UI variables
-    private var exitLabel = SKLabelNode()
-    private var loadingBarContainer = SKShapeNode()
-    let loadingBar: LoadingBar = {
-        let loadingBar = LoadingBar(color: .green, size: CGSize(width: 600, height: 26))
-        loadingBar.position =  CGPoint(x: 0 , y: 450)
-        return loadingBar
+    private var exitLabel = ExitLabel()
+    private let loadingBar = LoadingBar(color: .green, size: CGSize(width: 600, height: 26))
+    private let taskLabel: TaskLabel = {
+        let taskLabelText = "Markiere die betonten (x́) und unbetonten (x) Silben."
+                            + " Zu jeder Silbe gehört ein graues Kästchen, das über ihr platziert ist."
+                            + "\nZiehe die Betonungszeichen in das jeweilige Kästchen über der Silbe."
+        let taskLabelPosition = CGPoint(x: 0 , y: 200)
+        let taskLabel = TaskLabel(text: taskLabelText, position: taskLabelPosition)
+        return taskLabel
     }()
-    
-    private let taskLabel = SKLabelNode()
+    private var accentuationInfo = AccentuationInfo(size: CGSize(width: 650, height: 800))
+    private var infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: 225 , y: 90))
+    private var soundButton = SoundButton(size: CGSize(width: 40, height: 40), position: CGPoint(x: 150 , y: 90))
+    private var checkButton = CheckButton(size: CGSize(width: 150, height: 55))
+ 
     private var accentBins = [SKSpriteNode]()
     private var selectedLineLabel = SKLabelNode()
     private var selectedLineBoldLabel = SKLabelNode()
@@ -56,19 +33,14 @@ class LevelOneToFourScene: SKScene {
     private let stressed = SKLabelNode()
     private let unstressed = SKLabelNode()
     private let unstressedStressMarkParentBin = SKSpriteNode()
-    private var accentuationInfoButton = SKSpriteNode()
-    private var accentuationInfo: AccentuationInfo!
-    private var soundBoxButton = SKSpriteNode()
-    private var checkButtonFrame = SKSpriteNode()
-    private var checkButton = SKLabelNode()
+    
     // overlay nodes
     // TODO check whether forced unwrapping is appropriate here
-    private var backgroundBlocker: SKSpriteNode!
-    private var overlay: SKSpriteNode!
-    private var congratulations: Congratulations!
-    private var replyIsCorrect: ReplyIsCorrect!
-    private var replyIsFalse: ReplyIsFalse!
-    private var warning: Warning!
+    private var backgroundBlocker = SKSpriteNode()
+    private var congratulations = Congratulations(size: CGSize(width: 650, height: 800))
+    private var replyIsCorrect = ReplyIsCorrect(size: CGSize(width: 747, height: 350))
+    private var replyIsFalse = ReplyIsFalse(size: CGSize(width: 747, height: 350))
+    private var warning = Warning(size: CGSize(width: 650, height: 450))
     
     // variables for level passing management
     // lazy: https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
@@ -97,91 +69,19 @@ class LevelOneToFourScene: SKScene {
     //        self.inputFile = inputFile
     //    }
     
-    /// Gets data from json file and saves deserialized Line objects to selection variable.
-    func loadInputFile() {
-        // https://stackoverflow.com/a/58981897
-        let data: Data
-        
-        // TODO get from Sandbox
-        // name of json file is in inputFile
-        guard let file = Bundle.main.url(forResource: inputFile, withExtension: nil) else {
-            fatalError("Could not find \(inputFile) in main bundle.")
-        }
-        do {
-            data = try Data(contentsOf: file)
-        }
-        catch {
-            fatalError("Could not find \(inputFile) in main bundle.")
-        }
-        do {
-            let lines = try! JSONDecoder().decode([Line].self, from: data)
-            loadedLines = Set<Line>(lines)
-            selectedLine = loadedLines.first!
-        }
-    }
     
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
     func setUpScene() {
-        exitLabel.name = "exit"
-        exitLabel.fontColor = SKColor.black
-        exitLabel.text = "x"
-        exitLabel.fontSize = 60
-        exitLabel.position = CGPoint(x: frame.midX-330, y: frame.midY+435)
-        exitLabel.zPosition = 2
         addChild(exitLabel)
-        
+        addChild(loadingBar)
         // https://www.youtube.com/watch?v=rAwOlR7lT3A
-        loadingBarContainer = SKShapeNode(rectOf: CGSize(width: 600, height: 30), cornerRadius: 5)
-        loadingBarContainer.position = CGPoint(x: frame.midX , y: frame.midY+450)
-        loadingBarContainer.strokeColor = .lightGray
-        loadingBarContainer.lineWidth = 4
-        addChild(loadingBarContainer)
         manageLoadingBar()
-        // progressBar.progress = 0.0
-        // addChild(progressBar)
-        
-        taskLabel.fontColor = SKColor.black
-        taskLabel.text = "Markiere die betonten (x́) und unbetonten (x) Silben."
-                         + " Zu jeder Silbe gehört ein graues Kästchen, das über ihr platziert ist." +
-                        "\nZiehe die Betonungszeichen in das jeweilige Kästchen über der Silbe."
-        taskLabel.position = CGPoint(x: frame.midX , y: frame.midY+200)
-        // break line: https://forums.developer.apple.com/thread/82994
-        taskLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
-        taskLabel.numberOfLines = 0
-        taskLabel.preferredMaxLayoutWidth = 600
-        taskLabel.zPosition = 4
         addChild(taskLabel)
-        
         if provideHelp {
-            // accentuationInfoButton = SKSpriteNode(imageNamed: "info")
-            accentuationInfoButton = SKSpriteNode(imageNamed: "icons8-info-50")
-            accentuationInfoButton.name = "accentuationInfoBtn"
-            accentuationInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY+90)
-            accentuationInfoButton.size = CGSize(width: 50, height: 50)
-            accentuationInfoButton.zPosition = 2
-            addChild(accentuationInfoButton)
-            
-            // soundBoxButton = SKSpriteNode(imageNamed: "sound")
-            soundBoxButton = SKSpriteNode(imageNamed: "QuickActions_Audio")
-            soundBoxButton.name = "soundBoxBtn"
-            soundBoxButton.position = CGPoint(x: frame.midX+150 , y: frame.midY+90)
-            soundBoxButton.size = CGSize(width: 40, height: 40)
-            soundBoxButton.zPosition = 2
-            addChild(soundBoxButton)
+            addChild(infoButton)
+            addChild(soundButton)
         }
-        
-        checkButtonFrame.color = .lightGray
-        checkButtonFrame.size = CGSize(width: 150, height: 55)
-        checkButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
-        addChild(checkButtonFrame)
-        
-        checkButton.text = "Check"
-        checkButton.name = "check"
-        checkButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
-        checkButton.zPosition = 2
-        checkButton.fontColor = SKColor.darkGray
-        checkButton.addStroke(color: .darkGray, width: 6.0)
-        checkButtonFrame.addChild(checkButton)
+        addChild(checkButton)
     }
     
     /// Manages loading Bar.
@@ -202,9 +102,6 @@ class LevelOneToFourScene: SKScene {
     /// Sets up the ui elements that get removed from and re-added to scene during level.
     /// Displays new Line for which user has to solve task for.
     func setUpUnfixedParts() {
-        
-        addChild(loadingBar)
-        
         // TODO right position in code?
         selectedLine = selectNextLine()
         
@@ -225,9 +122,7 @@ class LevelOneToFourScene: SKScene {
         generateStressMarks()
         
         // reset colors of check button
-        checkButtonFrame.color = .lightGray
-        checkButton.fontColor = .darkGray
-        checkButton.addStroke(color: .darkGray, width: 6.0)
+        checkButton.deactivate()
     }
     
     /// Returns the next Line for which the user has to solve the task.
@@ -411,64 +306,44 @@ class LevelOneToFourScene: SKScene {
     
     /// Adds AccentiationInfo as overlay node to scene.
     func displayAccentuationInfo() {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.zPosition = 4999
+        getBackgroundBlockerTest(shallBeTransparent: false, size: self.size)
+        // backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
         addChild(backgroundBlocker)
-        
-        accentuationInfo = AccentuationInfo(size: CGSize(width: 650, height: 800))
         accentuationInfo.delegate = self
-        accentuationInfo.zPosition = 5000
         addChild(accentuationInfo)
     }
+
     
     /// Adds Congratualtions as overlay node to scene.
     func displayCongratulations() {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.zPosition = 4999
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
         addChild(backgroundBlocker)
-        
-        congratulations = Congratulations(size: CGSize(width: 650, height: 800))
         congratulations.delegate = self
-        congratulations.zPosition = 5000
         addChild(congratulations)
     }
     
     /// Adds ReplyIsCorrect as overlay node to scene.
     func displayReplyIsCorrect() {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.zPosition = 4999
-        backgroundBlocker.alpha = 0.5
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
         addChild(backgroundBlocker)
-        
-        replyIsCorrect = ReplyIsCorrect(size: CGSize(width: 747, height: 350))
         replyIsCorrect.delegate = self
-        replyIsCorrect.zPosition = 5000
         addChild(replyIsCorrect)
     }
     
     /// Adds ReplyIsFalse as overlay node to scene.
     func displayReplyIsFalse(solution: String) {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.zPosition = 4999
-        backgroundBlocker.alpha = 0.5
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
         addChild(backgroundBlocker)
-        
-        replyIsFalse = ReplyIsFalse(size: CGSize(width: 747, height: 350), solution: solution)
+        replyIsFalse.addSolutionToText(solution: solution)
         replyIsFalse.delegate = self
-        replyIsFalse.zPosition = 5000
         addChild(replyIsFalse)
     }
     
     /// Adds Warning as overlay node to scene.
     func displayWarning() {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.zPosition = 4999
-        backgroundBlocker.alpha = 0.5
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
         addChild(backgroundBlocker)
-        
-        warning = Warning(size: CGSize(width: 650, height: 450))
         warning.delegate = self
-        warning.zPosition = 5000
         addChild(warning)
     }
     
@@ -615,7 +490,7 @@ class LevelOneToFourScene: SKScene {
     
     /// Empties lists, removes unfix nodes and sets up scene again for new line to be solved.
     func cleanAndSetupSceneForNewLine() {
-        loadingBar.removeFromParent()
+        // loadingBar.removeFromParent()
         
         // remove all accentBins and stressMarks from scene
         accentBins.forEach { $0.removeFromParent() }
@@ -635,7 +510,11 @@ class LevelOneToFourScene: SKScene {
     
 
     override func didMove(to view: SKView) {
-        loadInputFile()
+        // loadInputFile()
+        loadedLines = loadInputFile(inputFile: inputFile)
+        selectedLine = loadedLines.first!
+        
+        
         setUpScene()
         setUpUnfixedParts()
         
@@ -659,7 +538,7 @@ class LevelOneToFourScene: SKScene {
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
         
-        if(provideHelp && touchedNode.name == "accentuationInfoBtn") {
+        if(provideHelp && touchedNode.isEqual(to: infoButton)) {
             displayAccentuationInfo()
         }
         
@@ -671,7 +550,7 @@ class LevelOneToFourScene: SKScene {
             // audioNode.run(SKAction.playSoundFileNamed("test.WAV", waitForCompletion: false))
 
             // node no longer receives touch events
-            self.soundBoxButton.isUserInteractionEnabled = true
+            self.soundButton.isUserInteractionEnabled = true
             
             let playSound = SKAction.playSoundFileNamed(selectedLine.audioFile, waitForCompletion: false)
             let action =  SKAction.group([playSound,
@@ -682,11 +561,11 @@ class LevelOneToFourScene: SKScene {
             // node waits 1.5 for lower levels, 4.0 for higher levels and reveices touch events again
             // otherwise app would crash since addAndRemoveNode would be operated although node is still in scene
             self.run(SKAction.wait(forDuration: longerDurationIfHigherLevels()), completion: {() -> Void in
-                self.soundBoxButton.isUserInteractionEnabled = false
-                print(self.soundBoxButton.isUserInteractionEnabled.description)})
+                self.soundButton.isUserInteractionEnabled = false
+                print(self.soundButton.isUserInteractionEnabled.description)})
         }
         
-        if (touchedNode.name == "check") {
+        if (touchedNode.isEqual(to: checkButton)) || (touchedNode.parent == checkButton) {
             if areAccentBinsFilledWithAStressmark() {
                 let (isSolutionCorrect, realSolution) = self.isReplyCorrect()
                 
@@ -785,14 +664,10 @@ class LevelOneToFourScene: SKScene {
         
         // to signalize user that pushing the button would lead to an action now
         if (areAccentBinsFilledWithAStressmark()) {
-            checkButtonFrame.color = .green
-            checkButton.fontColor = .white
-            checkButton.addStroke(color: .white, width: 6.0)
+            checkButton.activate()
         }
         else {
-            checkButtonFrame.color = .lightGray
-            checkButton.fontColor = .darkGray
-            checkButton.addStroke(color: .darkGray, width: 6.0)
+            checkButton.deactivate()
         }
         
     }
@@ -806,8 +681,9 @@ class LevelOneToFourScene: SKScene {
 
 extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate, ReplyIsFalseDelegate, CongratulationsDelegate, WarningDelegate {
     func closeAccentuationInfo() {
-        backgroundBlocker.removeFromParent()
-        accentuationInfo?.removeFromParent()
+        //backgroundBlocker.removeFromParent()
+        self.childNode(withName: "backgroundBlocker")?.removeFromParent()
+        accentuationInfo.removeFromParent()
     }
     
     func closeCongratulations() {
@@ -818,7 +694,7 @@ extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate,
     
     func closeReplyIsCorrect() {
         backgroundBlocker.removeFromParent()
-        replyIsCorrect?.removeFromParent()
+        replyIsCorrect.removeFromParent()
         
         if correctReplies == amountOfCorrectRepliesToPassLevel {
             displayCongratulations()
@@ -830,7 +706,7 @@ extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate,
     
     func closeReplyIsFalse() {
         backgroundBlocker.removeFromParent()
-        replyIsFalse?.removeFromParent()
+        replyIsFalse.removeFromParent()
         cleanAndSetupSceneForNewLine()
     }
     
@@ -842,7 +718,7 @@ extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate,
     
     func closeWarning() {
         backgroundBlocker.removeFromParent()
-        warning?.removeFromParent()
+        warning.removeFromParent()
     }
 }
 
