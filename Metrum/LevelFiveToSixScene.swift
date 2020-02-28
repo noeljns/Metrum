@@ -106,7 +106,7 @@ class LevelFiveToSixScene: SKScene {
         }
         
         guard var newlySelected = notYetCorrectlyBuildMeasures.randomElement() else {
-            fatalError("error with loadedLines")
+            fatalError("error with measures")
         }
         // only one remaining measure to be build
         if (notYetCorrectlyBuildMeasures.count==1) {

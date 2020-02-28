@@ -41,7 +41,7 @@ class LevelSevenToTenScene: SKScene {
     // variables for level passing management
     // lazy: https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
     private lazy var correctlyDraggedLines = Set<Line>()
-    private var amountOfCorrectRepliesToPassLevel = 2
+    private var amountOfCorrectRepliesToPassLevel = 4
     private var correctReplies = 0
     
     // variables for input data
@@ -58,17 +58,6 @@ class LevelSevenToTenScene: SKScene {
     private let colorizeGreen = SKAction.colorize(with: UIColor.green, colorBlendFactor: 1, duration: 0.1)
     private let colorizeRed = SKAction.colorize(with: UIColor.red, colorBlendFactor: 1, duration: 0.1)
     private let colorizeWhite = SKAction.colorize(with: UIColor.white, colorBlendFactor: 1, duration: 0.2)
-    
-    // both did not work
-    // https://forums.raywenderlich.com/t/swift-tutorial-initialization-in-depth-part-2-2/13209/3
-    // https://spritekitswift.wordpress.com/2015/10/21/spritekit-custom-skscene-class-from-abstract-skscene-class-with-swift/
-    //    convenience init?(fileNamed: String, provideHelp: Bool, inputFile: String) {
-    //        // super.init(size: size)
-    //        self.init(fileNamed: "fileNamed")
-    //        self.provideHelp = provideHelp
-    //        self.inputFile = inputFile
-    //    }
-    
     
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
     func setUpScene() {
@@ -215,7 +204,9 @@ class LevelSevenToTenScene: SKScene {
             notYetCorrectlyMarkedLines = loadedLines
         }
         
-        var newlySelected = notYetCorrectlyMarkedLines.randomElement()!
+        guard var newlySelected = notYetCorrectlyMarkedLines.randomElement() else {
+            fatalError("error with loadedLines")
+        }
         // only one remaining line to be solved
         if (notYetCorrectlyMarkedLines.count==1) {
             // newlySelected contains that one line
@@ -255,22 +246,6 @@ class LevelSevenToTenScene: SKScene {
         }
         return lineToBeRatedBold
     }
-    
-    // TODO modularize overlay nodes
-    //    func displayOverlayNode(node: SKSpriteNode, size: CGSize, transparent: Bool) {
-    //        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-    //        backgroundBlocker.zPosition = 4999
-    //        if transparent {
-    //            backgroundBlocker.alpha = 0.5
-    //        }
-    //        addChild(backgroundBlocker)
-    //
-    //        // how to hand over custom node classes?
-    //        let node = typeTest(node.type(of: init)(size: CGSize(size: size)))
-    //        node.delegate = self
-    //        node.zPosition = 5000
-    //        addChild(node)
-    //    }
     
     /// Adds MeasureInfo as overlay node to scene.
     func displayMeasureInfo() {
@@ -350,14 +325,6 @@ class LevelSevenToTenScene: SKScene {
         }
     }
     
-    /// Empties lists, removes unfix nodes and sets up scene again for new line to be solved.
-    func cleanAndSetupSceneForNewLine() {
-        selectedLineLabel.removeAllChildren()
-        selectedLineLabel.removeFromParent()
-        selectedLineBoldLabel.removeAllChildren()
-        setUpUnfixedParts()
-    }
-    
     /// Manages level status and loading bar for correct replies
     func manageCorrectReply() {
         correctReplies += 1
@@ -374,7 +341,16 @@ class LevelSevenToTenScene: SKScene {
             cleanAndSetupSceneForNewLine()
         }
     }
-
+    
+    /// Removes unfix nodes, their children and sets up scene again for new line to be solved.
+    func cleanAndSetupSceneForNewLine() {
+        selectedLineLabel.removeAllChildren()
+        selectedLineLabel.removeFromParent()
+        selectedLineBoldLabel.removeAllChildren()
+        
+        setUpUnfixedParts()
+    }
+    
     override func didMove(to view: SKView) {
         // loadInputFile()
         loadedLines = loadInputFile(inputFile: inputFile)
@@ -414,7 +390,7 @@ class LevelSevenToTenScene: SKScene {
             // audioNode.run(SKAction.playSoundFileNamed("Sonne.WAV", waitForCompletion: false))
             // audioNode.run(SKAction.playSoundFileNamed("test.WAV", waitForCompletion: false))
  
-            // node no longer receives touch events
+            // sound and line nodes no longer receives touch events
             self.soundButton.isUserInteractionEnabled = true
             self.selectedLineBoldLabel.isUserInteractionEnabled = true
             
@@ -424,8 +400,8 @@ class LevelSevenToTenScene: SKScene {
                                           SKAction.run{self.hideAndUnhideNode(node: self.selectedLineLabel)}])
             self.run(action)
             
-            // node waits 1.5 for lower levels, 4.0 for higher levels and reveices touch events again
-            // otherwise app would crash since addAndRemoveNode would be operated although node is still in scene
+            // sound and line nodes wait 1.5 for lower levels, 4.0 for higher levels, afterwards they reveice touch events again
+            // otherwise app would crash since addAndRemoveNode would be operated although nodes are still in scene
             self.run(SKAction.wait(forDuration: longerDurationIfHigherLevels()), completion: {() -> Void in
                 self.soundButton.isUserInteractionEnabled = false
                 self.selectedLineBoldLabel.isUserInteractionEnabled = false
