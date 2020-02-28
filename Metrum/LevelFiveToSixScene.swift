@@ -14,6 +14,8 @@ class LevelFiveToSixScene: SKScene {
     private let loadingBar = LoadingBar(color: .green, size: CGSize(width: 600, height: 26))
     private var measureInfo = MeasureInfo(size: CGSize(width: 650, height: 800))
     private var infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: 225 , y: 210))
+    private var checkButton = CheckButton(size: CGSize(width: 150, height: 55))
+
 
     
     private let selectedMeasureLabel = SKLabelNode()
@@ -27,8 +29,7 @@ class LevelFiveToSixScene: SKScene {
     
     
     
-    private var checkButtonFrame = SKSpriteNode()
-    private var checkButton = SKLabelNode()
+    
     
     // overlay nodes
     // TODO check whether forced unwrapping is appropriate here
@@ -70,23 +71,10 @@ class LevelFiveToSixScene: SKScene {
         addChild(exitLabel)
         addChild(loadingBar)
         manageLoadingBar()
-
         if provideHelp {
             addChild(infoButton)
         }
-        
-        checkButtonFrame.color = .lightGray
-        checkButtonFrame.size = CGSize(width: 150, height: 55)
-        checkButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
-        addChild(checkButtonFrame)
-        
-        checkButton.text = "Check"
-        checkButton.name = "check"
-        checkButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
-        checkButton.zPosition = 2
-        checkButton.fontColor = SKColor.darkGray
-        checkButton.addStroke(color: .darkGray, width: 6.0)
-        checkButtonFrame.addChild(checkButton)
+        addChild(checkButton)
     }
     
     /// Manages loading Bar.
@@ -119,9 +107,7 @@ class LevelFiveToSixScene: SKScene {
         generateStressMarks()
         
         // reset colors of check button
-        checkButtonFrame.color = .lightGray
-        checkButton.fontColor = .darkGray
-        checkButton.addStroke(color: .darkGray, width: 6.0)
+        checkButton.deactivate()
     }
     
     /// Returns the next Measure for which the user has to solve the task.
@@ -509,7 +495,7 @@ class LevelFiveToSixScene: SKScene {
             displayMeasureInfo()
         }
         
-        if (touchedNode.name == "check") {
+        if (touchedNode.isEqual(to: checkButton)) {
             if areAccentBinsFilledWithAStressmark() {
                 let (isSolutionCorrect, realSolution) = self.isReplyCorrect()
                 
@@ -611,14 +597,10 @@ class LevelFiveToSixScene: SKScene {
         
         // to signalize user that pushing the button would lead to an action now
         if (areAccentBinsFilledWithAStressmark()) {
-            checkButtonFrame.color = .green
-            checkButton.fontColor = .white
-            checkButton.addStroke(color: .white, width: 6.0)
+            checkButton.activate()
         }
         else {
-            checkButtonFrame.color = .lightGray
-            checkButton.fontColor = .darkGray
-            checkButton.addStroke(color: .darkGray, width: 6.0)
+            checkButton.deactivate()
         }
         
     }
