@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class InfoButton: SKSpriteNode {
+class InfoButton: SKSpriteNode {        
     init(size: CGSize, position: CGPoint) {
         super.init(texture: SKTexture(imageNamed: "icons8-info-50"), color: .clear, size: size)
         self.size = size

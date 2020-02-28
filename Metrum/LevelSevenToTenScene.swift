@@ -12,8 +12,16 @@ class LevelSevenToTenScene: SKScene {
     // UI variables
     private var exitLabel = ExitLabel()
     private let loadingBar = LoadingBar(color: .green, size: CGSize(width: 600, height: 26))
+    private let taskLabel: TaskLabel = {
+        let taskLabelText = "Ziehe das Wort bzw. den Vers in den Kasten des zugehörigen Versmaßes."
+        let taskLabelPosition = CGPoint(x: 0 , y: 300)
+        let taskLabel = TaskLabel(text: taskLabelText, position: taskLabelPosition)
+        return taskLabel
+    }()
+    private var measureInfo = MeasureInfo(size: CGSize(width: 650, height: 800))
+    private var infoButton = InfoButton(size: CGSize(width: 40, height: 40), position: CGPoint(x: 0 , y: 0))
+    private var soundButton = SoundButton(size: CGSize(width: 30, height: 30), position: CGPoint(x: 0 , y: 0))
     
-    private let taskLabel = SKLabelNode()
     private var jambus = SKLabelNode()
     private var jambusBin = SKSpriteNode()
     private var trochaeus = SKLabelNode()
@@ -24,9 +32,7 @@ class LevelSevenToTenScene: SKScene {
     private var anapaestBin = SKSpriteNode()
     private var selectedLineLabel = SKLabelNode()
     private var selectedLineBoldLabel = SKLabelNode()
-    private var measureInfoButton = SKSpriteNode()
-    private var measureInfo: MeasureInfo!
-    private var soundBoxButton = SKSpriteNode()
+
 
     // overlay nodes
     // TODO check whether forced unwrapping is appropriate here
@@ -95,15 +101,6 @@ class LevelSevenToTenScene: SKScene {
         addChild(exitLabel)
         manageLoadingBar()
         addChild(loadingBar)
-        
-        taskLabel.fontColor = SKColor.black
-        taskLabel.text = "Ziehe das Wort bzw. den Vers in den Kasten des zugehörigen Versmaßes."
-        taskLabel.position = CGPoint(x: frame.midX , y: frame.midY+300)
-        // break line: https://forums.developer.apple.com/thread/82994
-        taskLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
-        taskLabel.numberOfLines = 0
-        taskLabel.preferredMaxLayoutWidth = 600
-        taskLabel.zPosition = 4
         addChild(taskLabel)
         
         let jambusLabel = makeAttributedString(stringToBeMutated: "Jambus: Ge·", shallBecomeBold: false, size: 25)
@@ -163,24 +160,6 @@ class LevelSevenToTenScene: SKScene {
         daktylusBin.drawBorder(color: .lightGray, width: 5.0)
         daktylusBin.zPosition = 1
         addChild(daktylusBin)
-        
-//        if provideHelp {
-//            // measureInfoButton = SKSpriteNode(imageNamed: "info")
-//            measureInfoButton = SKSpriteNode(imageNamed: "icons8-info-50")
-//            measureInfoButton.name = "measureInfoButton"
-//            measureInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY-75)
-//            measureInfoButton.size = CGSize(width: 40, height: 40)
-//            measureInfoButton.zPosition = 2
-//            addChild(measureInfoButton)
-//
-//            // soundBoxButton = SKSpriteNode(imageNamed: "sound")
-//            soundBoxButton = SKSpriteNode(imageNamed: "QuickActions_Audio")
-//            soundBoxButton.name = "soundBoxBtn"
-//            soundBoxButton.position = CGPoint(x: frame.midX+165 , y: frame.midY-75)
-//            soundBoxButton.size = CGSize(width: 30, height: 30)
-//            soundBoxButton.zPosition = 2
-//            addChild(soundBoxButton)
-//        }
     }
     
     /// Manages loading Bar.
@@ -200,7 +179,6 @@ class LevelSevenToTenScene: SKScene {
     /// Sets up the ui elements that get removed from and re-added to scene during level.
     /// Displays new Line for which user has to solve task for.
     func setUpUnfixedParts() {
-        // TODO right position in code?
         selectedLine = selectNextLine()
         
         selectedLineLabel.fontColor = SKColor.black
@@ -214,27 +192,38 @@ class LevelSevenToTenScene: SKScene {
         selectedLineBoldLabel.position = CGPoint(x: frame.midX, y: frame.midY-125)
         selectedLineBoldLabel.zPosition = 3
         selectedLineBoldLabel.name = selectedLine.measure.rawValue
-        // addChild(selectedLineBoldLabel)
         
         if provideHelp {
-            // measureInfoButton = SKSpriteNode(imageNamed: "info")
-            measureInfoButton = SKSpriteNode(imageNamed: "icons8-info-50")
-            measureInfoButton.name = "measureInfoButton"
-            measureInfoButton.position = CGPoint(x: selectedLineLabel.frame.maxX+70 , y: frame.midY+40)
-            measureInfoButton.size = CGSize(width: 40, height: 40)
-            measureInfoButton.zPosition = 2
-            selectedLineLabel.addChild(measureInfoButton)
-            selectedLineBoldLabel.addChild(measureInfoButton.copy() as! SKNode)
-            // soundBoxButton = SKSpriteNode(imageNamed: "sound")
-            soundBoxButton = SKSpriteNode(imageNamed: "QuickActions_Audio")
-            soundBoxButton.name = "soundBoxBtn"
-            soundBoxButton.position = CGPoint(x: selectedLineLabel.frame.maxX+20 , y: frame.midY+40)
-            soundBoxButton.size = CGSize(width: 30, height: 30)
-            soundBoxButton.zPosition = 2
-            selectedLineLabel.addChild(soundBoxButton)
-            selectedLineBoldLabel.addChild(soundBoxButton.copy() as! SKNode)
+            infoButton.position = CGPoint(x: selectedLineLabel.frame.maxX+70 , y: frame.midY+40)
+            selectedLineLabel.addChild(infoButton)
+            // did not work anymore: selectedLineBoldLabel.addChild(infoButton.copy() as! SKNode)
+            selectedLineBoldLabel.addChild(createInfoButton(position: infoButton.position))
+            soundButton.position = CGPoint(x: selectedLineLabel.frame.maxX+20 , y: frame.midY+40)
+            selectedLineLabel.addChild(soundButton)
+            // did not work anymore: selectedLineBoldLabel.addChild(soundBoxButton.copy() as! SKNode)
+            selectedLineBoldLabel.addChild(createSoundButton(position: soundButton.position))
         }
         addChild(selectedLineLabel)
+    }
+    
+    /// Creates an info button on specified position
+    /// Because copy() function did not work anymore
+    /// - Parameters:
+    ///   - position: position of generated info button
+    /// - Returns: generated info button
+    func createInfoButton(position: CGPoint) -> SKSpriteNode {
+        let infoButton = InfoButton(size: CGSize(width: 40, height: 40), position: position)
+        return infoButton
+    }
+    
+    /// Creates an sound button on specified position
+    /// Because copy() function did not work anymore
+    /// - Parameters:
+    ///   - position: position of generated sound button
+    /// - Returns: generated sound button
+    func createSoundButton(position: CGPoint) -> SKSpriteNode {
+        let soundButton = SoundButton(size: CGSize(width: 30, height: 30), position: position)
+        return soundButton
     }
     
     /// Returns the next Line for which the user has to solve the task.
@@ -315,9 +304,9 @@ class LevelSevenToTenScene: SKScene {
         backgroundBlocker.zPosition = 4999
         addChild(backgroundBlocker)
         
-        measureInfo = MeasureInfo(size: CGSize(width: 650, height: 800))
+        // measureInfo = MeasureInfo(size: CGSize(width: 650, height: 800))
         measureInfo.delegate = self
-        measureInfo.zPosition = 5000
+        // measureInfo.zPosition = 5000
         addChild(measureInfo)
     }
     
@@ -450,11 +439,11 @@ class LevelSevenToTenScene: SKScene {
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
         
-        if(provideHelp && touchedNode.name == "measureInfoButton") {
+        if(provideHelp && touchedNode.isEqual(to: infoButton)) {
             displayMeasureInfo()
         }
         
-        if(provideHelp && touchedNode.name == "soundBoxBtn") {
+        if(provideHelp && touchedNode.isEqual(to: soundButton)) {
             // https://www.reddit.com/r/swift/comments/2wpspa/running_parallel_skactions_with_different_nodes/
             // https://stackoverflow.com/questions/28823386/skaction-playsoundfilenamed-fails-to-load-sound
             // worked as well
@@ -462,7 +451,8 @@ class LevelSevenToTenScene: SKScene {
             // audioNode.run(SKAction.playSoundFileNamed("test.WAV", waitForCompletion: false))
  
             // node no longer receives touch events
-            self.soundBoxButton.isUserInteractionEnabled = true
+            self.soundButton.isUserInteractionEnabled = true
+            self.selectedLineBoldLabel.isUserInteractionEnabled = true
             
             let playSound = SKAction.playSoundFileNamed(selectedLine.audioFile, waitForCompletion: false)
             let action =  SKAction.group([playSound,
@@ -473,8 +463,9 @@ class LevelSevenToTenScene: SKScene {
             // node waits 1.5 for lower levels, 4.0 for higher levels and reveices touch events again
             // otherwise app would crash since addAndRemoveNode would be operated although node is still in scene
             self.run(SKAction.wait(forDuration: longerDurationIfHigherLevels()), completion: {() -> Void in
-                self.soundBoxButton.isUserInteractionEnabled = false
-                print(self.soundBoxButton.isUserInteractionEnabled.description)})
+                self.soundButton.isUserInteractionEnabled = false
+                self.selectedLineBoldLabel.isUserInteractionEnabled = false
+                print(self.soundButton.isUserInteractionEnabled.description)})
         }
         
         if (touchedNode.isEqual(to: exitLabel)) {
@@ -490,8 +481,9 @@ class LevelSevenToTenScene: SKScene {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first!
-        
+        guard let touch = touches.first else {
+            return
+        }
         // if it started in the label, move it to the new location
         if selectedLineLabel.frame.contains(touch.previousLocation(in: self)) {
             selectedLineLabel.position = touch.location(in: self)
@@ -559,7 +551,7 @@ class LevelSevenToTenScene: SKScene {
 extension LevelSevenToTenScene: MeasureInfoDelegate, CongratulationsDelegate, WarningDelegate {
     func closeMeasureInfo() {
         backgroundBlocker.removeFromParent()
-        measureInfo?.removeFromParent()
+        measureInfo.removeFromParent()
     }
     
     func closeCongratulations() {

@@ -12,7 +12,8 @@ class LevelFiveToSixScene: SKScene {
     // UI variables
     private var exitLabel = ExitLabel()
     private let loadingBar = LoadingBar(color: .green, size: CGSize(width: 600, height: 26))
-
+    private var measureInfo = MeasureInfo(size: CGSize(width: 650, height: 800))
+    private var infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: 225 , y: 210))
 
     
     private let selectedMeasureLabel = SKLabelNode()
@@ -24,8 +25,7 @@ class LevelFiveToSixScene: SKScene {
     private let unstressed = SKLabelNode()
     private let unstressedStressMarkParentBin = SKSpriteNode()
     
-    private var measureInfoButton = SKSpriteNode()
-    private var measureInfo: MeasureInfo!
+    
     
     private var checkButtonFrame = SKSpriteNode()
     private var checkButton = SKLabelNode()
@@ -72,13 +72,7 @@ class LevelFiveToSixScene: SKScene {
         manageLoadingBar()
 
         if provideHelp {
-            // measureInfoButton = SKSpriteNode(imageNamed: "info")
-            measureInfoButton = SKSpriteNode(imageNamed: "icons8-info-50")
-            measureInfoButton.name = "measureInfoBtn"
-            measureInfoButton.position = CGPoint(x: frame.midX+225 , y: frame.midY+210)
-            measureInfoButton.size = CGSize(width: 50, height: 50)
-            measureInfoButton.zPosition = 2
-            addChild(measureInfoButton)
+            addChild(infoButton)
         }
         
         checkButtonFrame.color = .lightGray
@@ -338,20 +332,15 @@ class LevelFiveToSixScene: SKScene {
     
     /// Adds MeasureInfo as overlay node to scene.
     func displayMeasureInfo() {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.zPosition = 4999
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
         addChild(backgroundBlocker)
-        
-        measureInfo = MeasureInfo(size: CGSize(width: 650, height: 800))
         measureInfo.delegate = self
-        measureInfo.zPosition = 5000
         addChild(measureInfo)
     }
     
     /// Adds Congratualtions as overlay node to scene.
     func displayCongratulations() {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.zPosition = 4999
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
         addChild(backgroundBlocker)
         
         congratulations = Congratulations(size: CGSize(width: 650, height: 800))
@@ -362,9 +351,7 @@ class LevelFiveToSixScene: SKScene {
     
     /// Adds ReplyIsCorrect as overlay node to scene.
     func displayReplyIsCorrect() {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.zPosition = 4999
-        backgroundBlocker.alpha = 0.5
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
         addChild(backgroundBlocker)
         
         replyIsCorrect = ReplyIsCorrect(size: CGSize(width: 747, height: 350))
@@ -375,9 +362,7 @@ class LevelFiveToSixScene: SKScene {
     
     /// Adds ReplyIsFalse as overlay node to scene.
     func displayReplyIsFalse(solution: String) {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.zPosition = 4999
-        backgroundBlocker.alpha = 0.5
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
         addChild(backgroundBlocker)
         
         replyIsFalse = ReplyIsFalse(size: CGSize(width: 747, height: 350))
@@ -389,9 +374,7 @@ class LevelFiveToSixScene: SKScene {
     
     /// Adds Warning as overlay node to scene.
     func displayWarning() {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.zPosition = 4999
-        backgroundBlocker.alpha = 0.5
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
         addChild(backgroundBlocker)
         
         warning = Warning(size: CGSize(width: 650, height: 450))
@@ -522,7 +505,7 @@ class LevelFiveToSixScene: SKScene {
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
         
-        if(provideHelp && touchedNode.name == "measureInfoBtn") {
+        if(provideHelp && touchedNode.isEqual(to: infoButton)) {
             displayMeasureInfo()
         }
         
@@ -567,7 +550,9 @@ class LevelFiveToSixScene: SKScene {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first!
+        guard let touch = touches.first else {
+            return
+        }
         
         // dragging of stress marks to new location by touching
         // TODO higher function
@@ -648,7 +633,7 @@ class LevelFiveToSixScene: SKScene {
 extension LevelFiveToSixScene: MeasureInfoDelegate, ReplyIsCorrectDelegate, ReplyIsFalseDelegate, CongratulationsDelegate, WarningDelegate {
     func closeMeasureInfo() {
         backgroundBlocker.removeFromParent()
-        measureInfo?.removeFromParent()
+        measureInfo.removeFromParent()
     }
     
     func closeCongratulations() {
