@@ -21,6 +21,8 @@ class LevelSevenToTenScene: SKScene {
     private var measureInfo = MeasureInfo(size: CGSize(width: 650, height: 800))
     private var infoButton = InfoButton(size: CGSize(width: 40, height: 40), position: CGPoint(x: 0 , y: 0))
     private var soundButton = SoundButton(size: CGSize(width: 30, height: 30), position: CGPoint(x: 0 , y: 0))
+    private var selectedLineLabel = SKLabelNode()
+    private var selectedLineBoldLabel = SKLabelNode()
     
     private var jambus = SKLabelNode()
     private var jambusBin = SKSpriteNode()
@@ -30,16 +32,11 @@ class LevelSevenToTenScene: SKScene {
     private var daktylusBin = SKSpriteNode()
     private var anapaest = SKLabelNode()
     private var anapaestBin = SKSpriteNode()
-    private var selectedLineLabel = SKLabelNode()
-    private var selectedLineBoldLabel = SKLabelNode()
-
-
+    
     // overlay nodes
-    // TODO check whether forced unwrapping is appropriate here
-    private var backgroundBlocker: SKSpriteNode!
-    private var overlay: SKSpriteNode!
-    private var congratulations: Congratulations!
-    private var warning: Warning!
+    private var backgroundBlocker = SKSpriteNode()
+    private var congratulations = Congratulations(size: CGSize(width: 650, height: 800))
+    private var warning = Warning(size: CGSize(width: 650, height: 450))
     
     // variables for level passing management
     // lazy: https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
@@ -300,38 +297,25 @@ class LevelSevenToTenScene: SKScene {
     
     /// Adds MeasureInfo as overlay node to scene.
     func displayMeasureInfo() {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.zPosition = 4999
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
         addChild(backgroundBlocker)
-        
-        // measureInfo = MeasureInfo(size: CGSize(width: 650, height: 800))
         measureInfo.delegate = self
-        // measureInfo.zPosition = 5000
         addChild(measureInfo)
     }
     
     /// Adds Congratualtions as overlay node to scene.
     func displayCongratulations() {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.zPosition = 4999
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
         addChild(backgroundBlocker)
-        
-        congratulations = Congratulations(size: CGSize(width: 650, height: 800))
         congratulations.delegate = self
-        congratulations.zPosition = 5000
         addChild(congratulations)
     }
     
     /// Adds Warning as overlay node to scene.
     func displayWarning() {
-        backgroundBlocker = SKSpriteNode(color: SKColor.white, size: self.size)
-        backgroundBlocker.zPosition = 4999
-        backgroundBlocker.alpha = 0.5
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
         addChild(backgroundBlocker)
-        
-        warning = Warning(size: CGSize(width: 650, height: 450))
         warning.delegate = self
-        warning.zPosition = 5000
         addChild(warning)
     }
     
@@ -568,6 +552,6 @@ extension LevelSevenToTenScene: MeasureInfoDelegate, CongratulationsDelegate, Wa
     
     func closeWarning() {
         backgroundBlocker.removeFromParent()
-        warning?.removeFromParent()
+        warning.removeFromParent()
     }
 }

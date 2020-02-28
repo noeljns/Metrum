@@ -15,11 +15,7 @@ class LevelFiveToSixScene: SKScene {
     private var measureInfo = MeasureInfo(size: CGSize(width: 650, height: 800))
     private var infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: 225 , y: 210))
     private var checkButton = CheckButton(size: CGSize(width: 150, height: 55))
-
-
-    
     private let selectedMeasureLabel = SKLabelNode()
-    
     private var accentBins = [SKSpriteNode]()
     private var stressMarks = [SKSpriteNode]()
     private let stressedStressMarkParentBin = SKSpriteNode()
@@ -27,18 +23,12 @@ class LevelFiveToSixScene: SKScene {
     private let unstressed = SKLabelNode()
     private let unstressedStressMarkParentBin = SKSpriteNode()
     
-    
-    
-    
-    
     // overlay nodes
-    // TODO check whether forced unwrapping is appropriate here
-    private var backgroundBlocker: SKSpriteNode!
-    private var overlay: SKSpriteNode!
-    private var congratulations: Congratulations!
-    private var replyIsCorrect: ReplyIsCorrect!
-    private var replyIsFalse: ReplyIsFalse!
-    private var warning: Warning!
+    private var backgroundBlocker = SKSpriteNode()
+    private var congratulations = Congratulations(size: CGSize(width: 650, height: 800))
+    private var replyIsCorrect = ReplyIsCorrect(size: CGSize(width: 766, height: 350))
+    private var replyIsFalse = ReplyIsFalse(size: CGSize(width: 766, height: 350))
+    private var warning = Warning(size: CGSize(width: 650, height: 450))
     
     // variables for level passing management
     // lazy: https://stackoverflow.com/questions/45423321/cannot-use-instance-member-within-property-initializer#comment101019582_45423454
@@ -114,47 +104,28 @@ class LevelFiveToSixScene: SKScene {
     /// Does not select the previous Measure.
     ///
     /// - Returns: The newly selected Measure.
-//    func selectNextMeasure() -> Measure {
-//        let previousSelected = selectedMeasure
-//        var newlySelected = previousSelected
-//
-//        while(previousSelected == newlySelected ) {
-//            newlySelected = [Measure.jambus, Measure.trochaeus, Measure.anapaest, Measure.daktylus].randomElement()
-//        }
-//        // TODO rethink forced unwrapping
-//        return newlySelected!
-//    }
-    
-    
     func selectNextMeasure() -> Measure {
-        print("in selectNextMeasure")
-
         let previousSelected = selectedMeasure
         
         // notYetCorrectlyBuildMeasures gets all measures if correctlyBuildMeasures is empty in the beginning
         var notYetCorrectlyBuildMeasures = measures.subtracting(correctlyBuildMeasures)
-        print("notYetCorrectlyBuildMeasures: " + notYetCorrectlyBuildMeasures.count.description)
         
         // loops over all measures if all measures have already been build correctly
         if (notYetCorrectlyBuildMeasures.isEmpty) {
             correctlyBuildMeasures.removeAll()
             notYetCorrectlyBuildMeasures = measures
-            print("all correct")
-            print("notYetCorrectlyBuildMeasures: " + notYetCorrectlyBuildMeasures.count.description)
         }
         
         var newlySelected = notYetCorrectlyBuildMeasures.randomElement()!
         // only one remaining measure to be build
         if (notYetCorrectlyBuildMeasures.count==1) {
             // newlySelected contains that one measure
-            print("last remaining")
             return newlySelected
         }
         
         while(previousSelected == newlySelected ) {
             newlySelected = notYetCorrectlyBuildMeasures.randomElement()!
         }
-        print("newlySelected: " + newlySelected.rawValue + "\n")
         return newlySelected
     }
     
@@ -328,10 +299,7 @@ class LevelFiveToSixScene: SKScene {
     func displayCongratulations() {
         backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
         addChild(backgroundBlocker)
-        
-        congratulations = Congratulations(size: CGSize(width: 650, height: 800))
         congratulations.delegate = self
-        congratulations.zPosition = 5000
         addChild(congratulations)
     }
     
@@ -339,10 +307,7 @@ class LevelFiveToSixScene: SKScene {
     func displayReplyIsCorrect() {
         backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
         addChild(backgroundBlocker)
-        
-        replyIsCorrect = ReplyIsCorrect(size: CGSize(width: 747, height: 350))
         replyIsCorrect.delegate = self
-        replyIsCorrect.zPosition = 5000
         addChild(replyIsCorrect)
     }
     
@@ -350,11 +315,8 @@ class LevelFiveToSixScene: SKScene {
     func displayReplyIsFalse(solution: String) {
         backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
         addChild(backgroundBlocker)
-        
-        replyIsFalse = ReplyIsFalse(size: CGSize(width: 747, height: 350))
         replyIsFalse.addSolutionToText(solution: solution)
         replyIsFalse.delegate = self
-        replyIsFalse.zPosition = 5000
         addChild(replyIsFalse)
     }
     
@@ -362,10 +324,7 @@ class LevelFiveToSixScene: SKScene {
     func displayWarning() {
         backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
         addChild(backgroundBlocker)
-        
-        warning = Warning(size: CGSize(width: 650, height: 450))
         warning.delegate = self
-        warning.zPosition = 5000
         addChild(warning)
     }
     
@@ -495,7 +454,7 @@ class LevelFiveToSixScene: SKScene {
             displayMeasureInfo()
         }
         
-        if (touchedNode.isEqual(to: checkButton)) {
+        if (touchedNode.isEqual(to: checkButton)) || (touchedNode.parent == checkButton) {
             if areAccentBinsFilledWithAStressmark() {
                 let (isSolutionCorrect, realSolution) = self.isReplyCorrect()
                 
@@ -626,7 +585,7 @@ extension LevelFiveToSixScene: MeasureInfoDelegate, ReplyIsCorrectDelegate, Repl
     
     func closeReplyIsCorrect() {
         backgroundBlocker.removeFromParent()
-        replyIsCorrect?.removeFromParent()
+        replyIsCorrect.removeFromParent()
         
         if correctReplies == amountOfCorrectRepliesToPassLevel {
             displayCongratulations()
@@ -638,7 +597,7 @@ extension LevelFiveToSixScene: MeasureInfoDelegate, ReplyIsCorrectDelegate, Repl
     
     func closeReplyIsFalse() {
         backgroundBlocker.removeFromParent()
-        replyIsFalse?.removeFromParent()
+        replyIsFalse.removeFromParent()
         cleanAndSetupSceneForNewMeasure()
     }
     
@@ -650,6 +609,6 @@ extension LevelFiveToSixScene: MeasureInfoDelegate, ReplyIsCorrectDelegate, Repl
     
     func closeWarning() {
         backgroundBlocker.removeFromParent()
-        warning?.removeFromParent()
+        warning.removeFromParent()
     }
 }
