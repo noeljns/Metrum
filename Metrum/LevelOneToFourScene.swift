@@ -514,8 +514,7 @@ class LevelOneToFourScene: SKScene {
             // node waits 1.5 for lower levels, 4.0 for higher levels and reveices touch events again
             // otherwise app would crash since addAndRemoveNode would be operated although node is still in scene
             self.run(SKAction.wait(forDuration: longerDurationIfHigherLevels()), completion: {() -> Void in
-                self.soundButton.isUserInteractionEnabled = false
-                print(self.soundButton.isUserInteractionEnabled.description)})
+                self.soundButton.isUserInteractionEnabled = false})
         }
         
         if (touchedNode.isEqual(to: checkButton)) || (touchedNode.parent == checkButton) {

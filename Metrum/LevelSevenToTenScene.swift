@@ -63,7 +63,6 @@ class LevelSevenToTenScene: SKScene {
         let jambusLabelText = makeAttributedString(stringToBeMutated: "Jambus: Ge·", shallBecomeBold: false, size: 25)
          jambusLabelText.append(makeAttributedString(stringToBeMutated: "spenst 👻", shallBecomeBold: true, size: 25))
         if let jambusLabel = jambusBin.childNode(withName: "measureLabel") as? SKLabelNode {
-            print("one")
             jambusLabel.attributedText = jambusLabelText
         }
         addChild(jambusBin)
@@ -72,8 +71,6 @@ class LevelSevenToTenScene: SKScene {
         trochaeusLabelText.append(makeAttributedString(stringToBeMutated: "So", shallBecomeBold: true, size: 25))
         trochaeusLabelText.append(makeAttributedString(stringToBeMutated: "·nne ☀️", shallBecomeBold: false, size: 25))
         if let trochaeusLabel = trochaeusBin.childNode(withName: "measureLabel") as? SKLabelNode {
-            print("two")
-            print(trochaeusLabelText)
             trochaeusLabel.attributedText = trochaeusLabelText
         }
         addChild(trochaeusBin)
@@ -368,8 +365,7 @@ class LevelSevenToTenScene: SKScene {
             // otherwise app would crash since addAndRemoveNode would be operated although nodes are still in scene
             self.run(SKAction.wait(forDuration: longerDurationIfHigherLevels()), completion: {() -> Void in
                 self.soundButton.isUserInteractionEnabled = false
-                self.selectedLineBoldLabel.isUserInteractionEnabled = false
-                print(self.soundButton.isUserInteractionEnabled.description)})
+                self.selectedLineBoldLabel.isUserInteractionEnabled = false})
         }
         
         if (touchedNode.isEqual(to: exitLabel)) {

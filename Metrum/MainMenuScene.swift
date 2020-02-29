@@ -93,14 +93,11 @@ class MainMenuScene: SKScene {
     func markEnterableAndPassedLevels() {
         var trophyPosition = 360
         for (index, levelIsPassed) in levels.enumerated() {
-            print("levelisPassed: " + String(index) + " " + String(levelIsPassed))
             
             // last index / index = 9 is not necessary since there is no level11
             if levelIsPassed && index<9 {
-                print("levelisPassed: " + String(levelIsPassed) + " " + String(index))
                 let indexOfNextLevel = index+2
                 let nameOfNextLevel = "level" + String(indexOfNextLevel)
-                print("nameOfNextLevel: " + nameOfNextLevel)
                 drawLevelColorful(levelName: nameOfNextLevel)
             }
             
