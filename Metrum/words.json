@@ -4,18 +4,18 @@
       {
         "syllables": [
           {
-            "syllableString": "So",
+            "syllableString": "An",
             "accentuation": "stressed"
           },
           {
-            "syllableString": "nne",
+            "syllableString": "ker",
             "accentuation": "unstressed"
           }
         ]
       }
     ],
     "measure": "trochaeus",
-    "audioFile": "Sonne.mp3"
+    "audioFile": "Anker.mp3"
   },
   {
     "words": [
@@ -36,6 +36,42 @@
     "audioFile": "Flasche.mp3"
   },
   {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Ze",
+                      "accentuation": "stressed"
+                  },
+                  {
+                      "syllableString": "bra",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "trochaeus",
+      "audioFile": "Zebra.mp3"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Blu",
+                      "accentuation": "stressed"
+                  },
+                  {
+                      "syllableString": "me",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "trochaeus",
+      "audioFile": "Blume.mp3"
+  },
+  {
     "words": [
       {
         "syllables": [
@@ -52,6 +88,24 @@
     ],
     "measure": "trochaeus",
     "audioFile": "Lampe.mp3"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Mes",
+                      "accentuation": "stressed"
+                  },
+                  {
+                      "syllableString": "ser",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "trochaeus",
+      "audioFile": "Messer.mp3"
   },
   {
     "words": [
@@ -108,6 +162,78 @@
     "audioFile": "Ersatz.mp3"
   },
   {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Re",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": "gal",
+                      "accentuation": "stressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "jambus",
+      "audioFile": "Regal.mp3"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Ge",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": "sang",
+                      "accentuation": "stressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "jambus",
+      "audioFile": "Gesang.mp3"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Ge",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": "stell",
+                      "accentuation": "stressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "jambus",
+      "audioFile": "Gestell.mp3"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "ka",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": "putt",
+                      "accentuation": "stressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "jambus",
+      "audioFile": "kaputt.mp3"
+  },
+  {
     "words": [
       {
         "syllables": [
@@ -116,7 +242,7 @@
             "accentuation": "unstressed"
           },
           {
-            "syllableString": "mo",
+            "syllableString": " mo ",
             "accentuation": "unstressed"
           },
           {
@@ -138,7 +264,7 @@
             "accentuation": "unstressed"
           },
           {
-            "syllableString": "fo",
+            "syllableString": " fo ",
             "accentuation": "unstressed"
           },
           {
@@ -172,6 +298,72 @@
     ],
     "measure": "anapaest",
     "audioFile": "Direktion.mp3"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Chi",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": "rur",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": "gie",
+                      "accentuation": "stressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "anapaest",
+      "audioFile": "Chirurgie.mp3"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "E",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": " mo ",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": "tion",
+                      "accentuation": "stressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "anapaest",
+      "audioFile": "Emotion.mp3"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Fan",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": " ta  ",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": "sie",
+                      "accentuation": "stressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "anapaest",
+      "audioFile": "Fantasie.mp3"
   },
   {
     "words": [
@@ -238,5 +430,71 @@
     ],
     "measure": "daktylus",
     "audioFile": "Autobahn.mp3"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "an",
+                      "accentuation": "stressed"
+                  },
+                  {
+                      "syllableString": "ge",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": "spannt",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "daktylus",
+      "audioFile": "angespannt.mp3"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Fin",
+                      "accentuation": "stressed"
+                  },
+                  {
+                      "syllableString": "ster",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": "nis",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "daktylus",
+      "audioFile": "Finsternis.mp3"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Stun",
+                      "accentuation": "stressed"
+                  },
+                  {
+                      "syllableString": "den",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": "plan",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "daktylus",
+      "audioFile": "Stundenplan.mp3"
   }
 ]

@@ -51,7 +51,7 @@
       }
     ],
     "measure": "trochaeus",
-    "audioFile": "lineOne.mp3"
+    "audioFile": "FreudeSchoenerGoetterfunken.mp3"
   },
   {
     "words": [
@@ -101,7 +101,7 @@
       }
     ],
     "measure": "jambus",
-    "audioFile": "lineTwo.mp3"
+    "audioFile": "AmHimmelHellUndKlar.mp3"
   },
   {
     "words": [
@@ -147,7 +147,7 @@
       }
     ],
     "measure": "daktylus",
-    "audioFile": "lineThree.mp3"
+    "audioFile": "OeffneDichErdeMit.mp3"
   },
   {
     "words": [
@@ -201,6 +201,6 @@
       }
     ],
     "measure": "anapaest",
-    "audioFile": "lineFour.mp3"
+    "audioFile": "UndEsWalletUndSiedet.mp3"
   }
 ]
