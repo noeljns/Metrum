@@ -32,7 +32,6 @@
 		DD296823240AAC980021E05F /* AmHellenStrand.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD29681F240AAC970021E05F /* AmHellenStrand.wav */; };
 		DD296824240AAC980021E05F /* HeuteHierMorgenDort.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD296820240AAC970021E05F /* HeuteHierMorgenDort.wav */; };
 		DD296825240AAC980021E05F /* AlleMeineEntchen.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD296821240AAC980021E05F /* AlleMeineEntchen.wav */; };
-		DD3276CA23F0DE93007DAB87 /* Gespenst.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD3276C923F0DE93007DAB87 /* Gespenst.mp3 */; };
 		DD4363F823F18645001F2A48 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363F723F18645001F2A48 /* Word.swift */; };
 		DD4363FA23F18676001F2A48 /* Syllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363F923F18676001F2A48 /* Syllable.swift */; };
 		DD4363FC23F18692001F2A48 /* Accentuation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363FB23F18692001F2A48 /* Accentuation.swift */; };
@@ -129,7 +128,6 @@
 		DD29681F240AAC970021E05F /* AmHellenStrand.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AmHellenStrand.wav; sourceTree = "<group>"; };
 		DD296820240AAC970021E05F /* HeuteHierMorgenDort.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = HeuteHierMorgenDort.wav; sourceTree = "<group>"; };
 		DD296821240AAC980021E05F /* AlleMeineEntchen.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AlleMeineEntchen.wav; sourceTree = "<group>"; };
-		DD3276C923F0DE93007DAB87 /* Gespenst.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Gespenst.mp3; sourceTree = "<group>"; };
 		DD4363F723F18645001F2A48 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		DD4363F923F18676001F2A48 /* Syllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Syllable.swift; sourceTree = "<group>"; };
 		DD4363FB23F18692001F2A48 /* Accentuation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accentuation.swift; sourceTree = "<group>"; };
@@ -244,7 +242,6 @@
 				DD296812240A8E360021E05F /* Emotion.mp3 */,
 				DDE2FBF923FD7AD600118ADC /* Achterbahn.mp3 */,
 				DDE2FBFB23FD7B1200118ADC /* Autobahn.mp3 */,
-				DD3276C923F0DE93007DAB87 /* Gespenst.mp3 */,
 				DD296816240AA42E0021E05F /* UndEsWalletUndSiedet.wav */,
 				DD29681C240AA4E40021E05F /* FreudeSchoenerGoetterfunken.wav */,
 				DD296818240AA4D10021E05F /* OeffneDichErdeMit.wav */,
@@ -494,7 +491,6 @@
 				DD5749D223EC405200C50423 /* Main.storyboard in Resources */,
 				DDE2FBF823FD7AA400118ADC /* Eitelkeit.mp3 in Resources */,
 				DDE2FBEE23FD798B00118ADC /* genau.mp3 in Resources */,
-				DD3276CA23F0DE93007DAB87 /* Gespenst.mp3 in Resources */,
 				DDC4906D23EC507A000F0942 /* MainMenuScene.sks in Resources */,
 				DD296823240AAC980021E05F /* AmHellenStrand.wav in Resources */,
 				DDE2FBFA23FD7AD600118ADC /* Achterbahn.mp3 in Resources */,
