@@ -32,6 +32,7 @@
 		DD296823240AAC980021E05F /* AmHellenStrand.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD29681F240AAC970021E05F /* AmHellenStrand.wav */; };
 		DD296824240AAC980021E05F /* HeuteHierMorgenDort.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD296820240AAC970021E05F /* HeuteHierMorgenDort.wav */; };
 		DD296825240AAC980021E05F /* AlleMeineEntchen.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD296821240AAC980021E05F /* AlleMeineEntchen.wav */; };
+		DD296827240ADBA20021E05F /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD296826240ADBA20021E05F /* Book.swift */; };
 		DD4363F823F18645001F2A48 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363F723F18645001F2A48 /* Word.swift */; };
 		DD4363FA23F18676001F2A48 /* Syllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363F923F18676001F2A48 /* Syllable.swift */; };
 		DD4363FC23F18692001F2A48 /* Accentuation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363FB23F18692001F2A48 /* Accentuation.swift */; };
@@ -128,6 +129,8 @@
 		DD29681F240AAC970021E05F /* AmHellenStrand.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AmHellenStrand.wav; sourceTree = "<group>"; };
 		DD296820240AAC970021E05F /* HeuteHierMorgenDort.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = HeuteHierMorgenDort.wav; sourceTree = "<group>"; };
 		DD296821240AAC980021E05F /* AlleMeineEntchen.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AlleMeineEntchen.wav; sourceTree = "<group>"; };
+		DD296826240ADBA20021E05F /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		DD29682C240ADD060021E05F /* books.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = books.json; sourceTree = "<group>"; };
 		DD4363F723F18645001F2A48 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		DD4363F923F18676001F2A48 /* Syllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Syllable.swift; sourceTree = "<group>"; };
 		DD4363FB23F18692001F2A48 /* Accentuation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accentuation.swift; sourceTree = "<group>"; };
@@ -262,6 +265,7 @@
 				DD4363F723F18645001F2A48 /* Word.swift */,
 				DD4363F923F18676001F2A48 /* Syllable.swift */,
 				DD4363FB23F18692001F2A48 /* Accentuation.swift */,
+				DD296826240ADBA20021E05F /* Book.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -335,6 +339,7 @@
 				DD3E90CC23F03C9B00E72372 /* Sounds */,
 				DD95065323FD8B2400BF1291 /* lines.json */,
 				DD95065423FD8B2400BF1291 /* words.json */,
+				DD29682C240ADD060021E05F /* books.json */,
 			);
 			path = Metrum;
 			sourceTree = "<group>";
@@ -561,6 +566,7 @@
 				DD5677872407EC38007B6025 /* LoadingBar.swift in Sources */,
 				DDC75EF923FE043200B551BB /* LevelSevenToTenScene.swift in Sources */,
 				DDC75EF323FDE37600B551BB /* LevelFiveToSixScene.swift in Sources */,
+				DD296827240ADBA20021E05F /* Book.swift in Sources */,
 				DD56778C24087642007B6025 /* TaskLabel.swift in Sources */,
 				DD56779924094002007B6025 /* SKSpriteNodeExtension.swift in Sources */,
 				DD9C91EE2401482C00C753C3 /* LevelExplanation.swift in Sources */,

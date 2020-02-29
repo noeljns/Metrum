@@ -54,6 +54,31 @@ extension SKScene {
         }
     }
     
+    /// Gets data from json file and saves deserialized Line objects to selection variable.
+    ///
+    /// - Parameters:
+    ///   - inputFile: inputFile to be loaded
+    /// - Returns: Set of loaded Line objects
+    func loadInputFileBooks(inputFile: String) -> [Book]{
+        let data: Data
+        
+        // TODO get from Sandbox
+        // name of json file is in inputFile
+        guard let file = Bundle.main.url(forResource: inputFile, withExtension: nil) else {
+            fatalError("Could not find \(inputFile) in main bundle.")
+        }
+        do {
+            data = try Data(contentsOf: file)
+        }
+        catch {
+            fatalError("Could not find \(inputFile) in main bundle.")
+        }
+        do {
+            let books = try! JSONDecoder().decode([Book].self, from: data)
+            return books
+        }
+    }
+    
     /// Returns white background blocker sprite node with z position of 4999
     ///
     /// - Parameters:

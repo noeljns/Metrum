@@ -2,10 +2,12 @@
 //  LevelFiveToSix.swift
 //  Metrum
 //
+// Class that represents a scene for level five to six of Metrum App.
+// After initializing the provideHelp and userDefaultsKey properties need to be specified.
+//
 //  Created by Jonas Jonas on 19.02.20.
 //  Copyright © 2020 Jonas Jonas. All rights reserved.
 //
-
 import SpriteKit
 
 class LevelFiveToSixScene: SKScene {
@@ -398,6 +400,10 @@ class LevelFiveToSixScene: SKScene {
     
     
     override func didMove(to view: SKView) {
+        if(userDefaultsKey == "") {
+            fatalError("hand over userdefaultkeys")
+        }
+        
         setUpScene()
         setUpUnfixedParts()
         

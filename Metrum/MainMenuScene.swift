@@ -2,10 +2,11 @@
 //  MainMenuScene.swift
 //  Metrum
 //
+// Class that represents the landing scene of Metrum App.
+//
 //  Created by Jonas Jonas on 06.02.20.
 //  Copyright © 2020 Jonas Jonas. All rights reserved.
 //
-
 import SpriteKit
 
 class MainMenuScene: SKScene {
@@ -123,6 +124,10 @@ class MainMenuScene: SKScene {
     }
 
     override func didMove(to view: SKView) {
+        // var books = loadInputFileBooks(inputFile: "books.json")
+        // print(books[0].title + " " + books[0].author +  "\n")
+        // print(books[1].title + " " + books[1].author)
+        
         if !(firstEntryOfApp) {
             displaySalutation()
             UserDefaults.standard.set(true, forKey: "firstEntry")

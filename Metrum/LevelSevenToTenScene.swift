@@ -2,10 +2,12 @@
 //  LevelSevenToTenScene.swift
 //  Metrum
 //
+// Class that represents a scene for level seven to ten of Metrum App.
+// After initializing the provideHelp, inputFile and userDefaultsKey properties need to be specified.
+//
 //  Created by Jonas Jonas on 20.02.20.
 //  Copyright © 2020 Jonas Jonas. All rights reserved.
 //
-
 import SpriteKit
 
 class LevelSevenToTenScene: SKScene {
@@ -320,6 +322,10 @@ class LevelSevenToTenScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
+        if(inputFile == "" || userDefaultsKey == "") {
+            fatalError("hand over input file and userdefaultkeys")
+        }
+        
         // loadInputFile()
         loadedLines = loadInputFile(inputFile: inputFile)
         selectedLine = loadedLines.first
