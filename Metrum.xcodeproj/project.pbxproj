@@ -32,8 +32,6 @@
 		DD296823240AAC980021E05F /* AmHellenStrand.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD29681F240AAC970021E05F /* AmHellenStrand.wav */; };
 		DD296824240AAC980021E05F /* HeuteHierMorgenDort.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD296820240AAC970021E05F /* HeuteHierMorgenDort.wav */; };
 		DD296825240AAC980021E05F /* AlleMeineEntchen.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD296821240AAC980021E05F /* AlleMeineEntchen.wav */; };
-		DD296827240ADBA20021E05F /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD296826240ADBA20021E05F /* Book.swift */; };
-		DD29682E240AE3300021E05F /* books.json in Resources */ = {isa = PBXBuildFile; fileRef = DD29682D240AE3300021E05F /* books.json */; };
 		DD296830240AE3920021E05F /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD29682F240AE3920021E05F /* FileManagerExtension.swift */; };
 		DD4363F823F18645001F2A48 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363F723F18645001F2A48 /* Word.swift */; };
 		DD4363FA23F18676001F2A48 /* Syllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363F923F18676001F2A48 /* Syllable.swift */; };
@@ -131,8 +129,6 @@
 		DD29681F240AAC970021E05F /* AmHellenStrand.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AmHellenStrand.wav; sourceTree = "<group>"; };
 		DD296820240AAC970021E05F /* HeuteHierMorgenDort.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = HeuteHierMorgenDort.wav; sourceTree = "<group>"; };
 		DD296821240AAC980021E05F /* AlleMeineEntchen.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AlleMeineEntchen.wav; sourceTree = "<group>"; };
-		DD296826240ADBA20021E05F /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
-		DD29682D240AE3300021E05F /* books.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = books.json; sourceTree = "<group>"; };
 		DD29682F240AE3920021E05F /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
 		DD4363F723F18645001F2A48 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		DD4363F923F18676001F2A48 /* Syllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Syllable.swift; sourceTree = "<group>"; };
@@ -268,7 +264,6 @@
 				DD4363F723F18645001F2A48 /* Word.swift */,
 				DD4363F923F18676001F2A48 /* Syllable.swift */,
 				DD4363FB23F18692001F2A48 /* Accentuation.swift */,
-				DD296826240ADBA20021E05F /* Book.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -341,7 +336,6 @@
 				DD5749D823EC405300C50423 /* Info.plist */,
 				DD11698E23F054FF00E553CE /* Assets.xcassets */,
 				DD3E90CC23F03C9B00E72372 /* Sounds */,
-				DD29682D240AE3300021E05F /* books.json */,
 				DD95065323FD8B2400BF1291 /* lines.json */,
 				DD95065423FD8B2400BF1291 /* words.json */,
 			);
@@ -525,7 +519,6 @@
 				DDC75EF523FDE39D00B551BB /* LevelFiveToSixScene.sks in Resources */,
 				DD296809240A816D0021E05F /* Regal.mp3 in Resources */,
 				DD29680B240A816D0021E05F /* Fantasie.mp3 in Resources */,
-				DD29682E240AE3300021E05F /* books.json in Resources */,
 				DD29680A240A816D0021E05F /* Anker.mp3 in Resources */,
 				DD95065523FD8B2500BF1291 /* lines.json in Resources */,
 				DD296813240A8E360021E05F /* Emotion.mp3 in Resources */,
@@ -571,7 +564,6 @@
 				DD5677872407EC38007B6025 /* LoadingBar.swift in Sources */,
 				DDC75EF923FE043200B551BB /* LevelSevenToTenScene.swift in Sources */,
 				DDC75EF323FDE37600B551BB /* LevelFiveToSixScene.swift in Sources */,
-				DD296827240ADBA20021E05F /* Book.swift in Sources */,
 				DD56778C24087642007B6025 /* TaskLabel.swift in Sources */,
 				DD56779924094002007B6025 /* SKSpriteNodeExtension.swift in Sources */,
 				DD9C91EE2401482C00C753C3 /* LevelExplanation.swift in Sources */,
