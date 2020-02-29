@@ -116,6 +116,7 @@ class LevelFiveToSixScene: SKScene {
         }
         
         while(previousSelected == newlySelected ) {
+            // forced unwrapping is fine because notYetCorrectlyMarkedLines can't be nil
             newlySelected = notYetCorrectlyBuildMeasures.randomElement()!
         }
         return newlySelected
@@ -347,7 +348,7 @@ class LevelFiveToSixScene: SKScene {
         for accentBin in accentBins {
             for stressMark in stressMarks {
                 if accentBin.position.equalTo(stressMark.position) {
-                    // TODO: Optional handling
+                    // forced unwrapping is okay because stressmark gets a name in generateAStressMark()
                     reply.append(stressMark.name!)
                 }
             }

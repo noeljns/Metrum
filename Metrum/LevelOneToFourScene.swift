@@ -124,7 +124,7 @@ class LevelOneToFourScene: SKScene {
         }
     
         guard var newlySelected = notYetCorrectlyMarkedLines.randomElement() else {
-            fatalError("error with loadedLines")
+            fatalError("error with loadedLines, so that notYetCorrectlyMarkedLines is nil")
         }
         // only one remaining line to be solved
         if (notYetCorrectlyMarkedLines.count==1) {
@@ -133,6 +133,7 @@ class LevelOneToFourScene: SKScene {
         }
         
         while(previousSelected == newlySelected ) {
+            // forced unwrapping is fine because notYetCorrectlyMarkedLines can't be nil
             newlySelected = notYetCorrectlyMarkedLines.randomElement()!
         }
         return newlySelected
@@ -404,7 +405,8 @@ class LevelOneToFourScene: SKScene {
         for accentBin in accentBins {
             for stressMark in stressMarks {
                 if accentBin.position.equalTo(stressMark.position) {
-                    // TODO: Optional handling
+                    // forced unwrapping is okay because stressmark gets a name in generateAStressMark()
+                    stressMark.name is not nil
                     reply.append(stressMark.name!)
                 }
             }
