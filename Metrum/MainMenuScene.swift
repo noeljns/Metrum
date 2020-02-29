@@ -123,11 +123,7 @@ class MainMenuScene: SKScene {
         }
     }
 
-    override func didMove(to view: SKView) {
-        // var books = loadInputFileBooks(inputFile: "books.json")
-        // print(books[0].title + " " + books[0].author +  "\n")
-        // print(books[1].title + " " + books[1].author)
-        
+    override func didMove(to view: SKView) {        
         if !(firstEntryOfApp) {
             displaySalutation()
             UserDefaults.standard.set(true, forKey: "firstEntry")

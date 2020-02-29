@@ -116,7 +116,7 @@ class LevelOneToFourScene: SKScene {
         
         // notYetCorrectlyMarkedLines gets all loadedLines if correctlyMarkedLines is empty in the beginning
         var notYetCorrectlyMarkedLines = loadedLines.subtracting(correctlyMarkedLines)
-        
+     
         // loops over all loadedLines if all lines have already been solved correctly
         if (notYetCorrectlyMarkedLines.isEmpty) {
             correctlyMarkedLines.removeAll()
@@ -477,9 +477,14 @@ class LevelOneToFourScene: SKScene {
             fatalError("hand over input file and userdefaultkeys")
         }
         
-        // loadInputFile()
-        loadedLines = loadInputFile(inputFile: inputFile)
-        selectedLine = loadedLines.first
+        // old version from main bundle: loadedLines = loadInputFileFromMainBundle(inputFile: inputFile)
+        if let data = loadInputFileFromDocumentDirectory(fromDocumentsWithFileName: inputFile) {
+            loadedLines = data
+            selectedLine = loadedLines.first
+        }
+        else {
+            fatalError("loading input file from document directory failed")
+        }
         
         setUpScene()
         setUpUnfixedParts()

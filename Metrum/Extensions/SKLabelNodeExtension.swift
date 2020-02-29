@@ -9,7 +9,6 @@
 import SpriteKit
 
 extension SKLabelNode {
-    
     /// Adds stroke to label in specified color and width
     ///
     /// - Parameters:

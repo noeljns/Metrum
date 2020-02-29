@@ -9,7 +9,6 @@
 import SpriteKit
 
 extension SKSpriteNode {
-    // https://stackoverflow.com/questions/20889222/can-i-add-a-border-to-an-skspritenode-similar-to-uiview
     /// Draws border around sprite node and adds border to scene
     ///
     /// - Parameters:

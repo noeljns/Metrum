@@ -14,6 +14,13 @@ protocol CongratulationsDelegate: class {
 
 class Congratulations: SKSpriteNode {
     weak var delegate: CongratulationsDelegate?
+    let explanationLabel = SKLabelNode()
+    
+    /// Sets final explanation text for last level
+    func setExplanationLabelForLastLevel() {
+        explanationLabel.text = "Großartig, du hast die Lernapp durchgearbeitet.\n\n"
+            + "Jetzt bist du ein Metrum Profi. Herzlichen Glückwünsch!"
+    }
     
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
@@ -40,9 +47,9 @@ class Congratulations: SKSpriteNode {
         trophy.zPosition = 4
         trophyButton.addChild(trophy)
      
-        let explanationLabel = SKLabelNode()
         explanationLabel.fontColor = SKColor.black
-        explanationLabel.text = "Herzlichen Glückwünsch! Du hast das Level bestanden.\n\n" +              "Weiter geht es im nächsten Level."
+        explanationLabel.text = "Herzlichen Glückwünsch! Du hast das Level bestanden.\n\n"
+            + "Weiter geht es im nächsten Level."
         explanationLabel.fontSize = 40
         explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-200)
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping

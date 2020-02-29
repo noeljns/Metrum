@@ -9,6 +9,83 @@
 import SpriteKit
 
 extension SKScene {
+    /// Returns a set of Line objects deserialized from a json file stored in user's document directory
+    ///
+    /// - Parameters:
+    ///   - fileName: name of file to be loaded and deserialized
+    /// - Returns: Set of loaded and deserialized Line objects
+    func loadInputFileFromDocumentDirectory(fromDocumentsWithFileName fileName: String) -> Set<Line>? {
+        let data: Data
+        let url = self.getDocumentsDirectory().appendingPathComponent(fileName)
+        // check if fileName exists
+        if FileManager.default.fileExists(atPath: url.path) {
+            do {
+                data = try Data(contentsOf: url)
+                let lines = try! JSONDecoder().decode(Set<Line>.self, from: data)
+                return lines
+            }
+            catch {
+                print("Error reading \(fileName) file")
+            }
+        }
+        else {
+            print("\(fileName) is not available")
+        }
+        return nil
+    }
+    
+    /// Gets user's document directory
+    ///
+    /// - Returns: url of user's document directory
+    func getDocumentsDirectory() -> URL {
+        // find all possible documents directories for this user
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        
+        // returns the first one, which should be the only one
+        return paths[0]
+    }
+    
+    
+    /// Gets data from json file stored in main bundle and returns deserialized set of Line objects
+    ///
+    /// - Parameters:
+    ///   - inputFile: inputFile to be loaded
+    /// - Returns: Set of loaded and deserialized Line objects
+    func loadInputFileFromMainBundle(inputFile: String) -> Set<Line>{
+        let data: Data
+        
+        // name of json file is in inputFile, for instance lines.json
+        guard let file = Bundle.main.url(forResource: inputFile, withExtension: nil) else {
+            fatalError("Could not find \(inputFile) in main bundle.")
+        }
+        do {
+            data = try Data(contentsOf: file)
+        }
+        catch {
+            fatalError("Could not find \(inputFile) in main bundle.")
+        }
+        do {
+            let lines = try! JSONDecoder().decode([Line].self, from: data)
+            return Set<Line>(lines)
+        }
+    }
+    
+    /// Returns white background blocker sprite node with z position of 4999
+    ///
+    /// - Parameters:
+    ///   - shallBeTransparent: Bool that determines whether background blocker shall be transparent or not
+    ///   - size: size of background blocker
+    /// - Returns: background blocker sprite node
+    func getBackgroundBlocker(shallBeTransparent: Bool, size: CGSize) -> SKSpriteNode {
+        let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: size)
+        backgroundBlocker.name = "backgroundBlocker"
+        backgroundBlocker.zPosition = 4999
+        if shallBeTransparent {
+            backgroundBlocker.alpha = 0.5
+        }
+        return backgroundBlocker
+    }
+    
     /// Returns String as NSMutableAttributedString and when indicated in bold.
     ///
     /// - Parameters:
@@ -27,72 +104,6 @@ extension SKScene {
             let normalString = NSMutableAttributedString(string:stringToBeMutated, attributes: notBold as [NSAttributedString.Key : Any])
             return normalString
         }
-    }
-    
-    /// Gets data from json file and saves deserialized Line objects to selection variable.
-    ///
-    /// - Parameters:
-    ///   - inputFile: inputFile to be loaded
-    /// - Returns: Set of loaded Line objects
-    func loadInputFile(inputFile: String) -> Set<Line>{
-        let data: Data
-        
-        // TODO get from Sandbox
-        // name of json file is in inputFile
-        guard let file = Bundle.main.url(forResource: inputFile, withExtension: nil) else {
-            fatalError("Could not find \(inputFile) in main bundle.")
-        }
-        do {
-            data = try Data(contentsOf: file)
-        }
-        catch {
-            fatalError("Could not find \(inputFile) in main bundle.")
-        }
-        do {
-            let lines = try! JSONDecoder().decode([Line].self, from: data)
-            return Set<Line>(lines)
-        }
-    }
-    
-    /// Gets data from json file and saves deserialized Line objects to selection variable.
-    ///
-    /// - Parameters:
-    ///   - inputFile: inputFile to be loaded
-    /// - Returns: Set of loaded Line objects
-    func loadInputFileBooks(inputFile: String) -> [Book]{
-        let data: Data
-        
-        // TODO get from Sandbox
-        // name of json file is in inputFile
-        guard let file = Bundle.main.url(forResource: inputFile, withExtension: nil) else {
-            fatalError("Could not find \(inputFile) in main bundle.")
-        }
-        do {
-            data = try Data(contentsOf: file)
-        }
-        catch {
-            fatalError("Could not find \(inputFile) in main bundle.")
-        }
-        do {
-            let books = try! JSONDecoder().decode([Book].self, from: data)
-            return books
-        }
-    }
-    
-    /// Returns white background blocker sprite node with z position of 4999
-    ///
-    /// - Parameters:
-    ///   - shallBeTransparent: Bool that determines whether background blocker shall be transparent or not
-    ///   - size: size of background blocker
-    /// - Returns: background blocker sprite node
-    func getBackgroundBlocker(shallBeTransparent: Bool, size: CGSize) -> SKSpriteNode {
-        let backgroundBlocker = SKSpriteNode(color: SKColor.white, size: size)
-        backgroundBlocker.name = "backgroundBlocker"
-        backgroundBlocker.zPosition = 4999
-        if shallBeTransparent {
-            backgroundBlocker.alpha = 0.5
-        }
-        return backgroundBlocker
     }
     
 //    // TODO: test to modularize overlay nodes

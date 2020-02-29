@@ -326,9 +326,18 @@ class LevelSevenToTenScene: SKScene {
             fatalError("hand over input file and userdefaultkeys")
         }
         
-        // loadInputFile()
-        loadedLines = loadInputFile(inputFile: inputFile)
-        selectedLine = loadedLines.first
+        if (userDefaultsKey == "level10") {
+            congratulations.setExplanationLabelForLastLevel()
+        }
+        
+        // old version from main bundle: loadedLines = loadInputFileFromMainBundle(inputFile: inputFile)
+        if let data = loadInputFileFromDocumentDirectory(fromDocumentsWithFileName: inputFile) {
+            loadedLines = data
+            selectedLine = loadedLines.first
+        }
+        else {
+            fatalError("loading input file from document directory failed")
+        }
         
         setUpScene()
         setUpUnfixedParts()

@@ -14,17 +14,11 @@ protocol AccentuationInfoDelegate: class {
 
 class AccentuationInfo: SKSpriteNode {
     weak var delegate: AccentuationInfoDelegate?
+    private let soundButton = SoundButton(size: CGSize(width: 40, height: 40), position: CGPoint(x: 120 , y: -140))
     private var exampleWordLabel = SKLabelNode()
     private var exampleWordBoldLabel = SKLabelNode()
     
     func generateExampleWord() {
-        let soundBoxButton = SKSpriteNode(imageNamed: "QuickActions_Audio")
-        soundBoxButton.name = "soundBoxBtn"
-        soundBoxButton.position = CGPoint(x: frame.midX+120 , y: frame.midY-140)
-        soundBoxButton.size = CGSize(width: 40, height: 40)
-        soundBoxButton.zPosition = 2
-        addChild(soundBoxButton)
-        
         let accentBinOne = SKSpriteNode()
         accentBinOne.color = SKColor.lightGray
         accentBinOne.size = CGSize(width: 40, height: 50)
@@ -78,7 +72,7 @@ class AccentuationInfo: SKSpriteNode {
         super.init(texture: nil, color: .clear, size: size)
         name = "accentuationInfo"
         zPosition = 5000
-
+        
         let background = SKSpriteNode(color: .white, size: self.size)
         background.zPosition = 1
         background.drawBorder(color: .lightGray, width: 5)
@@ -105,6 +99,7 @@ class AccentuationInfo: SKSpriteNode {
         addChild(explanationLabel)
         
         generateExampleWord()
+        addChild(soundButton)
         
         // let colorCloseButtonFrame = UIColor(hue: 0.9611, saturation: 0.93, brightness: 1, alpha: 1.0) /* #ff1149 */
         // let closeButtonFrame = SKSpriteNode(color: colorCloseButtonFrame, size: CGSize(width: 180, height: 55))
@@ -134,7 +129,7 @@ class AccentuationInfo: SKSpriteNode {
     /// - Parameters:
     ///   - node: Node that should be added to and removed from the scene.
     func addAndRemoveNode(node: SKLabelNode) {
-        let duration = 1.5
+        let duration = 2.5
         
         addChild(node)
         node.run(SKAction.sequence([
@@ -151,7 +146,7 @@ class AccentuationInfo: SKSpriteNode {
     /// - Parameters:
     ///   - node: Node that should be added to and removed from the scene.
     func hideAndUnhideNode(node: SKLabelNode) {
-        let duration = 1.5
+        let duration = 2.5
         
         node.run(SKAction.sequence([
             SKAction.hide(),
@@ -177,12 +172,20 @@ class AccentuationInfo: SKSpriteNode {
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
         
-        if(touchedNode.name == "soundBoxBtn") {
+        if(touchedNode.isEqual(to: soundButton)) {
+            // node no longer receives touch events
+            self.soundButton.isUserInteractionEnabled = true
+            
             let playSound = SKAction.playSoundFileNamed("Torben.mp3", waitForCompletion: false)
             let action =  SKAction.group([playSound,
                                           SKAction.run{self.addAndRemoveNode(node: self.exampleWordBoldLabel)},
                                           SKAction.run{self.hideAndUnhideNode(node: self.exampleWordLabel)}])
             self.run(action)
+            
+            // node waits 1.5 for lower levels, 4.0 for higher levels and reveices touch events again
+            // otherwise app would crash since addAndRemoveNode would be operated although node is still in scene
+            self.run(SKAction.wait(forDuration: 2.5), completion: {() -> Void in
+                self.soundButton.isUserInteractionEnabled = false})
         }
         
         if (touchedNode.name == "closeButton") || (touchedNode.name == "closeButtonFrame"){
