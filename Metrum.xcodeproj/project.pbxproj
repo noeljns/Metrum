@@ -24,6 +24,14 @@
 		DD29680E240A816D0021E05F /* Messer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD296800240A816C0021E05F /* Messer.mp3 */; };
 		DD296811240A8BA70021E05F /* Stundenplan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD296810240A8BA70021E05F /* Stundenplan.mp3 */; };
 		DD296813240A8E360021E05F /* Emotion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD296812240A8E360021E05F /* Emotion.mp3 */; };
+		DD296817240AA42E0021E05F /* UndEsWalletUndSiedet.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD296816240AA42E0021E05F /* UndEsWalletUndSiedet.wav */; };
+		DD296819240AA4D10021E05F /* OeffneDichErdeMit.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD296818240AA4D10021E05F /* OeffneDichErdeMit.wav */; };
+		DD29681B240AA4DC0021E05F /* AmHimmelHellUndKlar.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD29681A240AA4DC0021E05F /* AmHimmelHellUndKlar.wav */; };
+		DD29681D240AA4E40021E05F /* FreudeSchoenerGoetterfunken.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD29681C240AA4E40021E05F /* FreudeSchoenerGoetterfunken.wav */; };
+		DD296822240AAC980021E05F /* EhretDieFrauenSie.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD29681E240AAC970021E05F /* EhretDieFrauenSie.wav */; };
+		DD296823240AAC980021E05F /* AmHellenStrand.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD29681F240AAC970021E05F /* AmHellenStrand.wav */; };
+		DD296824240AAC980021E05F /* HeuteHierMorgenDort.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD296820240AAC970021E05F /* HeuteHierMorgenDort.wav */; };
+		DD296825240AAC980021E05F /* AlleMeineEntchen.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD296821240AAC980021E05F /* AlleMeineEntchen.wav */; };
 		DD3276CA23F0DE93007DAB87 /* Gespenst.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD3276C923F0DE93007DAB87 /* Gespenst.mp3 */; };
 		DD4363F823F18645001F2A48 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363F723F18645001F2A48 /* Word.swift */; };
 		DD4363FA23F18676001F2A48 /* Syllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363F923F18676001F2A48 /* Syllable.swift */; };
@@ -60,10 +68,6 @@
 		DDC4906D23EC507A000F0942 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC4906C23EC507A000F0942 /* MainMenuScene.sks */; };
 		DDC4907123EC5736000F0942 /* LevelOneToFourScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC4907023EC5736000F0942 /* LevelOneToFourScene.sks */; };
 		DDC4907323ED7641000F0942 /* AccentuationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4907223ED7641000F0942 /* AccentuationInfo.swift */; };
-		DDC75EEE23FDE0F300B551BB /* FreudeSchoenerGoetterfunken.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EEA23FDE0F100B551BB /* FreudeSchoenerGoetterfunken.mp3 */; };
-		DDC75EEF23FDE0F300B551BB /* UndEsWalletUndSiedet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EEB23FDE0F100B551BB /* UndEsWalletUndSiedet.mp3 */; };
-		DDC75EF023FDE0F300B551BB /* OeffneDichErdeMit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EEC23FDE0F200B551BB /* OeffneDichErdeMit.mp3 */; };
-		DDC75EF123FDE0F300B551BB /* AmHimmelHellUndKlar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EED23FDE0F300B551BB /* AmHimmelHellUndKlar.mp3 */; };
 		DDC75EF323FDE37600B551BB /* LevelFiveToSixScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC75EF223FDE37600B551BB /* LevelFiveToSixScene.swift */; };
 		DDC75EF523FDE39D00B551BB /* LevelFiveToSixScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EF423FDE39D00B551BB /* LevelFiveToSixScene.sks */; };
 		DDC75EF723FDE42000B551BB /* MeasureInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC75EF623FDE42000B551BB /* MeasureInfo.swift */; };
@@ -117,6 +121,14 @@
 		DD296800240A816C0021E05F /* Messer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Messer.mp3; sourceTree = "<group>"; };
 		DD296810240A8BA70021E05F /* Stundenplan.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Stundenplan.mp3; sourceTree = "<group>"; };
 		DD296812240A8E360021E05F /* Emotion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Emotion.mp3; sourceTree = "<group>"; };
+		DD296816240AA42E0021E05F /* UndEsWalletUndSiedet.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = UndEsWalletUndSiedet.wav; sourceTree = "<group>"; };
+		DD296818240AA4D10021E05F /* OeffneDichErdeMit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = OeffneDichErdeMit.wav; sourceTree = "<group>"; };
+		DD29681A240AA4DC0021E05F /* AmHimmelHellUndKlar.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AmHimmelHellUndKlar.wav; sourceTree = "<group>"; };
+		DD29681C240AA4E40021E05F /* FreudeSchoenerGoetterfunken.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = FreudeSchoenerGoetterfunken.wav; sourceTree = "<group>"; };
+		DD29681E240AAC970021E05F /* EhretDieFrauenSie.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = EhretDieFrauenSie.wav; sourceTree = "<group>"; };
+		DD29681F240AAC970021E05F /* AmHellenStrand.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AmHellenStrand.wav; sourceTree = "<group>"; };
+		DD296820240AAC970021E05F /* HeuteHierMorgenDort.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = HeuteHierMorgenDort.wav; sourceTree = "<group>"; };
+		DD296821240AAC980021E05F /* AlleMeineEntchen.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AlleMeineEntchen.wav; sourceTree = "<group>"; };
 		DD3276C923F0DE93007DAB87 /* Gespenst.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Gespenst.mp3; sourceTree = "<group>"; };
 		DD4363F723F18645001F2A48 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		DD4363F923F18676001F2A48 /* Syllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Syllable.swift; sourceTree = "<group>"; };
@@ -159,10 +171,6 @@
 		DDC4906C23EC507A000F0942 /* MainMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenuScene.sks; sourceTree = "<group>"; };
 		DDC4907023EC5736000F0942 /* LevelOneToFourScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelOneToFourScene.sks; sourceTree = "<group>"; };
 		DDC4907223ED7641000F0942 /* AccentuationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentuationInfo.swift; sourceTree = "<group>"; };
-		DDC75EEA23FDE0F100B551BB /* FreudeSchoenerGoetterfunken.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FreudeSchoenerGoetterfunken.mp3; sourceTree = "<group>"; };
-		DDC75EEB23FDE0F100B551BB /* UndEsWalletUndSiedet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = UndEsWalletUndSiedet.mp3; sourceTree = "<group>"; };
-		DDC75EEC23FDE0F200B551BB /* OeffneDichErdeMit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = OeffneDichErdeMit.mp3; sourceTree = "<group>"; };
-		DDC75EED23FDE0F300B551BB /* AmHimmelHellUndKlar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = AmHimmelHellUndKlar.mp3; sourceTree = "<group>"; };
 		DDC75EF223FDE37600B551BB /* LevelFiveToSixScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelFiveToSixScene.swift; sourceTree = "<group>"; };
 		DDC75EF423FDE39D00B551BB /* LevelFiveToSixScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelFiveToSixScene.sks; sourceTree = "<group>"; };
 		DDC75EF623FDE42000B551BB /* MeasureInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureInfo.swift; sourceTree = "<group>"; };
@@ -237,10 +245,14 @@
 				DDE2FBF923FD7AD600118ADC /* Achterbahn.mp3 */,
 				DDE2FBFB23FD7B1200118ADC /* Autobahn.mp3 */,
 				DD3276C923F0DE93007DAB87 /* Gespenst.mp3 */,
-				DDC75EEB23FDE0F100B551BB /* UndEsWalletUndSiedet.mp3 */,
-				DDC75EEA23FDE0F100B551BB /* FreudeSchoenerGoetterfunken.mp3 */,
-				DDC75EEC23FDE0F200B551BB /* OeffneDichErdeMit.mp3 */,
-				DDC75EED23FDE0F300B551BB /* AmHimmelHellUndKlar.mp3 */,
+				DD296816240AA42E0021E05F /* UndEsWalletUndSiedet.wav */,
+				DD29681C240AA4E40021E05F /* FreudeSchoenerGoetterfunken.wav */,
+				DD296818240AA4D10021E05F /* OeffneDichErdeMit.wav */,
+				DD29681A240AA4DC0021E05F /* AmHimmelHellUndKlar.wav */,
+				DD296821240AAC980021E05F /* AlleMeineEntchen.wav */,
+				DD29681F240AAC970021E05F /* AmHellenStrand.wav */,
+				DD29681E240AAC970021E05F /* EhretDieFrauenSie.wav */,
+				DD296820240AAC970021E05F /* HeuteHierMorgenDort.wav */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -477,32 +489,35 @@
 			files = (
 				DDC75EFB23FE04E900B551BB /* LevelSevenToTenScene.sks in Resources */,
 				DD29680D240A816D0021E05F /* kaputt.mp3 in Resources */,
+				DD296824240AAC980021E05F /* HeuteHierMorgenDort.wav in Resources */,
 				DD296803240A816D0021E05F /* Gestell.mp3 in Resources */,
 				DD5749D223EC405200C50423 /* Main.storyboard in Resources */,
 				DDE2FBF823FD7AA400118ADC /* Eitelkeit.mp3 in Resources */,
 				DDE2FBEE23FD798B00118ADC /* genau.mp3 in Resources */,
 				DD3276CA23F0DE93007DAB87 /* Gespenst.mp3 in Resources */,
 				DDC4906D23EC507A000F0942 /* MainMenuScene.sks in Resources */,
+				DD296823240AAC980021E05F /* AmHellenStrand.wav in Resources */,
 				DDE2FBFA23FD7AD600118ADC /* Achterbahn.mp3 in Resources */,
 				DDE2FBE823FD78C000118ADC /* Lampe.mp3 in Resources */,
 				DD296806240A816D0021E05F /* Blume.mp3 in Resources */,
+				DD29681B240AA4DC0021E05F /* AmHimmelHellUndKlar.wav in Resources */,
 				DD95065623FD8B2500BF1291 /* words.json in Resources */,
-				DDC75EEE23FDE0F300B551BB /* FreudeSchoenerGoetterfunken.mp3 in Resources */,
 				DDA5BD282405D6850060E766 /* Torben.mp3 in Resources */,
 				DD11698F23F054FF00E553CE /* Assets.xcassets in Resources */,
+				DD296819240AA4D10021E05F /* OeffneDichErdeMit.wav in Resources */,
 				DD86857F24072F8A000C44CE /* Direktion.mp3 in Resources */,
 				DD29680E240A816D0021E05F /* Messer.mp3 in Resources */,
+				DD296817240AA42E0021E05F /* UndEsWalletUndSiedet.wav in Resources */,
 				DDE2FBFC23FD7B1200118ADC /* Autobahn.mp3 in Resources */,
 				DD5749D723EC405300C50423 /* LaunchScreen.storyboard in Resources */,
 				DD296807240A816D0021E05F /* angespannt.mp3 in Resources */,
-				DDC75EF023FDE0F300B551BB /* OeffneDichErdeMit.mp3 in Resources */,
 				DD296805240A816D0021E05F /* Finsternis.mp3 in Resources */,
+				DD296825240AAC980021E05F /* AlleMeineEntchen.wav in Resources */,
 				DD296808240A816D0021E05F /* Zebra.mp3 in Resources */,
-				DDC75EEF23FDE0F300B551BB /* UndEsWalletUndSiedet.mp3 in Resources */,
+				DD29681D240AA4E40021E05F /* FreudeSchoenerGoetterfunken.wav in Resources */,
 				DDE2FBEA23FD78F000118ADC /* Sonne.mp3 in Resources */,
 				DDC4907123EC5736000F0942 /* LevelOneToFourScene.sks in Resources */,
 				DDC75EF523FDE39D00B551BB /* LevelFiveToSixScene.sks in Resources */,
-				DDC75EF123FDE0F300B551BB /* AmHimmelHellUndKlar.mp3 in Resources */,
 				DD296809240A816D0021E05F /* Regal.mp3 in Resources */,
 				DD29680B240A816D0021E05F /* Fantasie.mp3 in Resources */,
 				DD29680A240A816D0021E05F /* Anker.mp3 in Resources */,
@@ -515,6 +530,7 @@
 				DD5749FC23EC408800C50423 /* .gitignore in Resources */,
 				DDE2FBF423FD7A4700118ADC /* Sinfonie.mp3 in Resources */,
 				DD296802240A816D0021E05F /* Chirurgie.mp3 in Resources */,
+				DD296822240AAC980021E05F /* EhretDieFrauenSie.wav in Resources */,
 				DDE2FBF223FD7A1300118ADC /* Harmonie.mp3 in Resources */,
 				DDE2FBEC23FD794D00118ADC /* Verstand.mp3 in Resources */,
 			);

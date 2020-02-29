@@ -51,7 +51,49 @@
       }
     ],
     "measure": "trochaeus",
-    "audioFile": "FreudeSchoenerGoetterfunken.mp3"
+    "audioFile": "FreudeSchoenerGoetterfunken.wav"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Al",
+                      "accentuation": "stressed"
+                  },
+                  {
+                      "syllableString": "le",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          },
+          {
+              "syllables": [
+                  {
+                      "syllableString": " mei",
+                      "accentuation": "stressed"
+                  },
+                  {
+                      "syllableString": "ne",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          },
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Ent",
+                      "accentuation": "stressed"
+                  },
+                  {
+                      "syllableString": "chen ",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "trochaeus",
+      "audioFile": "AlleMeineEntchen.wav"
   },
   {
     "words": [
@@ -101,7 +143,41 @@
       }
     ],
     "measure": "jambus",
-    "audioFile": "AmHimmelHellUndKlar.mp3"
+    "audioFile": "AmHimmelHellUndKlar.wav"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Am",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          },
+          {
+              "syllables": [
+                  {
+                      "syllableString": "hel",
+                      "accentuation": "stressed"
+                  },
+                  {
+                      "syllableString": "len",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          },
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Strand",
+                      "accentuation": "stressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "jambus",
+      "audioFile": "AmHellenStrand.wav"
   },
   {
     "words": [
@@ -147,7 +223,53 @@
       }
     ],
     "measure": "daktylus",
-    "audioFile": "OeffneDichErdeMit.mp3"
+    "audioFile": "OeffneDichErdeMit.wav"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Eh",
+                      "accentuation": "stressed"
+                  },
+                  {
+                      "syllableString": "ret",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          },
+          {
+              "syllables": [
+                  {
+                      "syllableString": "die",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          },
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Frau",
+                      "accentuation": "stressed"
+                  },
+                  {
+                      "syllableString": "en!",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          },
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Sie...",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "daktylus",
+      "audioFile": "EhretDieFrauenSie.wav"
   },
   {
     "words": [
@@ -201,6 +323,52 @@
       }
     ],
     "measure": "anapaest",
-    "audioFile": "UndEsWalletUndSiedet.mp3"
+    "audioFile": "UndEsWalletUndSiedet.wav"
+  },
+  {
+      "words": [
+          {
+              "syllables": [
+                  {
+                      "syllableString": "Heu",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": "te",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          },
+          {
+              "syllables": [
+                  {
+                      "syllableString": " hier",
+                      "accentuation": "stressed"
+                  }
+              ]
+          },
+          {
+              "syllables": [
+                  {
+                      "syllableString": "mor",
+                      "accentuation": "unstressed"
+                  },
+                  {
+                      "syllableString": "gen",
+                      "accentuation": "unstressed"
+                  }
+              ]
+          },
+          {
+              "syllables": [
+                  {
+                      "syllableString": "dort",
+                      "accentuation": "stressed"
+                  }
+              ]
+          }
+      ],
+      "measure": "anapaest",
+      "audioFile": "HeuteHierMorgenDort.wav"
   }
 ]
