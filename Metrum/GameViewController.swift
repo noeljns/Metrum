@@ -11,7 +11,6 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
-
     /// Copies specified files from main bundle to user document directory
     ///
     /// - Parameters:
@@ -50,15 +49,15 @@ class GameViewController: UIViewController {
     }
 
     override var shouldAutorotate: Bool {
-        // forbid landscape mode
-        return false
+        return true
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        // forbid landscape mode
         if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
+            return .portrait
         } else {
-            return .all
+            return .portrait
         }
     }
 
