@@ -25,18 +25,21 @@ class Salutation: SKSpriteNode {
         background.drawBorder(color: .orange, width: 5)
         addChild(background)
         
-        let headerLabel = SKLabelNode(text: "Willkommen!")
+        let headerLabel = SKLabelNode(text: "Herzlichen Willkommen!")
         headerLabel.fontColor = SKColor.black
         headerLabel.fontSize = 50
-        headerLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY+340)
+        headerLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY+280)
         headerLabel.zPosition = 4
+        headerLabel.shakeLabelNode()
         addChild(headerLabel)
         
         let explanationLabel = SKLabelNode()
         explanationLabel.fontColor = SKColor.black
-        explanationLabel.text = "Herzlichen Willkommen in der Lernapp Metrum. Hier kannst du in verschiedenen Leveln üben, das Metrum von Gedichtversen zu bestimmen.\n\n" +
-            "Am Anfang lernst du, betonte von unbetonten Silben von Worten und Versen zu unterscheiden. Danach lernst du die vier wichtigsten Metriken kennen. In den finalen Leveln bist du dann bereit, das Metrum von Worten und Versen zu bestimmen.\n\n" + "Viel Spaß!"
-        explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-270)
+        explanationLabel.text = "In der Lernapp Metrum lernst du in verschiedenen Leveln, das Metrum von Gedichtversen zu bestimmen.\n\n"
+            + "»Welche Silben eines Wortes oder eines Verses werden betont und welche nicht?«\n"
+        + "»Welchem Metrum kann ein Wort oder ein Vers zugeordnet werden«?\n\n"
+            + "Auf diese Fragen findest du hier Antworten. Viel Spaß!"
+        explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-230)
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         explanationLabel.numberOfLines = 0
         explanationLabel.preferredMaxLayoutWidth = 480

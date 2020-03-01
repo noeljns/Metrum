@@ -406,7 +406,6 @@ class LevelOneToFourScene: SKScene {
             for stressMark in stressMarks {
                 if accentBin.position.equalTo(stressMark.position) {
                     // forced unwrapping is okay because stressmark gets a name in generateAStressMark()
-                    stressMark.name is not nil
                     reply.append(stressMark.name!)
                 }
             }
