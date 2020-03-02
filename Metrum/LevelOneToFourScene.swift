@@ -621,7 +621,6 @@ class LevelOneToFourScene: SKScene {
         // TODO higher function
         for stressMark in stressMarks {
             if !(frame.contains(stressMark.position)) {
-                print("lost a stressMark to the infinite nonentity")
                 stressMark.position = CGPoint(x: frame.midX, y: frame.midY-150)
             }
         }

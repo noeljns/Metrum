@@ -15,7 +15,7 @@ class LevelFiveToSixScene: SKScene {
     private var exitLabel = ExitLabel()
     private let loadingBar = LoadingBar(color: .green, size: CGSize(width: 600, height: 26))
     private var measureInfo = MeasureInfo(size: CGSize(width: 650, height: 800))
-    private var infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: 225 , y: 210))
+    private var infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: 180 , y: 60))
     private var checkButton = CheckButton(size: CGSize(width: 150, height: 55))
     private let selectedMeasureLabel = SKLabelNode()
     private var accentBins = [SKSpriteNode]()
@@ -79,7 +79,10 @@ class LevelFiveToSixScene: SKScene {
         
         selectedMeasureLabel.fontColor = SKColor.black
         selectedMeasureLabel.text = generateTaskLabelForSelectedMeasure(measure: selectedMeasure)
-        selectedMeasureLabel.position = CGPoint(x: frame.midX , y: frame.midY+200)
+        selectedMeasureLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+        selectedMeasureLabel.numberOfLines = 0
+        selectedMeasureLabel.preferredMaxLayoutWidth = 520
+        selectedMeasureLabel.position = CGPoint(x: frame.midX , y: frame.midY+180)
         selectedMeasureLabel.zPosition = 4
         addChild(selectedMeasureLabel)
         
@@ -131,13 +134,17 @@ class LevelFiveToSixScene: SKScene {
         var taskLabelText = ""
         switch measure {
         case .jambus:
-            taskLabelText = "Baue einen Jambus 👻!"
+            taskLabelText = "Welches Betonungsmuster wird Jambus 👻 genannt?\n"
+                            + "Ziehe die Betonungszeichen in der richtigen Reihenfolge in die grauen Kästchen!"
         case .trochaeus:
-            taskLabelText = "Baue einen Trochäus ☀️!"
+            taskLabelText = "Welches Betonungsmuster wird als Trochäus ☀️ bezeichnet?\n"
+                            + "Ziehe die Betonungszeichen in der richtigen Reihenfolge in die grauen Kästchen!"
         case .anapaest:
-        taskLabelText = "Baue einen Anapäst 🐘!"
+            taskLabelText = "Welches Betonungsmuster wird Anapäst 🐘 genannt?\n"
+                            + "Ziehe die Betonungszeichen in der richtigen Reihenfolge in die grauen Kästchen!"
         case .daktylus:
-        taskLabelText = "Baue einen Daktylus 🥦!"
+            taskLabelText = "Welches Betonungsmuster wird als Daktylus 🥦 bezeichnet?\n"
+                            + "Ziehe die Betonungszeichen in der richtigen Reihenfolge in die grauen Kästchen!"
         }
         return taskLabelText
     }

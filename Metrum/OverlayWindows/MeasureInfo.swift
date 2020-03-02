@@ -30,24 +30,26 @@ class MeasureInfo: SKSpriteNode {
         headerLabel.fontSize = 50
         headerLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY+300)
         headerLabel.zPosition = 4
+        headerLabel.shakeLabelNode()
         addChild(headerLabel)
         
         let explanationLabel = SKLabelNode()
         explanationLabel.fontColor = SKColor.black
         let attributedText = makeAttributedString(stringToBeMutated: "Die Verse vieler Gedichte haben ein bestimmtes Betonungsmuster. "
-            + "Das heißt die betonten (x́) und unbetonten (x) Silben eines Verses wechseln sich in einer festen Reihenfolge ab. \n"
-            + "Diese Abfolge nennt man Versmaß oder Metrum. Die vier wichtigsten Grundtypen sind: \n\n"
-            + "   Jambus (x x́)   : Ge·", shallBecomeBold: false, size: 32)
+            + "Die betonten (x́) und unbetonten (x) Silben eines Verses wechseln sich also in einer festen Reihenfolge ab. \n"
+            + "Diese Abfolge nennt man Metrum.\n\n"
+            + "Das sind die vier wichtigsten Metren mit Beispielworten, die ihrem Betonungsmuster entsprechen:\n"
+            + "   Jambus (x x́)  : z.B. Ge·", shallBecomeBold: false, size: 32)
         attributedText.append(makeAttributedString(stringToBeMutated: "spenst 👻", shallBecomeBold: true, size: 32))
-        attributedText.append(makeAttributedString(stringToBeMutated: "\n   Trochäus (x́ x)  :", shallBecomeBold: false, size: 32))
-        attributedText.append(makeAttributedString(stringToBeMutated: " So", shallBecomeBold: true, size: 32))
-        attributedText.append(makeAttributedString(stringToBeMutated: "·nne ☀️\n   Anapäst (x x x́) : E·le·", shallBecomeBold: false, size: 32))
+        attributedText.append(makeAttributedString(stringToBeMutated: "\n   Trochäus (x́ x) : z.B. ", shallBecomeBold: false, size: 32))
+        attributedText.append(makeAttributedString(stringToBeMutated: "So", shallBecomeBold: true, size: 32))
+        attributedText.append(makeAttributedString(stringToBeMutated: "·nne ☀️\n   Anapäst (x x x́): z.B. E·le·", shallBecomeBold: false, size: 32))
         attributedText.append(makeAttributedString(stringToBeMutated: "fant 🐘", shallBecomeBold: true, size: 32))
-        attributedText.append(makeAttributedString(stringToBeMutated: "\n   Daktylus (x́ x x) : ", shallBecomeBold: false, size: 32))
+        attributedText.append(makeAttributedString(stringToBeMutated: "\n   Daktylus (x́ x x): z.B. ", shallBecomeBold: false, size: 32))
         attributedText.append(makeAttributedString(stringToBeMutated: "Bro", shallBecomeBold: true, size: 32))
         attributedText.append(makeAttributedString(stringToBeMutated: "·kko·li 🥦", shallBecomeBold: false, size: 32))
         explanationLabel.attributedText = attributedText
-        explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-250)
+        explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-290)
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         explanationLabel.numberOfLines = 0
         explanationLabel.preferredMaxLayoutWidth = 500
