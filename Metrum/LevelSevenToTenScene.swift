@@ -54,7 +54,7 @@ class LevelSevenToTenScene: SKScene {
     private let colorizeGreen = SKAction.colorize(with: UIColor.green, colorBlendFactor: 1, duration: 0.1)
     private let colorizeRed = SKAction.colorize(with: UIColor.red, colorBlendFactor: 1, duration: 0.1)
     private let colorizeWhite = SKAction.colorize(with: UIColor.white, colorBlendFactor: 1, duration: 0.2)
-    let playRewardSound = SKAction.playSoundFileNamed("CorrectReply.mp3", waitForCompletion: false)
+    let playRewardSound = SKAction.playSoundFileNamed("ReplyIsCorrect.mp3", waitForCompletion: false)
     
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
     func setUpScene() {

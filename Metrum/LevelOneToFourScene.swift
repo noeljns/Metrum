@@ -563,7 +563,7 @@ class LevelOneToFourScene: SKScene {
                     manageLoadingBar()
                     
                     // play sound to reward user for success
-                    let playRewardSound = SKAction.playSoundFileNamed("CorrectReply.mp3", waitForCompletion: false)
+                    let playRewardSound = SKAction.playSoundFileNamed("ReplyIsCorrect.mp3", waitForCompletion: false)
                     self.run(playRewardSound)
                 
                     displayReplyIsCorrect()

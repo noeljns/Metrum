@@ -58,7 +58,7 @@
 		DD5749FC23EC408800C50423 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DD5749FB23EC408800C50423 /* .gitignore */; };
 		DD5D68C8240C597C001777A7 /* SKShapeNodeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5D68C7240C597C001777A7 /* SKShapeNodeExtension.swift */; };
 		DD5D68CD240C6CE5001777A7 /* GameWon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD5D68CB240C6CE5001777A7 /* GameWon.mp3 */; };
-		DD5D68CE240C6CE5001777A7 /* CorrectReply.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD5D68CC240C6CE5001777A7 /* CorrectReply.mp3 */; };
+		DD75FA7E240D3E8D00CA7662 /* ReplyIsCorrect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD75FA7D240D3E8D00CA7662 /* ReplyIsCorrect.mp3 */; };
 		DD86857F24072F8A000C44CE /* Direktion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD86857E24072F89000C44CE /* Direktion.mp3 */; };
 		DD95065523FD8B2500BF1291 /* lines.json in Resources */ = {isa = PBXBuildFile; fileRef = DD95065323FD8B2400BF1291 /* lines.json */; };
 		DD95065623FD8B2500BF1291 /* words.json in Resources */ = {isa = PBXBuildFile; fileRef = DD95065423FD8B2400BF1291 /* words.json */; };
@@ -164,7 +164,7 @@
 		DD5749FB23EC408800C50423 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		DD5D68C7240C597C001777A7 /* SKShapeNodeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKShapeNodeExtension.swift; sourceTree = "<group>"; };
 		DD5D68CB240C6CE5001777A7 /* GameWon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GameWon.mp3; sourceTree = "<group>"; };
-		DD5D68CC240C6CE5001777A7 /* CorrectReply.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CorrectReply.mp3; sourceTree = "<group>"; };
+		DD75FA7D240D3E8D00CA7662 /* ReplyIsCorrect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ReplyIsCorrect.mp3; sourceTree = "<group>"; };
 		DD86857E24072F89000C44CE /* Direktion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Direktion.mp3; sourceTree = "<group>"; };
 		DD95065323FD8B2400BF1291 /* lines.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = lines.json; sourceTree = "<group>"; };
 		DD95065423FD8B2400BF1291 /* words.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = words.json; sourceTree = "<group>"; };
@@ -223,9 +223,9 @@
 		DD3E90CC23F03C9B00E72372 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				DD5D68CC240C6CE5001777A7 /* CorrectReply.mp3 */,
 				DD5D68CB240C6CE5001777A7 /* GameWon.mp3 */,
 				DDA5BD272405D6850060E766 /* Torben.mp3 */,
+				DD75FA7D240D3E8D00CA7662 /* ReplyIsCorrect.mp3 */,
 				DDE2FBE923FD78F000118ADC /* Sonne.mp3 */,
 				DDE2FBE323FD780E00118ADC /* Flasche.mp3 */,
 				DDE2FBE723FD78C000118ADC /* Lampe.mp3 */,
@@ -508,7 +508,6 @@
 				DDE2FBFA23FD7AD600118ADC /* Achterbahn.mp3 in Resources */,
 				DDE2FBE823FD78C000118ADC /* Lampe.mp3 in Resources */,
 				DD296806240A816D0021E05F /* Blume.mp3 in Resources */,
-				DD5D68CE240C6CE5001777A7 /* CorrectReply.mp3 in Resources */,
 				DD29681B240AA4DC0021E05F /* AmHimmelHellUndKlar.wav in Resources */,
 				DD95065623FD8B2500BF1291 /* words.json in Resources */,
 				DDA5BD282405D6850060E766 /* Torben.mp3 in Resources */,
@@ -529,6 +528,7 @@
 				DDC4907123EC5736000F0942 /* LevelOneToFourScene.sks in Resources */,
 				DDC75EF523FDE39D00B551BB /* LevelFiveToSixScene.sks in Resources */,
 				DD296809240A816D0021E05F /* Regal.mp3 in Resources */,
+				DD75FA7E240D3E8D00CA7662 /* ReplyIsCorrect.mp3 in Resources */,
 				DD29680B240A816D0021E05F /* Fantasie.mp3 in Resources */,
 				DD29680A240A816D0021E05F /* Anker.mp3 in Resources */,
 				DD95065523FD8B2500BF1291 /* lines.json in Resources */,
