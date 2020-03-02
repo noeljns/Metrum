@@ -38,7 +38,7 @@ class Salutation: SKSpriteNode {
         explanationLabel.text = "In der Lernapp Metrum lernst du in verschiedenen Leveln, das Metrum von Gedichtversen zu bestimmen.\n\n"
             + "»Welche Silben eines Wortes oder eines Verses werden betont und welche nicht?«\n"
         + "»Welchem Metrum kann ein Wort oder ein Vers zugeordnet werden«?\n\n"
-            + "Auf diese Fragen findest du hier Antworten. Viel Spaß!"
+            + "Diese Fragen wirst du bald selbst beantworten können! Viel Spaß!"
         explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-230)
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         explanationLabel.numberOfLines = 0

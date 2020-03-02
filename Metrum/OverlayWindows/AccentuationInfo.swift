@@ -83,11 +83,12 @@ class AccentuationInfo: SKSpriteNode {
         headerLabel.fontSize = 50
         headerLabel.position = CGPoint(x: frame.midX-10 , y: frame.midY+340)
         headerLabel.zPosition = 4
+        headerLabel.shakeLabelNode()
         addChild(headerLabel)
  
         let explanationLabel = SKLabelNode()
         explanationLabel.fontColor = SKColor.black
-        explanationLabel.text = "Jedes Wort besteht aus einer oder mehreren Silben. Diese können betont (x́) oder unbetont (x) sein.\n\n" +
+        explanationLabel.text = "Ein Wort besteht aus einer oder mehreren Silben. Diese sind betont (x́) oder unbetont (x).\n\n" +
             "Der Name Torben besteht zum Beispiel aus zwei Silben: Tor·ben.\n" +
             "Die erste Silbe ist betont (x́) und die zweite Silbe ist unbetont (x).\n\n" +
             "Klicke auf den Lautsprecher und die betonte Silbe erscheint fett markiert."

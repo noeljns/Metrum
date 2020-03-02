@@ -15,9 +15,8 @@ class LevelOneToFourScene: SKScene {
     private var exitLabel = ExitLabel()
     private let loadingBar = LoadingBar(color: .green, size: CGSize(width: 600, height: 26))
     private let taskLabel: TaskLabel = {
-        let taskLabelText = "Markiere die betonten (x́) und unbetonten (x) Silben."
-                            + " Zu jeder Silbe gehört ein graues Kästchen, das über ihr platziert ist."
-                            + "\nZiehe die Betonungszeichen in das jeweilige Kästchen über der Silbe."
+        let taskLabelText = "Markiere alle Silben mit einem Betonungszei- chen als betont (x́) oder unbetont (x).\n"
+                            + "Ziehe dafür das Zeichen in das graue Kästchen, das über ihr platziert ist."
         let taskLabelPosition = CGPoint(x: 0 , y: 200)
         let taskLabel = TaskLabel(text: taskLabelText, position: taskLabelPosition)
         return taskLabel
