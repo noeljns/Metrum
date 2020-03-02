@@ -560,20 +560,23 @@ extension LevelFiveToSixScene: MeasureInfoDelegate, ReplyIsCorrectDelegate, Repl
         measureInfo.removeFromParent()
     }
     
-    func closeCongratulations() {
+    func exitCongratulations() {
         let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
         self.view?.presentScene(mainMenu)
+    }
+    
+    func closeCongratulations() {
+        backgroundBlocker.removeFromParent()
+        congratulations.removeFromParent()
     }
     
     func closeReplyIsCorrect() {
         backgroundBlocker.removeFromParent()
         replyIsCorrect.removeFromParent()
-        
+        cleanAndSetupSceneForNewMeasure()
+
         if correctReplies == amountOfCorrectRepliesToPassLevel {
             displayCongratulations()
-        }
-        else {
-            cleanAndSetupSceneForNewMeasure()
         }
     }
     

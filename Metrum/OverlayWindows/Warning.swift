@@ -59,18 +59,18 @@ class Warning: SKSpriteNode {
         exitButton.addStroke(color: .white, width: 6.0)
         exitButtonFrame.addChild(exitButton)
         
-        let backButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 180, height: 55))
-        backButtonFrame.position = CGPoint(x: frame.midX-200, y: frame.midY-170)
-        backButtonFrame.zPosition = 4
-        addChild(backButtonFrame)
-        let backButton = SKLabelNode(text: "Level fortführen")
-        backButton.name = "back"
-        backButton.fontSize = 25
-        backButton.fontColor = SKColor.white
-        backButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
-        backButton.zPosition = 5
-        backButton.addStroke(color: .white, width: 6.0)
-        backButtonFrame.addChild(backButton)
+        let closeButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 180, height: 55))
+        closeButtonFrame.position = CGPoint(x: frame.midX-200, y: frame.midY-170)
+        closeButtonFrame.zPosition = 4
+        addChild(closeButtonFrame)
+        let closeButton = SKLabelNode(text: "Level fortführen")
+        closeButton.name = "close"
+        closeButton.fontSize = 25
+        closeButton.fontColor = SKColor.white
+        closeButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
+        closeButton.zPosition = 5
+        closeButton.addStroke(color: .white, width: 6.0)
+        closeButtonFrame.addChild(closeButton)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -97,7 +97,7 @@ class Warning: SKSpriteNode {
         if (touchedNode.name == "exit") {
             exit()
         }
-        if (touchedNode.name == "back") {
+        if (touchedNode.name == "close") {
             close()
         }
     }

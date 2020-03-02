@@ -93,23 +93,6 @@ class LevelSevenToTenScene: SKScene {
             addMeasureBin(measureBin: anapaestBin, labelText: anapaestLabelText)
             addMeasureBin(measureBin: daktylusBin, labelText: daktylusLabelText)
         }
-        
-//        if let jambusLabel = jambusBin.childNode(withName: "measureLabel") as? SKLabelNode {
-//            jambusLabel.attributedText = jambusLabelText
-//        }
-//        addChild(jambusBin)
-//        if let trochaeusLabel = trochaeusBin.childNode(withName: "measureLabel") as? SKLabelNode {
-//            trochaeusLabel.attributedText = trochaeusLabelText
-//        }
-//        addChild(trochaeusBin)
-//        if let anapaestLabel = anapaestBin.childNode(withName: "measureLabel") as? SKLabelNode {
-//            anapaestLabel.attributedText = anapaestLabelText
-//        }
-//        addChild(anapaestBin)
-//        if let daktylusLabel = daktylusBin.childNode(withName: "measureLabel") as? SKLabelNode {
-//            daktylusLabel.attributedText = daktylusLabelText
-//        }
-//        addChild(daktylusBin)
     }
     
     /// Adds measure bin to scene
@@ -501,9 +484,14 @@ extension LevelSevenToTenScene: MeasureInfoDelegate, CongratulationsDelegate, Wa
         measureInfo.removeFromParent()
     }
     
-    func closeCongratulations() {
+    func exitCongratulations() {
         let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
         self.view?.presentScene(mainMenu)
+    }
+    
+    func closeCongratulations() {
+        backgroundBlocker.removeFromParent()
+        congratulations.removeFromParent()
     }
     
     func exitWarning() {

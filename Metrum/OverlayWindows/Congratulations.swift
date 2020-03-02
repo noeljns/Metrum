@@ -9,6 +9,7 @@
 import SpriteKit
 
 protocol CongratulationsDelegate: class {
+    func exitCongratulations()
     func closeCongratulations()
 }
 
@@ -21,7 +22,7 @@ class Congratulations: SKSpriteNode {
         explanationLabel.text = "Großartig, du hast die Lernapp durchgearbeitet.\n\n"
             + "Jetzt bist du ein Metrum Profi. Herzlichen Glückwünsch!"
     }
-    
+
     init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
         name = "congratulations"
@@ -46,30 +47,44 @@ class Congratulations: SKSpriteNode {
         trophy.position = CGPoint(x: frame.midX , y: frame.midY+120)
         trophy.zPosition = 4
         trophyButton.addChild(trophy)
-     
+        trophyButton.shakeSpriteNode()
+
         explanationLabel.fontColor = SKColor.black
-        explanationLabel.text = "Herzlichen Glückwünsch! Du hast das Level bestanden.\n\n"
-            + "Weiter geht es im nächsten Level."
+        explanationLabel.text = "Herzlichen Glückwünsch! Du hast vier Mal richtig geantwortet.\n\n"
+            + "Möchtest du über das Hauptmenü zum nächsten Level oder weiter üben?"
         explanationLabel.fontSize = 40
         explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-200)
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         explanationLabel.numberOfLines = 0
-        explanationLabel.preferredMaxLayoutWidth = 480
+        explanationLabel.preferredMaxLayoutWidth = 520
         explanationLabel.zPosition = 2
         addChild(explanationLabel)
         
-        let closeButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 150, height: 55))
+        let exitButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 180, height: 55))
+        exitButtonFrame.name = "exitButtonFrame"
+        exitButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-300)
+        exitButtonFrame.zPosition = 4
+        addChild(exitButtonFrame)
+        let exitButton = SKLabelNode()
+        exitButton.text = "Hauptmenü"
+        exitButton.name = "exitButton"
+        exitButton.fontSize = 25
+        exitButton.fontColor = SKColor.white
+        exitButton.position = CGPoint(x: frame.midX, y: frame.midY-10)
+        exitButton.zPosition = 5
+        exitButton.addStroke(color: .white, width: 6.0)
+        exitButtonFrame.addChild(exitButton)
+        
+        let closeButtonFrame = SKSpriteNode(color: .orange, size: CGSize(width: 180, height: 55))
         closeButtonFrame.name = "closeButtonFrame"
-        closeButtonFrame.position = CGPoint(x: frame.midX+200, y: frame.midY-350)
+        closeButtonFrame.position = CGPoint(x: frame.midX-200, y: frame.midY-300)
         closeButtonFrame.zPosition = 4
         addChild(closeButtonFrame)
-        
-        trophyButton.shakeSpriteNode()
-        
-        let closeButton = SKLabelNode(text: "Weiter")
+        let closeButton = SKLabelNode(text: "Weiter üben")
         closeButton.name = "closeButton"
+        closeButton.fontSize = 25
         closeButton.fontColor = SKColor.white
-        closeButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
+        closeButton.position = CGPoint(x: frame.midX, y: frame.midY-10)
         closeButton.zPosition = 5
         closeButton.addStroke(color: .white, width: 6.0)
         closeButtonFrame.addChild(closeButton)
@@ -77,34 +92,9 @@ class Congratulations: SKSpriteNode {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        // fatalError("init(coder:) has not been implemented")
+        fatalError("init(coder:) has not been implemented")
     }
 
-//    /// Function to shake node non stop
-//    ///
-//    /// - Parameters:
-//    ///   - node: node that shall be shaken
-//    func shakeSpriteNode(node: SKSpriteNode) {
-//        let duration = 6.0
-//        let position = node.position
-//        let rangeX:Float = 15
-//        let rangeY:Float = 15
-//        let numberOfShakes = duration / 0.2
-//        var actions:[SKAction] = []
-//        for _ in 1...Int(numberOfShakes) {
-//            let moveX = Float(arc4random_uniform(UInt32(rangeX))) - rangeX / 2
-//            let moveY = Float(arc4random_uniform(UInt32(rangeY))) - rangeY / 2
-//            let shakeAction = SKAction.moveBy(x: CGFloat(moveX), y: CGFloat(moveY), duration: 0.2)
-//            shakeAction.timingMode = SKActionTimingMode.easeOut
-//            actions.append(shakeAction)
-//            actions.append(shakeAction.reversed())
-//        }
-//        actions.append(SKAction.move(to: position, duration: 0.0))
-//        let actionSeq = SKAction.sequence(actions)
-//        let actionLoop = SKAction.repeatForever(actionSeq)
-//        node.run(actionLoop)
-//    }
-    
     override var isUserInteractionEnabled: Bool {
         set {
             // ignore
@@ -121,12 +111,19 @@ class Congratulations: SKSpriteNode {
         
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
+        if (touchedNode.name == "exitButton") || (touchedNode.name == "exitButtonFrame") {
+            exit()
+        }
         if (touchedNode.name == "closeButton") || (touchedNode.name == "closeButtonFrame") {
             close()
         }
     }
     
+    func exit() {
+        self.delegate?.exitCongratulations()
+    }
     func close() {
         self.delegate?.closeCongratulations()
     }
 }
+

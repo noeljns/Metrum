@@ -677,20 +677,23 @@ extension LevelOneToFourScene: AccentuationInfoDelegate, ReplyIsCorrectDelegate,
         accentuationInfo.removeFromParent()
     }
     
-    func closeCongratulations() {
+    func exitCongratulations() {
         let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
         self.view?.presentScene(mainMenu)
+    }
+    
+    func closeCongratulations() {
+        backgroundBlocker.removeFromParent()
+        congratulations.removeFromParent()
     }
     
     func closeReplyIsCorrect() {
         backgroundBlocker.removeFromParent()
         replyIsCorrect.removeFromParent()
+        cleanAndSetupSceneForNewLine()
         
         if correctReplies == amountOfCorrectRepliesToPassLevel {
             displayCongratulations()
-        }
-        else {
-            cleanAndSetupSceneForNewLine()
         }
     }
     
