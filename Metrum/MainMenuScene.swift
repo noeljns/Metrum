@@ -46,11 +46,14 @@ class MainMenuScene: SKScene {
         addChild(levelExplanation)
     }
     
+    var levelTexts = ["Level 1 üben", "Level 1 testen", "Level 2 üben", "Level 2 testen","Level 3 üben", "Level 3 testen", "Level 4 üben", "Level 4 testen","Level 5 üben", "Level 5 testen"]
+    
     /// Generates ten levels
     func generateLevels() {
         var canvasPosition = 370
         for index in 1...10 {
-            let text = "Enter Level " + String(index)
+            // let text = "Enter Level " + String(index)
+            let text = levelTexts[index-1]
             let name = "level" + String(index)
             generateLevel(text: text, name: name, canvasPosition: frame.midY + CGFloat(canvasPosition))
             canvasPosition = canvasPosition-85
