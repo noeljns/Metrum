@@ -57,6 +57,25 @@ class LevelOneToFourScene: SKScene {
     public var inputFile = ""
     public var userDefaultsKey = ""
     
+    // variable for the animation to help user understand to drag and drop to solve the task
+    private var arrow = SKSpriteNode()
+    
+    /// Generates the animation to help user understand to drag and drop stressmarks to solve the task
+    /// Animations stops as soon as all accent bins are filled with stressmarks for the first time in level 1
+    func displayDragAndDropAnimation() {
+        arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow2"), color: .clear, size: CGSize(width: 100, height: 200))
+        arrow.name = "arrow"
+        arrow.position = CGPoint(x: -160, y: -80)
+        arrow.zPosition = 1
+        // arrow.zRotation = 50
+        addChild(arrow)
+        
+        // start animation
+        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
+        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+        arrow.run(SKAction.repeatForever(SKAction.sequence([fadeOut, fadeIn])))
+    }
+    
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
     func setUpScene() {
         addChild(exitLabel)
@@ -95,6 +114,7 @@ class LevelOneToFourScene: SKScene {
         selectedLineLabel.zPosition = 2
         addChild(selectedLineLabel)
 
+        selectedLineBoldLabel.name = "selectedLineBoldLabel"
         selectedLineBoldLabel.fontColor = SKColor.black
         selectedLineBoldLabel.attributedText = getLineToBeRatedBold(line: selectedLine)
         selectedLineBoldLabel.position = CGPoint(x: frame.midX, y: frame.midY-50)
@@ -490,9 +510,10 @@ class LevelOneToFourScene: SKScene {
         setUpScene()
         setUpUnfixedParts()
         
-        // only show AccentuationInfo, if level1 has not been passed yet
+        // only show AccentuationInfo and helper animation, if level1 has not been passed yet
         if !(UserDefaults.standard.bool(forKey: "level1")) {
             displayAccentuationInfo()
+            displayDragAndDropAnimation()
         }
         // current level has been passed, so we do not need to show congratulation window anymore
         // correctReplies as threshold has to be bigger than amountOfCorrectRepliesToPassLevel
@@ -531,9 +552,9 @@ class LevelOneToFourScene: SKScene {
         
         if (touchedNode.isEqual(to: checkButton)) || (touchedNode.parent == checkButton) {
             if areAccentBinsFilledWithAStressmark() {
-                let (isSolutionCorrect, realSolution) = self.isReplyCorrect()
+                let (isReplyCorrect, realSolution) = self.isReplyCorrect()
                 
-                if (isSolutionCorrect) {
+                if (isReplyCorrect) {
                     correctlyMarkedLines.insert(selectedLine)
                     
                     correctReplies += 1
@@ -626,6 +647,11 @@ class LevelOneToFourScene: SKScene {
         
         // signalize user that pushing the button would lead to an action now
         if (areAccentBinsFilledWithAStressmark()) {
+            // remove helper animation when accent bins are filled for the first time
+            if let arrow = self.childNode(withName: "arrow") {
+                arrow.removeFromParent()
+            }
+            
             checkButton.activate()
         }
         else {
