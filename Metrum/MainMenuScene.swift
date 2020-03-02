@@ -46,7 +46,7 @@ class MainMenuScene: SKScene {
         addChild(levelExplanation)
     }
     
-    var levelTexts = ["Level 1 üben", "Level 1 testen", "Level 2 üben", "Level 2 testen","Level 3 üben", "Level 3 testen", "Level 4 üben", "Level 4 testen","Level 5 üben", "Level 5 testen"]
+    var levelTexts = ["Level 1 üben ", "Level 1 testen", "Level 2 üben ", "Level 2 testen","Level 3 üben ", "Level 3 testen", "Level 4 üben ", "Level 4 testen","Level 5 üben ", "Level 5 testen"]
     
     /// Generates ten levels
     func generateLevels() {

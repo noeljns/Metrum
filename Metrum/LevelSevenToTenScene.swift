@@ -57,43 +57,71 @@ class LevelSevenToTenScene: SKScene {
     let playRewardSound = SKAction.playSoundFileNamed("ReplyIsCorrect.mp3", waitForCompletion: false)
     
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
+    /// Sets up measures bins with words as examples in level 7 and 8
+    /// Sets up measures bins with lines as examples in level 9 and 10
     func setUpScene() {
         addChild(exitLabel)
         manageLoadingBar()
         addChild(loadingBar)
         addChild(taskLabel)
         
-        let jambusLabelText = makeAttributedString(stringToBeMutated: "Jambus: z.B. Ge·", shallBecomeBold: false, size: 25)
-         jambusLabelText.append(makeAttributedString(stringToBeMutated: "spenst 👻", shallBecomeBold: true, size: 25))
-        if let jambusLabel = jambusBin.childNode(withName: "measureLabel") as? SKLabelNode {
-            jambusLabel.attributedText = jambusLabelText
+        
+        if (userDefaultsKey=="level7" || userDefaultsKey=="level8") {
+            let jambusLabelText = makeAttributedString(stringToBeMutated: "Jambus: z.B. Ge·", shallBecomeBold: false, size: 25)
+            jambusLabelText.append(makeAttributedString(stringToBeMutated: "spenst 👻", shallBecomeBold: true, size: 25))
+            addMeasureBin(measureBin: jambusBin, labelText: jambusLabelText)
+            let trochaeusLabelText = makeAttributedString(stringToBeMutated: "Trochäus: z.B. ", shallBecomeBold: false, size: 25)
+            trochaeusLabelText.append(makeAttributedString(stringToBeMutated: "So", shallBecomeBold: true, size: 25))
+            trochaeusLabelText.append(makeAttributedString(stringToBeMutated: "·nne ☀️", shallBecomeBold: false, size: 25))
+            addMeasureBin(measureBin: trochaeusBin, labelText: trochaeusLabelText)
+            let anapaestLabelText = makeAttributedString(stringToBeMutated: "Anapäst: z.B. E·le·", shallBecomeBold: false, size: 25)
+            anapaestLabelText.append(makeAttributedString(stringToBeMutated: "fant 🐘", shallBecomeBold: true, size: 25))
+            addMeasureBin(measureBin: anapaestBin, labelText: anapaestLabelText)
+            let daktylusLabelText = makeAttributedString(stringToBeMutated: "Daktylus: z.B. ", shallBecomeBold: false, size: 25)
+            daktylusLabelText.append(makeAttributedString(stringToBeMutated: "Bro", shallBecomeBold: true, size: 25))
+            daktylusLabelText.append(makeAttributedString(stringToBeMutated: "·kko·li 🥦", shallBecomeBold: false, size: 25))
+            addMeasureBin(measureBin: daktylusBin, labelText: daktylusLabelText)
         }
-        addChild(jambusBin)
+        else {
+            let jambusLabelText = makeAttributedString(stringToBeMutated: "Jambus: x x́ x x́ x x́ x x́", shallBecomeBold: false, size: 25)
+            let trochaeusLabelText = makeAttributedString(stringToBeMutated: "Trochäus: x́ x x́ x x́ x x́ x", shallBecomeBold: false, size: 25)
+            let anapaestLabelText = makeAttributedString(stringToBeMutated: "Anapäst: x x x́ x x x́ x x x́", shallBecomeBold: false, size: 25)
+            let daktylusLabelText = makeAttributedString(stringToBeMutated: "Daktylus: x́ x x x́ x x x́ x x", shallBecomeBold: false, size: 25)
+            
+            addMeasureBin(measureBin: jambusBin, labelText: jambusLabelText)
+            addMeasureBin(measureBin: trochaeusBin, labelText: trochaeusLabelText)
+            addMeasureBin(measureBin: anapaestBin, labelText: anapaestLabelText)
+            addMeasureBin(measureBin: daktylusBin, labelText: daktylusLabelText)
+        }
+        
+//        if let jambusLabel = jambusBin.childNode(withName: "measureLabel") as? SKLabelNode {
+//            jambusLabel.attributedText = jambusLabelText
+//        }
+//        addChild(jambusBin)
+//        if let trochaeusLabel = trochaeusBin.childNode(withName: "measureLabel") as? SKLabelNode {
+//            trochaeusLabel.attributedText = trochaeusLabelText
+//        }
+//        addChild(trochaeusBin)
+//        if let anapaestLabel = anapaestBin.childNode(withName: "measureLabel") as? SKLabelNode {
+//            anapaestLabel.attributedText = anapaestLabelText
+//        }
+//        addChild(anapaestBin)
+//        if let daktylusLabel = daktylusBin.childNode(withName: "measureLabel") as? SKLabelNode {
+//            daktylusLabel.attributedText = daktylusLabelText
+//        }
+//        addChild(daktylusBin)
+    }
     
-        let trochaeusLabelText = makeAttributedString(stringToBeMutated: "Trochäus: z.B. ", shallBecomeBold: false, size: 25)
-        trochaeusLabelText.append(makeAttributedString(stringToBeMutated: "So", shallBecomeBold: true, size: 25))
-        trochaeusLabelText.append(makeAttributedString(stringToBeMutated: "·nne ☀️", shallBecomeBold: false, size: 25))
-        if let trochaeusLabel = trochaeusBin.childNode(withName: "measureLabel") as? SKLabelNode {
-            trochaeusLabel.attributedText = trochaeusLabelText
+    /// Adds measure bin to scene
+    ///
+    /// - Parameters:
+    ///   - measureBin: measureBin that shall be added to scene
+    ///   - measureBin: text of label of measureBin that shall be added to scene
+    func addMeasureBin(measureBin: MeasureContainer, labelText: NSMutableAttributedString) {
+        if let measureLabel = measureBin.childNode(withName: "measureLabel") as? SKLabelNode {
+            measureLabel.attributedText = labelText
         }
-        addChild(trochaeusBin)
-        
-        
-        let anapaestLabelText = makeAttributedString(stringToBeMutated: "Anapäst: z.B. E·le·", shallBecomeBold: false, size: 25)
-        anapaestLabelText.append(makeAttributedString(stringToBeMutated: "fant 🐘", shallBecomeBold: true, size: 25))
-        if let anapaestLabel = anapaestBin.childNode(withName: "measureLabel") as? SKLabelNode {
-            anapaestLabel.attributedText = anapaestLabelText
-        }
-        addChild(anapaestBin)
-        
-        
-        let daktylusLabelText = makeAttributedString(stringToBeMutated: "Daktylus: z.B. ", shallBecomeBold: false, size: 25)
-        daktylusLabelText.append(makeAttributedString(stringToBeMutated: "Bro", shallBecomeBold: true, size: 25))
-        daktylusLabelText.append(makeAttributedString(stringToBeMutated: "·kko·li 🥦", shallBecomeBold: false, size: 25))
-        if let daktylusLabel = daktylusBin.childNode(withName: "measureLabel") as? SKLabelNode {
-            daktylusLabel.attributedText = daktylusLabelText
-        }
-        addChild(daktylusBin)
+        addChild(measureBin)
     }
     
     /// Manages loading Bar.
