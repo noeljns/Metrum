@@ -611,7 +611,7 @@ class LevelOneToFourScene: SKScene {
         // TODO higher function
         for accentBin in accentBins {
             for stressMark in stressMarks {
-                if accentBin.frame.contains(stressMark.position) {
+                if accentBin.frame.intersects(stressMark.frame) {
                     stressMark.position = accentBin.position
                 }
             }

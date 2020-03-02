@@ -15,7 +15,7 @@ class LevelSevenToTenScene: SKScene {
     private var exitLabel = ExitLabel()
     private let loadingBar = LoadingBar(color: .green, size: CGSize(width: 600, height: 26))
     private let taskLabel: TaskLabel = {
-        let taskLabelText = "Ziehe das Wort bzw. den Vers in den Kasten des zugehörigen Versmaßes."
+        let taskLabelText = "Ziehe das Wort bzw. den Vers in den Kasten des zugehörigen Metrums."
         let taskLabelPosition = CGPoint(x: 0 , y: 300)
         let taskLabel = TaskLabel(text: taskLabelText, position: taskLabelPosition)
         return taskLabel
@@ -62,14 +62,14 @@ class LevelSevenToTenScene: SKScene {
         addChild(loadingBar)
         addChild(taskLabel)
         
-        let jambusLabelText = makeAttributedString(stringToBeMutated: "Jambus: Ge·", shallBecomeBold: false, size: 25)
+        let jambusLabelText = makeAttributedString(stringToBeMutated: "Jambus: z.B. Ge·", shallBecomeBold: false, size: 25)
          jambusLabelText.append(makeAttributedString(stringToBeMutated: "spenst 👻", shallBecomeBold: true, size: 25))
         if let jambusLabel = jambusBin.childNode(withName: "measureLabel") as? SKLabelNode {
             jambusLabel.attributedText = jambusLabelText
         }
         addChild(jambusBin)
     
-        let trochaeusLabelText = makeAttributedString(stringToBeMutated: "Trochäus: ", shallBecomeBold: false, size: 25)
+        let trochaeusLabelText = makeAttributedString(stringToBeMutated: "Trochäus: z.B. ", shallBecomeBold: false, size: 25)
         trochaeusLabelText.append(makeAttributedString(stringToBeMutated: "So", shallBecomeBold: true, size: 25))
         trochaeusLabelText.append(makeAttributedString(stringToBeMutated: "·nne ☀️", shallBecomeBold: false, size: 25))
         if let trochaeusLabel = trochaeusBin.childNode(withName: "measureLabel") as? SKLabelNode {
@@ -78,7 +78,7 @@ class LevelSevenToTenScene: SKScene {
         addChild(trochaeusBin)
         
         
-        let anapaestLabelText = makeAttributedString(stringToBeMutated: "Anapäst: E·le·", shallBecomeBold: false, size: 25)
+        let anapaestLabelText = makeAttributedString(stringToBeMutated: "Anapäst: z.B. E·le·", shallBecomeBold: false, size: 25)
         anapaestLabelText.append(makeAttributedString(stringToBeMutated: "fant 🐘", shallBecomeBold: true, size: 25))
         if let anapaestLabel = anapaestBin.childNode(withName: "measureLabel") as? SKLabelNode {
             anapaestLabel.attributedText = anapaestLabelText
@@ -86,7 +86,7 @@ class LevelSevenToTenScene: SKScene {
         addChild(anapaestBin)
         
         
-        let daktylusLabelText = makeAttributedString(stringToBeMutated: "Daktylus: ", shallBecomeBold: false, size: 25)
+        let daktylusLabelText = makeAttributedString(stringToBeMutated: "Daktylus: z.B. ", shallBecomeBold: false, size: 25)
         daktylusLabelText.append(makeAttributedString(stringToBeMutated: "Bro", shallBecomeBold: true, size: 25))
         daktylusLabelText.append(makeAttributedString(stringToBeMutated: "·kko·li 🥦", shallBecomeBold: false, size: 25))
         if let daktylusLabel = daktylusBin.childNode(withName: "measureLabel") as? SKLabelNode {

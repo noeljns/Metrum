@@ -81,7 +81,7 @@ class LevelFiveToSixScene: SKScene {
         selectedMeasureLabel.text = generateTaskLabelForSelectedMeasure(measure: selectedMeasure)
         selectedMeasureLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         selectedMeasureLabel.numberOfLines = 0
-        selectedMeasureLabel.preferredMaxLayoutWidth = 520
+        selectedMeasureLabel.preferredMaxLayoutWidth = 580
         selectedMeasureLabel.position = CGPoint(x: frame.midX , y: frame.midY+180)
         selectedMeasureLabel.zPosition = 4
         addChild(selectedMeasureLabel)
@@ -137,13 +137,13 @@ class LevelFiveToSixScene: SKScene {
             taskLabelText = "Welches Betonungsmuster wird Jambus 👻 genannt?\n"
                             + "Ziehe die Betonungszeichen in der richtigen Reihenfolge in die grauen Kästchen!"
         case .trochaeus:
-            taskLabelText = "Welches Betonungsmuster wird als Trochäus ☀️ bezeichnet?\n"
+            taskLabelText = "Welches Betonungsmuster wird als   Trochäus ☀️ bezeichnet?\n"
                             + "Ziehe die Betonungszeichen in der richtigen Reihenfolge in die grauen Kästchen!"
         case .anapaest:
             taskLabelText = "Welches Betonungsmuster wird Anapäst 🐘 genannt?\n"
                             + "Ziehe die Betonungszeichen in der richtigen Reihenfolge in die grauen Kästchen!"
         case .daktylus:
-            taskLabelText = "Welches Betonungsmuster wird als Daktylus 🥦 bezeichnet?\n"
+            taskLabelText = "Welches Betonungsmuster wird als   Daktylus 🥦 bezeichnet?\n"
                             + "Ziehe die Betonungszeichen in der richtigen Reihenfolge in die grauen Kästchen!"
         }
         return taskLabelText
@@ -501,7 +501,7 @@ class LevelFiveToSixScene: SKScene {
         // TODO higher function
         for accentBin in accentBins {
             for stressMark in stressMarks {
-                if accentBin.frame.contains(stressMark.position) {
+                if accentBin.frame.intersects(stressMark.frame) {
                     stressMark.position = accentBin.position
                 }
             }
