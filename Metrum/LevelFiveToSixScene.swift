@@ -451,6 +451,10 @@ class LevelFiveToSixScene: SKScene {
                     // increase loadingbar but only if level has not been passed yet
                     manageLoadingBar()
                     
+                    // play sound to reward user for success
+                    let playRewardSound = SKAction.playSoundFileNamed("CorrectReply.mp3", waitForCompletion: false)
+                    self.run(playRewardSound)
+                    
                     displayReplyIsCorrect()
                 }
                 else {

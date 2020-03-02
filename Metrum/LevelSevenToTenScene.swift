@@ -54,6 +54,7 @@ class LevelSevenToTenScene: SKScene {
     private let colorizeGreen = SKAction.colorize(with: UIColor.green, colorBlendFactor: 1, duration: 0.1)
     private let colorizeRed = SKAction.colorize(with: UIColor.red, colorBlendFactor: 1, duration: 0.1)
     private let colorizeWhite = SKAction.colorize(with: UIColor.white, colorBlendFactor: 1, duration: 0.2)
+    let playRewardSound = SKAction.playSoundFileNamed("CorrectReply.mp3", waitForCompletion: false)
     
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
     func setUpScene() {
@@ -227,6 +228,12 @@ class LevelSevenToTenScene: SKScene {
     
     /// Adds Congratualtions as overlay node to scene.
     func displayCongratulations() {
+        if (userDefaultsKey == "level10") {
+            let playFinalRewardSound = SKAction.playSoundFileNamed("GameWon.mp3", waitForCompletion: false)
+            self.run(playFinalRewardSound)
+        }
+        
+        
         backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
         addChild(backgroundBlocker)
         congratulations.delegate = self
@@ -370,8 +377,8 @@ class LevelSevenToTenScene: SKScene {
             self.soundButton.isUserInteractionEnabled = true
             self.selectedLineBoldLabel.isUserInteractionEnabled = true
             
-            let playSound = SKAction.playSoundFileNamed(selectedLine.audioFile, waitForCompletion: false)
-            let action =  SKAction.group([playSound,
+            let playSoundOfLine = SKAction.playSoundFileNamed(selectedLine.audioFile, waitForCompletion: false)
+            let action =  SKAction.group([playSoundOfLine,
                                           SKAction.run{self.addAndRemoveNode(node: self.selectedLineBoldLabel)},
                                           SKAction.run{self.hideAndUnhideNode(node: self.selectedLineLabel)}])
             self.run(action)
@@ -412,7 +419,7 @@ class LevelSevenToTenScene: SKScene {
         
         if jambusBin.frame.contains(selectedLineLabel.position) {
             if selectedLineLabel.name == Measure.jambus.rawValue {
-                jambusBin.run(SKAction.sequence([colorizeGreen, colorizeWhite]))
+                jambusBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
                 manageCorrectReply()
             }
             // else if wordToBeRated.name == "trochaeus" or "daktylus" or "anapaest"
@@ -424,7 +431,7 @@ class LevelSevenToTenScene: SKScene {
         
         if trochaeusBin.frame.contains(selectedLineLabel.position) {
             if selectedLineLabel.name == Measure.trochaeus.rawValue {
-                trochaeusBin.run(SKAction.sequence([colorizeGreen, colorizeWhite]))
+                trochaeusBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
                 manageCorrectReply()
             } else {
                 trochaeusBin.run(SKAction.sequence([colorizeRed, colorizeWhite]))
@@ -434,7 +441,7 @@ class LevelSevenToTenScene: SKScene {
         
         if daktylusBin.frame.contains(selectedLineLabel.position) {
             if selectedLineLabel.name == Measure.daktylus.rawValue {
-                daktylusBin.run(SKAction.sequence([colorizeGreen, colorizeWhite]))
+                daktylusBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
                 manageCorrectReply()
             } else {
                 daktylusBin.run(SKAction.sequence([colorizeRed, colorizeWhite]))
@@ -444,7 +451,7 @@ class LevelSevenToTenScene: SKScene {
         
         if anapaestBin.frame.contains(selectedLineLabel.position) {
             if selectedLineLabel.name == Measure.anapaest.rawValue {
-                anapaestBin.run(SKAction.sequence([colorizeGreen, colorizeWhite]))
+                anapaestBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
                 manageCorrectReply()
             } else {
                 anapaestBin.run(SKAction.sequence([colorizeRed, colorizeWhite]))

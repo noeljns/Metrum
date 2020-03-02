@@ -537,8 +537,8 @@ class LevelOneToFourScene: SKScene {
             // node no longer receives touch events
             self.soundButton.isUserInteractionEnabled = true
             
-            let playSound = SKAction.playSoundFileNamed(selectedLine.audioFile, waitForCompletion: false)
-            let action =  SKAction.group([playSound,
+            let playSoundOfLine = SKAction.playSoundFileNamed(selectedLine.audioFile, waitForCompletion: false)
+            let action =  SKAction.group([playSoundOfLine,
                                           SKAction.run{self.addAndRemoveNode(node: self.selectedLineBoldLabel)},
                                           SKAction.run{self.hideAndUnhideNode(node: self.selectedLineLabel)}])
             self.run(action)
@@ -561,6 +561,10 @@ class LevelOneToFourScene: SKScene {
                     updateLevelStatus()
                     // increase loadingbar but only if level has not been passed yet
                     manageLoadingBar()
+                    
+                    // play sound to reward user for success
+                    let playRewardSound = SKAction.playSoundFileNamed("CorrectReply.mp3", waitForCompletion: false)
+                    self.run(playRewardSound)
                 
                     displayReplyIsCorrect()
                 }

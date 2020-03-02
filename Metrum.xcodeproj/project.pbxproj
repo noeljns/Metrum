@@ -57,8 +57,7 @@
 		DD5749ED23EC405400C50423 /* MetrumUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5749EC23EC405400C50423 /* MetrumUITests.swift */; };
 		DD5749FC23EC408800C50423 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DD5749FB23EC408800C50423 /* .gitignore */; };
 		DD5D68C8240C597C001777A7 /* SKShapeNodeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5D68C7240C597C001777A7 /* SKShapeNodeExtension.swift */; };
-		DD5D68CA240C6C48001777A7 /* Applause.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD5D68C9240C6C48001777A7 /* Applause.mp3 */; };
-		DD5D68CD240C6CE5001777A7 /* LevelWon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD5D68CB240C6CE5001777A7 /* LevelWon.mp3 */; };
+		DD5D68CD240C6CE5001777A7 /* GameWon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD5D68CB240C6CE5001777A7 /* GameWon.mp3 */; };
 		DD5D68CE240C6CE5001777A7 /* CorrectReply.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD5D68CC240C6CE5001777A7 /* CorrectReply.mp3 */; };
 		DD86857F24072F8A000C44CE /* Direktion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD86857E24072F89000C44CE /* Direktion.mp3 */; };
 		DD95065523FD8B2500BF1291 /* lines.json in Resources */ = {isa = PBXBuildFile; fileRef = DD95065323FD8B2400BF1291 /* lines.json */; };
@@ -164,8 +163,7 @@
 		DD5749EE23EC405400C50423 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD5749FB23EC408800C50423 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		DD5D68C7240C597C001777A7 /* SKShapeNodeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKShapeNodeExtension.swift; sourceTree = "<group>"; };
-		DD5D68C9240C6C48001777A7 /* Applause.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Applause.mp3; sourceTree = "<group>"; };
-		DD5D68CB240C6CE5001777A7 /* LevelWon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = LevelWon.mp3; sourceTree = "<group>"; };
+		DD5D68CB240C6CE5001777A7 /* GameWon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GameWon.mp3; sourceTree = "<group>"; };
 		DD5D68CC240C6CE5001777A7 /* CorrectReply.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CorrectReply.mp3; sourceTree = "<group>"; };
 		DD86857E24072F89000C44CE /* Direktion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Direktion.mp3; sourceTree = "<group>"; };
 		DD95065323FD8B2400BF1291 /* lines.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = lines.json; sourceTree = "<group>"; };
@@ -225,9 +223,8 @@
 		DD3E90CC23F03C9B00E72372 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				DD5D68C9240C6C48001777A7 /* Applause.mp3 */,
 				DD5D68CC240C6CE5001777A7 /* CorrectReply.mp3 */,
-				DD5D68CB240C6CE5001777A7 /* LevelWon.mp3 */,
+				DD5D68CB240C6CE5001777A7 /* GameWon.mp3 */,
 				DDA5BD272405D6850060E766 /* Torben.mp3 */,
 				DDE2FBE923FD78F000118ADC /* Sonne.mp3 */,
 				DDE2FBE323FD780E00118ADC /* Flasche.mp3 */,
@@ -523,7 +520,7 @@
 				DDE2FBFC23FD7B1200118ADC /* Autobahn.mp3 in Resources */,
 				DD5749D723EC405300C50423 /* LaunchScreen.storyboard in Resources */,
 				DD296807240A816D0021E05F /* angespannt.mp3 in Resources */,
-				DD5D68CD240C6CE5001777A7 /* LevelWon.mp3 in Resources */,
+				DD5D68CD240C6CE5001777A7 /* GameWon.mp3 in Resources */,
 				DD296805240A816D0021E05F /* Finsternis.mp3 in Resources */,
 				DD296825240AAC980021E05F /* AlleMeineEntchen.wav in Resources */,
 				DD296808240A816D0021E05F /* Zebra.mp3 in Resources */,
@@ -536,7 +533,6 @@
 				DD29680A240A816D0021E05F /* Anker.mp3 in Resources */,
 				DD95065523FD8B2500BF1291 /* lines.json in Resources */,
 				DD296813240A8E360021E05F /* Emotion.mp3 in Resources */,
-				DD5D68CA240C6C48001777A7 /* Applause.mp3 in Resources */,
 				DD29680C240A816D0021E05F /* Gesang.mp3 in Resources */,
 				DDE2FBF023FD79C200118ADC /* Ersatz.mp3 in Resources */,
 				DDE2FBE423FD780E00118ADC /* Flasche.mp3 in Resources */,
