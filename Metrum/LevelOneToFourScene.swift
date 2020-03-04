@@ -31,8 +31,8 @@ class LevelOneToFourScene: SKScene {
     private var stressMarks = [SKSpriteNode]()
     private let stressedStressMarkParentBin = SKSpriteNode()
     private let stressed = SKLabelNode()
-    private let unstressed = SKLabelNode()
     private let unstressedStressMarkParentBin = SKSpriteNode()
+    private let unstressed = SKLabelNode()
     
     // overlay nodes
     private var backgroundBlocker = SKSpriteNode()
@@ -608,6 +608,28 @@ class LevelOneToFourScene: SKScene {
                 }
             }
         }
+    }
+    
+    /// Checks if both spawn locations are filled with a stress mark that user can drag and drop
+    ///
+    /// - Returns: true, if both spawn locations are filled with a stress mark, false otherwise
+    func areBothSpawnLocationsFilledWithAStressMark() -> Bool {
+        var areBothSpawnLocationsFilledWithAStressMark = false
+        
+        var stressedStressMarkSpawnIsFilled = Set<Bool>()
+        var unstressedStressMarkSpawnIsFilled = Set<Bool>()
+        for stressMark in stressMarks {
+            stressedStressMarkSpawnIsFilled.insert((stressedStressMarkParentBin.frame.contains(stressMark.position)))
+            unstressedStressMarkSpawnIsFilled.insert((unstressedStressMarkParentBin.frame.contains(stressMark.position)))
+        }
+        // if spawn set contains one true, it is filled; if spawn set only contains false, it is empty
+        if (stressedStressMarkSpawnIsFilled.contains(true)) && (unstressedStressMarkSpawnIsFilled.contains(true)) {
+            areBothSpawnLocationsFilledWithAStressMark = true
+        }
+        
+        stressedStressMarkSpawnIsFilled.removeAll()
+        unstressedStressMarkSpawnIsFilled.removeAll()
+        return areBothSpawnLocationsFilledWithAStressMark
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -9,12 +9,12 @@
 import SpriteKit
 
 extension SKLabelNode {
-    /// Function to shake label node non stop
+    /// Function to shake label node for about 5 seconds
     func shakeLabelNode() {
-        let duration = 6.0
+        let duration = 4.0
         let position = self.position
-        let rangeX:Float = 7.5
-        let rangeY:Float = 7.5
+        let rangeX:Float = 7.0
+        let rangeY:Float = 7.0
         let numberOfShakes = duration / 0.2
         var actions:[SKAction] = []
         for _ in 1...Int(numberOfShakes) {
@@ -27,7 +27,7 @@ extension SKLabelNode {
         }
         actions.append(SKAction.move(to: position, duration: 0.0))
         let actionSeq = SKAction.sequence(actions)
-        let actionLoop = SKAction.repeatForever(actionSeq)
+        let actionLoop = SKAction.repeat(actionSeq, count: 1)
         self.run(actionLoop)
     }
 }

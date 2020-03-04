@@ -22,8 +22,8 @@ class LevelFiveToSixScene: SKScene {
     private var stressMarks = [SKSpriteNode]()
     private let stressedStressMarkParentBin = SKSpriteNode()
     private let stressed = SKLabelNode()
-    private let unstressed = SKLabelNode()
     private let unstressedStressMarkParentBin = SKSpriteNode()
+    private let unstressed = SKLabelNode()
     
     // overlay nodes
     private var backgroundBlocker = SKSpriteNode()

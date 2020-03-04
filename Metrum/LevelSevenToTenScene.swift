@@ -56,6 +56,25 @@ class LevelSevenToTenScene: SKScene {
     private let colorizeWhite = SKAction.colorize(with: UIColor.white, colorBlendFactor: 1, duration: 0.2)
     let playRewardSound = SKAction.playSoundFileNamed("ReplyIsCorrect.mp3", waitForCompletion: false)
     
+    // variable for the animation to help user understand to drag and drop to solve the task
+    private var arrow = SKSpriteNode()
+    
+    /// Generates the animation to help user understand to drag and drop stressmarks to solve the task
+    /// Animations stops as soon as all accent bins are filled with stressmarks for the first time in level 1
+    func displayDragAndDropAnimation() {
+        arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow"), color: .clear, size: CGSize(width: 50, height: 150))
+        arrow.name = "arrow"
+        arrow.position = CGPoint(x: -90, y: 0)
+        arrow.zPosition = 1
+        arrow.zRotation = -50
+        addChild(arrow)
+        
+        // start animation
+        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
+        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+        arrow.run(SKAction.repeatForever(SKAction.sequence([fadeOut, fadeIn])))
+    }
+    
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
     /// Sets up measures bins with words as examples in level 7 and 8
     /// Sets up measures bins with lines as examples in level 9 and 10
@@ -360,9 +379,10 @@ class LevelSevenToTenScene: SKScene {
         setUpScene()
         setUpUnfixedParts()
         
-        // only show MeasureInfo, if level5 has not been passed yet
-        if !(UserDefaults.standard.bool(forKey: "level5")) {
-            displayMeasureInfo()
+        
+        // only show helper animation, if level7 has not been passed yet
+        if !(UserDefaults.standard.bool(forKey: "level7")) {
+            displayDragAndDropAnimation()
         }
         // current level has been passed, so we do not need to show congratulation window anymore
         // correctReplies as threshold has to be bigger than amountOfCorrectRepliesToPassLevel
@@ -429,6 +449,11 @@ class LevelSevenToTenScene: SKScene {
         }
         
         if jambusBin.frame.contains(selectedLineLabel.position) {
+            // remove helper animation when accent bins are filled for the first time
+            if let arrow = self.childNode(withName: "arrow") {
+                arrow.removeFromParent()
+            }
+            
             if selectedLineLabel.name == Measure.jambus.rawValue {
                 jambusBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
                 manageCorrectReply()
@@ -441,6 +466,11 @@ class LevelSevenToTenScene: SKScene {
         }
         
         if trochaeusBin.frame.contains(selectedLineLabel.position) {
+            // remove helper animation when accent bins are filled for the first time
+            if let arrow = self.childNode(withName: "arrow") {
+                arrow.removeFromParent()
+            }
+            
             if selectedLineLabel.name == Measure.trochaeus.rawValue {
                 trochaeusBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
                 manageCorrectReply()
@@ -451,6 +481,11 @@ class LevelSevenToTenScene: SKScene {
         }
         
         if daktylusBin.frame.contains(selectedLineLabel.position) {
+            // remove helper animation when accent bins are filled for the first time
+            if let arrow = self.childNode(withName: "arrow") {
+                arrow.removeFromParent()
+            }
+            
             if selectedLineLabel.name == Measure.daktylus.rawValue {
                 daktylusBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
                 manageCorrectReply()
@@ -461,6 +496,11 @@ class LevelSevenToTenScene: SKScene {
         }
         
         if anapaestBin.frame.contains(selectedLineLabel.position) {
+            // remove helper animation when accent bins are filled for the first time
+            if let arrow = self.childNode(withName: "arrow") {
+                arrow.removeFromParent()
+            }
+            
             if selectedLineLabel.name == Measure.anapaest.rawValue {
                 anapaestBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
                 manageCorrectReply()

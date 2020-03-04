@@ -41,18 +41,19 @@ class Congratulations: SKSpriteNode {
         addChild(headerLabel)
         
         let trophyButton = SKSpriteNode(color: .green, size: CGSize(width: 300, height: 300))
+        trophyButton.position = CGPoint(x: 0 , y: frame.midY+135)
         addChild(trophyButton)
         let trophy = SKLabelNode(text: "🏆")
         trophy.fontSize = 140
-        trophy.position = CGPoint(x: frame.midX , y: frame.midY+120)
+        //trophy.position = CGPoint(x: 0 , y: frame.midY+135)
         trophy.zPosition = 4
         trophyButton.addChild(trophy)
         trophyButton.shakeSpriteNode()
 
         explanationLabel.fontColor = SKColor.black
         explanationLabel.text = "Herzlichen Glückwünsch! Du hast vier Mal richtig geantwortet.\n\n"
-            + "Möchtest du über das Hauptmenü zum nächsten Level oder weiter üben?"
-        explanationLabel.fontSize = 40
+            + "Im Hauptmenü wurde das nächste Level für dich freigeschaltet. Oder möchtest du im bisherigen Level weiter üben?"
+        explanationLabel.fontSize = 35
         explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-200)
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         explanationLabel.numberOfLines = 0
@@ -80,7 +81,7 @@ class Congratulations: SKSpriteNode {
         closeButtonFrame.position = CGPoint(x: frame.midX-200, y: frame.midY-300)
         closeButtonFrame.zPosition = 4
         addChild(closeButtonFrame)
-        let closeButton = SKLabelNode(text: "Weiter üben")
+        let closeButton = SKLabelNode(text: "Level fortführen")
         closeButton.name = "closeButton"
         closeButton.fontSize = 25
         closeButton.fontColor = SKColor.white
