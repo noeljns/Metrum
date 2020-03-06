@@ -33,6 +33,7 @@
 		DD296824240AAC980021E05F /* HeuteHierMorgenDort.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD296820240AAC970021E05F /* HeuteHierMorgenDort.wav */; };
 		DD296825240AAC980021E05F /* AlleMeineEntchen.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD296821240AAC980021E05F /* AlleMeineEntchen.wav */; };
 		DD296830240AE3920021E05F /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD29682F240AE3920021E05F /* FileManagerExtension.swift */; };
+		DD41D3AA2411380B006E5E84 /* StressMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD41D3A92411380B006E5E84 /* StressMark.swift */; };
 		DD4363F823F18645001F2A48 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363F723F18645001F2A48 /* Word.swift */; };
 		DD4363FA23F18676001F2A48 /* Syllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363F923F18676001F2A48 /* Syllable.swift */; };
 		DD4363FC23F18692001F2A48 /* Accentuation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4363FB23F18692001F2A48 /* Accentuation.swift */; };
@@ -133,6 +134,7 @@
 		DD296820240AAC970021E05F /* HeuteHierMorgenDort.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = HeuteHierMorgenDort.wav; sourceTree = "<group>"; };
 		DD296821240AAC980021E05F /* AlleMeineEntchen.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AlleMeineEntchen.wav; sourceTree = "<group>"; };
 		DD29682F240AE3920021E05F /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
+		DD41D3A92411380B006E5E84 /* StressMark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StressMark.swift; sourceTree = "<group>"; };
 		DD4363F723F18645001F2A48 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		DD4363F923F18676001F2A48 /* Syllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Syllable.swift; sourceTree = "<group>"; };
 		DD4363FB23F18692001F2A48 /* Accentuation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accentuation.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				DD56778F24088B73007B6025 /* InfoButton.swift */,
 				DD56779124088B83007B6025 /* SoundButton.swift */,
 				DD56779A24094AA4007B6025 /* MeasureContainer.swift */,
+				DD41D3A92411380B006E5E84 /* StressMark.swift */,
 			);
 			path = SceneElements;
 			sourceTree = "<group>";
@@ -593,6 +596,7 @@
 				DD5D68C8240C597C001777A7 /* SKShapeNodeExtension.swift in Sources */,
 				DD56779524093F86007B6025 /* SKLabelNodeExtension.swift in Sources */,
 				DD5749C723EC405200C50423 /* AppDelegate.swift in Sources */,
+				DD41D3AA2411380B006E5E84 /* StressMark.swift in Sources */,
 				DD43640023F18D87001F2A48 /* Line.swift in Sources */,
 				DDC4907323ED7641000F0942 /* AccentuationInfo.swift in Sources */,
 				DD19AB0C23FABEC60015D899 /* Congratulations.swift in Sources */,

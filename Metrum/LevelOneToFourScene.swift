@@ -25,10 +25,12 @@ class LevelOneToFourScene: SKScene {
     private var infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: 225 , y: 90))
     private var soundButton = SoundButton(size: CGSize(width: 40, height: 40), position: CGPoint(x: 150 , y: 90))
     private var checkButton = CheckButton(size: CGSize(width: 150, height: 55))
+    
     private var accentBins = [SKSpriteNode]()
     private var selectedLineLabel = SKLabelNode()
     private var selectedLineBoldLabel = SKLabelNode()
-    private var stressMarks = [SKSpriteNode]()
+    // private var stressMarks = [SKSpriteNode]()
+    private var stressMarks = [StressMark]()
     private let stressedStressMarkParentBin = SKSpriteNode()
     private let stressed = SKLabelNode()
     private let unstressedStressMarkParentBin = SKSpriteNode()
@@ -247,14 +249,20 @@ class LevelOneToFourScene: SKScene {
     
     /// Generates a stressed stress mark at specified stress mark spawning area.
     func generateStressedStressMark() {
-        let stressedStressMarkParent = generateAStressMark(stressed: true, x: frame.midX-50, y: frame.midY-170)
-        stressMarks.append(stressedStressMarkParent)
+//        let stressedStressMarkParent = generateAStressMark(stressed: true, x: frame.midX-50, y: frame.midY-170)
+//        stressMarks.append(stressedStressMarkParent)
+        let stressMark = StressMark(isStressed: true, position: CGPoint(x: -50, y: -170))
+        addChild(stressMark)
+        stressMarks.append(stressMark)
     }
     
     /// Generates an unstressed stress mark at specified stress mark spawning area.
     func generateUnstressedStressMark() {
-        let unstressedStressMarkParent = generateAStressMark(stressed: false, x: frame.midX+50, y: frame.midY-170)
-        stressMarks.append(unstressedStressMarkParent)
+//        let unstressedStressMarkParent = generateAStressMark(stressed: false, x: frame.midX+50, y: frame.midY-170)
+//        stressMarks.append(unstressedStressMarkParent)
+        let stressMark = StressMark(isStressed: false, position: CGPoint(x: 50, y: -170))
+        addChild(stressMark)
+        stressMarks.append(stressMark)
     }
     
     /// Returns parent node of a stress mark with a specified position.
@@ -270,7 +278,8 @@ class LevelOneToFourScene: SKScene {
         stressMarkParent.size = CGSize(width: 40, height: 50)
         stressMarkParent.position = CGPoint(x: x, y: y)
         stressMarkParent.drawBorder(color: .orange, width: 4)
-        stressMarkParent.zPosition = 1
+        stressMarkParent.zPosition = 50000
+        
         
         let stressMark = SKLabelNode()
         stressMark.fontColor = SKColor.black
@@ -633,15 +642,151 @@ class LevelOneToFourScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {
+            return
+        }
+        let location = touch.location(in: self)
+        let touchedNodes = nodes(at: location)
+        
+        for node in touchedNodes {
+        }
+        
+        
+        
+        for s in stressMarks {
+            s.isClinchedToAccentBin = false
+        }
+        
+        // print("stressMarks.count: " + stressMarks.count.description)
+        print("\n\n\n new touch")
+        for accentBin in accentBins {
+            print("accent bin starts")
+            for stressMark in stressMarks {
+                print("hi, i'm a " + stressMark.name! + " stressMark")
+                // stressMark.isClinchedToAccentBin = false
+                if accentBin.frame.intersects(stressMark.frame) {
+                    if stressMark.wasNeverClinchedToAccentBin {
+                        // spawn StressMark at empty spawn location
+                        print("was never clinched to bin before")
+                            
+                        if stressMark.name == "stressed" {
+                            generateStressedStressMark()
+                            print("spawn stressed")
+                        }
+                        else if stressMark.name == "unstressed" {
+                            generateUnstressedStressMark()
+                            print("spawn unstressed")
+                        }
+                    }
+                    stressMark.position = accentBin.position
+                    stressMark.isClinchedToAccentBin = true
+                    print("i am clinched, because: " + stressMark.isClinchedToAccentBin.description)
+                    stressMark.wasNeverClinchedToAccentBin = false
+                }
+                else {
+                    if !(stressMark.wasNeverClinchedToAccentBin) && !(accentBin.frame.contains(stressMark.position)) {
+                    // print("you should be deleted!")
+                        // stressMark.removeFromParent()
+                    }
+                }
+                // print("isClinchedToAccentBin: " + stressMark.isClinchedToAccentBin.description)
+                print("wasNeverClinchedToAccentBin: " + stressMark.wasNeverClinchedToAccentBin.description + "\n")
+            }
+        }
+        // get the once that are put out of accent bin
+        var toBeRemoved = [StressMark]()
+        for stressMark in stressMarks {
+            if (stressMark.isClinchedToAccentBin==false && stressMark.wasNeverClinchedToAccentBin==false) && (stressMark.position != CGPoint(x: -50, y: -170) || stressMark.position != CGPoint(x: 50, y: -170)) {
+                print("you should be deleted")
+                toBeRemoved.append(stressMark)
+            }
+        }
+        print("stressMarks.count: " + stressMarks.count.description)
+        for stressMark in toBeRemoved {
+            stressMark.removeFromParent()
+            stressMarks = stressMarks.filter { $0 != stressMark }
+        }
+        print("stressMarks.count: " + stressMarks.count.description)
+ 
+            
+//            if touchedNodes.contains(stressMark) {
+//                stressMark.isClinchedToAccentBin = false
+//                for stressMark in stressMarks {
+//                    if accentBin.frame.intersects(stressMark.frame) {
+//                        stressMark.position = accentBin.position
+//
+//
+//
+//                        stressMark.isClinchedToAccentBin = true
+//                        stressMark.wasClinchedToAccentBinAtLeastOne = true
+//                    }
+//                }
+//            }
+//            if let touchedStressMark = touchedNodes.last {
+//                print("jo:" + touchedStressMark.description + "\n\n")
+//            }
+//        }
+        
+        
+        
+        
+
+//
+//        print("i was touched: " + touchedNode.description)
+//        print("i was touched: " + touchedNode.last!.description)
+//        //let frontTouchedNode = atPoint(location).name
+//        let frontTouchedNode = atPoint(location)
+//        print("i was front touched: " + frontTouchedNode.description + "\n")
+
+        
+        
         // stress marks clinch (einrasten) into accentBin
         // TODO higher function
         for accentBin in accentBins {
             for stressMark in stressMarks {
                 if accentBin.frame.intersects(stressMark.frame) {
                     stressMark.position = accentBin.position
+                    // stressMark.isClinchedToAccentBin = true
+                    // stressMark.wasClinchedToAccentBinAtLeastOne = true
+                }
+                else {
+                    // stressMark.isClinchedToAccentBin = false
                 }
             }
         }
+        
+        // dürfen immer nur zwei stressMarks stressMark.isClinchedToAccentBin = false sein
+        
+        
+        
+//        // stress marks clinch (einrasten) into accentBin
+//        // TODO higher function
+//        for accentBin in accentBins {
+//            for stressMark in stressMarks {
+//                if accentBin.frame.intersects(stressMark.frame) {
+//                    stressMark.position = accentBin.position
+//                }
+//        }
+        
+//
+//        // generate new stress mark if spawn is empty
+//        // TODO higher function
+//        var stressedStressMarkSpawnIsFilled = Set<Bool>()
+//        var unstressedStressMarkSpawnIsFilled = Set<Bool>()
+//        for stressMark in stressMarks {
+//            stressedStressMarkSpawnIsFilled.insert((stressedStressMarkParentBin.frame.contains(stressMark.position)))
+//            unstressedStressMarkSpawnIsFilled.insert((unstressedStressMarkParentBin.frame.contains(stressMark.position)))
+//        }
+//        // if spawn set only contains false, it is empty
+//        if !(stressedStressMarkSpawnIsFilled.contains(true)) {
+//            generateStressedStressMark()
+//        }
+//        if !(unstressedStressMarkSpawnIsFilled.contains(true)) {
+//            generateUnstressedStressMark()
+//        }
+//        stressedStressMarkSpawnIsFilled.removeAll()
+//        unstressedStressMarkSpawnIsFilled.removeAll()
+        
         
         // if stress mark.position is not in frame anymore, position it back to the center of the scene
         // TODO higher function
@@ -651,23 +796,6 @@ class LevelOneToFourScene: SKScene {
             }
         }
         
-        // generate new stress mark if spawn is empty
-        // TODO higher function
-        var stressedStressMarkSpawnIsFilled = Set<Bool>()
-        var unstressedStressMarkSpawnIsFilled = Set<Bool>()
-        for stressMark in stressMarks {
-            stressedStressMarkSpawnIsFilled.insert((stressedStressMarkParentBin.frame.contains(stressMark.position)))
-            unstressedStressMarkSpawnIsFilled.insert((unstressedStressMarkParentBin.frame.contains(stressMark.position)))
-        }
-        // if spawn set only contains false, it is empty
-        if !(stressedStressMarkSpawnIsFilled.contains(true)) {
-            generateStressedStressMark()
-        }
-        if !(unstressedStressMarkSpawnIsFilled.contains(true)) {
-            generateUnstressedStressMark()
-        }
-        stressedStressMarkSpawnIsFilled.removeAll()
-        unstressedStressMarkSpawnIsFilled.removeAll()
         
         // signalize user that pushing the button would lead to an action now
         if (areAccentBinsFilledWithAStressmark()) {
