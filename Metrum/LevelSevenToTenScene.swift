@@ -29,6 +29,9 @@ class LevelSevenToTenScene: SKScene {
     private let trochaeusBin = MeasureContainer(position: CGPoint(x: 200, y: 100))
     private let anapaestBin = MeasureContainer(position: CGPoint(x: -200, y: -300))
     private let daktylusBin = MeasureContainer(position: CGPoint(x: 200, y: -300))
+    
+    // variable for the animation to help user understand to drag and drop to solve the task
+    private var arrow = SKSpriteNode()
 
     // overlay nodes
     private var backgroundBlocker = SKSpriteNode()
@@ -56,23 +59,162 @@ class LevelSevenToTenScene: SKScene {
     private let colorizeWhite = SKAction.colorize(with: UIColor.white, colorBlendFactor: 1, duration: 0.2)
     let playRewardSound = SKAction.playSoundFileNamed("ReplyIsCorrect.mp3", waitForCompletion: false)
     
-    // variable for the animation to help user understand to drag and drop to solve the task
-    private var arrow = SKSpriteNode()
-    
-    /// Generates the animation to help user understand to drag and drop stressmarks to solve the task
-    /// Animations stops as soon as all accent bins are filled with stressmarks for the first time in level 1
-    func displayDragAndDropAnimation() {
-        arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow"), color: .clear, size: CGSize(width: 50, height: 150))
-        arrow.name = "arrow"
-        arrow.position = CGPoint(x: -90, y: 0)
-        arrow.zPosition = 1
-        arrow.zRotation = -50
-        addChild(arrow)
+
+    override func didMove(to view: SKView) {
+        if(inputFile == "" || userDefaultsKey == "") {
+            fatalError("hand over input file and userdefaultkeys")
+        }
         
-        // start animation
-        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
-        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
-        arrow.run(SKAction.repeatForever(SKAction.sequence([fadeOut, fadeIn])))
+        if (userDefaultsKey == "level10") {
+            congratulations.setExplanationLabelForLastLevel()
+        }
+        
+        // old version from main bundle: loadedLines = loadInputFileFromMainBundle(inputFile: inputFile)
+        if let data = loadInputFileFromDocumentDirectory(fromDocumentsWithFileName: inputFile) {
+            loadedLines = data
+            selectedLine = loadedLines.first
+        }
+        else {
+            fatalError("loading input file from document directory failed")
+        }
+        
+        setUpScene()
+        setUpUnfixedParts()
+        
+        
+        // only show helper animation, if level7 has not been passed yet
+        if !(UserDefaults.standard.bool(forKey: "level7")) {
+            displayDragAndDropAnimation()
+        }
+        // current level has been passed, so we do not need to show congratulation window anymore
+        // correctReplies as threshold has to be bigger than amountOfCorrectRepliesToPassLevel
+        // because if threshold = amountOfCorrectRepliesToPassLevel, the congratulation is shown
+        if (UserDefaults.standard.bool(forKey: userDefaultsKey)) {
+            correctReplies = amountOfCorrectRepliesToPassLevel+1
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {
+            return
+        }
+        let touchLocation = touch.location(in: self)
+        let touchedNode = self.atPoint(touchLocation)
+        
+        if(touchedNode.isEqual(to: infoButton)) {
+            displayMeasureInfo()
+        }
+        
+        if(touchedNode.isEqual(to: soundButton)) {
+            // sound and line nodes no longer receives touch events
+            self.soundButton.isUserInteractionEnabled = true
+            self.selectedLineBoldLabel.isUserInteractionEnabled = true
+            
+            let playSoundOfLine = SKAction.playSoundFileNamed(selectedLine.audioFile, waitForCompletion: false)
+            let action =  SKAction.group([playSoundOfLine,
+                                          SKAction.run{self.addAndRemoveNode(node: self.selectedLineBoldLabel)},
+                                          SKAction.run{self.hideAndUnhideNode(node: self.selectedLineLabel)}])
+            self.run(action)
+            
+            // sound and line nodes wait 1.5 for lower levels, 4.0 for higher levels, afterwards they reveice touch events again
+            // otherwise app would crash since addAndRemoveNode would be operated although nodes are still in scene
+            self.run(SKAction.wait(forDuration: longerDurationIfHigherLevels()), completion: {() -> Void in
+                self.soundButton.isUserInteractionEnabled = false
+                self.selectedLineBoldLabel.isUserInteractionEnabled = false})
+        }
+        
+        if (touchedNode.isEqual(to: exitLabel)) {
+            if(UserDefaults.standard.bool(forKey: userDefaultsKey)) {
+                let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
+                self.view?.presentScene(mainMenu)
+            }
+            else {
+                displayWarning()
+            }
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {
+            return
+        }
+        // if it started in the label, move it to the new location
+        if selectedLineLabel.frame.contains(touch.previousLocation(in: self)) {
+            selectedLineLabel.position = touch.location(in: self)
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // bold label is dragged to new position too
+        if (selectedLineBoldLabel.position != selectedLineLabel.position) {
+            selectedLineBoldLabel.position = selectedLineLabel.position
+        }
+        
+        if jambusBin.frame.contains(selectedLineLabel.position) {
+            // remove helper animation when accent bins are filled for the first time
+            if let arrow = self.childNode(withName: "arrow") {
+                arrow.removeFromParent()
+            }
+            
+            if selectedLineLabel.name == Measure.jambus.rawValue {
+                jambusBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
+                manageCorrectReply()
+            }
+            // else if wordToBeRated.name == "trochaeus" or "daktylus" or "anapaest"
+            else {
+                jambusBin.run(SKAction.sequence([colorizeRed, colorizeWhite]))
+                selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-120)
+            }
+        }
+        
+        if trochaeusBin.frame.contains(selectedLineLabel.position) {
+            // remove helper animation when accent bins are filled for the first time
+            if let arrow = self.childNode(withName: "arrow") {
+                arrow.removeFromParent()
+            }
+            
+            if selectedLineLabel.name == Measure.trochaeus.rawValue {
+                trochaeusBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
+                manageCorrectReply()
+            } else {
+                trochaeusBin.run(SKAction.sequence([colorizeRed, colorizeWhite]))
+                selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-120)
+            }
+        }
+        
+        if daktylusBin.frame.contains(selectedLineLabel.position) {
+            // remove helper animation when accent bins are filled for the first time
+            if let arrow = self.childNode(withName: "arrow") {
+                arrow.removeFromParent()
+            }
+            
+            if selectedLineLabel.name == Measure.daktylus.rawValue {
+                daktylusBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
+                manageCorrectReply()
+            } else {
+                daktylusBin.run(SKAction.sequence([colorizeRed, colorizeWhite]))
+                selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-120)
+            }
+        }
+        
+        if anapaestBin.frame.contains(selectedLineLabel.position) {
+            // remove helper animation when accent bins are filled for the first time
+            if let arrow = self.childNode(withName: "arrow") {
+                arrow.removeFromParent()
+            }
+            
+            if selectedLineLabel.name == Measure.anapaest.rawValue {
+                anapaestBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
+                manageCorrectReply()
+            } else {
+                anapaestBin.run(SKAction.sequence([colorizeRed, colorizeWhite]))
+                selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-120)
+            }
+        }
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        // Called before each frame is rendered
     }
     
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
@@ -231,13 +373,17 @@ class LevelSevenToTenScene: SKScene {
         // TODO Higher Function instead of two for loops
         for word in line.words {
             for syllable in word.syllables {
-                if syllable.accentuation.rawValue == "unstressed" {
-                    let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false, size: 40)
+                switch syllable.accentuation.rawValue {
+                case "unstressed":
+                    // let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false)
+                    let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false, size: 50)
+                    
                     lineToBeRatedBold.append(syllableNotBold)
-                }
-                else if syllable.accentuation.rawValue == "stressed" {
-                    let syllableBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: true, size: 40)
+                case "stressed":
+                    let syllableBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: true, size: 50)
                     lineToBeRatedBold.append(syllableBold)
+                default:
+                    print("never happens")
                 }
             }
             // cut last character, so that last middle point is removed from word
@@ -246,6 +392,22 @@ class LevelSevenToTenScene: SKScene {
             lineToBeRatedBold.append(NSMutableAttributedString(string:"  "))
         }
         return lineToBeRatedBold
+    }
+    
+    /// Generates the animation to help user understand to drag and drop stressmarks to solve the task
+    /// Animations stops as soon as all accent bins are filled with stressmarks for the first time in level 1
+    func displayDragAndDropAnimation() {
+        arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow"), color: .clear, size: CGSize(width: 50, height: 150))
+        arrow.name = "arrow"
+        arrow.position = CGPoint(x: -90, y: 0)
+        arrow.zPosition = 1
+        arrow.zRotation = -50
+        addChild(arrow)
+        
+        // start animation
+        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
+        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+        arrow.run(SKAction.repeatForever(SKAction.sequence([fadeOut, fadeIn])))
     }
     
     /// Adds MeasureInfo as overlay node to scene.
@@ -356,163 +518,6 @@ class LevelSevenToTenScene: SKScene {
         selectedLineBoldLabel.removeAllChildren()
         
         setUpUnfixedParts()
-    }
-    
-    override func didMove(to view: SKView) {
-        if(inputFile == "" || userDefaultsKey == "") {
-            fatalError("hand over input file and userdefaultkeys")
-        }
-        
-        if (userDefaultsKey == "level10") {
-            congratulations.setExplanationLabelForLastLevel()
-        }
-        
-        // old version from main bundle: loadedLines = loadInputFileFromMainBundle(inputFile: inputFile)
-        if let data = loadInputFileFromDocumentDirectory(fromDocumentsWithFileName: inputFile) {
-            loadedLines = data
-            selectedLine = loadedLines.first
-        }
-        else {
-            fatalError("loading input file from document directory failed")
-        }
-        
-        setUpScene()
-        setUpUnfixedParts()
-        
-        
-        // only show helper animation, if level7 has not been passed yet
-        if !(UserDefaults.standard.bool(forKey: "level7")) {
-            displayDragAndDropAnimation()
-        }
-        // current level has been passed, so we do not need to show congratulation window anymore
-        // correctReplies as threshold has to be bigger than amountOfCorrectRepliesToPassLevel
-        // because if threshold = amountOfCorrectRepliesToPassLevel, the congratulation is shown
-        if (UserDefaults.standard.bool(forKey: userDefaultsKey)) {
-            correctReplies = amountOfCorrectRepliesToPassLevel+1
-        }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
-            return
-        }
-        let touchLocation = touch.location(in: self)
-        let touchedNode = self.atPoint(touchLocation)
-        
-        if(touchedNode.isEqual(to: infoButton)) {
-            displayMeasureInfo()
-        }
-        
-        if(touchedNode.isEqual(to: soundButton)) {
-            // sound and line nodes no longer receives touch events
-            self.soundButton.isUserInteractionEnabled = true
-            self.selectedLineBoldLabel.isUserInteractionEnabled = true
-            
-            let playSoundOfLine = SKAction.playSoundFileNamed(selectedLine.audioFile, waitForCompletion: false)
-            let action =  SKAction.group([playSoundOfLine,
-                                          SKAction.run{self.addAndRemoveNode(node: self.selectedLineBoldLabel)},
-                                          SKAction.run{self.hideAndUnhideNode(node: self.selectedLineLabel)}])
-            self.run(action)
-            
-            // sound and line nodes wait 1.5 for lower levels, 4.0 for higher levels, afterwards they reveice touch events again
-            // otherwise app would crash since addAndRemoveNode would be operated although nodes are still in scene
-            self.run(SKAction.wait(forDuration: longerDurationIfHigherLevels()), completion: {() -> Void in
-                self.soundButton.isUserInteractionEnabled = false
-                self.selectedLineBoldLabel.isUserInteractionEnabled = false})
-        }
-        
-        if (touchedNode.isEqual(to: exitLabel)) {
-            if(UserDefaults.standard.bool(forKey: userDefaultsKey)) {
-                let mainMenu = MainMenuScene(fileNamed: "MainMenuScene")
-                self.view?.presentScene(mainMenu)
-            }
-            else {
-                displayWarning()
-            }
-        }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
-            return
-        }
-        // if it started in the label, move it to the new location
-        if selectedLineLabel.frame.contains(touch.previousLocation(in: self)) {
-            selectedLineLabel.position = touch.location(in: self)
-        }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // bold label is dragged to new position too
-        if (selectedLineBoldLabel.position != selectedLineLabel.position) {
-            selectedLineBoldLabel.position = selectedLineLabel.position
-        }
-        
-        if jambusBin.frame.contains(selectedLineLabel.position) {
-            // remove helper animation when accent bins are filled for the first time
-            if let arrow = self.childNode(withName: "arrow") {
-                arrow.removeFromParent()
-            }
-            
-            if selectedLineLabel.name == Measure.jambus.rawValue {
-                jambusBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
-                manageCorrectReply()
-            }
-            // else if wordToBeRated.name == "trochaeus" or "daktylus" or "anapaest"
-            else {
-                jambusBin.run(SKAction.sequence([colorizeRed, colorizeWhite]))
-                selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-120)
-            }
-        }
-        
-        if trochaeusBin.frame.contains(selectedLineLabel.position) {
-            // remove helper animation when accent bins are filled for the first time
-            if let arrow = self.childNode(withName: "arrow") {
-                arrow.removeFromParent()
-            }
-            
-            if selectedLineLabel.name == Measure.trochaeus.rawValue {
-                trochaeusBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
-                manageCorrectReply()
-            } else {
-                trochaeusBin.run(SKAction.sequence([colorizeRed, colorizeWhite]))
-                selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-120)
-            }
-        }
-        
-        if daktylusBin.frame.contains(selectedLineLabel.position) {
-            // remove helper animation when accent bins are filled for the first time
-            if let arrow = self.childNode(withName: "arrow") {
-                arrow.removeFromParent()
-            }
-            
-            if selectedLineLabel.name == Measure.daktylus.rawValue {
-                daktylusBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
-                manageCorrectReply()
-            } else {
-                daktylusBin.run(SKAction.sequence([colorizeRed, colorizeWhite]))
-                selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-120)
-            }
-        }
-        
-        if anapaestBin.frame.contains(selectedLineLabel.position) {
-            // remove helper animation when accent bins are filled for the first time
-            if let arrow = self.childNode(withName: "arrow") {
-                arrow.removeFromParent()
-            }
-            
-            if selectedLineLabel.name == Measure.anapaest.rawValue {
-                anapaestBin.run(SKAction.sequence([playRewardSound, colorizeGreen, colorizeWhite]))
-                manageCorrectReply()
-            } else {
-                anapaestBin.run(SKAction.sequence([colorizeRed, colorizeWhite]))
-                selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-120)
-            }
-        }
-    }
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
     }
 }
 

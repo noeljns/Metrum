@@ -25,16 +25,17 @@ class LevelOneToFourScene: SKScene {
     private var infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: 225 , y: 90))
     private var soundButton = SoundButton(size: CGSize(width: 40, height: 40), position: CGPoint(x: 150 , y: 90))
     private var checkButton = CheckButton(size: CGSize(width: 150, height: 55))
-    
     private var accentBins = [SKSpriteNode]()
     private var selectedLineLabel = SKLabelNode()
     private var selectedLineBoldLabel = SKLabelNode()
-    // private var stressMarks = [SKSpriteNode]()
     private var stressMarks = [StressMark]()
-    private let stressedStressMarkParentBin = SKSpriteNode()
-    private let stressed = SKLabelNode()
-    private let unstressedStressMarkParentBin = SKSpriteNode()
-    private let unstressed = SKLabelNode()
+    private let stressedStressMarkSpawn = SKSpriteNode()
+    private let stressedStressMarkSpawnLocation = CGPoint(x: -50, y: -170)
+    private let unstressedStressMarkSpawn = SKSpriteNode()
+    private let unstressedStressMarkSpawnLocation = CGPoint(x: 50, y: -170)
+    
+    // variable for the animation to help user understand to drag and drop to solve the task
+    private var arrow = SKSpriteNode()
     
     // overlay nodes
     private var backgroundBlocker = SKSpriteNode()
@@ -58,449 +59,7 @@ class LevelOneToFourScene: SKScene {
     public var inputFile = ""
     public var userDefaultsKey = ""
     
-    // variable for the animation to help user understand to drag and drop to solve the task
-    private var arrow = SKSpriteNode()
     
-    /// Generates the animation to help user understand to drag and drop stressmarks to solve the task
-    /// Animations stops as soon as all accent bins are filled with stressmarks for the first time in level 1
-    func displayDragAndDropAnimation() {
-        arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow2"), color: .clear, size: CGSize(width: 100, height: 200))
-        arrow.name = "arrow"
-        arrow.position = CGPoint(x: -160, y: -80)
-        arrow.zPosition = 1
-        // arrow.zRotation = 50
-        addChild(arrow)
-        
-        // start animation
-        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
-        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
-        arrow.run(SKAction.repeatForever(SKAction.sequence([fadeOut, fadeIn])))
-    }
-    
-    /// Sets up the ui elements that don't get removed from and re-added to scene during level
-    func setUpScene() {
-        addChild(exitLabel)
-        addChild(loadingBar)
-        manageLoadingBar()
-        addChild(taskLabel)
-        if provideHelp != nil && provideHelp == true {
-            addChild(infoButton)
-            addChild(soundButton)
-        }
-        addChild(checkButton)
-    }
-    
-    /// Manages loading Bar.
-    /// Every time the user replies correctly, the loading bar gets increased.
-    /// If the user has passed the level, the loading bar remains full.
-    func manageLoadingBar() {
-        let levelIsPassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
-        
-        if !(levelIsPassed) {
-            loadingBar.progress = CGFloat(correctReplies)/CGFloat(amountOfCorrectRepliesToPassLevel)
-        }
-        else {
-            loadingBar.progress = 1.0
-        }
-    }
-    
-    /// Sets up the ui elements that get removed from and re-added to scene during level.
-    /// Displays new Line for which user has to solve task for.
-    func setUpUnfixedParts() {
-        selectedLine = selectNextLine()
-        
-        selectedLineLabel.fontColor = SKColor.black
-        selectedLineLabel.attributedText = makeAttributedString(stringToBeMutated: selectedLine.line, shallBecomeBold: false, size: 50)
-        selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-50)
-        selectedLineLabel.zPosition = 2
-        addChild(selectedLineLabel)
-
-        selectedLineBoldLabel.name = "selectedLineBoldLabel"
-        selectedLineBoldLabel.fontColor = SKColor.black
-        selectedLineBoldLabel.attributedText = getLineToBeRatedBold(line: selectedLine)
-        selectedLineBoldLabel.position = CGPoint(x: frame.midX, y: frame.midY-50)
-        selectedLineBoldLabel.zPosition = 2
-        
-        generateAccentuationBins(line: selectedLine, lineToBeRated: selectedLineLabel)
-        generateStressMarks()
-        
-        // reset colors of check button to gray
-        checkButton.deactivate()
-    }
-    
-    /// Returns the next Line for which the user has to solve the task.
-    /// Does not select the previous Line, only if it is the last not correctly solved Line.
-    ///
-    /// - Returns: The newly selected Line.
-    func selectNextLine() -> Line {
-        let previousSelected = selectedLine
-        
-        // notYetCorrectlyMarkedLines gets all loadedLines if correctlyMarkedLines is empty in the beginning
-        var notYetCorrectlyMarkedLines = loadedLines.subtracting(correctlyMarkedLines)
-     
-        // loops over all loadedLines if all lines have already been solved correctly
-        if (notYetCorrectlyMarkedLines.isEmpty) {
-            correctlyMarkedLines.removeAll()
-            notYetCorrectlyMarkedLines = loadedLines
-        }
-    
-        guard var newlySelected = notYetCorrectlyMarkedLines.randomElement() else {
-            fatalError("error with loadedLines, so that notYetCorrectlyMarkedLines is nil")
-        }
-        // only one remaining line to be solved
-        if (notYetCorrectlyMarkedLines.count==1) {
-            // newlySelected contains that one line
-            return newlySelected
-        }
-        
-        while(previousSelected == newlySelected ) {
-            // forced unwrapping is fine because notYetCorrectlyMarkedLines can't be nil
-            newlySelected = notYetCorrectlyMarkedLines.randomElement()!
-        }
-        return newlySelected
-    }
-    
-    /// Returns Line with stressed syllables in bold.
-    ///
-    /// - Parameters:
-    ///   - line: The Line which should be returnded.
-    /// - Returns: The Line with stressed syllables in bold.
-    func getLineToBeRatedBold(line: Line) -> NSMutableAttributedString? {
-        let lineToBeRatedBold = NSMutableAttributedString()
-        
-        // TODO Higher Function instead of two for loops
-        for word in line.words {
-            for syllable in word.syllables {
-                if syllable.accentuation.rawValue == "unstressed" {
-                    // let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false)
-                    let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false, size: 50)
-
-                    lineToBeRatedBold.append(syllableNotBold)
-                }
-                else if syllable.accentuation.rawValue == "stressed" {
-                    let syllableBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: true, size: 50)
-                    lineToBeRatedBold.append(syllableBold)
-                }
-            }
-            // cut last character, so that last middle point is removed from word
-            lineToBeRatedBold.deleteCharacters(in: NSRange(location:(lineToBeRatedBold.length) - 1,length:1))
-            // space character between words
-            lineToBeRatedBold.append(NSMutableAttributedString(string:"  "))
-        }
-        return lineToBeRatedBold
-    }
-    
-    /// Generates target bins per each syllable in which the stressMarks shall be dragged and dropped.
-    /// Positions each target bin right over corresponding syllable.
-    ///
-    /// - Parameters:
-    ///   - line: The Line for which the target bins shall be generated.
-    ///   - linetoBeRated: The node of the Line to which the targets shall be added.
-    func generateAccentuationBins(line: Line, lineToBeRated: SKLabelNode) {
-        let amountOfCharsInLine = line.line.count
-        // unit per char: dynamically calculated by frame.width divided by amount of chars
-        let unit = CGFloat(lineToBeRated.frame.width / CGFloat(amountOfCharsInLine))
-        
-        var counter = CGFloat(0.0)
-        for word in line.words {
-            for syllable in word.syllables {
-                let accentBin = SKSpriteNode()
-                accentBin.color = SKColor.lightGray
-                accentBin.size = CGSize(width: 40, height: 50)
-                
-                // half of amount of chars of syllable multiplied by unit plus counter
-                // unit/2 is added since middle of four chars is index 2.5 with a unit of 1
-                // 0.3 is subtracted since middlepoint has a very small width compared to regular chars
-                let positionOfBin = CGFloat((Double(syllable.syllableString.count)-0.3)/2.0)*unit + unit/2 + counter
-                accentBin.position = CGPoint(x: lineToBeRated.frame.minX+positionOfBin, y: frame.midY+25)
-                accentBin.zPosition = 2
-                accentBin.drawBorder(color: .orange, width: 4)
-                // append to class variable
-                accentBins.append(accentBin)
-                
-                // counter shifts to the next syllable
-                counter += CGFloat(syllable.syllableString.count) * unit + unit/2
-                addChild(accentBin)
-            }
-            // counter shifts to the next word
-            // alternative values for counter: counter += 25, 15
-            counter += 17
-        }
-    }
-    
-    /// Generates a stressed and an unstressed stressMarks that the user shall drag and drop into the accentBins.
-    /// If the bin of a stress mark is empty a new stress mark spawns at the bin.
-    func generateStressMarks() {
-        generateStressedStressMark()
-        generateUnstressedStressMark()
-        
-        // necessary to check whether spawn place of stress marks are filled with stress marks or empty
-        stressedStressMarkParentBin.color = .clear
-        stressedStressMarkParentBin.size = CGSize(width: 40, height: 50)
-        stressedStressMarkParentBin.position = CGPoint(x: frame.midX-50, y: frame.midY-170)
-        stressedStressMarkParentBin.zPosition = 2
-        addChild(stressedStressMarkParentBin)
-        unstressedStressMarkParentBin.color = .clear
-        unstressedStressMarkParentBin.size = CGSize(width: 40, height: 50)
-        unstressedStressMarkParentBin.position = CGPoint(x: frame.midX+50, y: frame.midY-170)
-        unstressedStressMarkParentBin.zPosition = 2
-        addChild(unstressedStressMarkParentBin)
-    }
-    
-    /// Generates a stressed stress mark at specified stress mark spawning area.
-    func generateStressedStressMark() {
-//        let stressedStressMarkParent = generateAStressMark(stressed: true, x: frame.midX-50, y: frame.midY-170)
-//        stressMarks.append(stressedStressMarkParent)
-        let stressMark = StressMark(isStressed: true, position: CGPoint(x: -50, y: -170))
-        addChild(stressMark)
-        stressMarks.append(stressMark)
-    }
-    
-    /// Generates an unstressed stress mark at specified stress mark spawning area.
-    func generateUnstressedStressMark() {
-//        let unstressedStressMarkParent = generateAStressMark(stressed: false, x: frame.midX+50, y: frame.midY-170)
-//        stressMarks.append(unstressedStressMarkParent)
-        let stressMark = StressMark(isStressed: false, position: CGPoint(x: 50, y: -170))
-        addChild(stressMark)
-        stressMarks.append(stressMark)
-    }
-    
-    /// Returns parent node of a stress mark with a specified position.
-    ///
-    /// - Parameters:
-    ///   - stressed: Indicates whether the stress mark should be stressed or unstressed.
-    ///   - x: X position where the stress mark shall be positioned.
-    ///   - y: Y position where the stress mark shall be positioned.
-    /// - Returns: Parent node with stress mark with a specified position as a child.
-    func generateAStressMark(stressed: Bool, x: CGFloat, y: CGFloat) -> SKSpriteNode {
-        let stressMarkParent = SKSpriteNode()
-        stressMarkParent.color = .white
-        stressMarkParent.size = CGSize(width: 40, height: 50)
-        stressMarkParent.position = CGPoint(x: x, y: y)
-        stressMarkParent.drawBorder(color: .orange, width: 4)
-        stressMarkParent.zPosition = 50000
-        
-        
-        let stressMark = SKLabelNode()
-        stressMark.fontColor = SKColor.black
-        stressMark.fontSize = 40
-        stressMark.zPosition = 2
-        stressMark.position = CGPoint(x: -stressMarkParent.frame.width/4+10, y: -stressMarkParent.frame.height/4)
-        stressMark.addStroke(color: .black, width: 6)
-        // TODO higher function
-        if stressed {
-            stressMark.text = "x́"
-            stressMarkParent.name = "stressed"
-        }
-        else {
-            stressMark.text = "x"
-            stressMarkParent.name = "unstressed"
-        }
-        stressMarkParent.addChild(stressMark)
-        addChild(stressMarkParent)
-        return stressMarkParent
-    }
-    
-    /// Adds AccentiationInfo as overlay node to scene.
-    func displayAccentuationInfo() {
-        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
-        addChild(backgroundBlocker)
-        accentuationInfo.delegate = self
-        addChild(accentuationInfo)
-    }
-
-    /// Adds Congratualtions as overlay node to scene.
-    func displayCongratulations() {
-        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
-        addChild(backgroundBlocker)
-        congratulations.delegate = self
-        addChild(congratulations)
-    }
-    
-    /// Adds ReplyIsCorrect as overlay node to scene.
-    func displayReplyIsCorrect() {
-        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
-        addChild(backgroundBlocker)
-        replyIsCorrect.delegate = self
-        addChild(replyIsCorrect)
-    }
-    
-    /// Adds ReplyIsFalse as overlay node to scene.
-    func displayReplyIsFalse(solution: String) {
-        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
-        addChild(backgroundBlocker)
-        replyIsFalse.addSolutionToText(solution: solution)
-        replyIsFalse.delegate = self
-        addChild(replyIsFalse)
-    }
-    
-    /// Adds Warning as overlay node to scene.
-    func displayWarning() {
-        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
-        addChild(backgroundBlocker)
-        warning.delegate = self
-        addChild(warning)
-    }
-    
-    /// Relevant for sound button.
-    /// Runs an action that adds a node to the scene and removes it after some seconds.
-    /// Duration of action is longer in higher levels.
-    ///
-    /// - Parameters:
-    ///   - node: Node that should be added to and removed from the scene.
-    func addAndRemoveNode(node: SKLabelNode) {
-        let duration = longerDurationIfHigherLevels()
-        
-        addChild(node)
-        node.run(SKAction.sequence([
-            SKAction.wait(forDuration: duration),
-            SKAction.removeFromParent(),
-            ])
-        )
-    }
-    
-    /// Relevant for sound button.
-    /// Runs an action that hides a node frome the scene and unhides it after some seconds.
-    /// Duration of action is longer in higher levels.
-    ///
-    /// - Parameters:
-    ///   - node: Node that should be added to and removed from the scene.
-    func hideAndUnhideNode(node: SKLabelNode) {
-        let duration = longerDurationIfHigherLevels()
-
-        node.run(SKAction.sequence([
-            SKAction.hide(),
-            SKAction.wait(forDuration: duration),
-            SKAction.unhide()
-            ])
-        )
-    }
-    
-    /// Relevant for sound button.
-    /// Returns a duration regarding the game status.
-    ///
-    /// - Returns: A duration of one second or four seconds if it is a higher level.
-    func longerDurationIfHigherLevels() -> TimeInterval{
-        var duration = TimeInterval(2.5)
-        if (userDefaultsKey == "level3" || userDefaultsKey == "level4" || userDefaultsKey == "level9" || userDefaultsKey == "level10") {
-            duration = TimeInterval(5.5)
-        }
-        return duration
-    }
-
-    /// Relevant for check button.
-    /// Checks if all accent bins contain a stress mark
-    ///
-    /// - Returns: True if all accent bins contain a stress mark, false otherwise.
-    func areAccentBinsFilledWithAStressmark() -> Bool {
-        // TODO higher function
-        // quick return since false is returned as soon as one accentBin is empty
-        for accentBin in accentBins {
-            if !(isAccentBinFilledWithAStressMark(accentBin: accentBin)) {
-                return false
-            }
-        }
-        return true
-    }
-    
-    /// Relevant for check button.
-    /// Checks whether an accent bin is filled with a stress mark.
-    ///
-    /// - Parameters:
-    ///   - accentBin: Accent bin that is empty or filled with a stress mark.
-    /// - Returns: True if the accent bin is filled with a stress mark, false otherwise.
-    func isAccentBinFilledWithAStressMark(accentBin: SKSpriteNode) -> Bool {
-        // TODO higher function
-        for stressMark in stressMarks {
-            if accentBin.position.equalTo(stressMark.position) {
-                return true
-            }
-        }
-        return false
-    }
-    
-    /// Relevant for check button.
-    /// Checks whether reply of user is correct or not.
-    /// The reply is correct if the accentBins are filled with the correct stress marks.
-    ///
-    /// - Returns: The solution of the task and true if the reply is correct, false otherwise.
-    func isReplyCorrect() -> (Bool, [String]) {
-        var reply = [String]()
-        var correctSolution = [String]()
-        
-        // get reply by getting the name of stressMarks sorted from left accentBin to the right
-        // TODO higher function
-        for accentBin in accentBins {
-            for stressMark in stressMarks {
-                if accentBin.position.equalTo(stressMark.position) {
-                    // forced unwrapping is okay because stressmark gets a name in generateAStressMark()
-                    reply.append(stressMark.name!)
-                }
-            }
-        }
-        
-        // get correct accentuation of line
-        // TODO higher order function
-        for word in selectedLine.words {
-            for syllable in word.syllables {
-                correctSolution.append(syllable.accentuation.rawValue)
-            }
-        }
-        
-        if reply.elementsEqual(correctSolution) {
-            return (true, correctSolution)
-        }
-        else {
-            return (false, correctSolution)
-        }
-        
-    }
-    
-    /// Relevant for check button.
-    /// Sets user data of the level to true, if the level has been passed.
-    func updateLevelStatus() {
-        if (correctReplies >= amountOfCorrectRepliesToPassLevel) {
-            UserDefaults.standard.set(true, forKey: userDefaultsKey)
-        }
-    }
-    
-    /// Relevant for check button.
-    /// Returns solution with stress mark signs.
-    /// Example: ["stressed", "unstressed"] is converted to "x́  x"
-    ///
-    /// - Parameters:
-    ///   - solution: List of Strings that should be converted.
-    /// - Returns: Converted String with stress mark signs.
-    func solutionWithStressMarkSigns(solution: [String]) -> String{
-        var result = ""
-        for str in solution {
-            if str == "stressed" {
-                result.append("x́  ")
-            }
-            else {
-                result.append("x  ")
-            }
-        }
-        return result
-    }
-    
-    /// Empties lists, removes unfix nodes and sets up scene again for new line to be solved.
-    func cleanAndSetupSceneForNewLine() {
-        // remove all accentBins and stressMarks from scene
-        accentBins.forEach { $0.removeFromParent() }
-        stressMarks.forEach { $0.removeFromParent() }
-        // empty accentBins array and stressMarks array since new line is selected
-        accentBins.removeAll()
-        stressMarks.removeAll()
-        
-        selectedLineLabel.removeFromParent()
-        stressedStressMarkParentBin.removeFromParent()
-        unstressedStressMarkParentBin.removeFromParent()
-        
-        setUpUnfixedParts()
-    }
-    
-
     override func didMove(to view: SKView) {
         if(inputFile == "" || userDefaultsKey == "") {
             fatalError("hand over input file and userdefaultkeys")
@@ -585,7 +144,6 @@ class LevelOneToFourScene: SKScene {
             else {
                 // nothing happens since not every accentBin is filled with a stressMark
             }
-            
         }
         
         if (touchedNode.isEqual(to: exitLabel)) {
@@ -603,192 +161,33 @@ class LevelOneToFourScene: SKScene {
         guard let touch = touches.first else {
             return
         }
-        
         // dragging of stress marks to new location by touching
         // TODO higher function
-        for (smIndex, stressMark) in stressMarks.enumerated() {
+        for (index, stressMark) in stressMarks.enumerated() {
             if stressMark.frame.contains(touch.previousLocation(in: self)) {
                 stressMark.position = touch.location(in: self)
             }
             // if stress marks collide, they do not stick together anymore
-            for (sIndex, s) in stressMarks.enumerated() {
-                if (stressMark.position.equalTo(s.position)) && (smIndex != sIndex) {
+            for (otherIndex, otherStressMark) in stressMarks.enumerated() {
+                if (stressMark.position.equalTo(otherStressMark.position)) && (index != otherIndex) {
                     stressMark.position = CGPoint(x: stressMark.position.x, y: stressMark.position.y-100)
                 }
             }
         }
     }
     
-    /// Checks if both spawn locations are filled with a stress mark that user can drag and drop
-    ///
-    /// - Returns: true, if both spawn locations are filled with a stress mark, false otherwise
-    func areBothSpawnLocationsFilledWithAStressMark() -> Bool {
-        var areBothSpawnLocationsFilledWithAStressMark = false
-        
-        var stressedStressMarkSpawnIsFilled = Set<Bool>()
-        var unstressedStressMarkSpawnIsFilled = Set<Bool>()
-        for stressMark in stressMarks {
-            stressedStressMarkSpawnIsFilled.insert((stressedStressMarkParentBin.frame.contains(stressMark.position)))
-            unstressedStressMarkSpawnIsFilled.insert((unstressedStressMarkParentBin.frame.contains(stressMark.position)))
-        }
-        // if spawn set contains one true, it is filled; if spawn set only contains false, it is empty
-        if (stressedStressMarkSpawnIsFilled.contains(true)) && (unstressedStressMarkSpawnIsFilled.contains(true)) {
-            areBothSpawnLocationsFilledWithAStressMark = true
-        }
-        
-        stressedStressMarkSpawnIsFilled.removeAll()
-        unstressedStressMarkSpawnIsFilled.removeAll()
-        return areBothSpawnLocationsFilledWithAStressMark
-    }
-    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
-            return
-        }
-        let location = touch.location(in: self)
-        let touchedNodes = nodes(at: location)
-        
-        for node in touchedNodes {
-        }
-        
-        for s in stressMarks {
-            s.isClinchedToAccentBin = false
-        }
-        
-        // print("stressMarks.count: " + stressMarks.count.description)
-        print("\n\n\n new touch")
-        for accentBin in accentBins {
-            print("accent bin starts")
-            for stressMark in stressMarks {
-                print("hi, i'm a " + stressMark.name! + " stressMark")
-                // stressMark.isClinchedToAccentBin = false
-                if accentBin.frame.intersects(stressMark.frame) {
-                    if stressMark.wasNeverClinchedToAccentBin {
-                        // spawn StressMark at empty spawn location
-                        print("was never clinched to bin before")
-                            
-                        if stressMark.name == "stressed" {
-                            generateStressedStressMark()
-                            print("spawn stressed")
-                        }
-                        else if stressMark.name == "unstressed" {
-                            generateUnstressedStressMark()
-                            print("spawn unstressed")
-                        }
-                    }
-                    stressMark.position = accentBin.position
-                    stressMark.isClinchedToAccentBin = true
-                    print("i am clinched, because: " + stressMark.isClinchedToAccentBin.description)
-                    stressMark.wasNeverClinchedToAccentBin = false
-                }
-                else {
-                    if !(stressMark.wasNeverClinchedToAccentBin) && !(accentBin.frame.contains(stressMark.position)) {
-                    // print("you should be deleted!")
-                        // stressMark.removeFromParent()
-                    }
-                }
-                // print("isClinchedToAccentBin: " + stressMark.isClinchedToAccentBin.description)
-                print("wasNeverClinchedToAccentBin: " + stressMark.wasNeverClinchedToAccentBin.description + "\n")
-            }
-        }
-        // get the once that are put out of accent bin
-        var toBeRemoved = [StressMark]()
-        for stressMark in stressMarks {
-            if (stressMark.isClinchedToAccentBin==false && stressMark.wasNeverClinchedToAccentBin==false) && (stressMark.position != CGPoint(x: -50, y: -170) || stressMark.position != CGPoint(x: 50, y: -170)) {
-                print("you should be deleted")
-                toBeRemoved.append(stressMark)
-            }
-        }
-        print("stressMarks.count: " + stressMarks.count.description)
-        for stressMark in toBeRemoved {
-            stressMark.removeFromParent()
-            stressMarks = stressMarks.filter { $0 != stressMark }
-        }
-        print("stressMarks.count: " + stressMarks.count.description)
- 
-            
-//            if touchedNodes.contains(stressMark) {
-//                stressMark.isClinchedToAccentBin = false
-//                for stressMark in stressMarks {
-//                    if accentBin.frame.intersects(stressMark.frame) {
-//                        stressMark.position = accentBin.position
-//
-//
-//
-//                        stressMark.isClinchedToAccentBin = true
-//                        stressMark.wasClinchedToAccentBinAtLeastOne = true
-//                    }
-//                }
-//            }
-//            if let touchedStressMark = touchedNodes.last {
-//                print("jo:" + touchedStressMark.description + "\n\n")
-//            }
-//        }
-//
-//        print("i was touched: " + touchedNode.description)
-//        print("i was touched: " + touchedNode.last!.description)
-//        //let frontTouchedNode = atPoint(location).name
-//        let frontTouchedNode = atPoint(location)
-//        print("i was front touched: " + frontTouchedNode.description + "\n")
-
-        
-        
-        // stress marks clinch (einrasten) into accentBin
-        // TODO higher function
-        for accentBin in accentBins {
-            for stressMark in stressMarks {
-                if accentBin.frame.intersects(stressMark.frame) {
-                    stressMark.position = accentBin.position
-                    // stressMark.isClinchedToAccentBin = true
-                    // stressMark.wasClinchedToAccentBinAtLeastOne = true
-                }
-                else {
-                    // stressMark.isClinchedToAccentBin = false
-                }
-            }
-        }
-        
-        // dürfen immer nur zwei stressMarks stressMark.isClinchedToAccentBin = false sein
-        
-        
-        
-//        // stress marks clinch (einrasten) into accentBin
-//        // TODO higher function
-//        for accentBin in accentBins {
-//            for stressMark in stressMarks {
-//                if accentBin.frame.intersects(stressMark.frame) {
-//                    stressMark.position = accentBin.position
-//                }
-//        }
-        
-//
-//        // generate new stress mark if spawn is empty
-//        // TODO higher function
-//        var stressedStressMarkSpawnIsFilled = Set<Bool>()
-//        var unstressedStressMarkSpawnIsFilled = Set<Bool>()
-//        for stressMark in stressMarks {
-//            stressedStressMarkSpawnIsFilled.insert((stressedStressMarkParentBin.frame.contains(stressMark.position)))
-//            unstressedStressMarkSpawnIsFilled.insert((unstressedStressMarkParentBin.frame.contains(stressMark.position)))
-//        }
-//        // if spawn set only contains false, it is empty
-//        if !(stressedStressMarkSpawnIsFilled.contains(true)) {
-//            generateStressedStressMark()
-//        }
-//        if !(unstressedStressMarkSpawnIsFilled.contains(true)) {
-//            generateUnstressedStressMark()
-//        }
-//        stressedStressMarkSpawnIsFilled.removeAll()
-//        unstressedStressMarkSpawnIsFilled.removeAll()
-        
+        spawnNewStressMarkIfNecessary()
+        removeStressMarkIfRemovedFromAccentBin()
         
         // if stress mark.position is not in frame anymore, position it back to the center of the scene
         // TODO higher function
         for stressMark in stressMarks {
             if !(frame.contains(stressMark.position)) {
+                print("lost a stressMark to the infinite nonentity")
                 stressMark.position = CGPoint(x: frame.midX, y: frame.midY-150)
             }
         }
-        
         
         // signalize user that pushing the button would lead to an action now
         if (areAccentBinsFilledWithAStressmark()) {
@@ -806,6 +205,454 @@ class LevelOneToFourScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+    }
+    
+    
+    /// Sets up the ui elements that don't get removed from and re-added to scene during level
+    func setUpScene() {
+        addChild(exitLabel)
+        addChild(loadingBar)
+        manageLoadingBar()
+        addChild(taskLabel)
+        if provideHelp != nil && provideHelp == true {
+            addChild(infoButton)
+            addChild(soundButton)
+        }
+        addChild(checkButton)
+    }
+    
+    /// Manages loading Bar.
+    /// Every time the user replies correctly, the loading bar gets increased.
+    /// If the user has passed the level, the loading bar remains full.
+    func manageLoadingBar() {
+        let levelIsPassed = UserDefaults.standard.bool(forKey: userDefaultsKey)
+        
+        if !(levelIsPassed) {
+            loadingBar.progress = CGFloat(correctReplies)/CGFloat(amountOfCorrectRepliesToPassLevel)
+        }
+        else {
+            loadingBar.progress = 1.0
+        }
+    }
+    
+    /// Sets up the ui elements that get removed from and re-added to scene during level.
+    /// Displays new Line for which user has to solve task for.
+    func setUpUnfixedParts() {
+        selectedLine = selectNextLine()
+        
+        selectedLineLabel.fontColor = SKColor.black
+        selectedLineLabel.attributedText = makeAttributedString(stringToBeMutated: selectedLine.line, shallBecomeBold: false, size: 50)
+        selectedLineLabel.position = CGPoint(x: frame.midX, y: frame.midY-50)
+        selectedLineLabel.zPosition = 2
+        addChild(selectedLineLabel)
+        
+        selectedLineBoldLabel.name = "selectedLineBoldLabel"
+        selectedLineBoldLabel.fontColor = SKColor.black
+        selectedLineBoldLabel.attributedText = getLineToBeRatedBold(line: selectedLine)
+        selectedLineBoldLabel.position = CGPoint(x: frame.midX, y: frame.midY-50)
+        selectedLineBoldLabel.zPosition = 2
+        
+        generateAccentuationBins(line: selectedLine, lineToBeRated: selectedLineLabel)
+        generateStressMarks()
+        
+        // reset colors of check button to gray
+        checkButton.deactivate()
+    }
+    
+    /// Returns the next Line for which the user has to solve the task.
+    /// Does not select the previous Line, only if it is the last not correctly solved Line.
+    ///
+    /// - Returns: The newly selected Line.
+    func selectNextLine() -> Line {
+        let previousSelected = selectedLine
+        
+        // notYetCorrectlyMarkedLines gets all loadedLines if correctlyMarkedLines is empty in the beginning
+        var notYetCorrectlyMarkedLines = loadedLines.subtracting(correctlyMarkedLines)
+        
+        // loops over all loadedLines if all lines have already been solved correctly
+        if (notYetCorrectlyMarkedLines.isEmpty) {
+            correctlyMarkedLines.removeAll()
+            notYetCorrectlyMarkedLines = loadedLines
+        }
+        
+        guard var newlySelected = notYetCorrectlyMarkedLines.randomElement() else {
+            fatalError("error with loadedLines, so that notYetCorrectlyMarkedLines is nil")
+        }
+        // only one remaining line to be solved
+        if (notYetCorrectlyMarkedLines.count==1) {
+            // newlySelected contains that one line
+            return newlySelected
+        }
+        
+        while(previousSelected == newlySelected ) {
+            // forced unwrapping is fine because notYetCorrectlyMarkedLines can't be nil
+            newlySelected = notYetCorrectlyMarkedLines.randomElement()!
+        }
+        return newlySelected
+    }
+    
+    /// Returns Line with stressed syllables in bold.
+    ///
+    /// - Parameters:
+    ///   - line: The Line which should be returnded.
+    /// - Returns: The Line with stressed syllables in bold.
+    func getLineToBeRatedBold(line: Line) -> NSMutableAttributedString? {
+        let lineToBeRatedBold = NSMutableAttributedString()
+        
+        // TODO Higher Function instead of two for loops
+        for word in line.words {
+            for syllable in word.syllables {
+                switch syllable.accentuation.rawValue {
+                case "unstressed":
+                    // let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false)
+                    let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false, size: 50)
+                    
+                    lineToBeRatedBold.append(syllableNotBold)
+                case "stressed":
+                    let syllableBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: true, size: 50)
+                    lineToBeRatedBold.append(syllableBold)
+                default:
+                    print("never happens")
+                }
+            }
+            // cut last character, so that last middle point is removed from word
+            lineToBeRatedBold.deleteCharacters(in: NSRange(location:(lineToBeRatedBold.length) - 1,length:1))
+            // space character between words
+            lineToBeRatedBold.append(NSMutableAttributedString(string:"  "))
+        }
+        return lineToBeRatedBold
+    }
+    
+    /// Generates target bins per each syllable in which the stressMarks shall be dragged and dropped.
+    /// Positions each target bin right over corresponding syllable.
+    ///
+    /// - Parameters:
+    ///   - line: The Line for which the target bins shall be generated.
+    ///   - linetoBeRated: The node of the Line to which the targets shall be added.
+    func generateAccentuationBins(line: Line, lineToBeRated: SKLabelNode) {
+        let amountOfCharsInLine = line.line.count
+        // unit per char: dynamically calculated by frame.width divided by amount of chars
+        let unit = CGFloat(lineToBeRated.frame.width / CGFloat(amountOfCharsInLine))
+        
+        var counter = CGFloat(0.0)
+        for word in line.words {
+            for syllable in word.syllables {
+                let accentBin = SKSpriteNode()
+                accentBin.color = SKColor.lightGray
+                accentBin.size = CGSize(width: 40, height: 50)
+                
+                // half of amount of chars of syllable multiplied by unit plus counter
+                // unit/2 is added since middle of four chars is index 2.5 with a unit of 1
+                // 0.3 is subtracted since middlepoint has a very small width compared to regular chars
+                let positionOfBin = CGFloat((Double(syllable.syllableString.count)-0.3)/2.0)*unit + unit/2 + counter
+                accentBin.position = CGPoint(x: lineToBeRated.frame.minX+positionOfBin, y: frame.midY+25)
+                accentBin.zPosition = 2
+                accentBin.drawBorder(color: .orange, width: 4)
+                // append to class variable
+                accentBins.append(accentBin)
+                
+                // counter shifts to the next syllable
+                counter += CGFloat(syllable.syllableString.count) * unit + unit/2
+                addChild(accentBin)
+            }
+            // counter shifts to the next word
+            // alternative values for counter: counter += 25, 15
+            counter += 17
+        }
+    }
+    
+    /// Generates a stressed and an unstressed stressMarks that the user shall drag and drop into the accentBins.
+    /// If the bin of a stress mark is empty a new stress mark spawns at the bin.
+    func generateStressMarks() {
+        generateStressedStressMark()
+        generateUnstressedStressMark()
+        
+        // necessary to check whether spawn place of stress marks are filled with stress marks or empty
+        stressedStressMarkSpawn.color = .clear
+        stressedStressMarkSpawn.size = CGSize(width: 40, height: 50)
+        stressedStressMarkSpawn.position = stressedStressMarkSpawnLocation
+        stressedStressMarkSpawn.zPosition = 2
+        addChild(stressedStressMarkSpawn)
+        unstressedStressMarkSpawn.color = .clear
+        unstressedStressMarkSpawn.size = CGSize(width: 40, height: 50)
+        unstressedStressMarkSpawn.position = unstressedStressMarkSpawnLocation
+        unstressedStressMarkSpawn.zPosition = 2
+        addChild(unstressedStressMarkSpawn)
+    }
+    
+    /// Generates a stressed stress mark at specified stress mark spawning area.
+    func generateStressedStressMark() {
+        let stressMark = StressMark(isStressed: true, position: stressedStressMarkSpawnLocation)
+        addChild(stressMark)
+        stressMarks.append(stressMark)
+    }
+    
+    /// Generates an unstressed stress mark at specified stress mark spawning area.
+    func generateUnstressedStressMark() {
+        let stressMark = StressMark(isStressed: false, position: unstressedStressMarkSpawnLocation)
+        addChild(stressMark)
+        stressMarks.append(stressMark)
+    }
+    
+    /// Generates the animation to help user understand to drag and drop stressmarks to solve the task
+    /// Animations stops as soon as all accent bins are filled with stressmarks for the first time in level 1
+    func displayDragAndDropAnimation() {
+        arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow2"), color: .clear, size: CGSize(width: 100, height: 200))
+        arrow.name = "arrow"
+        arrow.position = CGPoint(x: -160, y: -80)
+        arrow.zPosition = 1
+        // arrow.zRotation = 50
+        addChild(arrow)
+        
+        // start animation
+        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
+        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+        arrow.run(SKAction.repeatForever(SKAction.sequence([fadeOut, fadeIn])))
+    }
+    
+    /// Adds AccentiationInfo as overlay node to scene.
+    func displayAccentuationInfo() {
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
+        addChild(backgroundBlocker)
+        accentuationInfo.delegate = self
+        addChild(accentuationInfo)
+    }
+    
+    /// Adds Congratualtions as overlay node to scene.
+    func displayCongratulations() {
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
+        addChild(backgroundBlocker)
+        congratulations.delegate = self
+        addChild(congratulations)
+    }
+    
+    /// Adds ReplyIsCorrect as overlay node to scene.
+    func displayReplyIsCorrect() {
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
+        addChild(backgroundBlocker)
+        replyIsCorrect.delegate = self
+        addChild(replyIsCorrect)
+    }
+    
+    /// Adds ReplyIsFalse as overlay node to scene.
+    func displayReplyIsFalse(solution: String) {
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
+        addChild(backgroundBlocker)
+        replyIsFalse.addSolutionToText(solution: solution)
+        replyIsFalse.delegate = self
+        addChild(replyIsFalse)
+    }
+    
+    /// Adds Warning as overlay node to scene.
+    func displayWarning() {
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: true, size: self.size)
+        addChild(backgroundBlocker)
+        warning.delegate = self
+        addChild(warning)
+    }
+    
+    /// Relevant for sound button.
+    /// Runs an action that adds a node to the scene and removes it after some seconds.
+    /// Duration of action is longer in higher levels.
+    ///
+    /// - Parameters:
+    ///   - node: Node that should be added to and removed from the scene.
+    func addAndRemoveNode(node: SKLabelNode) {
+        let duration = longerDurationIfHigherLevels()
+        
+        addChild(node)
+        node.run(SKAction.sequence([
+            SKAction.wait(forDuration: duration),
+            SKAction.removeFromParent(),
+            ])
+        )
+    }
+    
+    /// Relevant for sound button.
+    /// Runs an action that hides a node frome the scene and unhides it after some seconds.
+    /// Duration of action is longer in higher levels.
+    ///
+    /// - Parameters:
+    ///   - node: Node that should be added to and removed from the scene.
+    func hideAndUnhideNode(node: SKLabelNode) {
+        let duration = longerDurationIfHigherLevels()
+        
+        node.run(SKAction.sequence([
+            SKAction.hide(),
+            SKAction.wait(forDuration: duration),
+            SKAction.unhide()
+            ])
+        )
+    }
+    
+    /// Relevant for sound button.
+    /// Returns a duration regarding the game status.
+    ///
+    /// - Returns: A duration of one second or four seconds if it is a higher level.
+    func longerDurationIfHigherLevels() -> TimeInterval{
+        var duration = TimeInterval(2.5)
+        if (userDefaultsKey == "level3" || userDefaultsKey == "level4" || userDefaultsKey == "level9" || userDefaultsKey == "level10") {
+            duration = TimeInterval(5.5)
+        }
+        return duration
+    }
+    
+    /// Relevant for check button.
+    /// Checks if all accent bins contain a stress mark
+    ///
+    /// - Returns: True if all accent bins contain a stress mark, false otherwise.
+    func areAccentBinsFilledWithAStressmark() -> Bool {
+        // TODO higher function
+        // quick return since false is returned as soon as one accentBin is empty
+        for accentBin in accentBins {
+            if !(isAccentBinFilledWithAStressMark(accentBin: accentBin)) {
+                return false
+            }
+        }
+        return true
+    }
+    
+    /// Relevant for check button.
+    /// Checks whether an accent bin is filled with a stress mark.
+    ///
+    /// - Parameters:
+    ///   - accentBin: Accent bin that is empty or filled with a stress mark.
+    /// - Returns: True if the accent bin is filled with a stress mark, false otherwise.
+    func isAccentBinFilledWithAStressMark(accentBin: SKSpriteNode) -> Bool {
+        // TODO higher function
+        for stressMark in stressMarks {
+            if accentBin.position.equalTo(stressMark.position) {
+                return true
+            }
+        }
+        return false
+    }
+    
+    /// Relevant for check button.
+    /// Checks whether reply of user is correct or not.
+    /// The reply is correct if the accentBins are filled with the correct stress marks.
+    ///
+    /// - Returns: The solution of the task and true if the reply is correct, false otherwise.
+    func isReplyCorrect() -> (Bool, [String]) {
+        var reply = [String]()
+        var correctSolution = [String]()
+        
+        // get reply by getting the name of stressMarks sorted from left accentBin to the right
+        // TODO higher function
+        for accentBin in accentBins {
+            for stressMark in stressMarks {
+                if accentBin.position.equalTo(stressMark.position) {
+                    // forced unwrapping is okay because stressmark always gets a name via init()
+                    reply.append(stressMark.name!)
+                }
+            }
+        }
+        
+        // get correct accentuation of line
+        // TODO higher order function
+        for word in selectedLine.words {
+            for syllable in word.syllables {
+                correctSolution.append(syllable.accentuation.rawValue)
+            }
+        }
+        
+        if reply.elementsEqual(correctSolution) {
+            print("your answer: " + reply.description)
+            return (true, correctSolution)
+        }
+        else {
+            print("your answer: " + reply.description)
+            return (false, correctSolution)
+        }
+    }
+    
+    /// Relevant for check button.
+    /// Sets user data of the level to true, if the level has been passed.
+    func updateLevelStatus() {
+        if (correctReplies >= amountOfCorrectRepliesToPassLevel) {
+            UserDefaults.standard.set(true, forKey: userDefaultsKey)
+        }
+    }
+    
+    /// Relevant for check button.
+    /// Returns solution with stress mark signs.
+    /// Example: ["stressed", "unstressed"] is converted to "x́  x"
+    ///
+    /// - Parameters:
+    ///   - solution: List of Strings that should be converted.
+    /// - Returns: Converted String with stress mark signs.
+    func solutionWithStressMarkSigns(solution: [String]) -> String{
+        var result = ""
+        for str in solution {
+            if str == "stressed" {
+                result.append("x́  ")
+            }
+            else {
+                result.append("x  ")
+            }
+        }
+        return result
+    }
+    
+    /// Empties lists, removes unfix nodes and sets up scene again for new line to be solved.
+    func cleanAndSetupSceneForNewLine() {
+        // remove all accentBins and stressMarks from scene
+        accentBins.forEach { $0.removeFromParent() }
+        stressMarks.forEach { $0.removeFromParent() }
+        // empty accentBins array and stressMarks array since new line is selected
+        accentBins.removeAll()
+        stressMarks.removeAll()
+        
+        selectedLineLabel.removeFromParent()
+        stressedStressMarkSpawn.removeFromParent()
+        unstressedStressMarkSpawn.removeFromParent()
+        
+        setUpUnfixedParts()
+    }
+
+    /// Checks if stressMark has been moved to accent bin for the first time
+    /// Spawns new stress mark if spawn location is empty
+    func spawnNewStressMarkIfNecessary() {
+        // reset isClinchedToAccentBin flag
+        for stressMark in stressMarks {
+            stressMark.isClinchedToAccentBin = false
+        }
+        // flag the stress marks that are clinched to accent bin
+        // spawn new stress mark if stress mark gets moved to accent bin for the first time
+        for accentBin in accentBins {
+            for stressMark in stressMarks {
+                if accentBin.frame.intersects(stressMark.frame) {
+                    if stressMark.wasNeverClinchedToAccentBin {
+                        if stressMark.name == "stressed" {
+                            generateStressedStressMark()
+                        }
+                        else if stressMark.name == "unstressed" {
+                            generateUnstressedStressMark()
+                        }
+                    }
+                    // clinch stressMark to accent bin
+                    stressMark.position = accentBin.position
+                    stressMark.isClinchedToAccentBin = true
+                    stressMark.wasNeverClinchedToAccentBin = false
+                }
+            }
+        }
+    }
+    
+    /// Removes stress mark if it was dragged out of accent bin
+    func removeStressMarkIfRemovedFromAccentBin() {
+        // get the stress mark that got removed from accent bin
+        var toBeRemoved = [StressMark]()
+        for stressMark in stressMarks {
+            if (stressMark.isClinchedToAccentBin==false && stressMark.wasNeverClinchedToAccentBin==false) && (stressMark.position != unstressedStressMarkSpawnLocation || stressMark.position != stressedStressMarkSpawnLocation) {
+                toBeRemoved.append(stressMark)
+            }
+        }
+        // delete the stress marks that got removed from accent bin
+        for stressMark in toBeRemoved {
+            stressMark.removeFromParent()
+            stressMarks = stressMarks.filter { $0 != stressMark }
+        }
     }
 }
 

@@ -15,12 +15,13 @@ class StressMark: SKSpriteNode {
     
     init(isStressed: Bool, position: CGPoint) {
         // stressMarkTouchContainer
-        super.init(texture: nil, color: .red, size: CGSize(width: 40, height: 50))
+        super.init(texture: nil, color: .white, size: CGSize(width: 40, height: 50))
         self.position = position
         drawBorder(color: .orange, width: 4)
         zPosition = 1
     
         let stressMarkLabel = SKLabelNode()
+        stressMarkLabel.name = "stressMarkLabel"
         stressMarkLabel.fontColor = SKColor.black
         stressMarkLabel.fontSize = 40
         stressMarkLabel.zPosition = 2
