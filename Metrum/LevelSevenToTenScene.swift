@@ -46,7 +46,7 @@ class LevelSevenToTenScene: SKScene {
     private var selectedLine: Line!
     
     // TODO check if handing over properties via init / constructor is better
-    public var provideHelp = false
+    public var provideHelp: Bool?
     public var inputFile = ""
     public var userDefaultsKey = ""
     
@@ -157,7 +157,7 @@ class LevelSevenToTenScene: SKScene {
         selectedLineBoldLabel.zPosition = 3
         selectedLineBoldLabel.name = selectedLine.measure.rawValue
         
-        if provideHelp {
+        if provideHelp != nil && provideHelp == true {
             infoButton.position = CGPoint(x: selectedLineLabel.frame.maxX+70 , y: frame.midY+40)
             selectedLineLabel.addChild(infoButton)
             // did not work anymore: selectedLineBoldLabel.addChild(infoButton.copy() as! SKNode)
@@ -399,11 +399,11 @@ class LevelSevenToTenScene: SKScene {
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
         
-        if(provideHelp && touchedNode.isEqual(to: infoButton)) {
+        if(touchedNode.isEqual(to: infoButton)) {
             displayMeasureInfo()
         }
         
-        if(provideHelp && touchedNode.isEqual(to: soundButton)) {
+        if(touchedNode.isEqual(to: soundButton)) {
             // sound and line nodes no longer receives touch events
             self.soundButton.isUserInteractionEnabled = true
             self.selectedLineBoldLabel.isUserInteractionEnabled = true

@@ -3,7 +3,7 @@
 //  Metrum
 //
 // Class that represents a scene for level one to four of Metrum App.
-// After initializing the provideHelp, inputFile and userDefaultsKey properties need to be specified.
+// After initializing the inputFile and userDefaultsKey properties need to be specified.
 //
 //  Created by Jonas Jonas on 06.02.20.
 //  Copyright © 2020 Jonas Jonas. All rights reserved.
@@ -54,7 +54,7 @@ class LevelOneToFourScene: SKScene {
     private var selectedLine: Line!
     
     // TODO check if handing over properties via init / constructor is better
-    public var provideHelp = false
+    public var provideHelp: Bool?
     public var inputFile = ""
     public var userDefaultsKey = ""
     
@@ -83,7 +83,7 @@ class LevelOneToFourScene: SKScene {
         addChild(loadingBar)
         manageLoadingBar()
         addChild(taskLabel)
-        if provideHelp {
+        if provideHelp != nil && provideHelp == true {
             addChild(infoButton)
             addChild(soundButton)
         }
@@ -538,11 +538,11 @@ class LevelOneToFourScene: SKScene {
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
         
-        if(provideHelp && touchedNode.isEqual(to: infoButton)) {
+        if(touchedNode.isEqual(to: infoButton)) {
             displayAccentuationInfo()
         }
         
-        if(provideHelp && touchedNode.isEqual(to: soundButton)) {
+        if(touchedNode.isEqual(to: soundButton)) {
             // node no longer receives touch events
             self.soundButton.isUserInteractionEnabled = true
             
@@ -651,8 +651,6 @@ class LevelOneToFourScene: SKScene {
         for node in touchedNodes {
         }
         
-        
-        
         for s in stressMarks {
             s.isClinchedToAccentBin = false
         }
@@ -726,11 +724,6 @@ class LevelOneToFourScene: SKScene {
 //                print("jo:" + touchedStressMark.description + "\n\n")
 //            }
 //        }
-        
-        
-        
-        
-
 //
 //        print("i was touched: " + touchedNode.description)
 //        print("i was touched: " + touchedNode.last!.description)
@@ -803,7 +796,6 @@ class LevelOneToFourScene: SKScene {
             if let arrow = self.childNode(withName: "arrow") {
                 arrow.removeFromParent()
             }
-            
             checkButton.activate()
         }
         else {

@@ -190,7 +190,6 @@ class MainMenuScene: SKScene {
         
         if(touchedNode.name == "level2" && levelOneIsPassed) {
             let levelTwoScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
-            levelTwoScene?.provideHelp = false
             levelTwoScene?.inputFile = "words.json"
             levelTwoScene?.userDefaultsKey = "level2"
             levelTwoScene?.scaleMode = scaleMode
@@ -208,7 +207,6 @@ class MainMenuScene: SKScene {
         
         if(touchedNode.name == "level4" && levelThreeIsPassed) {
             let levelFourScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
-            levelFourScene?.provideHelp = false
             levelFourScene?.inputFile = "lines.json"
             levelFourScene?.userDefaultsKey = "level4"
             levelFourScene?.scaleMode = scaleMode
@@ -225,7 +223,6 @@ class MainMenuScene: SKScene {
         
         if(touchedNode.name == "level6" && levelFiveIsPassed) {
             let levelSixScene = LevelFiveToSixScene(fileNamed: "LevelFiveToSixScene")
-            levelSixScene?.provideHelp = false
             levelSixScene?.userDefaultsKey = "level6"
             levelSixScene?.scaleMode = scaleMode
             view?.presentScene(levelSixScene)
@@ -242,7 +239,6 @@ class MainMenuScene: SKScene {
         
         if(touchedNode.name == "level8" && levelSevenIsPassed) {
             let levelEightScene = LevelSevenToTenScene(fileNamed: "LevelSevenToTenScene")
-            levelEightScene?.provideHelp = false
             levelEightScene?.inputFile = "words.json"
             levelEightScene?.userDefaultsKey = "level8"
             levelEightScene?.scaleMode = scaleMode
@@ -260,7 +256,6 @@ class MainMenuScene: SKScene {
         
         if(touchedNode.name == "level10" && levelNineIsPassed) {
             let levelTenScene = LevelSevenToTenScene(fileNamed: "LevelSevenToTenScene")
-            levelTenScene?.provideHelp = false
             levelTenScene?.inputFile = "lines.json"
             levelTenScene?.userDefaultsKey = "level10"
             levelTenScene?.scaleMode = scaleMode

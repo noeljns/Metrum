@@ -3,7 +3,7 @@
 //  Metrum
 //
 // Class that represents a scene for level five to six of Metrum App.
-// After initializing the provideHelp and userDefaultsKey properties need to be specified.
+// After initializing the userDefaultsKey property needs to be specified.
 //
 //  Created by Jonas Jonas on 19.02.20.
 //  Copyright © 2020 Jonas Jonas. All rights reserved.
@@ -43,7 +43,7 @@ class LevelFiveToSixScene: SKScene {
     private var selectedMeasure: Measure!
     
     // TODO check if handing over properties via init / constructor is better
-    public var provideHelp = false
+    public var provideHelp: Bool?
     public var userDefaultsKey = ""
     
     /// Sets up the ui elements that don't get removed from and re-added to scene during level
@@ -51,7 +51,7 @@ class LevelFiveToSixScene: SKScene {
         addChild(exitLabel)
         addChild(loadingBar)
         manageLoadingBar()
-        if provideHelp {
+        if provideHelp != nil && provideHelp == true {
             addChild(infoButton)
         }
         addChild(checkButton)
@@ -434,7 +434,7 @@ class LevelFiveToSixScene: SKScene {
         let touchLocation = touch.location(in: self)
         let touchedNode = self.atPoint(touchLocation)
         
-        if(provideHelp && touchedNode.isEqual(to: infoButton)) {
+        if(touchedNode.isEqual(to: infoButton)) {
             displayMeasureInfo()
         }
         
