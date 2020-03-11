@@ -376,11 +376,11 @@ class LevelSevenToTenScene: SKScene {
                 switch syllable.accentuation.rawValue {
                 case "unstressed":
                     // let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false)
-                    let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false, size: 50)
+                    let syllableNotBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: false, size: 40)
                     
                     lineToBeRatedBold.append(syllableNotBold)
                 case "stressed":
-                    let syllableBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: true, size: 50)
+                    let syllableBold = makeAttributedString(stringToBeMutated: syllable.syllableString + "·", shallBecomeBold: true, size: 40)
                     lineToBeRatedBold.append(syllableBold)
                 default:
                     print("never happens")

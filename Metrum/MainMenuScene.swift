@@ -152,7 +152,7 @@ class MainMenuScene: SKScene {
         let resetButtonFrame = SKSpriteNode(color: .red, size: CGSize(width: 130, height: 55))
         resetButtonFrame.position = CGPoint(x: frame.midX+270, y: frame.midY-440)
         resetButtonFrame.zPosition = 4
-        addChild(resetButtonFrame)
+        // addChild(resetButtonFrame)
         let resetButton = SKLabelNode(text: "Neustart")
         resetButton.name = "reset"
         resetButton.fontColor = SKColor.white

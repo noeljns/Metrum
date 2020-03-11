@@ -52,8 +52,8 @@ class Congratulations: SKSpriteNode {
 
         explanationLabel.fontColor = SKColor.black
         explanationLabel.text = "Herzlichen Glückwünsch! Du hast vier Mal richtig geantwortet.\n\n"
-            + "Im Hauptmenü wurde das nächste Level für dich freigeschaltet. Oder möchtest du im bisherigen Level weiter üben?"
-        explanationLabel.fontSize = 35
+            + "Im Hauptmenü wurde das nächste Level für dich freigeschaltet. Möchtest du im bisherigen Level weiter üben? Oder im Hauptmenü zum nächsten Level?"
+        explanationLabel.fontSize = 30
         explanationLabel.position = CGPoint(x: frame.midX , y: frame.midY-200)
         explanationLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         explanationLabel.numberOfLines = 0
