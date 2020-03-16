@@ -127,6 +127,9 @@ class MainMenuScene: SKScene {
     }
 
     override func didMove(to view: SKView) {        
+        UserDefaults.standard.set(false, forKey: "level1")
+        UserDefaults.standard.set(false, forKey: "level7")
+        
         if !(firstEntryOfApp) {
             displaySalutation()
             UserDefaults.standard.set(true, forKey: "firstEntry")

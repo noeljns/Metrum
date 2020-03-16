@@ -397,7 +397,7 @@ class LevelSevenToTenScene: SKScene {
     /// Generates the animation to help user understand to drag and drop stressmarks to solve the task
     /// Animations stops as soon as all accent bins are filled with stressmarks for the first time in level 1
     func displayDragAndDropAnimation() {
-        arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow"), color: .clear, size: CGSize(width: 50, height: 150))
+        arrow = SKSpriteNode(texture: SKTexture(imageNamed: "pfeil1"), color: .clear, size: CGSize(width: 50, height: 150))
         arrow.name = "arrow"
         arrow.position = CGPoint(x: -90, y: 0)
         arrow.zPosition = 1
