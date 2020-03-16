@@ -15,7 +15,7 @@ class LevelFiveToSixScene: SKScene {
     private var exitLabel = ExitLabel()
     private let loadingBar = LoadingBar(color: .green, size: CGSize(width: 600, height: 26))
     private var measureInfo = MeasureInfo(size: CGSize(width: 650, height: 800))
-    private var infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: 180 , y: 60))
+    private var infoButton = InfoButton(size: CGSize(width: 60, height: 60), position: CGPoint(x: 180 , y: 60))
     private var checkButton = CheckButton(size: CGSize(width: 150, height: 55))
     private let selectedMeasureLabel = SKLabelNode()
     private var accentBins = [SKSpriteNode]()

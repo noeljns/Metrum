@@ -22,8 +22,8 @@ class LevelOneToFourScene: SKScene {
         return taskLabel
     }()
     private var accentuationInfo = AccentuationInfo(size: CGSize(width: 650, height: 800))
-    private var infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: 225 , y: 90))
-    private var soundButton = SoundButton(size: CGSize(width: 40, height: 40), position: CGPoint(x: 150 , y: 90))
+    private var infoButton = InfoButton(size: CGSize(width: 60, height: 60), position: CGPoint(x: 225 , y: 90))
+    private var soundButton = SoundButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: 170 , y: 90))
     private var checkButton = CheckButton(size: CGSize(width: 150, height: 55))
     private var accentBins = [SKSpriteNode]()
     private var selectedLineLabel = SKLabelNode()

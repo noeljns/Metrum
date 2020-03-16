@@ -14,7 +14,7 @@ protocol AccentuationInfoDelegate: class {
 
 class AccentuationInfo: SKSpriteNode {
     weak var delegate: AccentuationInfoDelegate?
-    private let soundButton = SoundButton(size: CGSize(width: 40, height: 40), position: CGPoint(x: 120 , y: -140))
+    private let soundButton = SoundButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: 120 , y: -140))
     private var exampleWordLabel = SKLabelNode()
     private var exampleWordBoldLabel = SKLabelNode()
     

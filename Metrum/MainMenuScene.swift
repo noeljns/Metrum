@@ -85,7 +85,7 @@ class MainMenuScene: SKScene {
     func generateLevelExplanation() {
         var infoButtonPosition = 370
         for index in 1...10 {
-            let infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: -150 , y: infoButtonPosition))
+            let infoButton = InfoButton(size: CGSize(width: 60, height: 60), position: CGPoint(x: -150 , y: infoButtonPosition))
             infoButton.name = "infoButtonLevel" + String(index)
             addChild(infoButton)
             infoButtonPosition = infoButtonPosition-85

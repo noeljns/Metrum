@@ -21,8 +21,8 @@ class LevelSevenToTenScene: SKScene {
         return taskLabel
     }()
     private var measureInfo = MeasureInfo(size: CGSize(width: 650, height: 800))
-    private var infoButton = InfoButton(size: CGSize(width: 40, height: 40), position: CGPoint(x: 0 , y: 0))
-    private var soundButton = SoundButton(size: CGSize(width: 30, height: 30), position: CGPoint(x: 0 , y: 0))
+    private var infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: CGPoint(x: 0 , y: 0))
+    private var soundButton = SoundButton(size: CGSize(width: 40, height: 40), position: CGPoint(x: 0 , y: 0))
     private var selectedLineLabel = SKLabelNode()
     private var selectedLineBoldLabel = SKLabelNode()
     private let jambusBin = MeasureContainer(position: CGPoint(x: -200, y: 100))
@@ -304,7 +304,7 @@ class LevelSevenToTenScene: SKScene {
             selectedLineLabel.addChild(infoButton)
             // did not work anymore: selectedLineBoldLabel.addChild(infoButton.copy() as! SKNode)
             selectedLineBoldLabel.addChild(createInfoButton(position: infoButton.position))
-            soundButton.position = CGPoint(x: selectedLineLabel.frame.maxX+20 , y: frame.midY+40)
+            soundButton.position = CGPoint(x: selectedLineLabel.frame.maxX+30 , y: frame.midY+40)
             selectedLineLabel.addChild(soundButton)
             // did not work anymore: selectedLineBoldLabel.addChild(soundBoxButton.copy() as! SKNode)
             selectedLineBoldLabel.addChild(createSoundButton(position: soundButton.position))
@@ -318,7 +318,7 @@ class LevelSevenToTenScene: SKScene {
     ///   - position: position of generated info button
     /// - Returns: generated info button
     func createInfoButton(position: CGPoint) -> SKSpriteNode {
-        let infoButton = InfoButton(size: CGSize(width: 40, height: 40), position: position)
+        let infoButton = InfoButton(size: CGSize(width: 50, height: 50), position: position)
         return infoButton
     }
     
@@ -328,7 +328,7 @@ class LevelSevenToTenScene: SKScene {
     ///   - position: position of generated sound button
     /// - Returns: generated sound button
     func createSoundButton(position: CGPoint) -> SKSpriteNode {
-        let soundButton = SoundButton(size: CGSize(width: 30, height: 30), position: position)
+        let soundButton = SoundButton(size: CGSize(width: 40, height: 40), position: position)
         return soundButton
     }
     
