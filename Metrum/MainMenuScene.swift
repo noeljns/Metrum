@@ -135,10 +135,7 @@ class MainMenuScene: SKScene {
         }
     }
 
-    override func didMove(to view: SKView) {        
-        UserDefaults.standard.set(false, forKey: "level1")
-        UserDefaults.standard.set(false, forKey: "level7")
-        
+    override func didMove(to view: SKView) {
         if !(firstEntryOfApp) {
             displaySalutation()
             UserDefaults.standard.set(true, forKey: "firstEntry")
@@ -161,6 +158,7 @@ class MainMenuScene: SKScene {
         // colorize levels that are able to be entered and flag passed levels with trophy
         markEnterableAndPassedLevels()
         
+        // debug tool
         let resetButtonFrame = SKSpriteNode(color: .red, size: CGSize(width: 130, height: 55))
         resetButtonFrame.position = CGPoint(x: frame.midX+270, y: frame.midY-440)
         resetButtonFrame.zPosition = 4
