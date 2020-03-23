@@ -12,17 +12,17 @@ import SpriteKit
 class MainMenuScene: SKScene {
     private var firstEntryOfApp = UserDefaults.standard.bool(forKey: "firstEntry")
     private var levelOneIsPassed = UserDefaults.standard.bool(forKey: "level1")
-    private var levelTwoIsPassed = UserDefaults.standard.bool(forKey: "level2")
-    private var levelThreeIsPassed = UserDefaults.standard.bool(forKey: "level3")
-    private var levelFourIsPassed = UserDefaults.standard.bool(forKey: "level4")
-    private var levelFiveIsPassed = UserDefaults.standard.bool(forKey: "level5")
-    private var levelSixIsPassed = UserDefaults.standard.bool(forKey: "level6")
-    private var levelSevenIsPassed = UserDefaults.standard.bool(forKey: "level7")
-    private var levelEightIsPassed = UserDefaults.standard.bool(forKey: "level8")
-    private var levelNineIsPassed = UserDefaults.standard.bool(forKey: "level9")
-    private var levenTenIsPassed = UserDefaults.standard.bool(forKey: "level10")
-    private lazy var levels = [levelOneIsPassed, levelTwoIsPassed, levelThreeIsPassed, levelFourIsPassed, levelFiveIsPassed,
-                       levelSixIsPassed, levelSevenIsPassed, levelEightIsPassed, levelNineIsPassed, levenTenIsPassed]
+    private var levelOneTestIsPassed = UserDefaults.standard.bool(forKey: "level2")
+    private var levelTwoIsPassed = UserDefaults.standard.bool(forKey: "level3")
+    private var levelTwoTestIsPassed = UserDefaults.standard.bool(forKey: "level4")
+    private var levelThreeIsPassed = UserDefaults.standard.bool(forKey: "level5")
+    private var levelThreeTestIsPassed = UserDefaults.standard.bool(forKey: "level6")
+    private var levelFourIsPassed = UserDefaults.standard.bool(forKey: "level7")
+    private var levelFourTestIsPassed = UserDefaults.standard.bool(forKey: "level8")
+    private var levelFiveIsPassed = UserDefaults.standard.bool(forKey: "level9")
+    private var levelFiveTestIsPassed = UserDefaults.standard.bool(forKey: "level10")
+    private lazy var levels = [levelOneIsPassed, levelOneTestIsPassed, levelTwoIsPassed, levelTwoTestIsPassed, levelThreeIsPassed,
+                       levelThreeTestIsPassed, levelFourIsPassed, levelFourTestIsPassed, levelFiveIsPassed, levelFiveTestIsPassed]
     
     // overlay windows
     private var backgroundBlocker = SKSpriteNode()
@@ -205,7 +205,7 @@ class MainMenuScene: SKScene {
         }
         
         if(touchedNode.name == "level1") {
-            let levelOneScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
+            let levelOneScene = LevelOneAndTwoScene(fileNamed: "LevelOneAndTwoScene")
             levelOneScene?.provideHelp = true
             levelOneScene?.inputFile = "words.json"
             levelOneScene?.userDefaultsKey = "level1"
@@ -214,77 +214,77 @@ class MainMenuScene: SKScene {
         }
         
         if(touchedNode.name == "level2" && levelOneIsPassed) {
-            let levelTwoScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
-            levelTwoScene?.inputFile = "words.json"
-            levelTwoScene?.userDefaultsKey = "level2"
+            let levelOneTestScene = LevelOneAndTwoScene(fileNamed: "LevelOneAndTwoScene")
+            levelOneTestScene?.inputFile = "words.json"
+            levelOneTestScene?.userDefaultsKey = "level2"
+            levelOneTestScene?.scaleMode = scaleMode
+            view?.presentScene(levelOneTestScene)
+        }
+        
+        if(touchedNode.name == "level3" && levelOneTestIsPassed) {
+            let levelTwoScene = LevelOneAndTwoScene(fileNamed: "LevelOneAndTwoScene")
+            levelTwoScene?.provideHelp = true
+            levelTwoScene?.inputFile = "lines.json"
+            levelTwoScene?.userDefaultsKey = "level3"
             levelTwoScene?.scaleMode = scaleMode
             view?.presentScene(levelTwoScene)
         }
         
-        if(touchedNode.name == "level3" && levelTwoIsPassed) {
-            let levelThreeScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
+        if(touchedNode.name == "level4" && levelTwoIsPassed) {
+            let levelTwoTestScene = LevelOneAndTwoScene(fileNamed: "LevelOneAndTwoScene")
+            levelTwoTestScene?.inputFile = "lines.json"
+            levelTwoTestScene?.userDefaultsKey = "level4"
+            levelTwoTestScene?.scaleMode = scaleMode
+            view?.presentScene(levelTwoTestScene)
+        }
+        
+        if(touchedNode.name == "level5" && levelTwoTestIsPassed) {
+            let levelThreeScene = LevelThreeScene(fileNamed: "LevelThreeScene")
             levelThreeScene?.provideHelp = true
-            levelThreeScene?.inputFile = "lines.json"
-            levelThreeScene?.userDefaultsKey = "level3"
+            levelThreeScene?.userDefaultsKey = "level5"
             levelThreeScene?.scaleMode = scaleMode
             view?.presentScene(levelThreeScene)
         }
         
-        if(touchedNode.name == "level4" && levelThreeIsPassed) {
-            let levelFourScene = LevelOneToFourScene(fileNamed: "LevelOneToFourScene")
-            levelFourScene?.inputFile = "lines.json"
-            levelFourScene?.userDefaultsKey = "level4"
+        if(touchedNode.name == "level6" && levelThreeIsPassed) {
+            let levelThreeTestScene = LevelThreeScene(fileNamed: "LevelThreeScene")
+            levelThreeTestScene?.userDefaultsKey = "level6"
+            levelThreeTestScene?.scaleMode = scaleMode
+            view?.presentScene(levelThreeTestScene)
+        }
+        
+        if(touchedNode.name == "level7" && levelThreeTestIsPassed) {
+            let levelFourScene = LevelFourAndFiveScene(fileNamed: "LevelFourAndFiveScene")
+            levelFourScene?.provideHelp = true
+            levelFourScene?.inputFile = "words.json"
+            levelFourScene?.userDefaultsKey = "level7"
             levelFourScene?.scaleMode = scaleMode
             view?.presentScene(levelFourScene)
         }
         
-        if(touchedNode.name == "level5" && levelFourIsPassed) {
-            let levelFiveScene = LevelFiveToSixScene(fileNamed: "LevelFiveToSixScene")
+        if(touchedNode.name == "level8" && levelFourIsPassed) {
+            let levelFourTestScene = LevelFourAndFiveScene(fileNamed: "LevelFourAndFiveScene")
+            levelFourTestScene?.inputFile = "words.json"
+            levelFourTestScene?.userDefaultsKey = "level8"
+            levelFourTestScene?.scaleMode = scaleMode
+            view?.presentScene(levelFourTestScene)
+        }
+        
+        if(touchedNode.name == "level9" && levelFourTestIsPassed) {
+            let levelFiveScene = LevelFourAndFiveScene(fileNamed: "LevelFourAndFiveScene")
             levelFiveScene?.provideHelp = true
-            levelFiveScene?.userDefaultsKey = "level5"
+            levelFiveScene?.inputFile = "lines.json"
+            levelFiveScene?.userDefaultsKey = "level9"
             levelFiveScene?.scaleMode = scaleMode
             view?.presentScene(levelFiveScene)
         }
         
-        if(touchedNode.name == "level6" && levelFiveIsPassed) {
-            let levelSixScene = LevelFiveToSixScene(fileNamed: "LevelFiveToSixScene")
-            levelSixScene?.userDefaultsKey = "level6"
-            levelSixScene?.scaleMode = scaleMode
-            view?.presentScene(levelSixScene)
-        }
-        
-        if(touchedNode.name == "level7" && levelSixIsPassed) {
-            let levelSevenScene = LevelSevenToTenScene(fileNamed: "LevelSevenToTenScene")
-            levelSevenScene?.provideHelp = true
-            levelSevenScene?.inputFile = "words.json"
-            levelSevenScene?.userDefaultsKey = "level7"
-            levelSevenScene?.scaleMode = scaleMode
-            view?.presentScene(levelSevenScene)
-        }
-        
-        if(touchedNode.name == "level8" && levelSevenIsPassed) {
-            let levelEightScene = LevelSevenToTenScene(fileNamed: "LevelSevenToTenScene")
-            levelEightScene?.inputFile = "words.json"
-            levelEightScene?.userDefaultsKey = "level8"
-            levelEightScene?.scaleMode = scaleMode
-            view?.presentScene(levelEightScene)
-        }
-        
-        if(touchedNode.name == "level9" && levelEightIsPassed) {
-            let levelNineScene = LevelSevenToTenScene(fileNamed: "LevelSevenToTenScene")
-            levelNineScene?.provideHelp = true
-            levelNineScene?.inputFile = "lines.json"
-            levelNineScene?.userDefaultsKey = "level9"
-            levelNineScene?.scaleMode = scaleMode
-            view?.presentScene(levelNineScene)
-        }
-        
-        if(touchedNode.name == "level10" && levelNineIsPassed) {
-            let levelTenScene = LevelSevenToTenScene(fileNamed: "LevelSevenToTenScene")
-            levelTenScene?.inputFile = "lines.json"
-            levelTenScene?.userDefaultsKey = "level10"
-            levelTenScene?.scaleMode = scaleMode
-            view?.presentScene(levelTenScene)
+        if(touchedNode.name == "level10" && levelFiveIsPassed) {
+            let levelFiveTestScene = LevelFourAndFiveScene(fileNamed: "LevelFourAndFiveScene")
+            levelFiveTestScene?.inputFile = "lines.json"
+            levelFiveTestScene?.userDefaultsKey = "level10"
+            levelFiveTestScene?.scaleMode = scaleMode
+            view?.presentScene(levelFiveTestScene)
         }
         
         if(touchedNode.name == "reset") {

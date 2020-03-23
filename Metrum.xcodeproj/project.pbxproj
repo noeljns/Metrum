@@ -70,15 +70,15 @@
 		DDBF72AE24002AE3001587B6 /* Salutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBF72AD24002AE3001587B6 /* Salutation.swift */; };
 		DDC1D064242938BE00834018 /* Sources.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC1D063242938BE00834018 /* Sources.swift */; };
 		DDC4906723EC47EC000F0942 /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4906623EC47EC000F0942 /* MainMenuScene.swift */; };
-		DDC4906923EC4F0B000F0942 /* LevelOneToFourScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4906823EC4F0B000F0942 /* LevelOneToFourScene.swift */; };
+		DDC4906923EC4F0B000F0942 /* LevelOneAndTwoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4906823EC4F0B000F0942 /* LevelOneAndTwoScene.swift */; };
 		DDC4906D23EC507A000F0942 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC4906C23EC507A000F0942 /* MainMenuScene.sks */; };
-		DDC4907123EC5736000F0942 /* LevelOneToFourScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC4907023EC5736000F0942 /* LevelOneToFourScene.sks */; };
+		DDC4907123EC5736000F0942 /* LevelOneAndTwoScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC4907023EC5736000F0942 /* LevelOneAndTwoScene.sks */; };
 		DDC4907323ED7641000F0942 /* AccentuationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4907223ED7641000F0942 /* AccentuationInfo.swift */; };
-		DDC75EF323FDE37600B551BB /* LevelFiveToSixScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC75EF223FDE37600B551BB /* LevelFiveToSixScene.swift */; };
-		DDC75EF523FDE39D00B551BB /* LevelFiveToSixScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EF423FDE39D00B551BB /* LevelFiveToSixScene.sks */; };
+		DDC75EF323FDE37600B551BB /* LevelThreeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC75EF223FDE37600B551BB /* LevelThreeScene.swift */; };
+		DDC75EF523FDE39D00B551BB /* LevelThreeScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EF423FDE39D00B551BB /* LevelThreeScene.sks */; };
 		DDC75EF723FDE42000B551BB /* MeasureInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC75EF623FDE42000B551BB /* MeasureInfo.swift */; };
-		DDC75EF923FE043200B551BB /* LevelSevenToTenScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC75EF823FE043200B551BB /* LevelSevenToTenScene.swift */; };
-		DDC75EFB23FE04E900B551BB /* LevelSevenToTenScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EFA23FE04E900B551BB /* LevelSevenToTenScene.sks */; };
+		DDC75EF923FE043200B551BB /* LevelFourAndFiveScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC75EF823FE043200B551BB /* LevelFourAndFiveScene.swift */; };
+		DDC75EFB23FE04E900B551BB /* LevelFourAndFiveScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC75EFA23FE04E900B551BB /* LevelFourAndFiveScene.sks */; };
 		DDE2FBE423FD780E00118ADC /* Flasche.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBE323FD780E00118ADC /* Flasche.mp3 */; };
 		DDE2FBE823FD78C000118ADC /* Lampe.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBE723FD78C000118ADC /* Lampe.mp3 */; };
 		DDE2FBEA23FD78F000118ADC /* Sonne.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDE2FBE923FD78F000118ADC /* Sonne.mp3 */; };
@@ -179,15 +179,15 @@
 		DDBF72AD24002AE3001587B6 /* Salutation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salutation.swift; sourceTree = "<group>"; };
 		DDC1D063242938BE00834018 /* Sources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources.swift; sourceTree = "<group>"; };
 		DDC4906623EC47EC000F0942 /* MainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
-		DDC4906823EC4F0B000F0942 /* LevelOneToFourScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelOneToFourScene.swift; sourceTree = "<group>"; };
+		DDC4906823EC4F0B000F0942 /* LevelOneAndTwoScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelOneAndTwoScene.swift; sourceTree = "<group>"; };
 		DDC4906C23EC507A000F0942 /* MainMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenuScene.sks; sourceTree = "<group>"; };
-		DDC4907023EC5736000F0942 /* LevelOneToFourScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelOneToFourScene.sks; sourceTree = "<group>"; };
+		DDC4907023EC5736000F0942 /* LevelOneAndTwoScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelOneAndTwoScene.sks; sourceTree = "<group>"; };
 		DDC4907223ED7641000F0942 /* AccentuationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentuationInfo.swift; sourceTree = "<group>"; };
-		DDC75EF223FDE37600B551BB /* LevelFiveToSixScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelFiveToSixScene.swift; sourceTree = "<group>"; };
-		DDC75EF423FDE39D00B551BB /* LevelFiveToSixScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelFiveToSixScene.sks; sourceTree = "<group>"; };
+		DDC75EF223FDE37600B551BB /* LevelThreeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelThreeScene.swift; sourceTree = "<group>"; };
+		DDC75EF423FDE39D00B551BB /* LevelThreeScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelThreeScene.sks; sourceTree = "<group>"; };
 		DDC75EF623FDE42000B551BB /* MeasureInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureInfo.swift; sourceTree = "<group>"; };
-		DDC75EF823FE043200B551BB /* LevelSevenToTenScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSevenToTenScene.swift; sourceTree = "<group>"; };
-		DDC75EFA23FE04E900B551BB /* LevelSevenToTenScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelSevenToTenScene.sks; sourceTree = "<group>"; };
+		DDC75EF823FE043200B551BB /* LevelFourAndFiveScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelFourAndFiveScene.swift; sourceTree = "<group>"; };
+		DDC75EFA23FE04E900B551BB /* LevelFourAndFiveScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelFourAndFiveScene.sks; sourceTree = "<group>"; };
 		DDE2FBE323FD780E00118ADC /* Flasche.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Flasche.mp3; sourceTree = "<group>"; };
 		DDE2FBE723FD78C000118ADC /* Lampe.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Lampe.mp3; sourceTree = "<group>"; };
 		DDE2FBE923FD78F000118ADC /* Sonne.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Sonne.mp3; path = ../../../../Downloads/Sounds/Sonne.mp3; sourceTree = "<group>"; };
@@ -337,12 +337,12 @@
 				DD5749CE23EC405200C50423 /* GameViewController.swift */,
 				DDC4906623EC47EC000F0942 /* MainMenuScene.swift */,
 				DDC4906C23EC507A000F0942 /* MainMenuScene.sks */,
-				DDC4906823EC4F0B000F0942 /* LevelOneToFourScene.swift */,
-				DDC4907023EC5736000F0942 /* LevelOneToFourScene.sks */,
-				DDC75EF223FDE37600B551BB /* LevelFiveToSixScene.swift */,
-				DDC75EF423FDE39D00B551BB /* LevelFiveToSixScene.sks */,
-				DDC75EF823FE043200B551BB /* LevelSevenToTenScene.swift */,
-				DDC75EFA23FE04E900B551BB /* LevelSevenToTenScene.sks */,
+				DDC4906823EC4F0B000F0942 /* LevelOneAndTwoScene.swift */,
+				DDC4907023EC5736000F0942 /* LevelOneAndTwoScene.sks */,
+				DDC75EF223FDE37600B551BB /* LevelThreeScene.swift */,
+				DDC75EF423FDE39D00B551BB /* LevelThreeScene.sks */,
+				DDC75EF823FE043200B551BB /* LevelFourAndFiveScene.swift */,
+				DDC75EFA23FE04E900B551BB /* LevelFourAndFiveScene.sks */,
 				DD4363F623F18629001F2A48 /* Model */,
 				DD56778824087061007B6025 /* SceneElements */,
 				DD969FF623FC5A8100C22624 /* OverlayWindows */,
@@ -505,7 +505,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDC75EFB23FE04E900B551BB /* LevelSevenToTenScene.sks in Resources */,
+				DDC75EFB23FE04E900B551BB /* LevelFourAndFiveScene.sks in Resources */,
 				DD29680D240A816D0021E05F /* kaputt.mp3 in Resources */,
 				DD296824240AAC980021E05F /* HeuteHierMorgenDort.wav in Resources */,
 				DD296803240A816D0021E05F /* Gestell.mp3 in Resources */,
@@ -534,8 +534,8 @@
 				DD296808240A816D0021E05F /* Zebra.mp3 in Resources */,
 				DD29681D240AA4E40021E05F /* FreudeSchoenerGoetterfunken.wav in Resources */,
 				DDE2FBEA23FD78F000118ADC /* Sonne.mp3 in Resources */,
-				DDC4907123EC5736000F0942 /* LevelOneToFourScene.sks in Resources */,
-				DDC75EF523FDE39D00B551BB /* LevelFiveToSixScene.sks in Resources */,
+				DDC4907123EC5736000F0942 /* LevelOneAndTwoScene.sks in Resources */,
+				DDC75EF523FDE39D00B551BB /* LevelThreeScene.sks in Resources */,
 				DD296809240A816D0021E05F /* Regal.mp3 in Resources */,
 				DD75FA7E240D3E8D00CA7662 /* ReplyIsCorrect.mp3 in Resources */,
 				DD29680B240A816D0021E05F /* Fantasie.mp3 in Resources */,
@@ -584,8 +584,8 @@
 				DD507EC123F551AC00D790E1 /* ReplyIsCorrect.swift in Sources */,
 				DD56779024088B73007B6025 /* InfoButton.swift in Sources */,
 				DD5677872407EC38007B6025 /* LoadingBar.swift in Sources */,
-				DDC75EF923FE043200B551BB /* LevelSevenToTenScene.swift in Sources */,
-				DDC75EF323FDE37600B551BB /* LevelFiveToSixScene.swift in Sources */,
+				DDC75EF923FE043200B551BB /* LevelFourAndFiveScene.swift in Sources */,
+				DDC75EF323FDE37600B551BB /* LevelThreeScene.swift in Sources */,
 				DD56778C24087642007B6025 /* TaskLabel.swift in Sources */,
 				DD56779924094002007B6025 /* SKSpriteNodeExtension.swift in Sources */,
 				DD9C91EE2401482C00C753C3 /* LevelExplanation.swift in Sources */,
@@ -594,7 +594,7 @@
 				DD4363F823F18645001F2A48 /* Word.swift in Sources */,
 				DD56779724093FC6007B6025 /* SKSceneExtension.swift in Sources */,
 				DD56779B24094AA4007B6025 /* MeasureContainer.swift in Sources */,
-				DDC4906923EC4F0B000F0942 /* LevelOneToFourScene.swift in Sources */,
+				DDC4906923EC4F0B000F0942 /* LevelOneAndTwoScene.swift in Sources */,
 				DD56778A240873A6007B6025 /* ExitLabel.swift in Sources */,
 				DD4363FE23F186F2001F2A48 /* Measure.swift in Sources */,
 				DD19AB0A23F80D960015D899 /* ReplyIsFalse.swift in Sources */,

@@ -10,7 +10,7 @@
 //
 import SpriteKit
 
-class LevelSevenToTenScene: SKScene {
+class LevelFourAndFiveScene: SKScene {
     // UI variables
     private var exitLabel = ExitLabel()
     private let loadingBar = LoadingBar(color: .green, size: CGSize(width: 600, height: 26))
@@ -523,7 +523,7 @@ class LevelSevenToTenScene: SKScene {
 
 
 
-extension LevelSevenToTenScene: MeasureInfoDelegate, CongratulationsDelegate, WarningDelegate {
+extension LevelFourAndFiveScene: MeasureInfoDelegate, CongratulationsDelegate, WarningDelegate {
     func closeMeasureInfo() {
         backgroundBlocker.removeFromParent()
         measureInfo.removeFromParent()
