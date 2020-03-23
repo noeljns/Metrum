@@ -28,6 +28,7 @@ class MainMenuScene: SKScene {
     private var backgroundBlocker = SKSpriteNode()
     private let salutation = Salutation(size: CGSize(width: 650, height: 800))
     private var levelExplanation = LevelExplanation(size: CGSize(width: 550, height: 250))
+    private let sources = Sources(size: CGSize(width: 700, height: 900))
 
     /// Adds Salutation as overlay node to scene.
     func displaySalutation() {
@@ -44,6 +45,14 @@ class MainMenuScene: SKScene {
         levelExplanation.setLevelExplanationText(levelIndex: levelIndex)
         levelExplanation.delegate = self
         addChild(levelExplanation)
+    }
+    
+    // Adds Sources as overlay node to scene.
+    func displaySources() {
+        backgroundBlocker = getBackgroundBlocker(shallBeTransparent: false, size: self.size)
+        addChild(backgroundBlocker)
+        sources.delegate = self
+        addChild(sources)
     }
     
     var levelTexts = ["Level 1 üben  ", "Level 1 testen", "Level 2 üben  ", "Level 2 testen","Level 3 üben  ", "Level 3 testen", "Level 4 üben  ", "Level 4 testen","Level 5 üben  ", "Level 5 testen"]
@@ -163,6 +172,19 @@ class MainMenuScene: SKScene {
         resetButton.zPosition = 5
         resetButton.addStroke(color: .white, width: 6.0)
         resetButtonFrame.addChild(resetButton)
+        
+        let sourcesButtonFrame = SKSpriteNode(color: .lightGray, size: CGSize(width: 100, height: 45))
+        sourcesButtonFrame.position = CGPoint(x: frame.midX-290, y: frame.midY-460)
+        sourcesButtonFrame.zPosition = 4
+        addChild(sourcesButtonFrame)
+        let sourcesButton = SKLabelNode(text: "Quellen")
+        sourcesButton.fontSize = 24
+        sourcesButton.name = "sources"
+        sourcesButton.fontColor = SKColor.darkGray
+        sourcesButton.position = CGPoint(x: frame.midX, y: frame.midY-15)
+        sourcesButton.zPosition = 5
+        sourcesButton.addStroke(color: .darkGray, width: 6.0)
+        sourcesButtonFrame.addChild(sourcesButton)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -271,11 +293,15 @@ class MainMenuScene: SKScene {
             }
             didMove(to: self.view!)
         }
+        
+        if(touchedNode.name == "sources") {
+            displaySources()
+        }
     }
     
 }
 
-extension MainMenuScene: SalutationDelegate, LevelExplanationDelegate {
+extension MainMenuScene: SalutationDelegate, LevelExplanationDelegate, SourcesDelegate {
     func closeSalutation() {
         backgroundBlocker.removeFromParent()
         salutation.removeFromParent()
@@ -284,6 +310,11 @@ extension MainMenuScene: SalutationDelegate, LevelExplanationDelegate {
     func closeLevelExplanation() {
         backgroundBlocker.removeFromParent()
         levelExplanation.removeFromParent()
+    }
+    
+    func closeSources() {
+        backgroundBlocker.removeFromParent()
+        sources.removeFromParent()
     }
     
     // TODO modularize touching level buttons

@@ -68,6 +68,7 @@
 		DD9C91EE2401482C00C753C3 /* LevelExplanation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9C91ED2401482C00C753C3 /* LevelExplanation.swift */; };
 		DDA5BD282405D6850060E766 /* Torben.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDA5BD272405D6850060E766 /* Torben.mp3 */; };
 		DDBF72AE24002AE3001587B6 /* Salutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBF72AD24002AE3001587B6 /* Salutation.swift */; };
+		DDC1D064242938BE00834018 /* Sources.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC1D063242938BE00834018 /* Sources.swift */; };
 		DDC4906723EC47EC000F0942 /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4906623EC47EC000F0942 /* MainMenuScene.swift */; };
 		DDC4906923EC4F0B000F0942 /* LevelOneToFourScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC4906823EC4F0B000F0942 /* LevelOneToFourScene.swift */; };
 		DDC4906D23EC507A000F0942 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DDC4906C23EC507A000F0942 /* MainMenuScene.sks */; };
@@ -176,6 +177,7 @@
 		DD9C91ED2401482C00C753C3 /* LevelExplanation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelExplanation.swift; sourceTree = "<group>"; };
 		DDA5BD272405D6850060E766 /* Torben.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Torben.mp3; sourceTree = "<group>"; };
 		DDBF72AD24002AE3001587B6 /* Salutation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salutation.swift; sourceTree = "<group>"; };
+		DDC1D063242938BE00834018 /* Sources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources.swift; sourceTree = "<group>"; };
 		DDC4906623EC47EC000F0942 /* MainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
 		DDC4906823EC4F0B000F0942 /* LevelOneToFourScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelOneToFourScene.swift; sourceTree = "<group>"; };
 		DDC4906C23EC507A000F0942 /* MainMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenuScene.sks; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 				DD507EC023F551AC00D790E1 /* ReplyIsCorrect.swift */,
 				DD19AB0923F80D960015D899 /* ReplyIsFalse.swift */,
 				DD9C91ED2401482C00C753C3 /* LevelExplanation.swift */,
+				DDC1D063242938BE00834018 /* Sources.swift */,
 			);
 			path = OverlayWindows;
 			sourceTree = "<group>";
@@ -577,6 +580,7 @@
 				DDC75EF723FDE42000B551BB /* MeasureInfo.swift in Sources */,
 				DD56779224088B83007B6025 /* SoundButton.swift in Sources */,
 				DD56778E240879BD007B6025 /* CheckButton.swift in Sources */,
+				DDC1D064242938BE00834018 /* Sources.swift in Sources */,
 				DD507EC123F551AC00D790E1 /* ReplyIsCorrect.swift in Sources */,
 				DD56779024088B73007B6025 /* InfoButton.swift in Sources */,
 				DD5677872407EC38007B6025 /* LoadingBar.swift in Sources */,

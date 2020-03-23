@@ -43,6 +43,7 @@ class GameViewController: UIViewController {
             
             view.ignoresSiblingOrder = true
 
+            // disable debugging tools
             view.showsFPS = false
             view.showsNodeCount = false
         }
