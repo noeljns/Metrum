@@ -2,8 +2,8 @@
 //  WarningScene.swift
 //  Metrum
 //
-//  Created by Jonas Jonas on 18.02.20.
-//  Copyright © 2020 Jonas Jonas. All rights reserved.
+//  Created by Jonas Zwink on 18.02.20.
+//  Copyright © 2020 Jonas Zwink. All rights reserved.
 //
 
 import SpriteKit
@@ -39,7 +39,6 @@ class Warning: SKSpriteNode {
         "Alle Fortschritte in diesem Level werden verloren gehen."
         warningLabel.fontSize = 40
         warningLabel.position = CGPoint(x: frame.midX , y: frame.midY-100)
-        // break line: https://forums.developer.apple.com/thread/82994
         warningLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         warningLabel.numberOfLines = 0
         warningLabel.preferredMaxLayoutWidth = 470

@@ -4,8 +4,8 @@
 //
 // Class that represents the landing scene of Metrum App.
 //
-//  Created by Jonas Jonas on 06.02.20.
-//  Copyright © 2020 Jonas Jonas. All rights reserved.
+//  Created by Jonas Zwink on 06.02.20.
+//  Copyright © 2020 Jonas Zwink. All rights reserved.
 //
 import SpriteKit
 
@@ -314,53 +314,4 @@ extension MainMenuScene: SalutationDelegate, LevelExplanationDelegate, SourcesDe
         backgroundBlocker.removeFromParent()
         sources.removeFromParent()
     }
-    
-    // TODO modularize touching level buttons
-    // https://docs.swift.org/swift-book/LanguageGuide/TypeCasting.html
-    // https://developer.apple.com/swift/blog/?id=23
-    // https://thatthinginswift.com/guard-statement-swift/
-    //    func openLevelIfClicked(touchedNode: SKNode) {
-    //        for index in 1...10 {
-    //            if (touchedNode.name == "level" + String(index)) {
-    //                // generate correct Level Class
-    //
-    //                var levelScene = SKScene()
-    //                if [1, 2, 3, 4].contains(index) {
-    //                    guard levelScene == SKScene(fileNamed: "LevelOneToFourScene") as! LevelOneToFourScene else {
-    //                        return
-    //                    }
-    //                }
-    //                else if [5, 6].contains(index) {
-    //                    guard levelScene == SKScene(fileNamed: "LevelFiveToSixScene") as! LevelFiveToSixScene else {
-    //                        return
-    //                    }
-    //                }
-    //                else if [7, 8, 9, 10].contains(index) {
-    //                    guard levelScene == SKScene(fileNamed: "LevelSevenToTenScene") as! LevelSevenToTenScene else {
-    //                        return
-    //                    }
-    //                }
-    //
-    //                // set provideHelp variable
-    //                if index % 2 != 0 {
-    //                    // in level 1, 3, 5, 7, 9 help is provided
-    //                    levelScene.provideHelp = true
-    //                } else {
-    //                    levelScene.provideHelp = false
-    //                }
-    //
-    //                // set inputFile variable
-    //                if [1, 2, 7, 8].contains(index) {
-    //                    levelScene.inputFile = "words.json"
-    //                }
-    //                else if [3, 4, 9, 10].contains(index) {
-    //                    levelScene.inputFile = "lines.json"
-    //                }
-    //
-    //                levelScene.userDefaultsKey = "level" + String(index)
-    //                levelScene.scaleMode = scaleMode
-    //                view?.presentScene(levelScene)
-    //            }
-    //        }
-    //    }
 }

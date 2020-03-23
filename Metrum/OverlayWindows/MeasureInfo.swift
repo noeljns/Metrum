@@ -2,8 +2,8 @@
 //  MeasureInfo.swift
 //  Metrum
 //
-//  Created by Jonas Jonas on 19.02.20.
-//  Copyright © 2020 Jonas Jonas. All rights reserved.
+//  Created by Jonas Zwink on 19.02.20.
+//  Copyright © 2020 Jonas Zwink. All rights reserved.
 //
 
 import SpriteKit

@@ -1,12 +1,12 @@
 //
-//  LevelSevenToTenScene.swift
+//  LevelFourAndFiveScene.swift
 //  Metrum
 //
-// Class that represents a scene for level seven to ten of Metrum App.
+// Class that represents a scene for level four and five of Metrum App.
 // After initializing the provideHelp, inputFile and userDefaultsKey properties need to be specified.
 //
-//  Created by Jonas Jonas on 20.02.20.
-//  Copyright © 2020 Jonas Jonas. All rights reserved.
+//  Created by Jonas Zwink on 20.02.20.
+//  Copyright © 2020 Jonas Zwink. All rights reserved.
 //
 import SpriteKit
 

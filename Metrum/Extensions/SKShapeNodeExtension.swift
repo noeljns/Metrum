@@ -2,8 +2,8 @@
 //  SKShapeNodeExtension.swift
 //  Metrum
 //
-//  Created by Jonas Jonas on 01.03.20.
-//  Copyright © 2020 Jonas Jonas. All rights reserved.
+//  Created by Jonas Zwink on 01.03.20.
+//  Copyright © 2020 Jonas Zwink. All rights reserved.
 //
 
 import SpriteKit

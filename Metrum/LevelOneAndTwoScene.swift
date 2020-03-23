@@ -1,12 +1,12 @@
 //
-//  LevelOneToFourScene.swift
+//  LevelOneAndTwoScene
 //  Metrum
 //
-// Class that represents a scene for level one to four of Metrum App.
+// Class that represents a scene for level one to two of Metrum App.
 // After initializing the inputFile and userDefaultsKey properties need to be specified.
 //
-//  Created by Jonas Jonas on 06.02.20.
-//  Copyright © 2020 Jonas Jonas. All rights reserved.
+//  Created by Jonas Zwink on 06.02.20.
+//  Copyright © 2020 Jonas Zwink. All rights reserved.
 //
 import SpriteKit
 

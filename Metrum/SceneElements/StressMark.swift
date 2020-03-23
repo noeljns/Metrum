@@ -2,8 +2,8 @@
 //  StressMark.swift
 //  Metrum
 //
-//  Created by Jonas Jonas on 05.03.20.
-//  Copyright © 2020 Jonas Jonas. All rights reserved.
+//  Created by Jonas Zwink on 05.03.20.
+//  Copyright © 2020 Jonas Zwink. All rights reserved.
 //
 
 import SpriteKit
@@ -12,6 +12,7 @@ class StressMark: SKSpriteNode {
     var isClinchedToAccentBin = false
     var wasNeverClinchedToAccentBin = true
     var isAtSpawnLocation = true
+    // TODO replace isStressed with accentuation property
     
     init(isStressed: Bool, position: CGPoint) {
         // stressMarkTouchContainer

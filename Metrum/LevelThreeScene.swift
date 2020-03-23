@@ -1,12 +1,12 @@
 //
-//  LevelFiveToSix.swift
+//  LevelThreeScene.swift
 //  Metrum
 //
-// Class that represents a scene for level five to six of Metrum App.
+// Class that represents a scene for level three of Metrum App.
 // After initializing the userDefaultsKey property needs to be specified.
 //
-//  Created by Jonas Jonas on 19.02.20.
-//  Copyright © 2020 Jonas Jonas. All rights reserved.
+//  Created by Jonas Zwink on 19.02.20.
+//  Copyright © 2020 Jonas Zwink. All rights reserved.
 //
 import SpriteKit
 

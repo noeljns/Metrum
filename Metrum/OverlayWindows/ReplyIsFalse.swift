@@ -2,8 +2,8 @@
 //  ReplyIsIncorrect.swift
 //  Metrum
 //
-//  Created by Jonas Jonas on 15.02.20.
-//  Copyright © 2020 Jonas Jonas. All rights reserved.
+//  Created by Jonas Zwink on 15.02.20.
+//  Copyright © 2020 Jonas Zwink. All rights reserved.
 //
 
 import SpriteKit
@@ -12,7 +12,6 @@ protocol ReplyIsFalseDelegate: class {
     func closeReplyIsFalse()
 }
 
-// layover windows: https://stackoverflow.com/questions/46954696/save-state-of-gamescene-through-transitions
 class ReplyIsFalse: SKSpriteNode {
     weak var delegate: ReplyIsFalseDelegate?
     let textLabel = SKLabelNode()
@@ -28,7 +27,6 @@ class ReplyIsFalse: SKSpriteNode {
         background.drawBorder(color: .red, width: 5)
         addChild(background)
         
-        // break line: https://forums.developer.apple.com/thread/82994
         textLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         textLabel.numberOfLines = 0
         textLabel.preferredMaxLayoutWidth = 520
@@ -62,7 +60,6 @@ class ReplyIsFalse: SKSpriteNode {
         // fatalError("init(coder:) has not been implemented")
     }
     
-    // https://developer.apple.com/documentation/spritekit/sknode/controlling_user_interaction_on_nodes
     override var isUserInteractionEnabled: Bool {
         set {
             // ignore
